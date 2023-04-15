@@ -1,0 +1,77 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body bg-img">
+  <div class="login-wrapper">
+    <div class="container">
+      <div class="loginbox">
+        <div class="login-right">
+          <div class="login-right-wrap">
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
+            style="height: 10vw; width: 30vw !important;" />
+              <br>
+            <h1>{{ 'newPwd' | translate }}</h1>
+            <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <p class="account-subtitle">
+                  {{ 'writeNewPwd' | translate }}</p>
+                  <div class="form-group">
+                    <label class="form-control-label">{{ 'newPwd' | translate }}</label>
+                    <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password" [(ngModel)]="input1" formControlName="field_password" placeholder="{{ 'enterYour' | translate }}{{ 'user.password'| translate }}"
+                      id="field_password" [ngClass]="{
+                        'is-invalid': f['field_password'].touched && f['field_password'].invalid
+                      }" />
+                      <span
+                        [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
+                        (click)="iconLogle()"></span>
+                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                      {{ CustomControler.message }}
+                    </div>
+                    <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
+                      <div *ngIf="f['field_password'].errors && f['field_password'].errors['required']">
+                        {{ 'emailRequired' | translate }}
+                      </div>
+                      <div *ngIf="f['field_password'].errors && f['field_password'].errors['field_password']">
+                        {{ 'enterValidEmail' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">{{ 'writeAgaine' | translate }}</label>
+                    <input class="form-control" type="password" formControlName="confirm_password" [(ngModel)]="input2" placeholder="{{ 'enterYour' | translate }}{{ 'user.password'| translate }}"
+                      id="confirm_password" [ngClass]="{
+                        'is-invalid': f['confirm_password'].touched && f['confirm_password'].invalid
+                      }" />
+                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                      {{ CustomControler.message }}
+                    </div>
+                    <div *ngIf="f['confirm_password'].touched && f['confirm_password'].invalid" class="invalid-feedback">
+                      <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['required']">
+                        {{ 'emailRequired' | translate }}
+                      </div>
+                      <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['confirm_password']">
+                        {{ 'enterValidEmail' | translate }}
+                      </div>
+                    </div>
+                  </div>
+              <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                {{ 'send' | translate }}
+              </button>
+              <div *ngIf="waitingResponse">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+              <!-- /Social Login -->
+              <div class="text-center dont-have">
+                {{ 'dontHaveAccount' | translate }} ?
+                <a [routerLink]="'/register'">{{ 'createAccount' | translate }}</a>
+              </div>
+              <div class="text-center dont-have">
+                <a [routerLink]="'/login'">{{ 'connexion' | translate }}</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Main Wrapper -->

@@ -1,0 +1,29 @@
+
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+  <div class="content container-fluid">
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-6">
+                  <h3 class="page-title">{{'settings' | translate }}</h3>
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a  [routerLink]="'/index'">{{'dashboard' | translate }}</a>
+                      </li>
+                      <li class="breadcrumb-item active">{{page | titlecase}}</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-xl-3 col-md-4">
+              <app-sidemenu></app-sidemenu>
+          </div>
+
+          <div class="col-xl-9 col-md-8">
+              <router-outlet></router-outlet>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- /Page Wrapper -->

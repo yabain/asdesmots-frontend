@@ -1,0 +1,41 @@
+<!-- Settings Menu -->
+<div class="widget settings-menu">
+    <ul>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/settings'" class="nav-link active" [class.active]="page === 'settings'">
+                <i class="far fa-user"></i> <span class="ms-1">{{'profileSettings' | translate }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/preferences'" class="nav-link" [class.active]="page === 'preferences'">
+                <i class="fas fa-cog"></i> <span class="ms-1">{{'preferences' | translate }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/tax-types'" class="nav-link" [class.active]="page === 'tax-types'">
+                <i class="far fa-check-square"></i> <span class="ms-1">{{'taxType' | translate }}</span>
+            </a>
+        </li>
+        <!-- <li class="nav-item">
+            <a [routerLink]="'/setting/expense-category'" class="nav-link" [class.active]="page === 'expense-category'">
+                <i class="far fa-list-alt"></i> <span class="ms-1">Expense Category</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/notifications'" class="nav-link" [class.active]="page === 'notifications'">
+                <i class="far fa-bell"></i> <span class="ms-1">Notifications</span>
+            </a>
+        </li> -->
+        <li class="nav-item">
+            <a [routerLink]="'/setting/change-password'" class="nav-link" [class.active]="page === 'change-password'">
+                <i class="fas fa-unlock-alt"></i> <span class="ms-1">Change Password</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/delete-account'" class="nav-link" [class.active]="page === 'delete-account'">
+                <i class="fas fa-ban"></i> <span class="ms-1">Delete Account</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- /Settings Menu -->

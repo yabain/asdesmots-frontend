@@ -1,0 +1,70 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body bg-img">
+  <div class="login-wrapper">
+    <div class="container">
+      <div class="loginbox">
+        <div class="login-right">
+          <div class="login-right-wrap">
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
+            style="height: 10vw; width: 30vw !important;" />
+              <br>
+            <h1>{{ 'forgotPwd' | translate }}</h1>
+            <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <p class="account-subtitle">
+                  {{ 'enterEmailForVerification' | translate }}</p>
+              <div class="form-group">
+                <label class="form-control-label">{{ 'user.emailAdress' | translate }}</label>
+                <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}"
+                  id="field_email" [ngClass]="{
+                    'is-invalid': f['field_email'].touched && f['field_email'].invalid
+                  }" />
+                <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                  {{ CustomControler.message }}
+                </div>
+                <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="invalid-feedback">
+                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
+                    {{ 'emailRequired' | translate }}
+                  </div>
+                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
+                    {{ 'enterValidEmail' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!waitingResponse">
+              <div *ngIf="sended" style="background-color: rgba(7, 129, 23, 0.275);
+              border-radius: 5px;
+              padding: 5px;
+              margin-top: 5px"><b style="color: rgb(31, 31, 31)"> Un mail de vérification a été envoyé à votre adresse email. </b><br>
+                <p style="color: rgb(26, 26, 26)">Vérifiez également dans vos "SPAM". Si vous ne l'avez pas reçu, cliquez sur Renvoyer.
+                </p>
+              </div>
+              <br>
+              <button *ngIf="sended" [disabled]="form.invalid" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                {{ 'resend' | translate }}
+              </button>
+            </div>
+              <div *ngIf="!sended">
+              <button *ngIf="!waitingResponse" [disabled]="form.invalid" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                {{ 'send' | translate }}
+              </button></div>
+              <div *ngIf="waitingResponse">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+              <!-- /Social Login -->
+              <div class="text-center dont-have">
+                {{ 'dontHaveAccount' | translate }} ?
+                <a [routerLink]="'/register'">{{ 'createAccount' | translate }}</a>
+              </div>
+              <div class="text-center dont-have">
+                <a [routerLink]="'/login'">{{ 'connexion' | translate }}</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Main Wrapper -->

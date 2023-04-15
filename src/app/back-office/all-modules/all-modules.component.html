@@ -1,0 +1,398 @@
+<div class="main-wrapper" style="background-color: rgba(243, 246, 248, 0.995);">
+  <app-sidemenu [hidden]="!adminShow"></app-sidemenu>
+  <router-outlet></router-outlet>
+</div>
+<!-- <div class="right-side-views">
+  <ul class="sticky-sidebar siderbar-view">
+      <li class="sidebar-icons">
+          <a class="toggle tipinfo open-layout open-siderbar" href="javascript:void(0);">
+              <div class="tooltip-five ">
+                  <img src="assets/img/icons/siderbar-icon1.svg" class="feather-five" alt="">
+                   <span class="tooltiptext">Check Layout</span>
+              </div>
+          </a>
+      </li>
+      <li class="sidebar-icons">
+           <a class="toggle tipinfo open-settings open-siderbar" href="javascript:void(0);">
+               <div class="tooltip-five">
+                   <img src="assets/img/icons/siderbar-icon2.svg" class="feather-five" alt="">
+                   <span class="tooltiptext">Demo Settings</span>
+               </div>
+           </a>
+       </li>
+       <li class="sidebar-icons">
+           <a class="toggle tipinfo" target="_blank" href="https://themeforest.net/item/kanakku-bootstrap-admin-html-template/29436291?s_rank=11">
+               <div class="tooltip-five">
+                   <img src="assets/img/icons/siderbar-icon3.svg" class="feather-five" alt="">
+                   <span class="tooltiptext">Buy Now</span>
+               </div>
+           </a>
+       </li>
+  </ul>
+</div> -->
+
+
+<!-- <div class="sidebar-layout">
+   <div class="sidebar-content">
+       <div class="sidebar-top">
+           <div class="container-fluid">
+               <div class="row align-items-center">
+                   <div class="col-xl-6 col-sm-6 col-12">
+                       <div class="sidebar-logo">
+                           <a [routerLink]="'/index'" class="logo test">
+                               <img src="assets/img/y_logo.png" alt="Logo" class="img-flex">
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xl-6 col-sm-6 col-12">
+                       <a class="btn-closed" href="javascript:void(0);"><img class="img-fliud" src="assets/img/icons/sidebar-delete-icon.svg" alt="demo"></a>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="container-fluid">
+           <div class="row align-items-center">
+               <h5 class="sidebar-title">Choose layout</h5>
+               <div class="col-xl-6 col-sm-6 col-12">
+                   <div class="sidebar-image align-center">
+                       <img class="img-fliud" src="assets/img/demo-one.png" alt="demo">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 layout">
+                           <h5 class="layout-title">Demo 1</h5>
+                       </div>
+                       <div class="col-lg-6 layout">
+                           <label class="switch">
+                               <a [routerLink]="'/index'" class="layout-link"></a>
+                               <span class="slider round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-6 col-sm-6 col-12">
+                   <div class="sidebar-image align-center">
+                       <img class="img-fliud" src="assets/img/demo-two.png" alt="demo">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 layout">
+                           <h5 class="layout-title">Demo 2</h5>
+                       </div>
+                       <div class="col-lg-6 layout">
+                           <label class="switch">
+                               <a [routerLink]="'/dashboard-two'" class="layout-link"></a>
+                               <span class="slider round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center">
+               <h5 class="sidebar-title">Choose layout</h5>
+               <div class="col-xl-6 col-sm-6 col-12">
+                   <div class="sidebar-image align-center">
+                       <img class="img-fliud" src="assets/img/demo-three.png" alt="demo">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 layout">
+                           <h5 class="layout-title">Demo 3</h5>
+                       </div>
+                       <div class="col-lg-6 layout">
+                           <label class="switch">
+                               <a [routerLink]="'/dashboard-three'" class="layout-link"></a>
+                               <span class="slider round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-6 col-sm-6 col-12">
+                   <div class="sidebar-image align-center">
+                       <img class="img-fliud" src="assets/img/demo-four.png" alt="demo">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 layout">
+                           <h5 class="layout-title">Demo 4</h5>
+                       </div>
+                       <div class="col-lg-6 layout">
+                           <label class="switch">
+                               <a [routerLink]="'/dashboard-four'" class="layout-link"></a>
+                               <span class="slider round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center">
+               <div class="col-xl-6 col-sm-6 col-12">
+                   <div class="sidebar-image align-center">
+                       <img class="img-fliud" src="assets/img/demo-five.png" alt="demo">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 layout">
+                           <h5 class="layout-title">Demo 5</h5>
+                       </div>
+                       <div class="col-lg-6 layout">
+                           <label class="switch">
+                               <a [routerLink]="'/dashboard-five'" class="layout-link"></a>
+                               <span class="slider round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center">
+               <div class="reset-page text-center">
+                   <a [routerLink]="'/index'">
+                       <button type="button" class="sidebar-but"><img src="assets/img/icons/reset-icon.svg" alt="reset" class="reset-icon">
+                           <span>Reset Settings</span>
+                       </button>
+                   </a>
+               </div>
+           </div>
+       </div>
+   </div>
+</div> -->
+
+<!-- <div class="sidebar-settings">
+   <div class="sidebar-content sticky-sidebar-one">
+       <div class="sidebar-top">
+           <div class="container-fluid">
+               <div class="row align-items-center ">
+                   <div class="col-xl-6 col-sm-6 col-12">
+                       <div class="sidebar-logo">
+                           <a [routerLink]="'/index'" class="logo">
+                               <img src="assets/img/y_logo.png" alt="Logo" class="img-flex">
+                           </a>
+                       </div>
+                   </div>
+                   <div class="col-xl-6 col-sm-6 col-12">
+                       <a class="btn-closed" href="javascript:void(0);"><img class="img-fliud" src="assets/img/icons/sidebar-delete-icon.svg" alt="demo"></a>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="container-fluid">
+           <div class="row align-items-center ">
+               <h5 class="sidebar-title">Preview Setting</h5>
+               <h5 class="sidebar-sub-title">Layout Type</h5>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-image-one align-center">
+                       <img class="img-fliud" src="assets/img/layout-one.png" alt="layout">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">LTR</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one">
+                               <a [routerLink]="'/index'" class="layout-link"></a>
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-image-one align-center">
+                       <img class="img-fliud" src="assets/img/layout-two.png" alt="layout">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">RTL</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one">
+                               <a href="https://kanakku-angular.dreamguystech.com/template-rtl/" class="layout-link"></a>
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-image-one align-center">
+                       <img class="img-fliud" src="assets/img/layout-three.png" alt="layout">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">BOX</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one">
+                               <a [routerLink]="'/dashboard-three'" class="layout-link"></a>
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center ">
+               <h5 class="sidebar-sub-title">Sidebar Type</h5>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-image-one align-center">
+                       <img src="assets/img/layout-four.png" alt="layout">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">Normal</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one">
+                               <a [routerLink]="'/dashboard-two'" class="layout-link"></a>
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-image-one align-center">
+                       <img src="assets/img/layout-five.png" alt="layout">
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">Compact</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one">
+                               <a [routerLink]="'/dashboard-five'" class="layout-link"></a>
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center">
+               <h5 class="sidebar-sub-title">Header & Sidebar Style</h5>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-color align-center">
+                       <span class="color-one"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col setting">
+                           <h5 class="setting-title">White</h5>
+                       </div>
+                       <div class="col-auto setting">
+                           <label class="switch switch-one sidebar-type-two">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-color align-center">
+                       <span class="color-two"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col setting">
+                           <h5 class="setting-title">Lite</h5>
+                       </div>
+                       <div class="col-auto setting">
+                           <label class="switch switch-one sidebar-type-three">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-color align-center">
+                       <span class="color-three"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col setting">
+                           <h5 class="setting-title">Dark</h5>
+                       </div>
+                       <div class="col-auto setting">
+                           <label class="switch switch-one sidebar-type-four">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-3 col-sm-6">
+                   <div class="sidebar-color align-center">
+                       <span class="color-eight"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col setting">
+                           <h5 class="setting-title">Theme</h5>
+                       </div>
+                       <div class="col-auto setting">
+                           <label class="switch switch-one sidebar-type-five">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center">
+               <h5 class="sidebar-sub-title">Primary Skin</h5>
+               <div class="col-xl-6 col-sm-6">
+                   <div class="sidebar-color-one align-center">
+                       <span class="color-five"></span>
+                       <span class="color-four"></span>
+                       <span class="color-six"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">Theme</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one primary-skin-one">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-6 col-sm-6">
+                   <div class="sidebar-color-one align-center">
+                       <span class="color-five"></span>
+                       <span class="color-two"></span>
+                       <span class="color-six"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">Lite</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one primary-skin-two">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xl-6 col-sm-6">
+                   <div class="sidebar-color-one align-center">
+                       <span class="color-three"></span>
+                       <span class="color-four"></span>
+                       <span class="color-seven"></span>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 setting">
+                           <h5 class="setting-title">Dark</h5>
+                       </div>
+                       <div class="col-lg-6 setting">
+                           <label class="switch switch-one primary-skin-three">
+                               <input type="checkbox">
+                               <span class="slider slider-one round"></span>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="row align-items-center ">
+               <div class="col-xl-12 col-sm-12">
+                   <div class="reset-page text-center">
+                       <a [routerLink]="'/index'">
+                           <button type="button" class="sidebar-but"><img src="assets/img/icons/reset-icon.svg" alt="reset" class="reset-icon">
+                               <span>Reset Settings</span>
+                           </button>
+                       </a>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div> -->

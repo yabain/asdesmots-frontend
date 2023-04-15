@@ -1,0 +1,9 @@
+.right-side-views {
+    display: none;
+}
+.bg-img{
+ background-image: url("../../../../assets/img/elements.svg");
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-color: rgb(2, 52, 99);
+}

@@ -1,0 +1,14 @@
+@import './../assets/plugins/fontawesome/css/fontawesome.min.css';
+@import './../assets/plugins/fontawesome/css/all.min.css';
+
+#change-lang {
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    bottom: 50px;
+    right: 30px;
+}
+
+#change-lang img {
+    width: 25px;
+}

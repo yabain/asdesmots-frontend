@@ -1,0 +1,115 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body bg-img">
+  <div class="login-wrapper">
+    <div class="container">
+      <div class="loginbox">
+        <div class="login-right">
+          <div class="login-right-wrap">
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
+            style="height: 10vw; width: 30vw !important;"/>
+              <br>
+            <h1>{{ 'connexion' | translate }}</h1>
+            <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="form-group">
+                <label class="form-control-label">{{ 'user.emailAdress' | translate }}{{ 'telNumber' | translate }}</label>
+                <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}{{ 'telNumber' | translate }}"
+                  id="field_email" [ngClass]="{
+                    'is-invalid': f['field_email'].touched && f['field_email'].invalid
+                  }" />
+                <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                  {{ CustomControler.message }}
+                </div>
+                <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="invalid-feedback">
+                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
+                    {{ 'emailRequired' | translate }}
+                  </div>
+                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
+                    {{ 'enterValidEmail' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">{{ 'user.password' | translate }}</label>
+                <div class="pass-group">
+                  <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
+                    formControlName="field_password" placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password" [ngClass]="{
+                      'is-invalid':
+                        f['field_password'].touched && f['field_password'].invalid
+                    }" />
+                  <span
+                    [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
+                    (click)="iconLogle()"></span>
+                  <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
+                    <div *ngIf="
+                        f['field_password'].errors && f['field_password'].errors['required']
+                      ">
+                    {{ 'passwordRequired' | translate }}
+                    </div>
+                  </div>
+                  <div class="invalid-feedback" *ngIf="CustomControler?.status === 'password'">
+                    {{ CustomControler.message }}
+                  </div>
+                </div>
+                <!-- <div style="background-color: rgba(248, 180, 71, 0.575);
+                border-radius: 5px;
+                padding: 5px;
+                margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
+                  <ol>
+                    <li>{{ 'upTo8Char' | translate }}</li>
+                    <li>{{ 'upTo1Captal' | translate }}</li>
+                    <li>{{ 'upTo1Number' | translate }}</li>
+                    <li>{{ 'upTo1SpecialCahr' | translate }}</li>
+                  </ol>
+                </div> -->
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="cb1" />
+                      <label class="custom-control-label ms-1" for="cb1">{{ 'stayCoonect' | translate }}</label>
+                    </div>
+                  </div>
+                  <div class="col-6 text-end">
+                    <a class="forgot-link" [routerLink]="'/forgot-pass'">{{ 'forgotPwd' | translate }} ?</a>
+                  </div>
+                </div>
+              </div>
+              <button [disabled]="form.invalid" *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                {{ 'connexion' | translate }}
+              </button>
+              <div *ngIf="waitingResponse">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+              <div class="login-or">
+                <span class="or-line"></span>
+                <span class="span-or">{{ 'or' | translate }}</span>
+              </div>
+              <!-- Social Login -->
+              <div class="social-login mb-3">
+                <span>{{ 'connectWith' | translate }}</span>
+                <a href="javascript:void(0);" class="facebook"><i class="fab fa-facebook-f"></i></a><a
+                  href="javascript:void(0);" class="google"><i class="fab fa-google"></i></a>
+              </div>
+              <!-- /Social Login -->
+              <div class="text-center dont-have">
+                {{ 'dontHaveAccount' | translate }} ?
+                <a [routerLink]="'/register'">{{ 'createAccount' | translate }}</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="en" (click)="setFrLang()" id="change-lang">
+  <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Retourner en haut" />Français</a>
+</div>
+<div *ngIf="fr" (click)="setEnLang()" id="change-lang">
+  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Retourner en haut" />English</a>
+</div>
+<!-- /Main Wrapper -->

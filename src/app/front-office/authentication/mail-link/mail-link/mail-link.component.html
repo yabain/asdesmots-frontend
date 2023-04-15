@@ -1,0 +1,50 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body bg-img">
+  <div class="login-wrapper">
+    <div class="container">
+      <div class="loginbox">
+        <div class="login-right">
+          <div class="login-right-wrap">
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
+            style="height: 10vw; width: 30vw !important;" />
+            <br>
+            <h1>{{ 'mailVerification' | translate }}</h1>
+            <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
+
+            <div *ngIf="waitingResponse">
+              <p class="account-subtitle">
+                {{ 'wait' | translate }}</p>
+              <div class="form-group">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+            </div>
+
+            <div *ngIf="!waitingResponse"><br>
+              <div  *ngIf="!error" style="background-color: rgba(2, 127, 17, 0.839);
+              border-radius: 5px;
+              padding: 5px; color: #fff;
+              margin-top: 5px"><b>{{ 'success' | translate }}:</b><br> {{msg}}
+
+              </div>
+              <div  *ngIf="error" style="background-color: rgba(152, 4, 4, 0.776);
+                border-radius: 5px;
+                padding: 5px; color: #fff;
+                margin-top: 5px"><b>{{ 'error' | translate }}:</b><br> {{msg}}
+              </div>
+              <br>
+              <button class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                {{ 'resend' | translate }}
+              </button>
+              <br>
+              <div class="text-center dont-have">
+                {{ 'dontHaveAccount' | translate }} ?
+                <a [routerLink]="'/login'">{{ 'connexion' | translate }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Main Wrapper -->

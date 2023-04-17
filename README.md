@@ -1,8 +1,8 @@
-<h1 align="center">Y-Nkap</h1>
+<h1 align="center">ASDESMOTS</h1>
 
 <p align="center">
   <br>
-  <img src="./src/assets/img/logo-full-adesmots.png" alt="Y-Nkap logo" width="100%" height="100%"/>
+  <img src="./src/assets/img/logo-full-adesmots.png" alt="Y-Nkap logo" width="80%" height="80%"/>
   <br><br>
   <i><b> ASDESMOTS: </b>a platform (De Jeu de mot) pour des competiton national et international.
     <br>Developed by Yaba-In, a software development company (desktop, web and mobile).</i>

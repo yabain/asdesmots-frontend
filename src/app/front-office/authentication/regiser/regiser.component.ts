@@ -104,7 +104,15 @@ export class RegiserComponent implements OnInit {
       'field_agree': ['', Validators.required ],
   });
   }
+  etape =1;
 
+  suivant(){
+    this.etape++;
+  }
+  precedent() {
+    this.etape--;
+  }
+  
   submit() {
     // stop here if form is invalid
     if (this.form.invalid) {
@@ -162,4 +170,6 @@ export class RegiserComponent implements OnInit {
   setFrLang(){
     this.translationService.setLanguage('fr');
   }
+  
+  
 }

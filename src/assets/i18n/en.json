@@ -97,6 +97,10 @@
     "selectCountry": "Select your country",
     "selectCity": "Select your city",
     "countryRequired": "Your country is required.",
+    "persinfo": "Personal information",
+    "userinfo": "Connection information",
+    "suivant": "Next",
+    "retour": "Back",
     "cityRequired": "Your city is required.",
 
     "user":{

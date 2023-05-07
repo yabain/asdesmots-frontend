@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,Event, NavigationStart } from '@angular/router';
+import { CommonServiceService } from 'src/app/services/common-service.service';
 
-import { CommonServiceService } from 'src/app/shared/services/common-service.service';
 
 @Component({
   selector: 'app-setting',

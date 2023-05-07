@@ -11,12 +11,14 @@ import { SidemenuComponent } from '../shared/sidemenu/sidemenu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
+import { ProgressIndeterminateModule } from 'src/app/front-office/shared/progress-indeterminate/progress-indeterminate.module';
+import { FooterModule } from '../shared/footer/footer.module';
 
 
 @NgModule({
   declarations: [
     AllModulesComponent,
-    SidemenuComponent
+    SidemenuComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +26,8 @@ import { HttpLoaderFactory } from 'src/app/app.module';
     HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
+    FooterModule,
+    ProgressIndeterminateModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

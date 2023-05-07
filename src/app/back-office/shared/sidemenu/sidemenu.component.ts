@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { DataService } from 'src/app/shared/services/data.service';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { UserService } from 'src/app/shared/services/user/user.service';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/data.service';
+import { TranslationService } from 'src/app/services/translation/language.service';
+import { UserService } from 'src/app/services/user/user.service';
 declare var $: any;
 
 @Component({
@@ -64,6 +64,8 @@ export class SidemenuComponent implements OnInit {
     });
 
   }
+
+  
   ngOnInit(): void {
     this.translate.use(this.translationService.getLanguage());
 

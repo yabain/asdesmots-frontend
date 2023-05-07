@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Event, Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AllModulesService } from 'src/app/shared/services/all-modules.service';
+import { AllModulesService } from 'src/app/services/all-modules.service';
 @Component({
   selector: 'app-edit-customer',
   templateUrl: './edit-customer.component.html',
@@ -17,7 +17,13 @@ export class EditCustomerComponent implements OnInit {
   public editCustomerForm!: FormGroup;
   constructor(private allModulesService: AllModulesService,private formBuilder: FormBuilder,private route: ActivatedRoute,private toastr: ToastrService,private router: Router,) { }
 
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
+
   ngOnInit(): void {
+    this.scrollToTop();
+    
     this.id = parseInt(this.route.snapshot.queryParams["id"]);
     this.getCustomer();
     this.editCustomerForm = this.formBuilder.group({

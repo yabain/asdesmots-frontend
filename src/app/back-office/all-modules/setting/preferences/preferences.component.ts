@@ -1,6 +1,6 @@
 import { Component, OnInit,TemplateRef  } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import {CommonServiceService  } from 'src/app/shared/services/common-service.service';
+import { CommonServiceService } from 'src/app/services/common-service.service';
 
 @Component({
   selector: 'app-preferences',

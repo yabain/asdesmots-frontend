@@ -3,7 +3,11 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthenticationGuard } from './shared/guard/auth/authentication.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  // { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'auth', redirectTo: 'login', pathMatch: 'full' },
+  // { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
+  { path: 'reset', redirectTo: 'auth/rest-password', pathMatch: 'full' },
+  { path: 'error404', redirectTo: 'front/error404', pathMatch: 'full' },
   { path: 'forgot-pass', redirectTo: 'forgot-pwd', pathMatch: 'full' },
   {
     path: 'login',
@@ -69,20 +73,12 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'invoice-reports',
+    path: '',
     loadChildren: () =>
-      import('./back-office/all-modules/invoice-reports/invoice-reports.module').then(
-        (m) => m.InvoiceReportsModule
-      ),
+      import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule),
     canActivate: [AuthenticationGuard],
-
   },
-//   {
-//     path: '',
-//     loadChildren: () =>
-//     import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule)
-// },
-{path: '**', redirectTo: 'welcome'},
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

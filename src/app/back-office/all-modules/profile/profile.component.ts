@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { UserService } from 'src/app/shared/services/user/user.service';
+import { TranslationService } from 'src/app/services/translation/language.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -28,10 +28,10 @@ export class ProfileComponent implements OnInit {
     private userService: UserService
   ){
     this.userData = this.userService.getLocalStorageUser();
-    const words = this.userData.createdAt.split('T');
-    this.creationDate = words[0];
-    const other = words[1].split('.');
-    this.creationTime = other[0];
+    // const words = this.userData.createdAt.split('T');
+    // this.creationDate = words[0];
+    // const other = words[1].split('.');
+    // this.creationTime = other[0];
 
     //this is to determine the text direction depending on the selected language
     translate.onLangChange.subscribe((event: LangChangeEvent) =>
@@ -42,7 +42,18 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.scrollToTop();
+    
     this.translate.use(this.translationService.getLanguage());
+    this.userService.getUserActivities(this.userData.id)
+    .then((result) => {
+      console.log("activities 000: ", result);
+      // this.aLaUne = result;
+      // this.waitingData0 = true;
+    })
+    .catch((error) => {
+      console.error('Erreur0000: ', error.message);
+    });
   }
 
   about() {
@@ -67,6 +78,10 @@ export class ProfileComponent implements OnInit {
       key: this.key,
       speciality: this.name,
     };
+  }
+
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
   }
 
   submit() {

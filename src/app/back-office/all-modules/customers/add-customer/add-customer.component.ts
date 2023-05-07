@@ -1,9 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { CommonServiceService } from 'src/app/shared/services/common-service.service';
+// import { CommonServiceService } from 'src/app/services/common-service.service';
 import { Event, Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AllModulesService } from 'src/app/shared/services/all-modules.service';
+import { AllModulesService } from 'src/app/services/all-modules.service';
 import { DatePipe } from "@angular/common";
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,7 +22,12 @@ export class AddCustomerComponent implements OnInit {
   constructor(public router: Router, location: Location, private allModulesService: AllModulesService,private formBuilder: FormBuilder,private route: ActivatedRoute,private toastr: ToastrService) {
   }
 
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
+
   ngOnInit(): void {
+  this.scrollToTop();
 
     this.addCustomerForm = this.formBuilder.group({
       customerName: ["", [Validators.required]],

@@ -61,22 +61,22 @@ export class DashboardComponent implements OnInit {
       colors: ['#dc3545', '#22cc62', '#fda600', '#7638ff'],
       series: [
         {
-          name: "Mega Million",
+          name: "Online arcade",
         type: "column",
         data: [50, 100, 85, 67, 93, 32, 27, 41, 122, 212, 160, 65, 80]
         },
         {
-        name: "Euro Million",
+        name: "Competitions",
         type: "column",
         data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160, 50]
         },
         {
-        name: "Bingo",
+        name: "Benefits",
         type: "column",
         data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 100]
         },
         {
-        name: "Lotto",
+        name: "Invoices",
         type: "column",
         data: [30, 20, 15, 60, 10, 200, 17, 63, 97, 30, 55, 6, 180]
         }

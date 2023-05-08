@@ -5,7 +5,7 @@ import { CustomerListRoutingModule } from './customer-list-routing.module';
 import { CustomerListComponent } from './customer-list.component';
 import { DataTablesModule } from "angular-datatables";
 import { TranslateModule } from '@ngx-translate/core';
-import { UserDetailsModule } from 'src/app/front-office/sections/user-details/user-details.module';
+import { UserDetailsModule } from 'src/app/back-office/shared/user-details/user-details.module';
 
 @NgModule({
   declarations: [],

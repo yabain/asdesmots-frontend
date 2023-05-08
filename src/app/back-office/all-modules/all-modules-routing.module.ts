@@ -22,29 +22,29 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
 
       },
-      // {
-      //   path: 'customers',
-      //   loadChildren: () =>
-      //     import('./customers/customers.module').then((m) => m.CustomersModule),
-      //   canActivate: [AuthenticationGuard],
+      {
+        path: 'customers',
+        loadChildren: () =>
+          import('./customers/customers.module').then((m) => m.CustomersModule),
+        canActivate: [AuthenticationGuard],
 
-      // },
-      // {
-      //   path: 'setting',
-      //   loadChildren: () =>
-      //     import('./setting/setting.module').then((m) => m.SettingModule),
-      //   canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'setting',
+        loadChildren: () =>
+          import('./setting/setting.module').then((m) => m.SettingModule),
+        canActivate: [AuthenticationGuard],
 
-      // },
-      // {
-      //   path: 'profile',
-      //   loadChildren: () =>
-      //     import('./profile/profile.module').then(
-      //       (m) => m.ProfileModule
-      //     ),
-      //   canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/profile.module').then(
+            (m) => m.ProfileModule
+          ),
+        canActivate: [AuthenticationGuard],
 
-      // },
+      },
       { path: '**', redirectTo: 'index', pathMatch: 'full' },
     ]
   }

@@ -4,16 +4,17 @@
 	<!-- Logo -->
 	<div class="header-left header-left-one">
 		<a [routerLink]="'/'" class="logo">
-			<img src="assets/img/sl_lightBG.png" alt="Logo" style="height: 50px;">
+			<img src="assets/img/adm/adm_icon.png" alt="Logo"><img src="assets/img/adm/asdesmots.png" alt="Logo" style="height: 23px;">
 		</a>
 		<a [routerLink]="'/'" class="white-logo">
-			<img src="assets/img/sl_lightBG.png" alt="Logo" style="height: 50px;">
+			<img src="assets/img/logo-adesmots.png" alt="Logo" style="height: 50px;">
 		</a>
 		<a [routerLink]="'/'" class="logo logo-small">
-			<img src="assets/img/sl_lightBG.png" alt="Logo" width="50" height="30">
+			<img src="assets/img/adm/adm_icon.png" alt="Logo" width="50" height="30">
 		</a>
 	</div>
 	<!-- /Logo -->
+
 
 	<!-- Sidebar Toggle -->
 	<!-- <a href="javascript:void(0);" (click)="burgerMenu()" id="toggle_btn">
@@ -39,23 +40,23 @@
 	<!-- Header Menu -->
 	<ul class="nav nav-tabs user-menu">
 		<!-- Flag -->
-		<li class="nav-item dropdown has-arrow flag-nav">
-			<a *ngIf="fr" href="javascript:void(0)" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
+		<li class="nav-item  flag-nav">
+			<a *ngIf="en" (click)="setFrLang()" href="javascript:void(0)" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
 				data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
 				<img src="assets/img/flags/fr.png" alt="" height="20"> <span> Français</span>
 			</a>
-			<a *ngIf="en" href="javascript:void(0)" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
+			<a *ngIf="fr" href="javascript:void(0)" (click)="setEnLang()" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
 				data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
 				<img src="assets/img/flags/us.png" alt="" height="20"> <span> English</span>
 			</a>
-			<div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
+			<!-- <div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
 				<a (click)="setEnLang()" class="dropdown-item">
 					<img src="assets/img/flags/us.png" alt="" height="16"> English
 				</a>
 				<a (click)="setFrLang()" class="dropdown-item">
 					<img src="assets/img/flags/fr.png" alt="" height="16"> French
 				</a>
-			</div>
+			</div> -->
 		</li>
 		<!-- /Flag -->
 
@@ -63,7 +64,7 @@
 		<li class="nav-item dropdown">
 			<a href="javascript:void(0)" data-bs-toggle="dropdown" class="dropdown-toggle nav-link"
 				aria-controls="collapseExample1">
-				<i data-feather="bell"></i> <span class="badge badge-pill">5</span>
+				<i data-feather="bell"></i> <span class="badge badge-pill">0</span>
 			</a>
 			<div class="dropdown-menu notifications" id="collapseExample1">
 				<div class="topnav-dropdown-header">
@@ -79,22 +80,22 @@
 
 		<!-- User Menu -->
 		<li class="nav-item dropdown has-arrow main-drop" id="dropdown">
-			<a href="javascript:void(0)" class="dropdown-toggle nav-link" aria-controls="collapseExample2"
-				data-bs-toggle="dropdown">
+			<a [routerLink]="'/setting/settings'">
 				<span class="user-img">
-					<img src="{{userData.profilePicture}}" alt="">
+					<!-- <img src="{{userData.profilePicture}}" alt=""> -->
+					<img src="assets/img/user-profile.png" alt="">
 					<span class="status online"></span>
 				</span>
-				<span>{{userData.firstName}}</span>
+				<span>{{userData.lastName}}</span>
 			</a>
-			<div class="dropdown-menu" id="collapseExample2">
+			<!-- <div class="dropdown-menu" id="collapseExample2">
 				<a class="dropdown-item" [routerLink]="'/profile'"><i data-feather="user" class="me-1"></i> {{'profile'
 					| translate}}</a>
 				<a class="dropdown-item" [routerLink]="'/setting/settings'"><i data-feather="settings" class="me-1"></i>
 					{{'settings' | translate}}</a>
 				<a class="dropdown-item" (click)="Logout()"><i data-feather="log-out" class="me-1"></i> {{'logOut' |
 					translate}}</a>
-			</div>
+			</div> -->
 		</li>
 		<!-- /User Menu -->
 	</ul>
@@ -111,9 +112,6 @@
 				<li class="menu-title"><span>Menu</span></li>
 				<li [class.active]="base === 'index'">
 					<a [routerLink]="'/index'"><i data-feather="home"></i> <span>{{'dashboard' | translate}}</span></a>
-				</li>
-				<li [class.active]="base === 'lotteries'">
-					<a [routerLink]="'/lotteries'"><i data-feather="disc"></i> <span>{{'lotteries' | translate}}</span></a>
 				</li>
 				<li [class.active]="base === 'customers'">
 					<a [routerLink]="'/customers/customers-list'"><i data-feather="users"></i>

@@ -78,7 +78,7 @@ export class UserService {
   // Get user's activity
   getUserActivities(userId: any, pageNumber?: number, itemsPerPage?: number): Promise<any> {
     if (!pageNumber) {
-      pageNumber = 1;
+      pageNumber = 5;
     }
     if (!itemsPerPage) {
       itemsPerPage = 10;
@@ -98,7 +98,7 @@ export class UserService {
         'limit': itemsPerPage,
       };
 
-      this.api.get2(`user/history/${userId}/${pageNumber}/${itemsPerPage}`, headers, param)
+      this.api.get2(`/user/history/${userId}/${pageNumber}/${itemsPerPage}`, headers, param)
         .subscribe(data => {
           resolve(data);
           return 0;
@@ -116,6 +116,7 @@ export class UserService {
   */
   getLocalStorageUser() {
     this.userData = JSON.parse(localStorage.getItem('user-data'));
+    this.userData = this.parseDataFromApi(this.userData);
     this.emitUserData();
     return this.userData;
     /*if (this.userData) {
@@ -484,7 +485,7 @@ export class UserService {
       };
 
       console.log('Get all users 2.')
-      this.api.get('users', headers)
+      this.api.get('/users', headers)
         .subscribe(result => {
           console.log("users-- -refresh: ", result);
           let tab: any = result.data;

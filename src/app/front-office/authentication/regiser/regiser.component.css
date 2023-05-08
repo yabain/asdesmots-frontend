@@ -5,11 +5,11 @@
     background-image: url("../../../../assets/img/elements.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: rgb(2, 52, 99);
+    background-color: #3063AD;
    }
    .login-nav{
     background-color: #fff;
-    color: rgb(2, 52, 99);
+    color: #3063AD;
     border-radius: 10px
    }
 

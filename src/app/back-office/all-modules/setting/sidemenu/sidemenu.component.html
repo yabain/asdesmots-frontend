@@ -37,8 +37,8 @@
             </a>
         </li><br><br>
         <li class="nav-item" *ngIf="!waitingResponse">
-            <a (click)="logout()" class="nav-link" [class.active]="page === 'delete-account'">
-                <i class="fas fa-sign-out"></i>
+            <a (click)="logout()" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
                 <span class="ms-1">{{'logOut' | translate }}</span>
             </a>
         </li>

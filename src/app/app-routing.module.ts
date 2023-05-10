@@ -24,7 +24,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'mailconf',
+    path: 'mail',
     loadChildren: () =>
       import(
         './front-office/authentication/mail-link/mail-link.module'

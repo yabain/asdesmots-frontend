@@ -988,7 +988,7 @@ Banner Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 226px 0px 120px 0px;
+  padding: 106px 0px 120px 0px;
   position: relative;
   overflow: hidden;
 }
@@ -2070,7 +2070,7 @@ responsive
   }
   .main-banner {
     text-align: center;
-    padding: 226px 0px 30px 0px;
+    padding: 106px 0px 30px 0px;
   }
   .main-banner:before {
     display: none;

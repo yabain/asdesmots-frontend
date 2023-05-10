@@ -47,8 +47,10 @@
                   <input class="form-control" type="date" name="birthdate" id="">
                 </div>
                 <div class="form-group">
-                  <label class="form-control-label">Téléphone</label>
-                  <input class="form-control" type="text" placeholder="xxx xxx xxx xxx" />
+                  <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
+                  <input class="form-control" type="number" placeholder="xxx xxx xxx xxx" formControlName="field_phone" [ngClass]="{
+                    'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
+                  }"/>
                 </div>
 
                 <div class="form-group">

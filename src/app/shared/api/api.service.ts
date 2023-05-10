@@ -249,6 +249,19 @@ export class ApiService {
 
 
 
+  // HTTP get with params in url
+  get2(endpoint: string, options?: any, body?: Record<string, any>): Observable<any> {
+    // if (body) {
+    //   let req: String = '';
+    //   // tslint:disable-next-line:forin
+    //   for (const key in body) {
+    //     req += `${key}=${body[key]}&`;
+    //   }
+    //   endpoint += '?' + req;
+    // }
+    console.log(this.url + endpoint, { 'headers': options });
+    return this.http.get(this.url + endpoint, { 'headers': options });
+  }
 
   // HTTP get
   get(endpoint: string, options?: any, body?: Record<string, any>): Observable<any> {

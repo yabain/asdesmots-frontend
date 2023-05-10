@@ -6,11 +6,11 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/services/translation/language.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-sidemenu',

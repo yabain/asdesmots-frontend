@@ -3,11 +3,11 @@ import { Injectable, ɵConsole } from '@angular/core';
 // import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from '../../api/api.service';
 import { User } from '../../entities/user';
 import { UserService } from '../user/user.service';
 import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
+import { ApiService } from 'src/app/shared/api/api.service';
 
 
 @Injectable({
@@ -148,12 +148,29 @@ export class AuthService {
   /*
    * logOut function is used to sign out .
    */
-  logOut() {
-    localStorage.clear();
-    this.isLoggedIn = false;
-    this.toastr.success('Votre session a été déconnecté!', 'Success');
-    this.router.navigate(["/login-form"]);
-  }
+
+  logOut(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/ld+json',
+        'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
+      };
+
+      this.api.delete('user/auth/logout', headers)
+        .subscribe(result => {
+          localStorage.clear();
+          this.isLoggedIn = false;
+          this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
+          this.router.navigate(["/login"]);
+          resolve(result);
+        }), (error: any) =>  {
+          this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 5000});
+          console.log(error);
+          reject(error);
+        };
+    });
+  
+}
 
   /**
    *  Create an account

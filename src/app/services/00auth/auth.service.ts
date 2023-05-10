@@ -4,7 +4,7 @@ import { Injectable, ɵConsole } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { async } from '@angular/core/testing';
-import { ApiService } from '../api/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
 import { UserService } from '../user/user.service';
 import { WebStorage } from '../storage/web.storage';
 import { User } from '../entities/user';

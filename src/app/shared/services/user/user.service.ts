@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../api/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../entities/user';
 import { Subject } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+// import { AuthService } from 'src/app/shared/api/api.service';
 
 
 

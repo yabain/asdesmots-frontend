@@ -87,9 +87,11 @@ export class RegiserComponent implements OnInit {
       'field_firstName': ['', Validators.compose([
         Validators.required,
         Validators.minLength(4)]) ],
-      'field_lastName': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)]) ],
+        'field_lastName': ['', Validators.compose([
+          Validators.required,
+          Validators.minLength(4)]) ],
+          'field_phone': ['', Validators.compose([
+            Validators.minLength(6)]) ],
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),

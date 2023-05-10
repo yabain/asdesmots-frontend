@@ -2,10 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { TranslationService } from 'src/app/services/translation/language.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 declare var $: any;
 
 @Component({

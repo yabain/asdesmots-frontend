@@ -1791,7 +1791,7 @@ Blog
 
 .blog-post .down-content .border-first-button {
   display: inline-block;
-  float: right;
+  float: none;
 }
 
 .blog-posts {
@@ -1808,7 +1808,7 @@ Blog
 
 .post-item .thumb {
   display: inline-block;
-  float: left;
+  float: none;
   margin-right: 30px;
 }
 

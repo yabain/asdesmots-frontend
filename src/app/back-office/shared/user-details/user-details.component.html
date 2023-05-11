@@ -1,7 +1,7 @@
-<div class="card" *ngIf="!isEditable">
-    <!-- <div class="card-header">
+<!-- <div class="card-header">
         <h5 class="card-title">{{'profile' | translate }}</h5>
     </div> -->
+<div *ngIf="!isEditable">
     <div class="card-body" style="padding: 0 !important;">
         <!-- Form -->
         <form>
@@ -39,28 +39,33 @@
                     </h2>
                     <ul class="list-inline">
                         <li class="list-inline-item" *ngIf="userData.facebook">
-                            <a class="btn btn-sm" target="_blank" href="{{userData.facebook}}" style="color: #fff; background-color: #317bf2;">
-                            <i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-sm" target="_blank" href="{{userData.facebook}}"
+                                style="color: #fff; background-color: #317bf2;">
+                                <i class="fab fa-facebook-f"></i></a>
                         </li>
                         <li class="list-inline-item" *ngIf="userData.whatsapp">
-                            <a class="btn btn-sm" target="_blank" href="{{userData.whatsapp}}" style="color: #fff; background-color: #0f9f19;">
-                            <i class="fab fa-whatsapp"></i></a>
+                            <a class="btn btn-sm" target="_blank" href="{{userData.whatsapp}}"
+                                style="color: #fff; background-color: #0f9f19;">
+                                <i class="fab fa-whatsapp"></i></a>
                         </li>
                         <li class="list-inline-item" *ngIf="userData.linkedin">
-                            <a class="btn btn-sm" target="_blank" href="{{userData.linkedin}}" style="color: #fff; background-color: #2c96d3;">
-                            <i class="fab fa-linkedin"></i></a>
+                            <a class="btn btn-sm" target="_blank" href="{{userData.linkedin}}"
+                                style="color: #fff; background-color: #2c96d3;">
+                                <i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item" *ngIf="userData.skype">
-                            <a class="btn btn-sm" target="_blank" href="{{userData.skype}}" style="color: #fff; background-color: #2c96d3;">
-                            <i class="fab fa-skype"></i></a>
+                            <a class="btn btn-sm" target="_blank" href="{{userData.skype}}"
+                                style="color: #fff; background-color: #2c96d3;">
+                                <i class="fab fa-skype"></i></a>
                         </li>
                         <!-- <li class="list-inline-item">
                             <a class="btn btn-sm" target="_blank" href="{{userData.instagram}}" style="color: #ee8484; background-color: #f7faf8; border: 1px solid #ee8484;">
                             <i class="fab fa-instagram"></i></a>
                         </li> -->
                         <li class="list-inline-item" *ngIf="userData.websiteLink">
-                            <a class="btn btn-sm" target="_blank" href="{{userData.websiteLink}}" style="color: #645f5f; background-color: #f7faf8; border: 1px solid #645f5f;" disabled>
-                            <i class="fas fa-globe"></i></a>
+                            <a class="btn btn-sm" target="_blank" href="{{userData.websiteLink}}"
+                                style="color: #645f5f; background-color: #f7faf8; border: 1px solid #645f5f;" disabled>
+                                <i class="fas fa-globe"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -136,8 +141,8 @@
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone"
-                                        placeholder="+000 000 000 000" value="{{userData.phone}}" disabled>
+                                    <input type="text" class="form-control" id="phone" placeholder="+000 000 000 000"
+                                        value="{{userData.phone}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -146,8 +151,8 @@
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone"
-                                        placeholder="+000 000 000 000" value="{{userData.phone2}}" disabled>
+                                    <input type="text" class="form-control" id="phone" placeholder="+000 000 000 000"
+                                        value="{{userData.phone2}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -160,11 +165,12 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' | translate
+                                <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' |
+                                        translate
                                         }}</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="zipcode" placeholder="Your zip code" value="25301"
-                                        disabled>
+                                    <input type="text" class="form-control" id="zipcode" placeholder="Your zip code"
+                                        value="25301" disabled>
                                 </div>
                             </div>
                         </form>
@@ -174,21 +180,24 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="phone" class="col-sm-3 col-form-label input-label"><b> {{'user.country' | translate }} :</b>
+                                <label for="phone" class="col-sm-3 col-form-label input-label"><b> {{'user.country' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="country" placeholder="" value="{{userData.country}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="country" placeholder=""
+                                        value="{{userData.country}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="location" class="col-sm-3 col-form-label input-label"><b> {{'user.location' | translate }}
+                                <label for="location" class="col-sm-3 col-form-label input-label"><b> {{'user.location'
+                                        | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="location"
-                                            placeholder="{{'user.location' | translate }}" value="{{userData.city}}" disabled>
+                                            placeholder="{{'user.location' | translate }}" value="{{userData.city}}"
+                                            disabled>
                                     </div>
                                     <!-- <div class="mb-3">
                                         <input type="text" class="form-control" placeholder="City" value="Charleston" disabled>
@@ -197,15 +206,17 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="addressline1" class="col-sm-3 col-form-label input-label"><b> {{'user.addressLine' |
+                                <label for="addressline1" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.addressLine' |
                                         translate }} 1</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="addressline1" placeholder=""
-                                        value="" disabled>
+                                    <input type="text" class="form-control" id="addressline1" placeholder="" value=""
+                                        disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="addressline2" class="col-sm-3 col-form-label input-label"><b> {{'user.addressLine' |
+                                <label for="addressline2" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.addressLine' |
                                         translate }} 2</b> <span class="text-muted"> (Optional)</span></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="addressline2" placeholder="" disabled>
@@ -218,25 +229,28 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="userId" class="col-sm-3 col-form-label input-label"><b> {{'user.id' | translate }} :</b>
+                                <label for="userId" class="col-sm-3 col-form-label input-label"><b> {{'user.id' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userId" placeholder="" value="{{userData.id}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="userId" placeholder=""
+                                        value="{{userData.id}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="authType" class="col-sm-3 col-form-label input-label"><b> {{'user.authType' | translate }} :</b>
+                                <label for="authType" class="col-sm-3 col-form-label input-label"><b> {{'user.authType'
+                                        | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="authType" placeholder="" value="{{userData.authType}}"
-                                    disabled>
+                                    <input type="text" class="form-control" id="authType" placeholder=""
+                                        value="{{userData.authType}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userStatus" class="col-sm-3 col-form-label input-label"><b> {{'user.status' | translate }} :</b>
+                                <label for="userStatus" class="col-sm-3 col-form-label input-label"><b> {{'user.status'
+                                        | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
@@ -248,65 +262,64 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userMailConfirm" class="col-sm-3 col-form-label input-label"><b> {{'user.emailConfirmed' | translate }} :</b>
+                                <label for="userMailConfirm" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.emailConfirmed' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userMailConfirm" placeholder="" value="{{userData.emailConfirmed}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="userMailConfirm" placeholder=""
+                                        value="{{userData.emailConfirmed}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userLang" class="col-sm-3 col-form-label input-label"><b> {{'user.language' | translate }} :</b>
+                                <label for="userLang" class="col-sm-3 col-form-label input-label"><b> {{'user.language'
+                                        | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userLang" placeholder="" value="{{userLang}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="userLang" placeholder=""
+                                        value="{{userLang}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userTheme" class="col-sm-3 col-form-label input-label"><b> {{'user.theme' | translate }} :</b>
+                                <label for="userTheme" class="col-sm-3 col-form-label input-label"><b> {{'user.theme' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userTheme" placeholder="" value="{{userTheme}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="userTheme" placeholder=""
+                                        value="{{userTheme}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userTimeFormat" class="col-sm-3 col-form-label input-label"><b> {{'user.timeFormat' | translate }} :</b>
+                                <label for="userTimeFormat" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.timeFormat' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userTimeFormat" placeholder="" value="{{isEnglishTimeFormat}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="userTimeFormat" placeholder=""
+                                        value="{{isEnglishTimeFormat}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="accountType" class="col-sm-3 col-form-label input-label"><b> {{'user.accountType' | translate }} :</b>
+                                <label for="accountType" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.accountType' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="accountType" placeholder="" value=""
-                                    disabled>
+                                        disabled>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="text-end">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  {{'close' | translate }}
-                </button>
-                <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
-            </div>
         </div>
     </div>
 </div>
 
-<div class="card" *ngIf="isEditable">
+<div *ngIf="isEditable">
     <div class="card-body" style="padding: 0 !important;">
         <!-- Form -->
         <form>
@@ -400,8 +413,8 @@
                                         {{'user.firstName' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder="" formControlName="firstName"
-                                        value="{{userData.firstName}}">
+                                    <input type="text" class="form-control" id="name" placeholder=""
+                                        formControlName="firstName" value="{{userData.firstName}}">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -409,8 +422,8 @@
                                         {{'user.lastName' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder="" formControlName="lastName"
-                                        value="{{userData.lastName}}">
+                                    <input type="text" class="form-control" id="name" placeholder=""
+                                        formControlName="lastName" value="{{userData.lastName}}">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -429,8 +442,8 @@
                                         {{'user.skype' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="skype" placeholder="" formControlName="skype"
-                                        value="{{userData.skype}}">
+                                    <input type="text" class="form-control" id="skype" placeholder=""
+                                        formControlName="skype" value="{{userData.skype}}">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -438,20 +451,22 @@
                                         {{'user.web' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="web" placeholder="" formControlName="websiteLink"
-                                        value="{{userData.websiteLink}}">
+                                    <input type="text" class="form-control" id="web" placeholder=""
+                                        formControlName="websiteLink" value="{{userData.websiteLink}}">
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <label for="name" class="col-sm-3 col-form-label input-label"><b> Bio
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder="" formControlName="bio"
-                                        value="{{userData.bio}}">
+                                    <input type="text" class="form-control" id="name" placeholder=""
+                                        formControlName="bio" value="{{userData.bio}}">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button  data-bs-dismiss="modal" type="submit" class="btn btn-primary" style="margin-left: 20px;">{{'save' | translate }} {{'general' | translate }}</button>
+                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' | translate }} {{'general' | translate
+                                    }}</button>
                             </div>
                         </form>
                     </div>
@@ -484,20 +499,23 @@
                                         {{'user.email' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email"
-                                        value="{{userData.email}}">
+                                    <input type="email" class="form-control" id="email" placeholder="Email"
+                                        formControlName="email" value="{{userData.email}}">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' | translate
+                                <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' |
+                                        translate
                                         }}</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="zipcode" placeholder="Your zip code" value="25301"
-                                    formControlName="zip">
+                                    <input type="text" class="form-control" id="zipcode" placeholder="Your zip code"
+                                        value="25301" formControlName="zip">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button  data-bs-dismiss="modal" type="submit" class="btn btn-primary" style="margin-left: 20px;">{{'save' | translate }} {{'contact' | translate }}</button>
+                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' | translate }} {{'contact' | translate
+                                    }}</button>
                             </div>
                         </form>
                     </div>
@@ -506,16 +524,18 @@
                     <div class="card-body">
                         <form [formGroup]="locationForm" (ngSubmit)="submitLocation()">
                             <div class="row form-group">
-                                <label for="phone" class="col-sm-3 col-form-label input-label"><b> {{'user.country' | translate }} :</b>
+                                <label for="phone" class="col-sm-3 col-form-label input-label"><b> {{'user.country' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="country" placeholder="" value="{{userData.country}}"
-                                    formControlName="country">
+                                    <input type="text" class="form-control" id="country" placeholder=""
+                                        value="{{userData.country}}" formControlName="country">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="location" class="col-sm-3 col-form-label input-label"><b> {{'user.location' | translate }}
+                                <label for="location" class="col-sm-3 col-form-label input-label"><b> {{'user.location'
+                                        | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
@@ -529,22 +549,27 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="addressline1" class="col-sm-3 col-form-label input-label"><b> {{'user.addressLine' |
+                                <label for="addressline1" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.addressLine' |
                                         translate }} 1</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="addressline1" placeholder="" formControlName="address1"
-                                        value="">
+                                    <input type="text" class="form-control" id="addressline1" placeholder=""
+                                        formControlName="address1" value="">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="addressline2" class="col-sm-3 col-form-label input-label"><b> {{'user.addressLine' |
+                                <label for="addressline2" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.addressLine' |
                                         translate }} 2</b> <span class="text-muted"> (Optional)</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="addressline2" placeholder="" formControlName="address2">
+                                    <input type="text" class="form-control" id="addressline2" placeholder=""
+                                        formControlName="address2">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button  data-bs-dismiss="modal" type="submit" class="btn btn-primary" style="margin-left: 20px;">{{'save' | translate }} {{'location' | translate }}</button>
+                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' | translate }} {{'location' | translate
+                                    }}</button>
                             </div>
                         </form>
                     </div>
@@ -553,16 +578,18 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="userId" class="col-sm-3 col-form-label input-label"><b> {{'user.id' | translate }} :</b>
+                                <label for="userId" class="col-sm-3 col-form-label input-label"><b> {{'user.id' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userId" placeholder="" value="{{userData.id}}"
-                                    disabled>
+                                    <input type="text" class="form-control" id="userId" placeholder=""
+                                        value="{{userData.id}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userStatus" class="col-sm-3 col-form-label input-label"><b> {{'user.status' | translate }} :</b>
+                                <label for="userStatus" class="col-sm-3 col-form-label input-label"><b> {{'user.status'
+                                        | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
@@ -576,64 +603,66 @@
                                           ? 'bg-danger-light btn btn-sm btn-white'
                                           : 'bg-success-light btn btn-sm btn-white'
                                       " style="margin-right: 10px;" *ngIf="isAdmin">
-                                      <i class="fa fa-power-off"></i></a>
+                                        <i class="fa fa-power-off"></i></a>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userMailConfirm" class="col-sm-3 col-form-label input-label"><b> {{'user.emailConfirmed' | translate }} :</b>
+                                <label for="userMailConfirm" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.emailConfirmed' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userMailConfirm" placeholder="" value="{{userData.emailConfirmed}}"
-                                    disabled>
+                                    <input type="text" class="form-control" id="userMailConfirm" placeholder=""
+                                        value="{{userData.emailConfirmed}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userLang" class="col-sm-3 col-form-label input-label"><b> {{'user.language' | translate }} :</b>
+                                <label for="userLang" class="col-sm-3 col-form-label input-label"><b> {{'user.language'
+                                        | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userLang" placeholder="" value="{{userLang}}"
-                                    >
+                                    <input type="text" class="form-control" id="userLang" placeholder=""
+                                        value="{{userLang}}">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userTheme" class="col-sm-3 col-form-label input-label"><b> {{'user.theme' | translate }} :</b>
+                                <label for="userTheme" class="col-sm-3 col-form-label input-label"><b> {{'user.theme' |
+                                        translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userTheme" placeholder="" value="{{userTheme}}"
-                                    >
+                                    <input type="text" class="form-control" id="userTheme" placeholder=""
+                                        value="{{userTheme}}">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="userTimeFormat" class="col-sm-3 col-form-label input-label"><b> {{'user.timeFormat' | translate }} :</b>
+                                <label for="userTimeFormat" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.timeFormat' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="userTimeFormat" placeholder="" value="{{isEnglishTimeFormat}}"
-                                    >
+                                    <input type="text" class="form-control" id="userTimeFormat" placeholder=""
+                                        value="{{isEnglishTimeFormat}}">
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="accountType" class="col-sm-3 col-form-label input-label"><b> {{'user.accountType' | translate }} :</b>
+                                <label for="accountType" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'user.accountType' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="accountType" placeholder="" value=""
-                                    >
+                                    <input type="text" class="form-control" id="accountType" placeholder="" value="">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button  data-bs-dismiss="modal" type="submit" class="btn btn-primary" style="margin-left: 20px;">{{'save' | translate }}</button>
+                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' | translate }}</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  {{'close' | translate }}
-                </button>
         </div>
     </div>
 </div>

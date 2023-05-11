@@ -76,8 +76,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let customer of customers; let i = index" (click)="splitTime(customer.registered_on);userData = customer"
-                    data-bs-toggle="modal" data-bs-target="#details">
+                  <tr *ngFor="let customer of customers; let i = index"
+                    (click)="splitTime(customer.registered_on);userData = customer" data-bs-toggle="modal"
+                    data-bs-target="#details">
                     <td>
                       <h2 class="table-avatar">
                         <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
@@ -105,7 +106,8 @@
                             : 'bg-success-light btn btn-sm btn-white'
                         " style="margin-right: 10px;">
                         <i class="fa fa-power-off"></i></a>
-                      <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i class="far fa-edit me-1"></i></a>
+                      <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
+                          class="far fa-edit me-1"></i></a>
                       <a (click)="tempId = customer.name" data-bs-toggle="modal" data-bs-target="#delete_customer"
                         class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                     </td>
@@ -163,10 +165,12 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
-        <button *ngIf="userData.status=='Active'" type="button" class="btn btn-danger" (click)="changeStatus(userData.id, false)" data-bs-dismiss="modal">
+        <button *ngIf="userData.status=='Active'" type="button" class="btn btn-danger"
+          (click)="changeStatus(userData.id, false)" data-bs-dismiss="modal">
           <i class="fa fa-power-off"></i> Desactive
         </button>
-        <button *ngIf="userData.status=='Inactive'" type="button" class="btn btn-success" (click)="changeStatus(userData.id, true)" data-bs-dismiss="modal">
+        <button *ngIf="userData.status=='Inactive'" type="button" class="btn btn-success"
+          (click)="changeStatus(userData.id, true)" data-bs-dismiss="modal">
           <i class="fa fa-power-off"></i> Active
         </button>
       </div>
@@ -178,7 +182,17 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
-        <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="false" [creationDate]="creationDate" [creationTime]="creationTime"></app-user-details>
+        <div class="card">
+          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="false" [creationDate]="creationDate"
+            [creationTime]="creationTime"></app-user-details>
+
+          <div class="text-left">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
+            </button>
+            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
+          </div>
+        </div>
       </div>
       <!-- <div class="modal-footer text-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -196,7 +210,17 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
-        <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="true" [creationDate]="creationDate" [creationTime]="creationTime"></app-user-details>
+        <div class="card">
+          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="true" [creationDate]="creationDate"
+            [creationTime]="creationTime"></app-user-details>
+
+          <div class="text-left">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
+            </button>
+            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ import { CustomerListComponent } from './customers-list/customer-list.component'
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { DataTablesModule } from "angular-datatables";
-import { ProgressIndeterminateModule } from 'src/app/front-office/shared/progress-indeterminate/progress-indeterminate.module';
+import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';

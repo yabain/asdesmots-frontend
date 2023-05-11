@@ -12,9 +12,9 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./user-details.component.css'],
 })
 export class UserDetailsComponent implements OnInit {
-  @Input() userData: any;
-  @Input() isAdmin: boolean = true;
-  @Input() isEditable: boolean = true;
+  @Input() userData?: any;
+  @Input() isAdmin?: boolean = true;
+  @Input() isEditable?: boolean = true;
   @Input() creationDate?: string;
   @Input() creationTime?: string;
 
@@ -34,7 +34,10 @@ export class UserDetailsComponent implements OnInit {
     private translationService: TranslationService,
     private formLog: FormBuilder,
   ) {
-
+    if(!this.userData){
+      this.userData = this.userService.getLocalStorageUser();
+      console.log("user details1: ", this.userData);
+    }
   }
 
   scrollToTop(): void {
@@ -44,6 +47,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.scrollToTop();
     this.translate.use(this.translationService.getLanguage());
+    console.log("user details: ", this.userData);
 
     this.generalForm = this.formLog.group({
       'firstName': ['', Validators.compose([

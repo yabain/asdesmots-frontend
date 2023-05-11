@@ -564,7 +564,7 @@ a.bg-success:focus,
 a.bg-success:hover,
 button.bg-success:focus,
 button.bg-success:hover {
-	background-color: #1eae55 !important;
+	background-color: #1a6939 !important;
 }
 .bg-info,
 .badge-info {
@@ -679,16 +679,16 @@ button.bg-danger:hover {
 	box-shadow: unset;
 }
 .btn-success {
-	background-color: #22cc62;
-	border: 1px solid #22cc62
+	background-color: #1a6939;
+	border: 1px solid #1a6939;
 }
 .btn-success:hover,
 .btn-success:focus,
 .btn-success.active,
 .btn-success:active,
 .open > .dropdown-toggle.btn-success {
-	background-color: #1eae55;
-	border: 1px solid #1eae55;
+	background-color: #1a6939;
+	border: 1px solid #1a6939;
 	color: #fff;
 }
 .btn-success.active.focus,
@@ -700,14 +700,14 @@ button.bg-danger:hover {
 .open > .dropdown-toggle.btn-success.focus,
 .open > .dropdown-toggle.btn-success:focus,
 .open > .dropdown-toggle.btn-success:hover {
-	background-color: #1eae55;
-	border: 1px solid #1eae55
+	background-color: #1a6939;
+	border: 1px solid #1a6939
 }
 .btn-success.active:not(:disabled):not(.disabled),
 .btn-success:active:not(:disabled):not(.disabled),
 .show > .btn-success.dropdown-toggle {
-	background-color: #1eae55;
-	border-color: #1eae55;
+	background-color: #1a6939;
+	border-color: #1a6939;
 	color: #fff;
 }
 .btn-success.active:focus:not(:disabled):not(.disabled),

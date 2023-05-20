@@ -73,7 +73,7 @@ export class AuthService {
           if (response) {
             console.log('Success00: ', response);
             setTimeout(() => {
-              this.toastr.success('A password reset link has been sent to your email.', 'Success', { timeOut: 7000 });
+              this.toastr.success('A password reset link has been sent to your email.', 'Success', { timeOut: 8000 });
               resolve(response);
               return 0;
             }, 3000);
@@ -82,19 +82,19 @@ export class AuthService {
           console.error('Erreur00: ', error.message);
           if (error.status == 500) {
             setTimeout(() => {
-              this.toastr.error("Try again later please.", 'Server Error', { timeOut: 5000 });
+              this.toastr.error("Try again later please.", 'Server Error', { timeOut: 8000 });
             }, 3000);
           } else if (error.status == 400) {
-            this.toastr.warning("Email address is not verified. Check your email-box and confirm your email", 'Warning', { timeOut: 7000 });
+            this.toastr.warning("Email address is not verified. Check your email-box and confirm your email", 'Warning', { timeOut: 8000 });
           } else if (error.status == 401) {
             this.logOut();
-            this.toastr.error("Your session has been expire", 'error', { timeOut: 5000 });
+            this.toastr.error("Your session has been expire", 'error', { timeOut: 8000 });
           } else if (error.status == 403) {
-            this.toastr.warning("The email has already been confirmed", 'Warning', { timeOut: 7000 });
+            this.toastr.warning("The email has already been confirmed", 'Warning', { timeOut: 8000 });
           } else if (error.status == 404) {
-            this.toastr.error("Unknown email address.", 'Error', { timeOut: 5000 });
+            this.toastr.error("Unknown email address.", 'Error', { timeOut: 8000 });
           } else {
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 8000 });
           }
           reject(error);
         });
@@ -121,7 +121,7 @@ export class AuthService {
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode == 200) {
-              this.toastr.success('Your password has been updated successfully !', 'Success', { timeOut: 7000 });
+              this.toastr.success('Your password has been updated successfully !', 'Success', { timeOut: 8000 });
               this.router.navigate(['login']);
               resolve(response);
               return 0;
@@ -137,14 +137,14 @@ export class AuthService {
             this.router.navigate(['auth/forgot-pwd']);
           }
           else if (error.status == 400) {
-            this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error', { timeOut: 7000 });
+            this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error', { timeOut: 8000 });
 
           }
           else if (error.status == 500) {
-            this.toastr.error("Internal Server Error.", 'Error', { timeOut: 5000 });
+            this.toastr.error("Internal Server Error.", 'Error', { timeOut: 8000 });
 
           } else {
-            this.toastr.error(error.error, 'Error', { timeOut: 5000 });
+            this.toastr.error(error.error, 'Error', { timeOut: 8000 });
           }
           reject(error);
         });
@@ -166,11 +166,11 @@ export class AuthService {
           .subscribe(result => {
             localStorage.clear();
             this.isLoggedIn = false;
-            this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
+            this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 8000 });
             this.router.navigate(["/login"]);
             resolve(result);
           }), (error: any) =>  {
-            this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 5000});
+            this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 8000});
             console.log(error);
             reject(error);
           };
@@ -217,12 +217,12 @@ export class AuthService {
         }, (error: any) => {
           if (error.status == 400) {
             this.registResult = false;
-            this.toastr.error("This email address is already used.", 'Error', { timeOut: 5000 });
+            this.toastr.error("This email address is already used.", 'Error', { timeOut: 8000 });
             // console.log('Error message: ', error.message);
             reject(error);
           } else if (error.status == 401) {
             this.registResult = false;
-            this.toastr.error("This email address is already used.", 'Error', { timeOut: 5000 });
+            this.toastr.error("This email address is already used.", 'Error', { timeOut: 8000 });
             // console.log('Error message: ', error.message);
             reject(error);
           } else if (error.status == 500) {
@@ -289,28 +289,28 @@ export class AuthService {
           this.user.setUserInformations(response.data.user)
           this.router.navigate(['home']);
           setTimeout(()=>{
-            this.toastr.success('Welcome !!', null, { timeOut: 5000 });
+            this.toastr.success('Welcome !!', null, { timeOut: 8000 });
           }, 3000);
           resolve(response);
         }, error => {
           if (error.status == 500) {
             this.registResult = false;
 
-            this.toastr.error("Error server", 'Error', { timeOut: 5000 });
+            this.toastr.error("Error server", 'Error', { timeOut: 10000 });
             reject(error);
           } else if (error.error.statusCode == 403) {
 
             this.registResult = false;
-            this.toastr.error("Email address not verified. Check your email.", 'Error', { timeOut: 7000 });
+            this.toastr.error("Email address not verified. Check your email.", 'Error', { timeOut: 10000 });
             reject(error);
           } else if (error.error.statusCode == 401) {
 
             this.registResult = false;
-            this.toastr.error("Incorrect email or password! Please verify your information.", 'Error', { timeOut: 7000 });
+            this.toastr.error("Incorrect email or password! Please verify your information.", 'Error', { timeOut: 10000 });
             reject(error);
           } else {
 
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 10000 });
             reject(error);
 
           }
@@ -346,16 +346,16 @@ export class AuthService {
 
             }
             else if (error.status == 403) {
-              this.toastr.warning("The email has already been confirmed.", null, { timeOut: 5000 });
+              this.toastr.warning("The email has already been confirmed.", null, { timeOut: 10000 });
               this.router.navigateByUrl('/login');
 
             }
             else if (error.status == 500) {
-              this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 5000 });
+              this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
               this.router.navigateByUrl('/login');
 
             } else {
-              this.toastr.error(error, 'Error', { timeOut: 5000 });
+              this.toastr.error(error, 'Error', { timeOut: 10000 });
               this.router.navigateByUrl('/login');
             }
             reject(error);
@@ -432,7 +432,7 @@ export class AuthService {
         }, (error: any) => {
 
           if (error) {
-            this.toastr.success(error.message, 'Success', { timeOut: 5000 });
+            this.toastr.success(error.message, 'Success', { timeOut: 8000 });
             reject(error);
           }
         });

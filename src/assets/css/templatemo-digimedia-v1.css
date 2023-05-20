@@ -250,7 +250,7 @@ intro
   z-index: 1;
 }
 
-/* .intro-banner:before {
+.intro-banner:before {
   content: '';
   background-image: url(../img/slider-right-dec.jpg);
   background-repeat: no-repeat;
@@ -260,7 +260,7 @@ intro
   width: 1159px;
   height: 797px;
   z-index: 2;
-} */
+}
 
 
 .intro-banner img {

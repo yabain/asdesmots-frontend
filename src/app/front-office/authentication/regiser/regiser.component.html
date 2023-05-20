@@ -6,7 +6,7 @@
         <div class="login-right">
           <div class="login-right-wrap">
             <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo"
-              style="height: 10vw; width: 30vw !important;" />
+              style="height: 10vw; width: 20vw !important;" />
             <br>
             <h1>{{ 'register' | translate }}</h1>
             <!-- <p class="account-subtitle">{{ 'needAccound' | translate }}.</p> -->
@@ -48,9 +48,10 @@
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
-                  <input class="form-control" type="number" placeholder="xxx xxx xxx xxx" formControlName="field_phone" [ngClass]="{
+                  <input class="form-control" type="number" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
+                    [ngClass]="{
                     'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
-                  }"/>
+                  }" />
                 </div>
 
                 <div class="form-group">
@@ -86,9 +87,11 @@
                   </div>
                 </div>
                 <div style="display: flex; justify-content: flex-end;">
-                  <button (click)="suivant()" class="btn btn-lg btn-block btn-primary w-100" style="width: 20vh !important;"> {{'next'| translate}} <i class="fa fa-arrow-right" style="font-size: medium;"></i></button>
+                  <button (click)="suivant()" class="btn btn-lg btn-block btn-primary w-100"
+                    style="width: 16vh !important; font-size: 15px;"> {{'next'| translate}} <i class="fa fa-arrow-right"
+                      style="font-size: medium;"></i></button>
                 </div>
-                
+
               </div>
 
               <div *ngIf="etape === 2">
@@ -96,7 +99,8 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_email"
-                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email" [ngClass]="{
+                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
+                    [ngClass]="{
                       'is-invalid': f['field_email'].touched && f['field_email'].invalid
                     }" />
                   <div class="invalid-feedback" *ngIf="CustomControler?.status === 'field_email'">
@@ -168,7 +172,7 @@
                     </div>
                   </div>
                 </div>
-  
+
                 <div class="form-group mb-0">
                   <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()"
                     class="btn btn-lg btn-block btn-primary w-100" type="submit">
@@ -178,12 +182,14 @@
                     <app-progress-indeterminate></app-progress-indeterminate>
                   </div>
                 </div>
-                  <br>
-                <button (click)="precedent()" class="btn btn-lg btn-block btn-primary w-100" style="width: 20vh !important;"><i class="fa fa-arrow-left" style="font-size: medium;"></i> {{'back' | translate}}</button>
-                
-              </div>             
-            
-              
+                <br>
+                <button (click)="precedent()" class="btn btn-lg btn-block btn-primary w-100"
+                  style="width: 15vh !important; font-size: 15px;"><i class="fa fa-arrow-left" style="font-size: medium;"></i> {{'back' |
+                  translate}}</button>
+
+              </div>
+
+
             </form>
             <!-- /Form -->
 
@@ -243,7 +249,7 @@
 
         <div class="w3-row-padding w3-center w3-margin-top">
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
+            <div class="w3-card w3-container" style="min-height:460px; background-color: gray; color: #fff;">
               <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
               <div style="font-size:120px; color: #fff;">1</div>
               <p>{{ 'openYourMail1' | translate }} </p>
@@ -252,7 +258,7 @@
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
+            <div class="w3-card w3-container" style="min-height:460px; background-color: gray; color: #fff;">
               <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
               <div style="font-size:120px; color: #fff;">2</div>
               <p>{{ 'openConfirmMail1' | translate }} </p>
@@ -261,7 +267,7 @@
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
+            <div class="w3-card w3-container" style="min-height:460px; background-color: gray; color: #fff;">
               <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
               <div style="font-size:120px; color: #fff;">3</div>
               <p>{{ 'clickConfirm1' | translate }} </p>

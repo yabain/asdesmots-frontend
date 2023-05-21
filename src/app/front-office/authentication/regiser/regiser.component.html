@@ -7,7 +7,7 @@
           <div class="login-right-wrap">
             <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo"
               style="height: 10vw; width: 20vw !important;" />
-            <br>
+            <!-- <br> -->
             <h1>{{ 'register' | translate }}</h1>
             <!-- <p class="account-subtitle">{{ 'needAccound' | translate }}.</p> -->
 
@@ -42,9 +42,25 @@
                     </div>
                   </div>
                 </div>
+                
+                <!-- <div class="form-group">
+                  <label class="form-control-label" >Sexe</label>
+                  <select class="form-control" id="sexe" formControlName="field_Sexe" [ngClass]="{
+                    'is-invalid': f['field_sexe'].touched && f['field_sexe'].invalid
+                  }">
+                    <option value="homme"> {{ 'man' | translate }}</option>
+                    <option value="femme"> {{ 'woman' | translate }}</option>
+                  </select>
+                  <div *ngIf="f['field_sexe'].touched && f['field_sexe'].invalid" class="invalid-feedback">
+                    <div *ngIf="f['field_sexe'].errors && f['field_sexe'].errors['required']">
+                      {{ 'sexen' | translate }}
+                    </div>
+                  </div>
+                </div> -->
+
                 <div class="form-group">
                   <label class="form-group-label">{{ 'user.dateofbirth' | translate }} :</label>
-                  <input class="form-control" type="date" name="birthdate" id="">
+                  <input formControlName="field_date" class="form-control" type="date" name="birthdate" id="field_date">
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
@@ -91,7 +107,7 @@
                     style="width: 16vh !important; font-size: 15px;"> {{'next'| translate}} <i class="fa fa-arrow-right"
                       style="font-size: medium;"></i></button>
                 </div>
-
+                
               </div>
 
               <div *ngIf="etape === 2">

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Component, NgModule, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormBuilder, FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { WebStorage } from 'src/app/shared/storage/web.storage';
 
@@ -13,7 +13,9 @@ import { LocationService } from 'src/app/shared/services/location/location.servi
   templateUrl: './regiser.component.html',
   styleUrls: ['./regiser.component.css']
 })
+
 export class RegiserComponent implements OnInit {
+  sexe: string= '';
   input1: string = '';
   input2: string = '';
   waitingResponse = false;
@@ -92,6 +94,8 @@ export class RegiserComponent implements OnInit {
           Validators.minLength(4)]) ],
           'field_phone': ['', Validators.compose([
             Validators.minLength(6)]) ],
+            'field_date': ['', Validators.compose([Validators.required])],
+            'field_sexe': ['', Validators.compose([Validators.required])],            
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),

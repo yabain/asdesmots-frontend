@@ -67,7 +67,7 @@ export class NewPwdComponent implements OnInit {
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)])
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)])
       ],
       'confirm_password': ['', Validators.required]
     },{validator: this.checkIfMatchingPasswords('field_password', 'confirm_password')});

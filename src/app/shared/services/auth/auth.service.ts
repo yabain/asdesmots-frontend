@@ -3,11 +3,11 @@ import { Injectable, ɵConsole } from '@angular/core';
 // import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from '../../api/api.service';
 import { User } from '../../entities/user';
 import { UserService } from '../user/user.service';
 import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
+import { ApiService } from 'src/app/shared/api/api.service';
 
 
 @Injectable({
@@ -148,12 +148,29 @@ export class AuthService {
   /*
    * logOut function is used to sign out .
    */
-  logOut() {
-    localStorage.clear();
-    this.isLoggedIn = false;
-    this.toastr.success('Votre session a été déconnecté!', 'Success');
-    this.router.navigate(["/login-form"]);
-  }
+
+  logOut(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/ld+json',
+        'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
+      };
+
+      this.api.delete('user/auth/logout', headers)
+        .subscribe(result => {
+          localStorage.clear();
+          this.isLoggedIn = false;
+          this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
+          this.router.navigate(["/login"]);
+          resolve(result);
+        }), (error: any) =>  {
+          this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 5000});
+          console.log(error);
+          reject(error);
+        };
+    });
+  
+}
 
   /**
    *  Create an account
@@ -249,12 +266,13 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.api.post('user/auth/login', param, header)
         .subscribe(response => {
-          const profilePicture = response.data.user.profilePicture;
-          const words = profilePicture.split('yaba-in.com/');
-          response.data.user.profilePicture = words[1];
+          // const profilePicture = response.data.user.profilePicture;
+          // const words = profilePicture.split('yaba-in.com/');
+          // response.data.user.profilePicture = words[1];
 
-          if (response.status === 502) {
-            this.toastr.success('Incorrect login information! Please verify your information.', 'Success');
+          if (response.data.user.emailConfirmed === false) {
+            this.toastr.warning('Your email was not verified. Go to your mail box.', null, {timeOut: 10000});
+            return false;
           }
 
           this.webStorage.Login(userIdentifiants);

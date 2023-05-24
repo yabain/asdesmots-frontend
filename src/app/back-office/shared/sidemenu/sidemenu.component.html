@@ -4,13 +4,13 @@
 	<!-- Logo -->
 	<div class="header-left header-left-one">
 		<a [routerLink]="'/'" class="logo">
-			<img src="assets/img/adm/adm_icon.png" alt="Logo"><img src="assets/img/adm/asdesmots.png" alt="Logo" style="height: 23px;">
+			<img src="assets/img/logo-white.png" alt="Logo"><img src="assets/img/logo-full-white-adesmots.png" alt="Logo" style="height: 23px;">
 		</a>
 		<a [routerLink]="'/'" class="white-logo">
 			<img src="assets/img/logo-adesmots.png" alt="Logo" style="height: 50px;">
 		</a>
 		<a [routerLink]="'/'" class="logo logo-small">
-			<img src="assets/img/adm/adm_icon.png" alt="Logo" width="50" height="30">
+			<img src="assets/img/logo-white.png" alt="Logo" width="50" height="30">
 		</a>
 	</div>
 	<!-- /Logo -->
@@ -64,7 +64,7 @@
 		<li class="nav-item dropdown">
 			<a href="javascript:void(0)" data-bs-toggle="dropdown" class="dropdown-toggle nav-link"
 				aria-controls="collapseExample1">
-				<i data-feather="bell"></i> <span class="badge badge-pill">0</span>
+				<i data-feather="bell"></i> <span class="badge badge-pill">1</span>
 			</a>
 			<div class="dropdown-menu notifications" id="collapseExample1">
 				<div class="topnav-dropdown-header">
@@ -116,6 +116,10 @@
 				<li [class.active]="base === 'customers'">
 					<a [routerLink]="'/customers/customers-list'"><i data-feather="users"></i>
 						<span>{{'users' | translate}}</span></a>
+				</li>
+				<li [class.active]="base === 'estimates'">
+					<a [routerLink]="'/words/words-list'"><i data-feather="file-text"></i>
+						<span>{{'words' | translate}}</span></a>
 				</li><br><br>
 				<li [class.active]="base === 'setting'">
 					<a [routerLink]="'setting/settings'"><i data-feather="settings"></i> <span>{{'settings' | translate}}</span></a>

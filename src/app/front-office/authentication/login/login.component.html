@@ -5,16 +5,16 @@
       <div class="loginbox">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
-            style="height: 10vw; width: 30vw !important;"/>
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo"
+            style="height: 10vw; width: 20vw !important;"/>
               <br>
             <h1>{{ 'connexion' | translate }}</h1>
             <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
 
             <form [formGroup]="form" (ngSubmit)="submit()">
               <div class="form-group">
-                <label class="form-control-label">{{ 'user.emailAdress' | translate }}{{ 'telNumber' | translate }}</label>
-                <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}{{ 'telNumber' | translate }}"
+                <label class="form-control-label">{{ 'user.emailAddress' | translate }}</label>
+                <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.emailAddress' | translate }}"
                   id="field_email" [ngClass]="{
                     'is-invalid': f['field_email'].touched && f['field_email'].invalid
                   }" />
@@ -107,9 +107,9 @@
 </div>
 
 <div *ngIf="en" (click)="setFrLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Retourner en haut" />Français</a>
+  <a style="color: #fff;"><img src="assets/img/flags/fr.png"  alt="Français" />Fr</a>
 </div>
 <div *ngIf="fr" (click)="setEnLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Retourner en haut" />English</a>
+  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Anglais" />En</a>
 </div>
 <!-- /Main Wrapper -->

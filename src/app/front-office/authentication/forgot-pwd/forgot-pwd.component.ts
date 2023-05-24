@@ -63,6 +63,7 @@ export class ForgotPwdComponent implements OnInit {
   }
 
   submit() {
+    this.sended = false;
 
     // stop here if form is invalid
     if (this.form.invalid) {
@@ -79,6 +80,7 @@ export class ForgotPwdComponent implements OnInit {
       this.sended = true;
     })
     .catch((error) => {
+      this.sended = false;
       console.error('Erreur: ', error.message);
       this.waitingResponse = false;
       this.errorMsg = error.message;
@@ -89,6 +91,7 @@ export class ForgotPwdComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.sended == false;
     this.subscription.unsubscribe();
   }
   iconLogle(){

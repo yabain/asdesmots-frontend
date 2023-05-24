@@ -8,9 +8,8 @@ export const environment = {
     // urlProd:  'https://api-dev.smartestlotto.io'
     // url:  'http://srv.yaba-in.com:3000',
     // urlProd:  'http://srv.yaba-in.com:3000'
-
-    url:  'http://localhost:3000',
-    urlProd:  'http://localhost:3000'
+    url:  'https://asdesmot-api.yaba-in.com',
+    urlProd:  'https://asdesmot-api.yaba-in.com'
 };
 
 /*

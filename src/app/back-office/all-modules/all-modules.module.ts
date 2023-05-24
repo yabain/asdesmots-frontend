@@ -11,7 +11,7 @@ import { SidemenuComponent } from '../shared/sidemenu/sidemenu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { ProgressIndeterminateModule } from 'src/app/front-office/shared/progress-indeterminate/progress-indeterminate.module';
+import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { FooterModule } from '../shared/footer/footer.module';
 
 

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { UserDetailsComponent } from './user-details.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ imports: [
   CommonModule,
   RouterModule,
   ReactiveFormsModule,
+  ProgressIndeterminateModule,
   FormsModule,
   TranslateModule.forRoot({
     loader: {

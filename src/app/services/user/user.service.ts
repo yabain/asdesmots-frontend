@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { ApiService } from '../api/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
 // import { AuthService } from '../auth/auth.service';
 import { User } from '../entities/user';
 
@@ -485,7 +485,7 @@ export class UserService {
       };
 
       console.log('Get all users 2.')
-      this.api.get('/users', headers)
+      this.api.get('users', headers)
         .subscribe(result => {
           console.log("users-- -refresh: ", result);
           let tab: any = result.data;

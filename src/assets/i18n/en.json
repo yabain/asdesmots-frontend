@@ -154,7 +154,9 @@
         "zip": "ZIP code",
         "location": "City",
         "country": "Country",
-        "creationDate": "Creation date"
+        "creationDate": "Creation date",
+        "gender": "Gender",
+        "selectGender": "Selecte your gender"
     },
     "testimonials": {
         "userTestimonial": "Before it was all random, have fun predicting your numbers that the AsDesMots AI generates. It's amazing!",

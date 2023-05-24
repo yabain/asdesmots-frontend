@@ -155,7 +155,9 @@
         "location": "Ville",
         "country": "Pays",
         "creationDate": "Date de création",
-        "darkTheme": "Theme sombre"
+        "darkTheme": "Theme sombre",
+        "gender": "Genre",
+        "selectGender": "Quel est votre genre"
     },
     "testimonials": {
         "userTestimonial": "Avant tout était dû au hasard, amusez-vous à prédire vos numéros que l'IA de AsDesMots génère. C'est incroyable!",

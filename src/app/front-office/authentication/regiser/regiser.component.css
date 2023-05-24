@@ -1,20 +1,26 @@
 .right-side-views {
     display: none;
 }
-.bg-img{
+
+.bg-img {
     background-image: url("../../../../assets/img/elements.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #3063AD;
-   }
-   .login-nav{
-    background-color: #fff;
-    color: #3063AD;
-    border-radius: 10px
-   }
+    background-color: #124eae;
+}
 
-   .login-nav:hover{
-    background-color: grey;
-    color: #fff;
+.login-nav {
+    background-color: #fff;
+    color: #124eae;
     border-radius: 10px
-   }
+}
+
+.login-nav:hover {
+    background-color: #124eae;
+    color: #fff;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+p {
+    color: #171718;
+}

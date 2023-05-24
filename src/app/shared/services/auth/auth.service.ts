@@ -266,12 +266,13 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.api.post('user/auth/login', param, header)
         .subscribe(response => {
-          const profilePicture = response.data.user.profilePicture;
-          const words = profilePicture.split('yaba-in.com/');
-          response.data.user.profilePicture = words[1];
+          // const profilePicture = response.data.user.profilePicture;
+          // const words = profilePicture.split('yaba-in.com/');
+          // response.data.user.profilePicture = words[1];
 
-          if (response.status === 502) {
-            this.toastr.success('Incorrect login information! Please verify your information.', 'Success');
+          if (response.data.user.emailConfirmed === false) {
+            this.toastr.warning('Your email was not verified. Go to your mail box.', null, {timeOut: 10000});
+            return false;
           }
 
           this.webStorage.Login(userIdentifiants);

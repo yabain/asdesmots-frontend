@@ -15,7 +15,7 @@ import { UserDetailsModule } from 'src/app/back-office/shared/user-details/user-
     SettingsRoutingModule,
     RouterModule,
     TranslateModule,
-    // UserDetailsModule,
+    UserDetailsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -30,6 +30,13 @@ const routes: Routes = [
 
       },
       {
+        path: 'words',
+        loadChildren: () =>
+          import('./words/words.module').then((m) => m.WordsModule),
+        canActivate: [AuthenticationGuard],
+
+      },
+      {
         path: 'setting',
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),

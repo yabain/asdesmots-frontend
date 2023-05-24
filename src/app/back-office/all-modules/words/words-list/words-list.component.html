@@ -5,10 +5,10 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">Customers</h3>
+          <h3 class="page-title">Words</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a [routerLink]="'/index'">Dashboard</a></li>
-            <li class="breadcrumb-item active">Customers</li>
+            <li class="breadcrumb-item active">Words</li>
           </ul>
         </div>
         <div class="col-auto">
@@ -58,68 +58,6 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="!wating">
-      <div class="col-sm-12">
-        <div class="card card-table">
-          <div class="card-body">
-            <div class="table-responsive">
-              <table datatable class="table table-stripped table-hover">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Customer</th>
-                    <th>Email</th>
-                    <!-- <th>Country</th> -->
-                    <th>City</th>
-                    <th>Phone</th>
-                    <th>Status</th>
-                    <th class="text-end">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let customer of customers; let i = index"
-                    (click)="splitTime(customer.registered_on);userData = customer" data-bs-toggle="modal"
-                    data-bs-target="#details">
-                    <td>
-                      <h2 class="table-avatar">
-                        <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                            src="assets/img/user-profile.png" alt="User Image" /></a>
-                        <a>{{ customer.name
-                          }}<span>{{ customer.phone }}</span></a>
-                      </h2>
-                    </td>
-                    <td>{{ customer.email }}</td>
-                    <!-- <td>{{ customer.country }}</td> -->
-                    <td>{{ customer.city }}</td>
-                    <!-- <td>{{ customer.registered_on | date: "dd MMM yyyy" }}</td> -->
-                    <td>{{ customer.phone}}</td>
-                    <td>
-                      <span [ngClass]="
-                          customer.status === 'Active'
-                            ? 'badge badge-pill bg-success-light'
-                            : 'badge badge-pill bg-danger-light'
-                        ">{{ customer.status }}</span>
-                    </td>
-                    <td class="text-end">
-                      <a (click)="tempId = customer.name" data-bs-toggle="modal" data-bs-target="#changeStatus"
-                        [ngClass]="
-                          customer.status === 'Active'
-                            ? 'bg-danger-light btn btn-sm btn-white'
-                            : 'bg-success-light btn btn-sm btn-white'
-                        " style="margin-right: 10px;">
-                        <i class="fa fa-power-off"></i></a>
-                      <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
-                          class="far fa-edit me-1"></i></a>
-                      <a (click)="tempId = customer.name" data-bs-toggle="modal" data-bs-target="#delete_customer"
-                        class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 

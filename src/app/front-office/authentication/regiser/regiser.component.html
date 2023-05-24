@@ -108,13 +108,12 @@
                     </div>
                   </div>
                 </div>
-                <div style="display: flex; justify-content: flex-end;">
-                  <a (click)="suivant()" class="btn btn"
-                    style="width: 16vh !important;
-                    font-size: 15px; color: #124eae;
-                    border: 1px solid #124eae;
-                    border-radius: 0 20px 20px 0;
-                    padding-left: 10px;"><b> {{'next'| translate}} &raquo;</b></a>
+                <br>
+
+                <div class="wrapper" style="display: flex; justify-content: flex-end;">
+                  <a (click)="suivant()" style="
+                  font-size: 15px;
+                  padding-left: 10px;"><b><span>{{'next'| translate}} &raquo;</span></b></a>
                 </div><br><br>
 
               </div>
@@ -197,13 +196,11 @@
                     </div>
                   </div>
                 </div>
-                <a (click)="precedent()" class="btn btn"
-                  style="width: 16vh !important;
-                  font-size: 15px; color: #124eae;
-                  border: 1px solid #124eae;
-                  border-radius: 20px 0 0 20px;
-                  padding-left: 10px;"><b>&laquo; {{'back'| translate}}</b></a>
-              <br><br>
+                <div class="wrapper" style="display: flex;">
+                  <a (click)="precedent()" style="width: 16vh !important;
+                  font-size: 15px;
+                  padding-left: 10px;"><b><span>&laquo; {{'back'| translate}}</span></b></a>
+                </div><br><br>
 
                 <div class="form-group mb-0">
                   <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()"

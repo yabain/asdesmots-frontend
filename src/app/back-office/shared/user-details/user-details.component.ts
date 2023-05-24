@@ -87,20 +87,16 @@ export class UserDetailsComponent implements OnInit {
         Validators.required,],
     });
 
-
     this.accountForm = this.formLog.group({
-      // 'firstName': ['', Validators.compose([
-      //   Validators.required,
-      //   Validators.minLength(4)])],
-      // 'lastName': ['', Validators.compose([
-      //   Validators.required,
-      //   Validators.minLength(4)])],
-      // 'skype': ['', Validators.compose([
-      //   Validators.pattern("^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")])],
-      // 'websiteLink': ['', Validators.compose([
-      //   Validators.pattern("^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")])],
-      // 'bio': [''],
+      'lang': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])],
+      'timeFormat': ['', Validators.required],
+      'AccountType': ['', Validators.required],
     });
+  }
+  changeStatus(id: number, status: string) {
+    // this.service.changeStatus(id, status, this.currentFilter);
   }
 
   submitGeneral() {
@@ -108,15 +104,16 @@ export class UserDetailsComponent implements OnInit {
   }
 
   submitContact() {
-    console.log("General datas: ", this.contactForm.value)
+    console.log("Contact datas: ", this.contactForm.value)
   }
 
   submitLocation() {
-    console.log("General datas: ", this.locationForm.value)
+    console.log("Location datas: ", this.locationForm.value)
   }
 
   submitAccount() {
-    console.log("General datas: ", this.accountForm.value)
+    console.log("Account datas: ", this.accountForm.value)
   }
+  
 
 }

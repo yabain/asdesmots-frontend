@@ -464,7 +464,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                <button type="submit" class="btn btn-success"
                                     style="margin-left: 20px;">{{'save' | translate }} {{'general' | translate
                                     }}</button>
                             </div>
@@ -513,7 +513,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                <button type="submit" class="btn btn-success"
                                     style="margin-left: 20px;">{{'save' | translate }} {{'contact' | translate
                                     }}</button>
                             </div>
@@ -567,7 +567,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                <button type="submit" class="btn btn-success"
                                     style="margin-left: 20px;">{{'save' | translate }} {{'location' | translate
                                     }}</button>
                             </div>
@@ -576,7 +576,7 @@
                 </div>
                 <div role="tabpanel" id="tab-40" class="tab-pane fade">
                     <div class="card-body">
-                        <form>
+                        <form [formGroup]="accountForm" (ngSubmit)="submitAccount()">
                             <div class="row form-group">
                                 <label for="userId" class="col-sm-3 col-form-label input-label"><b> {{'user.id' |
                                         translate }} :</b>
@@ -656,7 +656,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button data-bs-dismiss="modal" type="submit" class="btn btn-success"
+                                <button type="submit" class="btn btn-success"
                                     style="margin-left: 20px;">{{'save' | translate }}</button>
                             </div>
                         </form>

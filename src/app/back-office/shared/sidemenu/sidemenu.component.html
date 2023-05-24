@@ -116,6 +116,10 @@
 				<li [class.active]="base === 'customers'">
 					<a [routerLink]="'/customers/customers-list'"><i data-feather="users"></i>
 						<span>{{'users' | translate}}</span></a>
+				</li>
+				<li [class.active]="base === 'estimates'">
+					<a [routerLink]="'/words/words-list'"><i data-feather="file-text"></i>
+						<span>{{'words' | translate}}</span></a>
 				</li><br><br>
 				<li [class.active]="base === 'setting'">
 					<a [routerLink]="'setting/settings'"><i data-feather="settings"></i> <span>{{'settings' | translate}}</span></a>

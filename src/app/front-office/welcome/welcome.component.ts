@@ -9,6 +9,7 @@ import { faFacebook, faTwitter, faInstagram } from '@fortawesome/fontawesome-fre
 import { ScriptLoaderService } from './script-loader.service';
 
 
+
 @Component({
   selector: 'app-Welcome',
   templateUrl: './welcome.component.html',
@@ -37,9 +38,9 @@ export class WelcomeComponent implements OnInit {
   
   loadScripts(): void {
     const scriptUrls = [
-      '../../../assets/vendor/jquery/jquery.min.js',
-      '../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
       '../../../assets/js/owl-carousel.js',
+      '../../../assets/vendor/jquery/jquery.min.js',
+      '../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js',      
       '../../../assets/js/animation.js',
       '../../../assets/js/imagesloaded.js',
       '../../../assets/js/custom.js'

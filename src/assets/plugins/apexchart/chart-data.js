@@ -71,7 +71,7 @@ $(document).ready(function() {
 		tooltip: {
 			y: {
 				formatter: function (val) {
-					return "XAF " + val + " thousands"
+					return "XAF " + val + " Franc CFA"
 				}
 			}
 		}

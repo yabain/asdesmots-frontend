@@ -20,10 +20,10 @@ export class SettingsComponent implements OnInit {
     ) {
     this.userData = this.userService.getLocalStorageUser();
     console.log("test test: ", this.userData)
-    // const words = this.userData.registered_on.split('T');
-    // this.creationDate = words[0];
-    // const other = words[1].split('.');
-    // this.creationTime = other[0];
+    const words = this.userData.registered_on.split('T');
+    this.creationDate = words[0];
+    const other = words[1].split('.');
+    this.creationTime = other[0];
   }
 
   scrollToTop(): void {

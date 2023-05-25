@@ -3,3 +3,13 @@
 @import url(./styles/fontawesome.css);
 @import url(./styles/owl.css);
 @import url(./styles/templatemo-digimedia-v1.css);
+
+
+@media screen and (min-width: 768px) {
+    [data-aos-delay] {
+      transition-delay: 0 !important;
+    }
+    .newClass{
+        display: none;
+    }
+  }

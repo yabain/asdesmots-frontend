@@ -170,7 +170,7 @@ export class DashboardComponent implements OnInit {
     //   },
     //   yaxis: {
     //     title: {
-    //       text: '€ (thousands)'
+    //       text: 'XAF (Franc CFA)'
     //     }
     //   },
     //   fill: {
@@ -179,7 +179,7 @@ export class DashboardComponent implements OnInit {
     //   tooltip: {
     //     y: {
     //       formatter: function (val) {
-    //         return "€ " + val + " thousands"
+    //         return "XAF " + val + " Franc CFA"
     //       }
     //     }
     //   }

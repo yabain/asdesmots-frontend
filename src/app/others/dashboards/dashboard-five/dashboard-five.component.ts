@@ -123,7 +123,7 @@ export class DashboardFiveComponent implements OnInit {
       tooltip: {
         y: {
           formatter: function (val:any) {
-            return "XAF " + val + " thousands"
+            return "XAF " + val + " Franc CFA"
           }
         }
       }

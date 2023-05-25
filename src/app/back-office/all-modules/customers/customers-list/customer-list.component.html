@@ -77,7 +77,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let customer of customers; let i = index"
-                    (click)="splitTime(customer.registered_on);userData = customer" data-bs-toggle="modal"
+                    (click)="splitTime(customer.registered_on); userData = customer" data-bs-toggle="modal"
                     data-bs-target="#details">
                     <td>
                       <h2 class="table-avatar">

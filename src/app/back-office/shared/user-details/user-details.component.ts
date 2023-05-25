@@ -44,6 +44,20 @@ export class UserDetailsComponent implements OnInit, OnChanges {
           this.userData = changes.userData.currentValue;
           console.log("user details2: ", this.userData);
           this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.lastName.setValue(this.userData.lastName);
+          this.generalForm.controls.skype.setValue(this.userData.skype);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
         }
   }
 
@@ -60,46 +74,46 @@ export class UserDetailsComponent implements OnInit, OnChanges {
       'firstName': [this.userData.firstName, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'lastName': ['', Validators.compose([
+      'lastName': [this.userData.lastName, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'skype': ['', Validators.compose([
+      'skype': [this.userData.skype, Validators.compose([
         Validators.pattern("^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")])],
-      'websiteLink': ['', Validators.compose([
+      'websiteLink': [this.userData.websiteLink, Validators.compose([
         Validators.pattern("^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")])],
-      'bio': [''],
+      'bio': [this.userData.bio],
     });
 
     this.contactForm = this.formLog.group({
-      'phone': ['', Validators.compose([
+      'phone': [this.userData.phone, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'phone2': ['', Validators.compose([
+      'phone2': [this.userData.phone2, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'email': ['', Validators.compose([
+      'email': [this.userData.email, Validators.compose([
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])],
-      'zip': [''],
+      'zip': [this.userData.zip],
     });
 
     this.locationForm = this.formLog.group({
-      'country': ['',
+      'country': [this.userData.country,
         Validators.required],
-      'city': ['',
+      'city': [this.userData.city,
         Validators.required,],
-      'address1': ['',
+      'address1': [this.userData.address1,
         Validators.required,],
-      'address2': ['',
+      'address2': [this.userData.address2,
         Validators.required,],
     });
 
     this.accountForm = this.formLog.group({
-      'lang': ['', Validators.compose([
+      'lang': [this.userData.lang, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'timeFormat': ['', Validators.required],
-      'AccountType': ['', Validators.required],
+      'timeFormat': [this.userData.timeFormat, Validators.required],
+      'AccountType': [this.userData.AccountType, Validators.required],
     });
   }
   changeStatus(id: number, status: string) {

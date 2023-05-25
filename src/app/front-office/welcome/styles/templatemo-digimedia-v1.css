@@ -2128,6 +2128,11 @@ responsive
 }
 
 @media (max-width: 767px) {
+
+  .animated {
+    animation: none;
+  }
+
   .header-area .main-nav .logo h4 {
     font-size: 30px;
   }

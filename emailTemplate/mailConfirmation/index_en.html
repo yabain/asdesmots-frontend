@@ -634,7 +634,7 @@
                                   ">
                                 <p style="font-size: 14px; line-height: 140%">
                                   Dear {{userEmail}}, your asdesmots account has been created. To complete the process and access your dashboard,
-                                  you need to confirm your e-mail address via this button:
+                                  you need to confirm your e-mail address <a href="{{confirmationLink}}"><strong>via the following link</strong></a>
                                 </p>
                               </div>
                             </td>
@@ -722,7 +722,7 @@
                                 [endif]-->
                               <div class="v-text-align" align="center">
                                 <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://asdesmots.yaba-in.com" style="height:37px; v-text-anchor:middle; width:261px;" arcsize="11%"  stroke="f" fillcolor="#1f5299"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Open Sans',sans-serif;"><![endif]-->
-                                <a href="{{confirmationLink}}"
+                                <!-- <a href="{{confirmationLink}}"
                                   target="_blank" class="v-button v-size-width" style="
                                       box-sizing: border-box;
                                       display: inline-block;

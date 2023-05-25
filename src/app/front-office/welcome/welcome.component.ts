@@ -12,8 +12,8 @@ import { ScriptLoaderService } from './script-loader.service';
 @Component({
   selector: 'app-Welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./welcome.component.css',],
+  encapsulation: ViewEncapsulation.None
 })
 export class WelcomeComponent implements OnInit {
   textDir: String = 'ltr';
@@ -34,6 +34,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     this.loadScripts();
   }
+  
   loadScripts(): void {
     const scriptUrls = [
       '../../../assets/vendor/jquery/jquery.min.js',

@@ -240,7 +240,7 @@ intro
 
 .intro-banner:after {
   content: '';
-  background-image: url(../img/slider-left-dec.jpg);
+  background-image: url(../../../../assets/img/slider-left-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -252,7 +252,7 @@ intro
 
 .intro-banner:before {
   content: '';
-  background-image: url(../img/slider-right-dec.jpg);
+  background-image: url(../../../../assets/img/slider-right-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -995,7 +995,7 @@ Banner Style
 
 .main-banner:after {
   content: '';
-  background-image: url(../img/slider-left-dec.jpg);
+  background-image: url(../../../../assets/img/slider-left-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -1007,7 +1007,7 @@ Banner Style
 
 .main-banner:before {
   content: '';
-  background-image: url(../img/slider-right-dec.jpg);
+  background-image: url(../../../../assets/img/slider-right-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1325,7 +1325,7 @@ Services Style
 
 .services:after {
   content: '';
-  background-image: url(../img/services-left-dec.jpg);
+  background-image: url(../../../../assets/img/services-left-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -1337,7 +1337,7 @@ Services Style
 
 .services:before {
   content: '';
-  background-image: url(../img/services-right-dec.jpg);
+  background-image: url(../../../../assets/img/services-right-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1500,7 +1500,7 @@ Free Quote
 */
 
 .free-quote {
-  background-image: url(../img/quote-bg.jpg);
+  background-image: url(../../../../assets/img/quote-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1581,7 +1581,7 @@ Portfolio
 
 .our-portfolio:before {
   content: '';
-  background-image: url(../img/portfolio-right-dec.jpg);
+  background-image: url(../../../../assets/img/portfolio-right-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1593,7 +1593,7 @@ Portfolio
 
 .our-portfolio:after {
   content: '';
-  background-image: url(../img/portfolio-left-dec.jpg);
+  background-image: url(../../../../assets/img/portfolio-left-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -1702,7 +1702,7 @@ Blog
 
 .blog:before {
   content: '';
-  background-image: url(../img/blog-left-dec.jpg);
+  background-image: url(../../../../assets/img/blog-left-dec.jpg);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -1869,7 +1869,7 @@ contact
 
 
 form#contact:before {
-  background-image: url(../img/contact-top-right.png);
+  background-image: url(../../../../assets/img/contact-top-right.png);
   position: absolute;
   right: 0;
   top: 0;
@@ -1888,7 +1888,7 @@ form#contact:before {
 }
 
 form#contact:after {
-  background-image: url(../img/contact-bottom-right.png);
+  background-image: url(../../../../assets/img/contact-bottom-right.png);
   position: absolute;
   right: 0;
   bottom: 0;

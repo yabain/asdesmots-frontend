@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css'],
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent implements OnInit, OnChanges {
   @Input() userData?: any;
   @Input() isAdmin?: boolean = true;
   @Input() isEditable?: boolean = true;
@@ -39,6 +39,13 @@ export class UserDetailsComponent implements OnInit {
       console.log("user details1: ", this.userData);
     }
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.userData && this.generalForm) {
+          this.userData = changes.userData.currentValue;
+          console.log("user details2: ", this.userData);
+          this.generalForm.controls.firstName.setValue(this.userData.firstName);
+        }
+  }
 
   scrollToTop(): void {
     window.scrollTo(0, 0);
@@ -50,7 +57,7 @@ export class UserDetailsComponent implements OnInit {
     console.log("user details: ", this.userData);
 
     this.generalForm = this.formLog.group({
-      'firstName': ['', Validators.compose([
+      'firstName': [this.userData.firstName, Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
       'lastName': ['', Validators.compose([

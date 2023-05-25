@@ -78,10 +78,10 @@ export class UserService {
   // Get user's activity
   getUserActivities(userId: any, pageNumber?: number, itemsPerPage?: number): Promise<any> {
     if (!pageNumber) {
-      pageNumber = 5;
+      pageNumber = 1;
     }
     if (!itemsPerPage) {
-      itemsPerPage = 10;
+      itemsPerPage = 1;
     }
 
     return new Promise((resolve, reject) => {

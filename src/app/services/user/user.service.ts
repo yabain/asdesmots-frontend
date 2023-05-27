@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from 'src/app/shared/api/api.service';
 // import { AuthService } from '../auth/auth.service';
 import { User } from '../entities/user';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 
 
@@ -27,7 +28,7 @@ export class UserService {
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
-    // private authService: AuthService
+    private authService: AuthService
   ) { }
 
   /*
@@ -103,8 +104,8 @@ export class UserService {
           resolve(data);
           return 0;
 
-        }), (error: any) =>  {
-          this.toastr.error('Can t get activity', '500 Error', {timeOut: 5000});
+        }), (error: any) => {
+          this.toastr.error('Can t get activity', '500 Error', { timeOut: 5000 });
           console.log("00000", error);
           reject(error);
         };
@@ -234,7 +235,7 @@ export class UserService {
       const cheminUrl = `${this.api.url}/rest/type/user/user`;
       this.params = {
         // body
-        '_id':  userData.id,
+        '_id': userData.id,
 
         'user.field_surname': [
           {
@@ -279,7 +280,7 @@ export class UserService {
           }
         ],
       };
-      
+
 
       this.api.put(`user/profil/${userData.id}`, this.params, headers)
         .subscribe((response: any) => {
@@ -500,26 +501,25 @@ export class UserService {
 
         }, error => {
           if (error.status == 401) {
-            // this.authService.logOut();
-
-          localStorage.clear();
-          this.router.navigate(["/login"]);
-          this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
-          reject(error);
-        } else {
-          this.toastr.error("Can't get users", 'Error', { timeOut: 5000 });
-          console.log("Une erreur: ", error);
-          reject(error);
-        }
+            this.authService.logOut();
+            localStorage.clear();
+            this.router.navigate(["/login"]);
+            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
+            reject(error);
+          } else {
+            this.toastr.error("Can't get users", 'Error', { timeOut: 5000 });
+            console.log("Une erreur: ", error);
+            reject(error);
+          }
         });
     });
   }
 
   changeStatus(userId, status): Promise<any> {
-    console.log('change status: ', userId, status)
-    
+    console.log('change status: ', userId, status);
+
     const headers = {
-      'Content-Type': 'application/ld+json',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
     };
 
@@ -537,9 +537,18 @@ export class UserService {
           }, 3000);
           resolve(response);
         }, error => {
-          this.toastr.error("Can't change user status, try again later", 'Error', { timeOut: 7000 });
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-          reject(error);
+          console.log("User error", error);
+          if (error.status == 401) {
+            this.authService.logOut();
+            localStorage.clear();
+            this.router.navigate(["/login"]);
+            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
+            reject(error);
+          } else {
+            this.toastr.error("Can't change user status, try again later", 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            reject(error);
+          }
         });
     });
 
@@ -547,7 +556,7 @@ export class UserService {
 
   deleteUser(userId): Promise<any> {
     console.log('delete user: ', userId)
-    
+
     const headers = {
       'Content-Type': 'application/ld+json',
       'Authorization': 'Bearer ' + localStorage.getItem("access-token"),

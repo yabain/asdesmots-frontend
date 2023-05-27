@@ -80,11 +80,12 @@
     "paymentMethode": "Méthodes de paiement",
     "taxPercentage": "Commissions",
     "status": "Statut",
-    "active": "Actif",
-    "inactive": "inactif",
-    "activation": "Activer",
-    "desactivation": "Désactiver",
+    "actived": "Activated",
+    "inactived": "Desactivated",
+    "active": "Activer",
+    "inactive": "Desactiver",
     "delete": "Supprimer",
+    "deleteUser": "Supprimer l'utilisateur",
     "man": "Homme",
     "woman": "Femme",
     "sexen": "chose sexe",
@@ -124,11 +125,14 @@
     "passionOnlineLotto": "passionné de loto en ligne",
     "orSW": "ou se connecter avec",
     "to": "sur",
+    "wanTo": "Êtes-vous sûr de vouloir ",
+    "changeStatus": "Changer le status",
     "welcome": "Bienvenue",
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
     "connectPickup": "Connectez-vous et choisissez les numéros chance en un seul clic.",
     "user": {
+        "user": "Utilisateur",
         "id": "Id",
         "emailConfirmed": "Confirmation d'email",
         "coverPicture": "Cover picture",
@@ -267,5 +271,9 @@
         "subTitle": "Nous sommes à votre écoute",
         "sendMsg": "Envoyez votre message"
 
+    },
+    "words": {
+        "word": "Mots",
+        "wordList": "List des mots"
     }
 }

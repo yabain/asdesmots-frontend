@@ -5,10 +5,10 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">Customers</h3>
+          <h3 class="page-title">{{'user.user' | translate }}s</h3>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="'/index'">Dashboard</a></li>
-            <li class="breadcrumb-item active">Customers</li>
+            <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'dashboard' | translate }}</a></li>
+            <li class="breadcrumb-item active">{{'user.user' | translate }}s</li>
           </ul>
         </div>
         <div class="col-auto">
@@ -66,12 +66,12 @@
               <table datatable class="table table-stripped table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th>Customer</th>
-                    <th>Email</th>
+                    <th>{{'user.user' | translate }}s</th>
+                    <th>{{'user.email' | translate }}</th>
                     <!-- <th>Country</th> -->
-                    <th>City</th>
-                    <th>Phone</th>
-                    <th>Status</th>
+                    <th>{{'user.location' | translate }}</th>
+                    <th>{{'user.phone' | translate }}</th>
+                    <th>{{'status' | translate }}</th>
                     <th class="text-end">Actions</th>
                   </tr>
                 </thead>
@@ -131,16 +131,16 @@
           <i class="fas fa-trash-alt text-danger"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>Delete User</h2>
-          <p>Are you sure want to delete <b>{{userData.name}}</b>? </p>
+          <h2>{{'deleteUser' | translate }}</h2>
+          <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{userData.name}}</b>? </p>
         </div>
       </div>
       <div class="modal-footer text-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
+          {{'close' | translate }}
         </button>
         <button type="button" class="btn btn-danger" (click)="deleteUser(userData.id)" data-bs-dismiss="modal">
-          Delete
+          {{'delete' | translate }}
         </button>
       </div>
     </div>
@@ -157,22 +157,22 @@
           <i class="fa fa-power-off text-secondary"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>Change status ?</h2>
-          <p *ngIf="userData.status=='Active'">Are you sure you want to desactive <b>{{userData.name}}</b>? </p>
-          <p *ngIf="userData.status=='Inactive'">Are you sure you want to active <b>{{userData.name}}</b>? </p>
+          <h2>{{'changeStatus' | translate }} ?</h2>
+          <p *ngIf="userData.status=='Active'">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.name}}</b>? </p>
+          <p *ngIf="userData.status=='Inactive'">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.name}}</b>? </p>
         </div>
       </div>
       <div class="modal-footer text-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
+          {{'close' | translate }}
         </button>
         <button *ngIf="userData.status=='Active'" type="button" class="btn btn-danger"
           (click)="changeStatus(userData.id, false)" data-bs-dismiss="modal">
-          <i class="fa fa-power-off"></i> Desactive
+          <i class="fa fa-power-off"></i> {{'desactive' | translate }}
         </button>
         <button *ngIf="userData.status=='Inactive'" type="button" class="btn btn-success"
           (click)="changeStatus(userData.id, true)" data-bs-dismiss="modal">
-          <i class="fa fa-power-off"></i> Active
+          <i class="fa fa-power-off"></i> {{'active' | translate }}
         </button>
       </div>
     </div>

@@ -80,11 +80,14 @@
     "paymentMethode": "Payment methods",
     "taxPercentage": "Commissions",
     "status": "Status",
-    "active": "Activated",
-    "inactive": "Desactivated",
+    "actived": "Activated",
+    "inactived": "Desactivated",
+    "active": "Active",
+    "inactive": "Desactive",
     "activation": "Activate",
     "desactivation": "Désactivate",
     "delete": "Delete",
+    "deleteUser": "Delete user",
     "man": "Man",
     "woman": "Woman",
     "sexen": "choisir le sexe",
@@ -124,11 +127,14 @@
     "passionOnlineLotto": "passionate to online lotto",
     "orSW": "or sign in with",
     "to": "to",
+    "wanTo": "Are you sure want to ",
+    "changeStatus": "Change Status",
     "welcome": "Welcome",
     "emailResetSended": "A verification email has been sent to your email",
     "seeSpam": "Vérifiez également dans vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
     "connectPickup": "Sign in and pick lucky number with just one click.",
     "user": {
+        "user": "User",
         "id": "Id",
         "emailConfirmed": "Email confirmed",
         "coverPicture": "Cover picture",
@@ -265,5 +271,9 @@
         "title": "Contact us",
         "subTitle": "Get in touch by simply dropping a message",
         "sendMsg": "Send us your message"
+    },
+    "words": {
+        "word": "Word",
+        "wordList": "Words list"
     }
 }

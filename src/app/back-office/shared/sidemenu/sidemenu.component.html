@@ -4,7 +4,8 @@
 	<!-- Logo -->
 	<div class="header-left header-left-one">
 		<a [routerLink]="'/'" class="logo">
-			<img src="assets/img/logo-white.png" alt="Logo"><img src="assets/img/logo-full-white-adesmots.png" alt="Logo" style="height: 23px;">
+			<img src="assets/img/logo-white.png" alt="Logo"><img src="assets/img/logo-full-white-adesmots.png"
+				alt="Logo" style="height: 23px;">
 		</a>
 		<a [routerLink]="'/'" class="white-logo">
 			<img src="assets/img/logo-adesmots.png" alt="Logo" style="height: 50px;">
@@ -41,12 +42,12 @@
 	<ul class="nav nav-tabs user-menu">
 		<!-- Flag -->
 		<li class="nav-item  flag-nav">
-			<a *ngIf="en" (click)="setFrLang()" href="javascript:void(0)" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
-				data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+			<a *ngIf="en" (click)="setFrLang()" href="javascript:void(0)" class="nav-link dropdown-toggle"
+				aria-controls="collapseExample3" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
 				<img src="assets/img/flags/fr.png" alt="" height="20"> <span> Français</span>
 			</a>
-			<a *ngIf="fr" href="javascript:void(0)" (click)="setEnLang()" class="nav-link dropdown-toggle" aria-controls="collapseExample3"
-				data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+			<a *ngIf="fr" href="javascript:void(0)" (click)="setEnLang()" class="nav-link dropdown-toggle"
+				aria-controls="collapseExample3" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
 				<img src="assets/img/flags/us.png" alt="" height="20"> <span> English</span>
 			</a>
 			<!-- <div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
@@ -62,10 +63,6 @@
 
 		<!-- Notifications -->
 		<li class="nav-item dropdown">
-			<a href="javascript:void(0)" data-bs-toggle="dropdown" class="dropdown-toggle nav-link"
-				aria-controls="collapseExample1">
-				<i data-feather="bell"></i> <span class="badge badge-pill">1</span>
-			</a>
 			<div class="dropdown-menu notifications" id="collapseExample1">
 				<div class="topnav-dropdown-header">
 					<span class="notification-title">{{'notifications' | translate}}</span>
@@ -80,7 +77,8 @@
 
 		<!-- User Menu -->
 		<li class="nav-item dropdown has-arrow main-drop" id="dropdown">
-			<a [routerLink]="'/setting/settings'">
+			<a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+				aria-expanded="false">
 				<span class="user-img">
 					<!-- <img src="{{userData.profilePicture}}" alt=""> -->
 					<img src="assets/img/user-profile.png" alt="">
@@ -88,15 +86,27 @@
 				</span>
 				<span>{{userData.lastName}}</span>
 			</a>
-			<!-- <div class="dropdown-menu" id="collapseExample2">
+			<div class="dropdown-menu" id="collapseExample2">
 				<a class="dropdown-item" [routerLink]="'/profile'"><i data-feather="user" class="me-1"></i> {{'profile'
 					| translate}}</a>
 				<a class="dropdown-item" [routerLink]="'/setting/settings'"><i data-feather="settings" class="me-1"></i>
 					{{'settings' | translate}}</a>
 				<a class="dropdown-item" (click)="Logout()"><i data-feather="log-out" class="me-1"></i> {{'logOut' |
 					translate}}</a>
-			</div> -->
+			</div>
 		</li>
+		<li style="display: none;">
+			<div class="navig">
+			  <ul>
+				<li class="deroulant"><a href="#">Cours &ensp;</a>
+				  <ul class="sous">
+					<li><a href="#">Cours HTML et CSS</a></li>
+					<li><a href="#">Cours JavaScript</a></li>
+					<li><a href="#">Cours PHP et MySQL</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div></li>
 		<!-- /User Menu -->
 	</ul>
 	<!-- /Header Menu -->
@@ -119,14 +129,16 @@
 				</li>
 				<li [class.active]="base === 'estimates'">
 					<a [routerLink]="'/words/words-list'"><i data-feather="file-text"></i>
-						<span>{{'words' | translate}}</span></a>
+						<span>{{'words.word' | translate}}</span></a>
 				</li><br><br>
 				<li [class.active]="base === 'setting'">
-					<a [routerLink]="'setting/settings'"><i data-feather="settings"></i> <span>{{'settings' | translate}}</span></a>
+					<a [routerLink]="'setting/settings'"><i data-feather="settings"></i> <span>{{'settings' |
+							translate}}</span></a>
 				</li>
 				<li [class.active]="base === 'profile'">
-					<a [routerLink]="'/profile'"><i data-feather="file-text"></i> <span>{{'profile' | translate}} Log</span></a>
-				</li> 
+					<a [routerLink]="'/profile'"><i data-feather="file-text"></i> <span>{{'profile' | translate}}
+							Log</span></a>
+				</li>
 			</ul>
 		</div>
 	</div>

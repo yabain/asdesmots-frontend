@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/shared/api/api.service';
 // import { AuthService } from '../auth/auth.service';
 import { User } from '../entities/user';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { ErrorsService } from 'src/app/services/errors/errors.service';
 
 
 
@@ -28,7 +29,8 @@ export class UserService {
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorsService: ErrorsService
   ) { }
 
   /*
@@ -104,11 +106,10 @@ export class UserService {
           resolve(data);
           return 0;
 
-        }), (error: any) => {
-          this.toastr.error('Can t get activity', '500 Error', { timeOut: 5000 });
-          console.log("00000", error);
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, "get activities");
           reject(error);
-        };
+        });
     });
   }
 
@@ -158,12 +159,8 @@ export class UserService {
           }
 
         }, (error: any) => {
-
-          if (error) {
-            console.log(error);
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this.errorsService.errorsInformations(error, "get user information")
             reject(error);
-          }
         });
     });
   }
@@ -221,7 +218,8 @@ export class UserService {
   // }
 
   // permet d'update les infos d'un user
-  updateUser(userData: any): Promise<any> {
+  updateUser(userId: any, userData?: any): Promise<any> {
+    console.log("upsate user: ", userData);
 
     return new Promise((resolve, reject) => {
 
@@ -233,89 +231,70 @@ export class UserService {
       }
 
       const cheminUrl = `${this.api.url}/rest/type/user/user`;
-      this.params = {
-        // body
-        '_id': userData.id,
+      // this.params = {
+      //   '_id': userData.id,
 
-        'user.field_surname': [
-          {
-            'value': userData.user.field_surname
-          }
-        ],
+      //   'user.field_surname': [
+      //     {
+      //       'value': userData.user.field_surname
+      //     }
+      //   ],
 
-        'user.field_username': [
-          {
-            'value': userData.user.field_username
-          }
-        ],
+      //   'user.field_username': [
+      //     {
+      //       'value': userData.user.field_username
+      //     }
+      //   ],
 
-        'user.field_addresse_gps': [
-          {
-            'lat': 52.47878999999999649617166141979396343231201171875,
-            'lng': -0.11067700000000000072619688040731489309109747409820556640625
-          }
-        ],
+      //   'user.field_addresse_gps': [
+      //     {
+      //       'lat': 52.47878999999999649617166141979396343231201171875,
+      //       'lng': -0.11067700000000000072619688040731489309109747409820556640625
+      //     }
+      //   ],
 
-        'user.field_address': [
-          {
-            'value': userData.user.field_address
-          }
-        ],
+      //   'user.field_address': [
+      //     {
+      //       'value': userData.user.field_address
+      //     }
+      //   ],
 
-        'user.field_mobile_phone_number': [
-          {
-            'value': userData.user.field_mobile_phone_number
-          }
-        ],
+      //   'user.field_mobile_phone_number': [
+      //     {
+      //       'value': userData.user.field_mobile_phone_number
+      //     }
+      //   ],
 
-        'user.field_phone_number': [
-          {
-            'value': userData.user.field_phone_number
-          }
-        ],
+      //   'user.field_phone_number': [
+      //     {
+      //       'value': userData.user.field_phone_number
+      //     }
+      //   ],
 
-        'user.field_whatsapp_number': [
-          {
-            'value': userData.user.field_whatsapp_number
-          }
-        ],
-      };
+      //   'user.field_whatsapp_number': [
+      //     {
+      //       'value': userData.user.field_whatsapp_number
+      //     }
+      //   ],
+      // };
 
+      this.params = userData;
 
-      this.api.put(`user/profil/${userData.id}`, this.params, headers)
+      this.api.put(`user/profil/${userId}`, this.params, headers)
         .subscribe((response: any) => {
-          if (response) {
+          // if (response) {
             if (response.statusCode === 201) {
               // this.registResult = true;
               // this.router.navigate(['login']);
               this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success', { timeOut: 7000 });
             }
+            console.log("respose: ", response)
             resolve(response);
-            return 0;
-          }
+          //   return 0;
+          // }
         }, (error: any) => {
-          if (error.status == 400) {
-            // this.registResult = false;
-            this.toastr.error("This email address is already used.", 'Error', { timeOut: 5000 });
-            // console.log('Error message: ', error.message);
-            reject(error);
-          } else if (error.status == 401) {
-            // this.authService.logOut();
-            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
-            // console.log('Error message: ', error.message);
-            reject(error);
-          } else if (error.status == 500) {
-            // this.registResult = false;
-            this.toastr.error('Intternal server error: ' + error.message, 'Error', { timeOut: 7000 });
-            // console.log('Error message: ', error.message);
-            reject(error);
-          }
-          else {
-            // this.registResult = false;
-            this.toastr.error(error.message, 'Unknown error', { timeOut: 7000 });
-            // console.log('Error message: ', error.message);
-            reject(error);
-          }
+          this.errorsService.errorsInformations(error, "update account")
+          reject(error);
         });
       // this.api.patch(`user/${nid}?_format=hal_json`, JSON.stringify(this.params), headers).subscribe(success => {
       //   resolve(success);
@@ -533,22 +512,16 @@ export class UserService {
         .subscribe(response => {
           console.log('change status Response: ', response)
           setTimeout(() => {
-            this.toastr.success('Status changed !!', null, { timeOut: 5000 });
-          }, 3000);
-          resolve(response);
+            this.toastr.success('Status changed !!', "Done", { timeOut: 5000 });
+            resolve(response);
+          }, 1000);
         }, error => {
           console.log("User error", error);
+          this.errorsService.errorsInformations(error, "change status");
           if (error.status == 401) {
             this.authService.logOut();
-            localStorage.clear();
-            this.router.navigate(["/login"]);
-            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
-            reject(error);
-          } else {
-            this.toastr.error("Can't change user status, try again later", 'Error', { timeOut: 7000 });
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-            reject(error);
-          }
+          } 
+          reject(error);
         });
     });
 
@@ -575,8 +548,7 @@ export class UserService {
           }, 3000);
           resolve(response);
         }, error => {
-          this.toastr.error("Can't delete user, try again later", 'Error', { timeOut: 7000 });
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this;this.errorsService.errorsInformations(error, "delete user")
           reject(error);
         });
     });

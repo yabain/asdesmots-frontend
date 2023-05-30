@@ -423,7 +423,7 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="name" placeholder=""
-                                        formControlName="lastName" value="{{userData.lastName}}">
+                                        formControlName="lastName">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -443,7 +443,7 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="skype" placeholder=""
-                                        formControlName="skype" value="{{userData.skype}}">
+                                        formControlName="skype">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -452,7 +452,7 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="web" placeholder=""
-                                        formControlName="websiteLink" value="{{userData.websiteLink}}">
+                                        formControlName="websiteLink">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -460,13 +460,18 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="name" placeholder=""
-                                        formControlName="bio" value="{{userData.bio}}">
+                                        formControlName="bio">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success"
-                                    style="margin-left: 20px;">{{'save' | translate }} {{'general' | translate
+                                <button *ngIf="!waitingResponse" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' |
+                                    translate }} {{'general' | translate
                                     }}</button>
+                                <button *ngIf="waitingResponse" class="btn btn-success"
+                                    style="margin-left: 20px;">
+                                    <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -481,7 +486,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="phone" formControlName="phone"
-                                        placeholder="+000 000 000 000" value="{{userData.phone}}">
+                                        placeholder="+000 000 000 000">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -491,7 +496,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="phone" formControlName="phone2"
-                                        placeholder="+000 000 000 000" value="{{userData.phone2}}">
+                                        placeholder="+000 000 000 000">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -500,7 +505,7 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="email" class="form-control" id="email" placeholder="Email"
-                                        formControlName="email" value="{{userData.email}}">
+                                        formControlName="email">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -509,12 +514,12 @@
                                         }}</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="zipcode" placeholder="Your zip code"
-                                        value="25301" formControlName="zip">
+                                        formControlName="zip">
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success"
-                                    style="margin-left: 20px;">{{'save' | translate }} {{'contact' | translate
+                                <button type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
+                                    translate }} {{'contact' | translate
                                     }}</button>
                             </div>
                         </form>
@@ -530,7 +535,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="country" placeholder=""
-                                        value="{{userData.country}}" formControlName="country" disabled>
+                                        formControlName="country" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -540,7 +545,7 @@
                                 <div class="col-sm-9">
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="location" formControlName="city"
-                                            placeholder="{{'user.location' | translate }}" value="{{userData.city}}" disabled>
+                                            placeholder="{{'user.location' | translate }}" disabled>
                                     </div>
                                     <!-- <div class="mb-3">
                                         <input type="text" class="form-control" placeholder="City" value="Charleston">
@@ -554,7 +559,7 @@
                                         translate }} 1</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="addressline1" placeholder=""
-                                        formControlName="address1" value="">
+                                        formControlName="address1">
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -567,8 +572,8 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success"
-                                    style="margin-left: 20px;">{{'save' | translate }} {{'location' | translate
+                                <button type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
+                                    translate }} {{'location' | translate
                                     }}</button>
                             </div>
                         </form>
@@ -584,7 +589,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="userId" placeholder=""
-                                        value="{{userData.id}}" disabled>
+                                        formControlName="userId" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -656,8 +661,8 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success"
-                                    style="margin-left: 20px;">{{'save' | translate }}</button>
+                                <button type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
+                                    translate }}</button>
                             </div>
                         </form>
                     </div>

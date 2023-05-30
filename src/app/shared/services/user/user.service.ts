@@ -45,6 +45,7 @@ export class UserService {
   {
     this.currentUserSubject.next(this.userData);
   }
+  
   /*  
  *  get the user informations.
  */

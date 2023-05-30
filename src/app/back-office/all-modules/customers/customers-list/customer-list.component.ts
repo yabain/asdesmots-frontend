@@ -20,6 +20,8 @@ export class CustomerListComponent implements OnInit {
   userData?: any = '';
   creationDate: string;
   creationTime: string;
+  waitingResponse = false;
+  submitted = false;
 
   constructor(
     private translate: TranslateService,
@@ -110,18 +112,23 @@ export class CustomerListComponent implements OnInit {
   }
 
   changeStatus(userId, userStatus){
+    // this.wating = true;
+    this.submitted = true;
+    this.waitingResponse = true;
+    this.toastr.warning("Cette fonctionnalité n'est pas encore achevée et le changement risque ne pas marcher. Veuillez essayer ultérieurement", 'Warning', { timeOut: 10000 });
     this.userService.changeStatus(userId, userStatus)
     .then((result) => {
-      this.wating = true;
         setTimeout(() => {
           this.refreshList();
-          this.wating = false;
-        }, 3000);
+          // this.wating = false;
+          this.submitted = false;
+          this.waitingResponse = false;
+        }, 1000);
     })
     .catch((error) => {
-      console.error('Erreur: ', error.message);
-      this.toastr.error(error.message, 'Error', { timeOut: 10000 });
       this.wating = false;
+      this.submitted = false;
+      this.waitingResponse = false;
     });
   }
 

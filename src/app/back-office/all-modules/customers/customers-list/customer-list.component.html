@@ -167,12 +167,14 @@
           {{'close' | translate }}
         </button>
         <button *ngIf="userData.status=='Active'" type="button" class="btn btn-danger"
-          (click)="changeStatus(userData.id, false)" data-bs-dismiss="modal">
-          <i class="fa fa-power-off"></i> {{'desactive' | translate }}
+          (click)="changeStatus(userData.id, false)">
+          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
+          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
         </button>
         <button *ngIf="userData.status=='Inactive'" type="button" class="btn btn-success"
-          (click)="changeStatus(userData.id, true)" data-bs-dismiss="modal">
-          <i class="fa fa-power-off"></i> {{'active' | translate }}
+          (click)="changeStatus(userData.id, true)">
+          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
+          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
         </button>
       </div>
     </div>

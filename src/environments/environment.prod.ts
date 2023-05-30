@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url:  'http://srv.yaba-in.com:3000',
-  urlProd:  'http://srv.yaba-in.com:3000'
+  url:  'https://asdesmot-api.yaba-in.com',
+  urlProd:  'https://asdesmot-api.yaba-in.com'
 };

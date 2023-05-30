@@ -8,6 +8,7 @@ import { UserService } from '../user/user.service';
 import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
 import { ApiService } from 'src/app/shared/api/api.service';
+import { ErrorsService } from 'src/app/services/errors/errors.service';
 
 
 @Injectable({
@@ -30,7 +31,8 @@ export class AuthService {
     private api: ApiService,
     private toastr: ToastrService,
     private user: UserService,
-    private webStorage: WebStorage
+    private webStorage: WebStorage,
+    private errorsService: ErrorsService
   ) {
 
     // this.registResult = false;
@@ -125,20 +127,7 @@ export class AuthService {
           reject(response);
           return 0;
         }, (error: any) => {
-          if (error.status == 401) {
-            this.toastr.error("Your reset request email has expired.", 'Error');
-
-          }
-          else if (error.status == 400) {
-            this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error');
-
-          }
-          else if (error.status == 500) {
-            this.toastr.error("Internal Server Error.", 'Error');
-
-          } else {
-            this.toastr.error(error, 'Error');
-          }
+          this.errorsService.errorsInformations(error, "reset password");
           reject(error);
         });
     });
@@ -163,11 +152,20 @@ export class AuthService {
           this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
           this.router.navigate(["/login"]);
           resolve(result);
-        }), (error: any) =>  {
+        }, (error: any) =>  { 
+          console.log("test error: ", error)
+          if (error.status === 401) {
+            localStorage.clear();
+            this.isLoggedIn = false;
+            this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
+            this.router.navigate(["/login"]);
+          reject(error);
+        } else {
           this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 5000});
           console.log(error);
           reject(error);
-        };
+        }
+        });
     });
   
 }
@@ -271,6 +269,7 @@ export class AuthService {
           // response.data.user.profilePicture = words[1];
 
           if (response.data.user.emailConfirmed === false) {
+            this.logOut();
             this.toastr.warning('Your email was not verified. Go to your mail box.', null, {timeOut: 10000});
             return false;
           }

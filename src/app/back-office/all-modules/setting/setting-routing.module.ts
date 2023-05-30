@@ -38,6 +38,11 @@ const routes: Routes = [
           import('./preferences/preferences.module').then((m) => m.PreferencesModule),
       },
       {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/profile.module').then((m) => m.ProfileModule),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('./settings/settings.module').then((m) => m.SettingsModule),

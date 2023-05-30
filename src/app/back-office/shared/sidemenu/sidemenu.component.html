@@ -87,7 +87,7 @@
 				<span>{{userData.lastName}}</span>
 			</a>
 			<div class="dropdown-menu" id="collapseExample2">
-				<a class="dropdown-item" [routerLink]="'/profile'"><i data-feather="user" class="me-1"></i> {{'profile'
+				<a class="dropdown-item" [routerLink]="'/setting/profile'"><i data-feather="user" class="me-1"></i> {{'profile'
 					| translate}}</a>
 				<a class="dropdown-item" [routerLink]="'/setting/settings'"><i data-feather="settings" class="me-1"></i>
 					{{'settings' | translate}}</a>
@@ -132,7 +132,7 @@
 						<span>{{'words.word' | translate}}</span></a>
 				</li><br><br>
 				<li [class.active]="base === 'setting'">
-					<a [routerLink]="'setting/settings'"><i data-feather="settings"></i> <span>{{'settings' |
+					<a [routerLink]="'setting/profile'"><i data-feather="settings"></i> <span>{{'settings' |
 							translate}}</span></a>
 				</li>
 				<li [class.active]="base === 'profile'">

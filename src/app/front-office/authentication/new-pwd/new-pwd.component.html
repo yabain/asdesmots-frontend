@@ -28,10 +28,10 @@
                     </div>
                     <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
                       <div *ngIf="f['field_password'].errors && f['field_password'].errors['required']">
-                        {{ 'emailRequired' | translate }}
+                        {{ 'passwordRequired' | translate }}
                       </div>
                       <div *ngIf="f['field_password'].errors && f['field_password'].errors['field_password']">
-                        {{ 'enterValidEmail' | translate }}
+                        {{ 'enterValidPwd' | translate }}
                       </div>
                     </div>
                   </div>
@@ -46,10 +46,10 @@
                     </div>
                     <div *ngIf="f['confirm_password'].touched && f['confirm_password'].invalid" class="invalid-feedback">
                       <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['required']">
-                        {{ 'emailRequired' | translate }}
+                        {{ 'passwordRequired' | translate }}
                       </div>
                       <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['confirm_password']">
-                        {{ 'enterValidEmail' | translate }}
+                        {{ 'enterValidPwd' | translate }}
                       </div>
                     </div>
                   </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation/language.service';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-profile',

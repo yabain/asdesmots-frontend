@@ -7,6 +7,8 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { WebStorage } from 'src/app/shared/storage/web.storage';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/fontawesome-free';
 import { ScriptLoaderService } from './script-loader.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 
 
@@ -24,13 +26,14 @@ export class WelcomeComponent implements OnInit {
   
 
   constructor(
-    private renderer: Renderer2,
-    private storage: WebStorage,
-    private formLog: FormBuilder,
     private translate: TranslateService,
     public translationService: TranslationService,
-    private scriptLoaderService: ScriptLoaderService
-  ) {}
+    private scriptLoaderService: ScriptLoaderService,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.authService.isConnected();
+  }
 
   ngOnInit() {
     this.loadScripts();

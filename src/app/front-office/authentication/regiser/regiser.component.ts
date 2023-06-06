@@ -7,6 +7,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LocationService } from 'src/app/shared/services/location/location.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-regiser',
@@ -54,7 +55,8 @@ export class RegiserComponent implements OnInit {
     private authService: AuthService,
     private translate: TranslateService,
     private location: LocationService,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    private router: Router
   ) {
     //this is to determine the text direction depending on the selected language
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -77,6 +79,7 @@ export class RegiserComponent implements OnInit {
     this.subscription = this.storage.Createaccountvalue.subscribe((data) => {
       this.CustomControler = data;
     });
+    this.authService.isConnected();
   }
 
   ngOnInit() {
@@ -162,6 +165,10 @@ export class RegiserComponent implements OnInit {
     this.city = this.location.city()
       .filter(e =>
         e.id == country.target.value);
+  }
+
+  navigateToHome() {
+    this.router.navigate(['welcome']);
   }
 
   iconLogle() {

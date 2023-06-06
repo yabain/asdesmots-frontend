@@ -13,10 +13,17 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { UserDetailsModule } from '../../shared/user-details/user-details.module';
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { WordDetailsModule } from '../../shared/word-details/word-details.module';
 
 @NgModule({
-    declarations: [WordsComponent, WordsListComponent, AddWordsComponent, EditWordsComponent],
+    declarations: [
+        WordsComponent,
+        WordsListComponent,
+        AddWordsComponent,
+        EditWordsComponent,
+        SidemenuComponent
+    ],
     imports: [
         CommonModule,
         WordsRoutingModule,
@@ -33,7 +40,7 @@ import { UserDetailsModule } from '../../shared/user-details/user-details.module
                 deps: [HttpClient]
             }
         }),
-        UserDetailsModule
+        WordDetailsModule
     ]
 })
 export class WordsModule {}

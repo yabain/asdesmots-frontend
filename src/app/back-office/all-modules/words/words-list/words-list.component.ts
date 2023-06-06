@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AllModulesService } from 'src/app/services/all-modules.service';
-import { TranslationService } from 'src/app/services/translation/language.service';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-words-list',
@@ -63,11 +63,11 @@ export class WordsListComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  splitTime(userDateReg:any){
-    const words = userDateReg.split('T');
-    this.creationDate = words[0];
-    const other = words[1].split('.');
-    this.creationTime = other[0];}
+  // splitTime(userDateReg:any){
+  //   const words = userDateReg.split('T');
+  //   this.creationDate = words[0];
+  //   const other = words[1].split('.');
+  //   this.creationTime = other[0];}
 
   refreshList(){
     this.wating = true;

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -33,7 +34,8 @@ export class ForgotPwdComponent implements OnInit {
     private formLog: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    private router: Router
     ) {
       //this is to determine the text direction depending on the selected language
       translate.onLangChange.subscribe((event: LangChangeEvent) =>
@@ -88,6 +90,10 @@ export class ForgotPwdComponent implements OnInit {
       this.submitted = false;
 
     });
+  }
+
+  navigateToHome() {
+    this.router.navigate(['welcome']);
   }
 
   ngOnDestroy() {

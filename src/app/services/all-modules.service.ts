@@ -4,7 +4,7 @@ import { throwError, Observable } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 // import { AllModulesData } from 'src/assets/all-modules-data/all-modules-data';
 import { id } from 'src/assets/all-modules-data/id';
-import { UserService } from './user/user.service';
+import { UserService } from '../shared/services/user/user.service';
 
 @Injectable({
   providedIn: 'root',

@@ -117,8 +117,10 @@
                                         {{'user.creationDate' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled>
+                                    <!-- <input type="text" class="form-control" id="name" placeholder=""
+                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled> -->
+                                        <input type="text" class="form-control" id="name" placeholder=""
+                                            value=" {{userData.createdAt  | date:'full'}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -142,17 +144,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="phone" placeholder="+000 000 000 000"
-                                        value="{{userData.phone}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <label for="phone" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.phone' | translate }} 2:</b>
-                                    <!-- <span class="text-muted">(Optional)</span> -->
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone" placeholder="+000 000 000 000"
-                                        value="{{userData.phone2}}" disabled>
+                                        value="{{userData.phoneNumber}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -164,7 +156,7 @@
                                         value="{{userData.email}}" disabled>
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <!-- <div class="row form-group">
                                 <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' |
                                         translate
                                         }}</b></label>
@@ -172,7 +164,7 @@
                                     <input type="text" class="form-control" id="zipcode" placeholder="Your zip code"
                                         value="25301" disabled>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -180,7 +172,7 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="phone" class="col-sm-3 col-form-label input-label"><b> {{'user.country' |
+                                <label class="col-sm-3 col-form-label input-label"><b> {{'user.country' |
                                         translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
@@ -191,12 +183,11 @@
                             </div>
                             <div class="row form-group">
                                 <label for="location" class="col-sm-3 col-form-label input-label"><b> {{'user.location'
-                                        | translate }}
-                                        :</b></label>
+                                        | translate }} :</b></label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="location"
-                                            placeholder="{{'user.location' | translate }}" value="{{userData.city}}"
+                                            placeholder="{{'user.location' | translate }}" value="{{userData.location}}"
                                             disabled>
                                     </div>
                                     <!-- <div class="mb-3">
@@ -235,7 +226,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="userId" placeholder=""
-                                        value="{{userData.id}}" disabled>
+                                        value="{{userData._id}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -255,10 +246,10 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <span [ngClass]="
-                                    userData.status === 'Active'
+                                    userData.isDisabled === false
                                       ? 'badge badge-pill bg-success-light'
                                       : 'badge badge-pill bg-danger-light'
-                                  " style="margin-right: 10px;">{{ userData.status }}</span>
+                                  " style="margin-right: 10px;">{{ userData.isDisabled }}</span>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -321,6 +312,9 @@
 
 <div *ngIf="isEditable">
     <div class="card-body" style="padding: 0 !important;">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="display: none;" id="close-user-details">
+          {{'close' | translate }}
+        </button>
         <!-- Form -->
         <form>
             <div class="row form-group" style="margin-bottom: 0 !important;">
@@ -431,13 +425,15 @@
                                         {{'user.creationDate' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled>
+                                    <!-- <input type="text" class="form-control" id="name" placeholder=""
+                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled> -->
+                                        <input type="text" class="form-control" id="name" placeholder=""
+                                            value=" {{userData.createdAt  | date:'full'}}" disabled>
                                 </div>
                             </div>
 
 
-                            <div class="row form-group">
+                            <!-- <div class="row form-group">
                                 <label for="skype" class="col-sm-3 col-form-label input-label"><b>
                                         {{'user.skype' | translate }}
                                         :</b></label>
@@ -462,7 +458,7 @@
                                     <input type="text" class="form-control" id="name" placeholder=""
                                         formControlName="bio">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="text-end">
                                 <button *ngIf="!waitingResponse" type="submit" class="btn btn-success"
                                     style="margin-left: 20px;">{{'save' |
@@ -481,21 +477,11 @@
                         <form [formGroup]="contactForm" (ngSubmit)="submitContact()">
                             <div class="row form-group">
                                 <label for="phone" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.phone' | translate }} 1:</b>
+                                        {{'user.phone' | translate }} :</b>
                                     <!-- <span class="text-muted">(Optional)</span> -->
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone" formControlName="phone"
-                                        placeholder="+000 000 000 000">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <label for="phone" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.phone' | translate }} 2:</b>
-                                    <!-- <span class="text-muted">(Optional)</span> -->
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone" formControlName="phone2"
+                                    <input type="text" class="form-control" id="phone" formControlName="phoneNumber"
                                         placeholder="+000 000 000 000">
                                 </div>
                             </div>
@@ -508,7 +494,7 @@
                                         formControlName="email">
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <!-- <div class="row form-group">
                                 <label for="zipcode" class="col-sm-3 col-form-label input-label"><b>{{'user.zip' |
                                         translate
                                         }}</b></label>
@@ -516,11 +502,15 @@
                                     <input type="text" class="form-control" id="zipcode" placeholder="Your zip code"
                                         formControlName="zip">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
+                                <button *ngIf="!waitingResponse" type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
                                     translate }} {{'contact' | translate
                                     }}</button>
+                                    <button *ngIf="waitingResponse" class="btn btn-success"
+                                        style="margin-left: 20px;">
+                                        <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                                    </button>
                             </div>
                         </form>
                     </div>
@@ -544,7 +534,7 @@
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="location" formControlName="city"
+                                        <input type="text" class="form-control" id="location" formControlName="location"
                                             placeholder="{{'user.location' | translate }}" disabled>
                                     </div>
                                     <!-- <div class="mb-3">
@@ -553,7 +543,7 @@
                                     <input type="text" class="form-control" placeholder="State" value="West Virginia"> -->
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <!-- <div class="row form-group">
                                 <label for="addressline1" class="col-sm-3 col-form-label input-label"><b>
                                         {{'user.addressLine' |
                                         translate }} 1</b></label>
@@ -561,8 +551,8 @@
                                     <input type="text" class="form-control" id="addressline1" placeholder=""
                                         formControlName="address1">
                                 </div>
-                            </div>
-                            <div class="row form-group">
+                            </div> -->
+                            <!-- <div class="row form-group">
                                 <label for="addressline2" class="col-sm-3 col-form-label input-label"><b>
                                         {{'user.addressLine' |
                                         translate }} 2</b> <span class="text-muted"> (Optional)</span></label>
@@ -570,7 +560,7 @@
                                     <input type="text" class="form-control" id="addressline2" placeholder=""
                                         formControlName="address2">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="text-end">
                                 <button type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
                                     translate }} {{'location' | translate
@@ -599,12 +589,12 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <span [ngClass]="
-                                    userData.status === 'Active'
+                                    userData.isDisabled === 'Active'
                                       ? 'badge badge-pill bg-success-light'
                                       : 'badge badge-pill bg-danger-light'
-                                  " style="margin-right: 10px;">{{ userData.status }}</span>
+                                  " style="margin-right: 10px;">{{ userData.isDisabled }}</span>
                                     <a [ngClass]="
-                                        userData.status === 'Active'
+                                        userData.isDisabled === 'Active'
                                           ? 'bg-danger-light btn btn-sm btn-white'
                                           : 'bg-success-light btn btn-sm btn-white'
                                       " style="margin-right: 10px;" *ngIf="isAdmin">

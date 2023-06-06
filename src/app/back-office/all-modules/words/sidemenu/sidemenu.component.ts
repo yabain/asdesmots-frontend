@@ -8,9 +8,10 @@ import {
 import { Location } from '@angular/common';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation/language.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { LevelService } from 'src/app/shared/services/level/level.service';
 
 @Component({
   selector: 'app-sidemenu',
@@ -20,11 +21,18 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class SidemenuComponent implements OnInit {
   waitingResponse = false;
   submitted = false;
+  levels: any;
+  levelList?: any = '';
+  levelData?: any = '';
+
   name: any
   splitVal;
   base;
   page;
   url;
+
+
+
   constructor(
     private router: Router,
     location: Location,
@@ -32,7 +40,8 @@ export class SidemenuComponent implements OnInit {
     private authService: AuthService,
     private translate: TranslateService,
     private toastr: ToastrService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private levelService: LevelService
   ) {
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -49,34 +58,13 @@ export class SidemenuComponent implements OnInit {
       this.base = this.splitVal[1];
       this.page = this.splitVal[2];
     }
+
+    this.levelService.getAllLevels();
   }
 
-  scrollToTop(): void {
-    window.scrollTo(0, 0);
-  }
   ngOnInit() {
-    this.scrollToTop();
+    this.levels = localStorage.getItem('levels-list');
     this.translate.use(this.translationService.getLanguage());
-  }
-
-  logout() {
-    this.submitted = true;
-    this.waitingResponse = true;
-    // setTimeout(() => {
-    this.authService.logOut()
-    .then((result) => {
-          this.commonService.nextmessage('logout');
-          this.toastr.success('Your session has been disconnected!', null, { timeOut: 5000 });
-          // this.router.navigate(["/login"]);
-          this.submitted = false;
-          this.waitingResponse = false;
-    })
-    .catch((error) => {
-      console.error('Erreur: ', error);
-      // this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-      this.waitingResponse = false;
-    });
-  // }, 2000);
   }
 
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as ApexCharts from 'apexcharts';
-import { TranslationService } from 'src/app/services/translation/language.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-dashboard',

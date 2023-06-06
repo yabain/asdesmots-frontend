@@ -274,6 +274,16 @@
     },
     "words": {
         "word": "Mots",
-        "wordList": "List des mots"
+        "wordList": "List des mots",
+        "level": "Niveau",
+        "starter": "Débutant",
+        "advence": "Avancé",
+        "hard": "Dificile",
+        "wordStat": "Statistiques",
+        "addNewWords": "Ajouter un nouveau mot",
+        "wordInFr": "Mot en française",
+        "wordInEn": "Mot en anglais",
+        "wordDescriptionEn": "Description en englais",
+        "wordDescriptionFr": "Description en français"
     }
 }

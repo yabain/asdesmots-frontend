@@ -274,6 +274,16 @@
     },
     "words": {
         "word": "Word",
-        "wordList": "Words list"
+        "wordList": "Words list",
+        "level": "Level",
+        "starter": "Starter",
+        "advence": "Advence",
+        "hard": "Hard",
+        "wordStat": "escription in french",
+        "addNewWords": "Add a new word",
+        "wordInFr": "Word in french",
+        "wordInEn": "Word in english",
+        "wordDescriptionEn": "Description in english",
+        "wordDescriptionFr": "Description in french"
     }
 }

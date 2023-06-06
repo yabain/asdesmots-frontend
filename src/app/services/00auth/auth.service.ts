@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { async } from '@angular/core/testing';
 import { ApiService } from 'src/app/shared/api/api.service';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../shared/services/user/user.service';
 import { WebStorage } from '../storage/web.storage';
 import { User } from '../entities/user';
 
@@ -90,7 +90,7 @@ export class AuthService {
             this.logOut();
             this.toastr.error("Your session has been expire", 'error', { timeOut: 8000 });
           } else if (error.status == 403) {
-            this.toastr.warning("The email has already been confirmed", 'Warning', { timeOut: 8000 });
+            this.toastr.warning("The email has been already confirme", 'Warning', { timeOut: 8000 });
           } else if (error.status == 404) {
             this.toastr.error("Unknown email address.", 'Error', { timeOut: 8000 });
           } else {
@@ -346,7 +346,7 @@ export class AuthService {
 
             }
             else if (error.status == 403) {
-              this.toastr.warning("The email has already been confirmed.", null, { timeOut: 10000 });
+              this.toastr.warning("The email has been already confirme.", null, { timeOut: 10000 });
               this.router.navigateByUrl('/login');
 
             }
@@ -394,7 +394,7 @@ export class AuthService {
           } else if (error.status == 401) {
             this.toastr.error("User not found. Try resending your mail confirmation again.", 'error', { timeOut: 10000 });
           } else if (error.status == 403) {
-            this.toastr.warning("The email has already been confirmed", 'Warning', { timeOut: 10000 });
+            this.toastr.warning("The email has been already confirme", 'Warning', { timeOut: 10000 });
             this.router.navigate(['login']);
           } else if (error.status == 404) {
             this.toastr.error("User not found. Try resending your mail confirmation again.", 'Error', { timeOut: 10000 });

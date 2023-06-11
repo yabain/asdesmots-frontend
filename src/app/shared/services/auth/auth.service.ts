@@ -4,10 +4,10 @@ import { Injectable, ɵConsole } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../entities/user';
-import { UserService } from '../user/user.service';
 import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
 import { ApiService } from 'src/app/shared/api/api.service';
+import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 
 
 @Injectable({
@@ -29,8 +29,8 @@ export class AuthService {
     private router: Router,
     private api: ApiService,
     private toastr: ToastrService,
-    private user: UserService,
-    private webStorage: WebStorage
+    private webStorage: WebStorage,
+    private errorsService: ErrorsService
   ) {
 
     // this.registResult = false;
@@ -38,6 +38,13 @@ export class AuthService {
 
   }
 
+  isConnected() {
+    if (localStorage.getItem('access-token') && localStorage.getItem('user-data')) {
+      this.router.navigate(['/index']);
+      setTimeout(() => { location.reload() }, 500);
+
+    }
+  }
 
   /*
    *  Get local user profile data.
@@ -78,17 +85,7 @@ export class AuthService {
             return 0;
           }
         }, (error: any) => {
-          console.error('Erreur00: ', error.message);
-          if (error.status == 500) {
-            this.toastr.error("Error server, 'Error'");
-          } else if (error.status == 400) {
-            this.toastr.error("expected field was not submitted or does not have the correct type", 'Error');
-          } else if (error.status == 404) {
-            this.toastr.error("Unknown email address.", 'Error');
-          } else {
-            this.toastr.error(error.message, 'Error');
-
-          }
+          this.errorsService.errorsInformations(error, 'reset password');
           reject(error);
         });
     });
@@ -125,20 +122,7 @@ export class AuthService {
           reject(response);
           return 0;
         }, (error: any) => {
-          if (error.status == 401) {
-            this.toastr.error("Your reset request email has expired.", 'Error');
-
-          }
-          else if (error.status == 400) {
-            this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error');
-
-          }
-          else if (error.status == 500) {
-            this.toastr.error("Internal Server Error.", 'Error');
-
-          } else {
-            this.toastr.error(error, 'Error');
-          }
+          this.errorsService.errorsInformations(error, "reset password");
           reject(error);
         });
     });
@@ -148,7 +132,6 @@ export class AuthService {
   /*
    * logOut function is used to sign out .
    */
-
   logOut(): Promise<any> {
     return new Promise((resolve, reject) => {
       const headers = {
@@ -163,20 +146,20 @@ export class AuthService {
           this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
           this.router.navigate(["/login"]);
           resolve(result);
-        }), (error: any) =>  {
-          this.toastr.error("Can't disconnect to your session", 'Error', {timeOut: 5000});
-          console.log(error);
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, 'logout')
+          this.isLoggedIn = false;
           reject(error);
-        };
+        });
     });
-  
-}
+
+  }
 
   /**
    *  Create an account
    *
    */
-  createAccount(user: User): Promise<any> {
+  createAccount(user): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
@@ -191,7 +174,7 @@ export class AuthService {
         'lastName': user.field_lastName,
         'password': user.field_password,
         'email': user.field_email,
-        'profilePicture': 'https://yaba-in.com/' + user.field_profilPicture,
+        'profilePicture': '' + user.field_profilPicture,
         'country': user.field_country,
         // 'location': user.field_location,
         'location': user.field_location,
@@ -209,28 +192,22 @@ export class AuthService {
             return 0;
           }
         }, (error: any) => {
+          this.errorsService.errorsInformations(error, 'create account');
           if (error.status == 400) {
             this.registResult = false;
             this.toastr.error("This email address is already used.", 'Error');
-            // console.log('Error message: ', error.message);
             reject(error);
           } else if (error.status == 401) {
             this.registResult = false;
             this.toastr.error("This email address is already used.", 'Error');
-            // console.log('Error message: ', error.message);
             reject(error);
           } else if (error.status == 500) {
             this.registResult = false;
             this.toastr.error('Intternal server error: ' + error.message, 'Error');
-            // console.log('Error message: ', error.message);
             reject(error);
           }
-          else {
-            this.registResult = false;
-            this.toastr.error(error.message, 'Unknown error.');
-            // console.log('Error message: ', error.message);
-            reject(error);
-          }
+          this.registResult = false;
+          reject(error);
         });
     });
 
@@ -250,9 +227,9 @@ export class AuthService {
   }
 
   // Login into your account
-  authLogin(userIdentifiants: User): Promise<any> {
-    let email = userIdentifiants.field_email;
-    let password = userIdentifiants.field_password;
+  authLogin(user): Promise<any> {
+    let email = user.field_email;
+    let password = user.field_password;
 
     const param = {
       'email': email,
@@ -271,35 +248,26 @@ export class AuthService {
           // response.data.user.profilePicture = words[1];
 
           if (response.data.user.emailConfirmed === false) {
-            this.toastr.warning('Your email was not verified. Go to your mail box.', null, {timeOut: 10000});
+            this.logOut();
+            this.toastr.warning('Your email was not verified. Go to your mail box.', null, { timeOut: 10000 });
             return false;
           }
 
-          this.webStorage.Login(userIdentifiants);
+          if (response.data.user.isDisabled === true) {
+            this.logOut();
+            this.toastr.warning('Your account was desabled. Please contact administrator.', null, { timeOut: 10000 });
+            return false;
+          }
+          // this.webStorage.Login(user);
           this.api.setAccessToken(response.data.access_token);
           // console.log('User infos: ', response.data.user);
-          this.user.setUserInformations(response.data.user)
           this.router.navigate(['index']);
           this.toastr.success('Welcome !!');
           resolve(response);
         }, error => {
-          if (error.status == 500) {
-            this.registResult = false;
-            this.toastr.error("Error server", 'Error');
-            reject(error);
-          } else if (error.error.statusCode == 403) {
-            this.registResult = false;
-            this.toastr.error("Email address not verified. Check your email.", 'Error');
-            reject(error);
-          } else if (error.error.statusCode == 401) {
-            this.registResult = false;
-            this.toastr.error("Incorrect email or password! Please verify your information.", 'Error');
-            reject(error);
-          } else {
-            this.toastr.error(error.message, 'Error');
-            reject(error);
-
-          }
+          this.errorsService.errorsInformations(error, 'login');
+          this.registResult = false;
+          reject(error);
 
         });
     });
@@ -324,14 +292,13 @@ export class AuthService {
 
             if (error.status == 401) {
               this.toastr.error("Your verification email has expired.", 'Error');
-
             }
             else if (error.status == 404) {
               this.toastr.error("User not found.");
 
             }
             else if (error.status == 403) {
-              this.toastr.error("The email has already been confirmed.", 'Error');
+              this.toastr.error("The email has been already confirme.", 'Error');
 
             }
             else if (error.status == 500) {
@@ -345,53 +312,5 @@ export class AuthService {
       })
     }
   }
-  /**
-   *  Get the user informations
-   */
-  authUserInformations(): Promise<any> {
 
-    return new Promise((resolve, reject) => {
-
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      };
-
-
-      this.api.get('requester/profil', headers)
-        .subscribe((reponse: any) => {
-          if (reponse) {
-            resolve(reponse);
-            this.user.setUserInformations(reponse);
-          }
-
-        }, (error: any) => {
-
-          if (error) {
-            this.toastr.success(error.message, 'Success');
-            reject(error);
-          }
-        });
-
-      // this.api.get('requester/profil', headers)
-      // .subscribe((reponse: any) => {
-      //   if (reponse) {
-      //     resolve(reponse);
-      //     this.user.setUserInformations(reponse);
-      //   }
-
-      // }, (error: any) => {
-
-      //   if (error) {
-      //     this.toastr.success(error.message);
-      //     reject(error);
-      //   }
-      // });
-
-    });
-
-
-
-  }
 }

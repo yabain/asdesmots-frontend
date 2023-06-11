@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AllModulesService } from 'src/app/services/all-modules.service';
 import { DatePipe } from "@angular/common";
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-add-words',
@@ -19,7 +21,14 @@ export class AddWordsComponent implements OnInit {
   public pipe = new DatePipe("en-US");
   myDate = new Date();
   public addCustomerForm!: FormGroup;
-  constructor(public router: Router, location: Location, private allModulesService: AllModulesService,private formBuilder: FormBuilder,private route: ActivatedRoute,private toastr: ToastrService) {
+  constructor(public router: Router,
+    location: Location,
+    private allModulesService: AllModulesService,
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private translate: TranslateService,
+    private translationService: TranslationService) {
   }
 
   scrollToTop(): void {
@@ -27,6 +36,7 @@ export class AddWordsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.translate.use(this.translationService.getLanguage());
   this.scrollToTop();
 
     this.addCustomerForm = this.formBuilder.group({
@@ -34,22 +44,6 @@ export class AddWordsComponent implements OnInit {
       customerEmail: ["", [Validators.required]],
       customerCurrency: ["", [Validators.required]],
       customerPrimaryContact: ["", [Validators.required]],
-      customerPhone: ["", [Validators.required]],
-      customerWebsite: ["", [Validators.required]],
-      customerBillingName: ["", [Validators.required]],
-      customerBillingState: ["", [Validators.required]],
-      customerBillingAddress: ["", [Validators.required]],
-      customerBillingCountry: ["", [Validators.required]],
-      customerBillingCity: ["", [Validators.required]],
-      customerBillingPhone: ["", [Validators.required]],
-      customerBillingZip: ["", [Validators.required]],
-      customerShippingName: ["", [Validators.required]],
-      customerShippingState: ["", [Validators.required]],
-      customerShippingAddress: ["", [Validators.required]],
-      customerShippingCountry: ["", [Validators.required]],
-      customerShippingCity: ["", [Validators.required]],
-      customerShippingPhone: ["", [Validators.required]],
-      customerShippingZip: ["", [Validators.required]],
     });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -60,7 +54,7 @@ export class AddWordsComponent implements OnInit {
       }
     });
   }
-  addCustomer() {
+  addWords() {
     if(this.addCustomerForm.invalid){
       this.markFormGroupTouched(this.addCustomerForm)
       return
@@ -82,8 +76,8 @@ export class AddWordsComponent implements OnInit {
     this.allModulesService.add(obj, this.url).subscribe((data) => {
 
     });
-    this.router.navigate(["/customers"]);
-    this.toastr.success("Customer added sucessfully...!", "Success");
+    this.router.navigate(["/words-list"]);
+    this.toastr.success("Words added sucessfully...!", "Success");
     }
   }
 

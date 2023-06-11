@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddCustomerComponent } from './add-customer.component';
-import { AddCustomerRoutingModule } from './add-customer-routing.module';
+import { AddWordsRoutingModule } from './add-words-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    AddCustomerRoutingModule,
+    AddWordsRoutingModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    })
   ]
 })
-export class AddCustomerModule { }
+export class AddWordsModule { }

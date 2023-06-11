@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from 'src/app/shared/api/api.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../../entities/user';
 import { Subject } from 'rxjs';
-// import { AuthService } from 'src/app/shared/api/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
+// import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
+import { User } from 'src/app/shared/entities/user';
 
 
 
@@ -15,10 +17,10 @@ export class UserService {
 
   public currentUser: User = new User();
 
-  currentUserSubject:Subject<User> = new Subject<User>();
+  currentUserSubject: Subject<User> = new Subject<User>();
   public static isUser = true;
 
-  listUser:User[]=[];
+  listUser: User[] = [];
 
   params: any;
   userData: any;
@@ -27,61 +29,98 @@ export class UserService {
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
-    // private authService: AuthService
+    private authService: AuthService,
+    private errorsService: ErrorsService
   ) { }
 
   /*
 *  Set the user informations.
 */
   setUserInformations(user: any) {
-    this.currentUser = user;
+    // console.log("user avant: ", user)
+    // this.currentUser = user;
+    // user = this.parseDataFromApi(user);
+    // console.log("user après: ", user)
     localStorage.setItem('user-data', JSON.stringify(user));
-    
+
     //this.login.isLoggedIn = true;
   }
 
-
-  emitUserData()
-  {
+  emitUserData() {
     this.currentUserSubject.next(this.userData);
   }
   /*  
  *  get the user informations.
  */
-getUserInformations() {
-  console.log(JSON.parse(localStorage.getItem('user-data')));
-  // tslint:disable-next-line:prefer-const
-  const data: any = {
-  // console.log(JSON.parse(localStorage.getItem('user-data')).result._id);
-  field_id: JSON.parse(localStorage.getItem('user-data'))._id,
-  field_adility: JSON.parse(localStorage.getItem('user-data')).adility,
-  field_accountType: JSON.parse(localStorage.getItem('user-data')).accountType,
-  field_address: JSON.parse(localStorage.getItem('user-data')).address,
-  field_email : JSON.parse(localStorage.getItem('user-data')).adresse.email,
-  field_language : JSON.parse(localStorage.getItem('user-data')).adresse.language,
-  field_country : JSON.parse(localStorage.getItem('user-data')).adresse.country,
-  field_city : JSON.parse(localStorage.getItem('user-data')).adresse.city,
-  field_mobilePhone : JSON.parse(localStorage.getItem('user-data')).adresse.mobilePhone,
-  field_phone : JSON.parse(localStorage.getItem('user-data')).adresse.phone,
-  field_firstname : JSON.parse(localStorage.getItem('user-data')).firstname,
-  field_lastname : JSON.parse(localStorage.getItem('user-data')).lastname,
-  field_zip : JSON.parse(localStorage.getItem('user-data')).adresse.zip,
-  field_contact : JSON.parse(localStorage.getItem('user-data')).contact,
-  field_whatsappContact : JSON.parse(localStorage.getItem('user-data')).whatsappContact,
-  field_image : JSON.parse(localStorage.getItem('user-data')).image,
-  field_skype : JSON.parse(localStorage.getItem('user-data')).skype,
-  field_websiteLink : JSON.parse(localStorage.getItem('user-data')).websiteLink,
-};
-  // console.log(data);
-  return data;
-}
+  getUserInformations() {
+    console.log(JSON.parse(localStorage.getItem('user-data')));
+    // tslint:disable-next-line:prefer-const
+    const data: any = {
+      // console.log(JSON.parse(localStorage.getItem('user-data')).result._id);
+      field_id: JSON.parse(localStorage.getItem('user-data'))._id,
+      field_adility: JSON.parse(localStorage.getItem('user-data')).adility,
+      field_accountType: JSON.parse(localStorage.getItem('user-data')).accountType,
+      field_address: JSON.parse(localStorage.getItem('user-data')).address,
+      field_email: JSON.parse(localStorage.getItem('user-data')).adresse.email,
+      field_language: JSON.parse(localStorage.getItem('user-data')).adresse.language,
+      field_country: JSON.parse(localStorage.getItem('user-data')).adresse.country,
+      field_city: JSON.parse(localStorage.getItem('user-data')).adresse.city,
+      field_mobilePhone: JSON.parse(localStorage.getItem('user-data')).adresse.mobilePhone,
+      field_phone: JSON.parse(localStorage.getItem('user-data')).adresse.phone,
+      field_firstname: JSON.parse(localStorage.getItem('user-data')).firstname,
+      field_lastname: JSON.parse(localStorage.getItem('user-data')).lastname,
+      field_zip: JSON.parse(localStorage.getItem('user-data')).adresse.zip,
+      field_contact: JSON.parse(localStorage.getItem('user-data')).contact,
+      field_whatsappContact: JSON.parse(localStorage.getItem('user-data')).whatsappContact,
+      field_image: JSON.parse(localStorage.getItem('user-data')).image,
+      field_skype: JSON.parse(localStorage.getItem('user-data')).skype,
+      field_websiteLink: JSON.parse(localStorage.getItem('user-data')).websiteLink,
+    };
+    // console.log(data);
+    return data;
+  }
 
+  // Get user's activity
+  getUserActivities(userId: any, pageNumber?: number, itemsPerPage?: number): Promise<any> {
+    if (!pageNumber) {
+      pageNumber = 1;
+    }
+    if (!itemsPerPage) {
+      itemsPerPage = 1;
+    }
+
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/ld+json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
+      };
+
+      const param = {
+        // 'id': pageNumber,
+        'id': userId,
+        'page': pageNumber,
+        'limit': itemsPerPage,
+      };
+
+      this.api.get2(`/user/history/${userId}/${pageNumber}/${itemsPerPage}`, headers, param)
+        .subscribe(data => {
+          resolve(data);
+          return 0;
+
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, "get activities");
+          reject(error);
+        });
+    });
+  }
 
   /*
   *  Get local user profile data.
   */
   getLocalStorageUser() {
     this.userData = JSON.parse(localStorage.getItem('user-data'));
+    // this.userData = this.parseDataFromApi(this.userData);
     this.emitUserData();
     return this.userData;
     /*if (this.userData) {
@@ -92,62 +131,6 @@ getUserInformations() {
       return false;
     }*/
   }
-
-  /*
-  * resetPassword is used to reset your password.
-  */
-  resetPassword() {
-    this.toastr.success('Email Sent');
-    this.router.navigate(['login']);
-  }
-
-  
-
-  // permet denvoyer le code au user par mail pour reset son password
-  sendCodeUserByEmail(data: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const params = {
-        'email': data
-      };
-      this.api.post('api/v01/recover-user/by-email?_format=hal_json', JSON.stringify(params)).subscribe(success => {
-        resolve(success);
-      }, error => {
-        reject(error);
-      });
-    });
-  }
-
-  // permet de valider le code renseigné par le user
-  validateCodeEmailUser(data: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const params = {
-        'user.field_email': data.user.field_email,
-        'user_code': data.user_code
-      };
-      this.api.post(`api/v01/recover-user/by-email/validate-code`, JSON.stringify(params)).subscribe(success => {
-        resolve(success);
-      }, error => {
-        reject(error);
-      });
-    });
-  }
-
-  // permet de changer le password du user dès lors quil a renseigné le bon code
-  changeUserPassword(data: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const params = {
-        'user.field_email': data.user.field_email,
-        'user_code': data.user_code,
-        'user.field_password': data.user.field_password
-      };
-      this.api.post(`api/v01/recover-user/by-email/change-password`, JSON.stringify(params)).subscribe(success => {
-        resolve(success);
-      }, error => {
-        reject(error);
-      });
-    });
-  }
-
 
   // Permet de get le user connected en renvoyant toutes les infos nécessaires sur le profil du user
   userConnectedInformations(): Promise<any> {
@@ -161,240 +144,163 @@ getUserInformations() {
       };
 
       this.api.get('requester/profil', headers)
-      .subscribe((response: any) => {
-        if (response) {
-          // let userData: any[];
-          // userData['user.field_email'] = response.result.email;
-          // userData['user.field_country'] = response.result.address.contray;
-          // userData['user.field_phone'] = response.result.address.mobilePhone;
-          // userData['user.field_id'] = response.result._id;
-          // userData['user.field_firstName'] = response.result.firstname;
-          // userData['user.field_lastName'] = response.result.lastname;
+        .subscribe((response: any) => {
+          if (response) {
+            // let userData: any[];
+            // userData['user.field_email'] = response.result.email;
+            // userData['user.field_country'] = response.result.address.contray;
+            // userData['user.field_phone'] = response.result.address.mobilePhone;
+            // userData['user.field_id'] = response.result._id;
+            // userData['user.field_firstName'] = response.result.firstname;
+            // userData['user.field_lastName'] = response.result.lastname;
 
-          resolve(response);
-          this.userData = response.result;
-          this.emitUserData();
-          this.setUserInformations(response);
-        }
+            resolve(response);
+            this.userData = response.result;
+            this.emitUserData();
+            this.setUserInformations(response);
+          }
 
-      }, (error: any) => {
-
-        if (error) {
-          console.log(error);
-          this.toastr.success(error.message);
-          reject(error);
-        }
-      });
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, "get user information")
+            reject(error);
+        });
     });
   }
 
-  parseDataFromApi(userApiData:Record<string | number,any>):User
-  {
-    let user:User=new User();
-    user.field_id= userApiData._id;
-    user.field_firstName= userApiData.firstname;
-    user.field_lastName= userApiData.lastname;
-    user.field_email= userApiData.adresse.email;
-    user.field_city= userApiData.localtions;
-    user.field_country= userApiData.adresse.coutry;
-    user.field_password= userApiData.password;
-    user.field_contact= userApiData.adresse.mobilePhone;
-    user.field_whatsappContact= userApiData.adresse.whatsAppNumber;
-    // user.field_image=[];
-    user.field_phone= userApiData.adresse.phone;
-    user.field_skype= userApiData.adresse.skypeNumber;
-    user.field_websiteLink= userApiData.adresse.websiteLink;
+  parseDataFromApi(userApiData: Record<string | number, any>): User {
+    let user: User = new User();
+    user.id = userApiData._id;
+    user.name = userApiData.firstName + ' ' + userApiData.lastName;
+    user.firstName = userApiData.firstName;
+    user.lastName = userApiData.lastName;
+    user.email = userApiData.email;
+    user.phone = userApiData.phoneNumber;
+    user.img = userApiData.profilePicture;
+    user.createdAt = userApiData.createdAt;
+    user.emailConfirmed = userApiData.emailConfirmed;
+    user.coverPicture = userApiData.coverPicture;
+    user.country = userApiData.country;
+    user.whatsapp = userApiData.whatsapp;
+    user.skype = userApiData.skype;
+    user.websiteLink = userApiData.websiteLink;
+    user.city = userApiData.location;
+    user.authType = userApiData.authType;
+    // user.role.length = 1;
+    user.role = userApiData.role;
+    user.userSetting = userApiData.userSetting;
+    if (userApiData.isDisabled == false) {
+      user.status = 'Active';
+    } else {
+      user.status = 'Inactive';
+    };
+
+    user.address = userApiData.address;
+    user.bio = userApiData.bio;
+
     return user;
   }
-  parseDataToApi(user:User):Record<string|number,any>
-  {
-    return {
-      "_id": user.field_id,
-      "firstname": user.field_firstName,
-      "lastname": user.field_lastName,
-      "password": user.field_password,
-      "adresse": {
-        "email": user.field_email,
-        "mobilePhone": user.field_contact,
-        "phone": user.field_phone,
-        "websiteLink": user.field_websiteLink,
-        "whatsAppNumber": user.field_whatsappContact,
-        "skypeNumber": user.field_skype,
-        "country": user.field_country
-      }
-    }
-  }
+
+  // parseDataToApi(user:User):Record<string|number,any>
+  // {
+  //   return {
+  //     "_id": user.field_id,
+  //     "firstname": user.field_firstName,
+  //     "lastname": user.field_lastName,
+  //     "password": user.field_password,
+  //     "adresse": {
+  //       "email": user.field_email,
+  //       "mobilePhone": user.field_contact,
+  //       "phone": user.field_phone,
+  //       "websiteLink": user.field_websiteLink,
+  //       "whatsAppNumber": user.field_whatsappContact,
+  //       "skypeNumber": user.field_skype,
+  //       "country": user.field_country
+  //     }
+  //   }
+  // }
+
   // permet d'update les infos d'un user
-  UpdateUser(nid: string, token: string, data: any): Promise<any> {
+  updateUser(userId: any, userData?: any): Promise<any> {
+    console.log("upsate user: ", userData);
 
     return new Promise((resolve, reject) => {
 
       const headers = {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/hal+json',
-        'Accept': 'application/json',
-        'X-CSRF-Token': 'FWjJkOClVTMzyhEPEhz_OPR3PulweXUqi-NePcofKU8' || JSON.parse(localStorage.getItem('app-token'))
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+        'Content-Type': 'application/json',
       }
 
-      const cheminUrl = `${this.api.url}/rest/type/user/user`;
-      this.params = {
-        '_links': {
-          'type': {
-            'href': cheminUrl
-          }
-        },
-        // body
-        'user.field_firstname': [
-          {
-            'value': data.user.field_firstname
-          }
-        ],
+      // const cheminUrl = `${this.api.url}/rest/type/user/user`;
+      // this.params = {
+      //   '_id': userData.id,
 
-        'user.field_surname': [
-          {
-            'value': data.user.field_surname
-          }
-        ],
+      //   'user.field_surname': [
+      //     {
+      //       'value': userData.user.field_surname
+      //     }
+      //   ],
 
-        'user.field_username': [
-          {
-            'value': data.user.field_username
-          }
-        ],
+      //   'user.field_username': [
+      //     {
+      //       'value': userData.user.field_username
+      //     }
+      //   ],
 
-        'user.field_addresse_gps': [
-          {
-            'lat': 52.47878999999999649617166141979396343231201171875,
-            'lng': -0.11067700000000000072619688040731489309109747409820556640625
-          }
-        ],
+      //   'user.field_addresse_gps': [
+      //     {
+      //       'lat': 52.47878999999999649617166141979396343231201171875,
+      //       'lng': -0.11067700000000000072619688040731489309109747409820556640625
+      //     }
+      //   ],
 
-        'user.field_address': [
-          {
-            'value': data.user.field_address
-          }
-        ],
+      //   'user.field_address': [
+      //     {
+      //       'value': userData.user.field_address
+      //     }
+      //   ],
 
-        'user.field_mobile_phone_number': [
-          {
-            'value': data.user.field_mobile_phone_number
-          }
-        ],
+      //   'user.field_mobile_phone_number': [
+      //     {
+      //       'value': userData.user.field_mobile_phone_number
+      //     }
+      //   ],
 
-        'user.field_phone_number': [
-          {
-            'value': data.user.field_phone_number
-          }
-        ],
+      //   'user.field_phone_number': [
+      //     {
+      //       'value': userData.user.field_phone_number
+      //     }
+      //   ],
 
-        'user.field_whatsapp_number': [
-          {
-            'value': data.user.field_whatsapp_number
-          }
-        ],
-        // Les 2 cas qui suivent sont utilisés pour enregistrer le pays du user en fonction de la langue choisie dans le système. N.B: 1 seul cas parmi les 2 est utilisé.
+      //   'user.field_whatsapp_number': [
+      //     {
+      //       'value': userData.user.field_whatsapp_number
+      //     }
+      //   ],
+      // };
 
-        // Cas 1: ceci est utilisé pour enregistrer le pays du user avec choix de la langue English (uuid est obtenu à partir du numéro 12)
-        'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_country': [
-          {
-            '_links': {
-              'type': {
-                'href': 'http://dev.sdkgames.com/karryngo/rest/type/taxonomy_term/countries'
-              }
-            },
-            'uuid': [
-              {
-                'value': data.country_uuid
-              }
-            ]
-          }
-        ],
+      this.params = userData;
 
-        '_embedded': {
-          // Ceci est utilisé s'il y a le ID du type (ID Card ou Passport ou ...) (représente le ID type (ID Card ou Passport) obtenu à partir du numéro 6)
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_id_type': [
-            {
-              '_links': {
-                'type': {
-                  'href': 'http://dev.sdkgames.com/karryngo/rest/type/taxonomy_term/id_type'
-                }
-              },
-              'uuid': [
-                {
-                  'value': data.user.field_id_type
-                }
-              ]
+      this.api.put(`user/profil/${userId}`, this.params, headers)
+        .subscribe((response: any) => {
+          // if (response) {
+            if (response.statusCode === 201) {
+              // this.registResult = true;
+              // this.router.navigate(['login']);
+              this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success', { timeOut: 7000 });
             }
-          ],
-
-          // Ceci est utilisé pour lier l'image au profil du user. On utilise le numéro 7 pour save une image puis récupérer son uuid qu'on renseigne en bas
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user_picture': [
-            {
-              '_links': {
-                'type': {
-                  'href': 'http://dev.sdkgames.com/karryngo/rest/type/file/file'
-                }
-              },
-              'uuid': [
-                {
-                  'value': data.user_picture
-                }
-              ]
-
-            }
-          ],
-
-          // Cas 1: ceci est utilisé pour enregistrer le pays du user avec choix de la langue English (uuid est obtenu à partir du numéro 12)
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_country': [
-            {
-              '_links': {
-                'type': {
-                  'href': 'http://dev.sdkgames.com/karryngo/rest/type/taxonomy_term/countries'
-                }
-              },
-              'uuid': [
-                {
-                  'value': data.user.field_country
-                }
-              ]
-
-            }
-          ],
-          // Cas 2: ceci est utilisé pour enregistrer le pays du user avec choix de la langue Français (uuid est obtenu à partir du numéro 13)
-          /* 'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_pays': [
-            {
-              '_links': {
-                'type': {
-                  'href': 'http://dev.sdkgames.com/karryngo/rest/type/taxonomy_term/pays'
-                }
-              },
-              'uuid': [
-                {
-                  'value': data.user.field_pays
-                }
-              ]
-
-            }
-          ], */
-
-          // Ceci est utilisé pour enregistrer les différentes langues choisies par le user (uuid est obtenu à partir du numéro 11).
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_language': data.user.field_language || [],
-
-          // ceci est ajouté pour mettre à jour les différents types de service que le user offre (Services offered)
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_choose_type_of_services': data.user.field_choose_type_of_services || [],
-
-          // ceci est utilisé pour mettre à jour le choix du pays avec ces villes
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_interested_countries': data.user.field_interested_countries || [],
-
-          // ceci est utilisé pour mettre à jour les documents personnels du user
-          'http://dev.sdkgames.com/karryngo/rest/relation/user/user/user.field_documents': data.user.field_documents || [],
-        }
-      };
-      this.api.patch(`user/${nid}?_format=hal_json`, JSON.stringify(this.params), headers).subscribe(success => {
-        resolve(success);
-      }, error => {
-        reject(error);
-      });
+            console.log("respose: ", response)
+            resolve(response);
+          //   return 0;
+          // }
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, "update account")
+          reject(error);
+        });
+      // this.api.patch(`user/${nid}?_format=hal_json`, JSON.stringify(this.params), headers).subscribe(success => {
+      //   resolve(success);
+      // }, error => {
+      //   reject(error);
+      // });
     });
   }
 
@@ -487,21 +393,18 @@ getUserInformations() {
   }
 
   //recuperer les informations d'un utilisateur
-  getUserById(id:String):Promise<any>
-  {
-    return new Promise<any>((resolve,reject)=>{
-      let user:User=this.listUser.find((u)=>u.field_id==id);
-      if(user!=undefined) resolve(user);
-      else{
-        this.api.get(`user/profil/${id}`,{
+  getUserById(id: String): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      let user: User = this.listUser.find((u) => u.id == id);
+      if (user != undefined) resolve(user);
+      else {
+        this.api.get(`user/profil/${id}`, {
           'Authorization': 'Bearer ' + this.api.getAccessToken(),
 
         }).subscribe(success => {
-          if(success)
-          {
+          if (success) {
             // console.log("Success ",success)
-            if(success.resultCode==0)
-            {
+            if (success.resultCode == 0) {
               resolve(this.parseDataFromApi(success.result));
             }
             else reject(success)
@@ -513,6 +416,143 @@ getUserInformations() {
         })
       }
     })
+  }
+
+  // Get News to server
+  getPageUsers(pageNumber?: number, itemsPerPage?: number): Promise<any> {
+    console.log('page nomber: ', pageNumber);
+    if (!pageNumber) {
+      pageNumber = 1;
+    }
+    if (!itemsPerPage) {
+      itemsPerPage = 5;
+    }
+    console.log('page nomber second: ', pageNumber);
+
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/ld+json',
+        'Accept': 'application/json',
+      };
+
+      const body = {
+        'page': pageNumber,
+        'itemsPerPage': itemsPerPage,
+      };
+
+      this.api.get('news', headers, body)
+        .subscribe(data => {
+          // this.toastr.success("Les données ont été récupérées du serveur.", 'Success');
+          // console.log(data);
+          resolve(data);
+          return 0;
+
+        }), (error: any) => {
+          this.toastr.error('Can t get news', '500 Error');
+          console.log(error);
+          reject(error);
+        };
+    });
+  }
+
+  // Get News to server
+  getAllUsers(): Promise<any> {
+    console.log('Get all users.')
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Content-Type': 'application/ld+json',
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+      };
+
+      console.log('Get all users 2.')
+      this.api.get('users', headers)
+        .subscribe(result => {
+          console.log("users-- -refresh: ", result);
+          let tab: any = result.data;
+          // console.log("users-- -refresh: ", result.data);
+          // for (let i = 0; i < tab.length; i++) {
+          //   tab[i] = this.parseDataFromApi(tab[i]);
+          //   console.log('user ', i, ': ', tab[i]);
+          // }
+          localStorage.setItem("users-list", JSON.stringify(tab));
+          resolve(result);
+          return 0;
+
+        }, error => {
+          if (error.status == 401) {
+            this.authService.logOut();
+            localStorage.clear();
+            this.router.navigate(["/login"]);
+            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
+            reject(error);
+          } else {
+            this.toastr.error("Can't get users", 'Error', { timeOut: 5000 });
+            console.log("Une erreur: ", error);
+            reject(error);
+          }
+        });
+    });
+  }
+
+  changeStatus(userId, status): Promise<any> {
+    console.log('change status: ', userId, status);
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
+    };
+
+    const param = {
+      'userId': userId,
+      'status': status,
+    };
+
+    return new Promise((resolve, reject) => {
+      this.api.put('user/profil/status', param, headers)
+        .subscribe(response => {
+          console.log('change status Response: ', response)
+          setTimeout(() => {
+            this.toastr.success('Status changed !!', "Done", { timeOut: 5000 });
+            resolve(response);
+          }, 1000);
+        }, error => {
+          console.log("User error", error);
+          this.errorsService.errorsInformations(error, "change status");
+          if (error.status == 401) {
+            this.authService.logOut();
+          } 
+          reject(error);
+        });
+    });
+
+  }
+
+  deleteUser(userId): Promise<any> {
+    console.log('delete user: ', userId)
+
+    const headers = {
+      'Content-Type': 'application/ld+json',
+      'Authorization': 'Bearer ' + localStorage.getItem("access-token"),
+    };
+
+    const param = {
+      'id': userId,
+    };
+
+    return new Promise((resolve, reject) => {
+      this.api.delete('user/profil/' + userId, headers)
+        .subscribe(response => {
+          console.log('User deleted: ', response)
+          setTimeout(() => {
+            this.toastr.success('User was deleted !!', null, { timeOut: 5000 });
+          }, 3000);
+          resolve(response);
+        }, error => {
+          this;this.errorsService.errorsInformations(error, "delete user")
+          reject(error);
+        });
+    });
+
   }
 
 }

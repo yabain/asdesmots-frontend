@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation/language.service';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 declare var $: any;
 
 @Component({
@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
     ) {
     this.userData = this.userService.getLocalStorageUser();
     console.log("test test: ", this.userData)
-    // const words = this.userData.registered_on.split('T');
+    // const words = this.userData.createdAt.split('T');
     // this.creationDate = words[0];
     // const other = words[1].split('.');
     // this.creationTime = other[0];

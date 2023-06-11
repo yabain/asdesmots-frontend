@@ -12,8 +12,6 @@ import { AllModulesService } from 'src/app/shared/services/all-modules.service';
 // import { AllModulesData } from 'src/assets/all-modules-data/all-modules-data';
 import { ToastrModule } from 'ngx-toastr';
 import { DataTablesModule } from 'angular-datatables';
-import { AuthService } from './shared/services/auth/auth.service';
-import { UserService } from './shared/services/user/user.service';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';

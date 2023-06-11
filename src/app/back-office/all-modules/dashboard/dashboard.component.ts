@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as ApexCharts from 'apexcharts';
-import { TranslationService } from 'src/app/services/translation/language.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
       },
       yaxis: {
         title: {
-          text: '€ (thousands)'
+          text: 'XAF (Franc CFA)'
         }
       },
       fill: {
@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit {
       tooltip: {
         y: {
           formatter: function (val:any) {
-            return "€ " + val + " thousands"
+            return "XAF " + val + " FCFA"
           }
         }
       }
@@ -170,7 +170,7 @@ export class DashboardComponent implements OnInit {
     //   },
     //   yaxis: {
     //     title: {
-    //       text: '€ (thousands)'
+    //       text: 'XAF (Franc CFA)'
     //     }
     //   },
     //   fill: {
@@ -179,7 +179,7 @@ export class DashboardComponent implements OnInit {
     //   tooltip: {
     //     y: {
     //       formatter: function (val) {
-    //         return "€ " + val + " thousands"
+    //         return "XAF " + val + " Franc CFA"
     //       }
     //     }
     //   }

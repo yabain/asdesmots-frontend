@@ -12,7 +12,7 @@
 <!-- ***** Preloader End ***** -->
 
 <!-- Pre-header Starts -->
-<div class="pre-header">
+<!-- <div class="pre-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-sm-8 col-7">
@@ -30,7 +30,7 @@
             </div>              
         </div>
     </div>
-</div>
+</div> -->
 <!-- Pre-header End -->
 
 <!-- ***** Header Area Start ***** -->
@@ -49,13 +49,12 @@
                         <li class="scroll-to-section"><a href="#top" class="active">Acceuil</a></li>
                         <li class="scroll-to-section"><a href="#services">Competition</a></li>
                         <li class="scroll-to-section"><a href="#portfolio">Evenement</a></li>
-                        <li class="scroll-to-section"><a href="#about">Apropos</a></li>
-                        <!-- <li class="scroll-to-section"><a href="#blog">Blog</a></li> -->
+                        <li class="scroll-to-section"><a href="#about">Apropos</a></li>                        
                         <li class="scroll-to-section"><a href="#contact">Contact</a></li>
-                        <li class="scroll-to-section">
-                            <div class="border-first-button"><a target="_blank"
-                                    href="http://asdesmots.yaba-in.com/login">Connexion</a></div>
-                        </li>
+                        <li class="scroll-to-section newClass"><a [routerLink]="'/login'">Connexion</a></li>
+                        <li><div class="border-first-button"><a
+                            [routerLink]="'/login'">Connexion</a></div></li>
+                        
                     </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
@@ -74,7 +73,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-6 align-self-center">
+                    <div class="col-lg-6 align-self-center" style="z-index: 2 !important;">
                         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
                             data-wow-delay="1s">
                             <div class="row">
@@ -82,7 +81,7 @@
                                     <img src="../../../assets/img/logo-small.png" alt="">
                                 </a>
                                 <div class="col-lg-12">
-                                    <h6> <a href="http://asdesmots.yaba-in.com/login">Découvrez</a> </h6>
+                                    <h6> <a [routerLink]="'/login'">Découvrez</a> </h6>
                                     <h2>Votre plateforme de compétition d'intelects</h2>
                                     <p>AsDesMots est une application détenant un brevet de l’OAPI Cameroun
                                         depuis 2021
@@ -92,7 +91,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="border-first-button scroll-to-section">
-                                        <a href="http://asdesmots.yaba-in.com/login">Lancez-vous</a>
+                                        <a [routerLink]="'/login'">Lancez-vous</a>
                                     </div>
                                 </div>
                             </div>

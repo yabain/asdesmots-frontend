@@ -8,9 +8,9 @@ import {
 import { Location } from '@angular/common';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation/language.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-sidemenu',
@@ -62,22 +62,21 @@ export class SidemenuComponent implements OnInit {
   logout() {
     this.submitted = true;
     this.waitingResponse = true;
-    // this.authService.logOut()
-    // .then((result) => {
-        setTimeout(() => {
-          localStorage.clear();
+    // setTimeout(() => {
+    this.authService.logOut()
+    .then((result) => {
           this.commonService.nextmessage('logout');
           this.toastr.success('Your session has been disconnected!', null, { timeOut: 5000 });
-          this.router.navigate(["/login"]);
+          // this.router.navigate(["/login"]);
           this.submitted = false;
           this.waitingResponse = false;
-        }, 3000);
-    // })
-    // .catch((error) => {
-    //   console.error('Erreur: ', error.message);
-    //   this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-    //   this.waitingResponse = false;
-    // });
+    })
+    .catch((error) => {
+      console.error('Erreur: ', error);
+      // this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+      this.waitingResponse = false;
+    });
+  // }, 2000);
   }
 
 

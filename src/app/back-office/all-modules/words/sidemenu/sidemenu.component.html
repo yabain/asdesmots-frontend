@@ -1,0 +1,149 @@
+<!-- Settings Menu -->
+<div class="widget settings-menu">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-body">
+                <h5>{{'words.wordStat' | translate }}</h5>
+
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="text-align: center;">All words</th>
+                            <th style="text-align: center;">En words</th>
+                            <th style="text-align: center;">FR words</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let word of words; let i = index" (click)="wordData = word" data-bs-toggle="modal" data-bs-target="#details"> -->
+                        <tr>
+                            <td style="text-align: center;">00</td>
+                            <td style="text-align: center;">00</td>
+                            <td style="text-align: center;">00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title d-flex justify-content-between">
+                        <span>{{'words.level' | translate }} (03)</span>
+                        <a class="btn btn-sm btn-white" [routerLink]="'/words/add-category'"><i class="fas fa-plus"></i></a>
+                    </h5>
+                </div>
+                <div>
+                    <div class="table-responsive">
+                        <table datatable class="table table-stripped table-hover">
+                            <!-- <thead class="thead-light">
+                                <tr>
+                                    <th>{{'user.user' | translate }}s</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead> -->
+                            <tbody>
+                                <!-- <tr *ngFor="let word of words; let i = index" (click)="wordData = word" data-bs-toggle="modal" data-bs-target="#details"> -->
+                                <tr [routerLink]="'/words/words-list'">
+                                    <td>{{'words.starter' | translate }}</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal"
+                                            data-bs-target="#editLevel"><i class="far fa-edit me-1"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#deleteLevel"
+                                            class="btn btn-sm btn-white text-danger me-2"><i
+                                                class="far fa-trash-alt me-1"></i></a>
+                                    </td>
+                                </tr>
+                                <tr [routerLink]="'/words/words-list'">
+                                    <td>{{'words.advence' | translate }}</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal"
+                                            data-bs-target="#editLevel"><i class="far fa-edit me-1"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#deleteLevel"
+                                            class="btn btn-sm btn-white text-danger me-2"><i
+                                                class="far fa-trash-alt me-1"></i></a>
+                                    </td>
+                                </tr>
+                                <tr [routerLink]="'/words/words-list'">
+                                    <td>{{'words.hard' | translate }}</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal"
+                                            data-bs-target="#editLevel"><i class="far fa-edit me-1"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#deleteLevel"
+                                            class="btn btn-sm btn-white text-danger me-2"><i
+                                                class="far fa-trash-alt me-1"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Delete Tax Modal -->
+<div class="modal custom-modal fade" id="deleteLevel" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2>Delete level ?</h2>
+            <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
+            <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn1">
+            {{'close' | translate }}
+          </button>
+          <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
+            (click)="changeStatus(userData._id, true)">
+            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
+            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          </button>
+          <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
+            (click)="changeStatus(userData._id, false)">
+            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
+            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Delete Tax Modal -->
+<div class="modal custom-modal fade" id="editLevel" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fas fa-edit text-secondary"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2>Edit level</h2>
+            <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
+            <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn1">
+            {{'close' | translate }}
+          </button>
+          <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
+            (click)="changeStatus(userData._id, true)">
+            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
+            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          </button>
+          <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
+            (click)="changeStatus(userData._id, false)">
+            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
+            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>

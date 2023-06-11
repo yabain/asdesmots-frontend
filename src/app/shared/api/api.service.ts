@@ -293,6 +293,7 @@ export class ApiService {
   // HTTP put
 
   put(endpoint: string, body: any, options?: any): Observable<any> {
+    console.log("put request: ", this.url + endpoint, body);
     return this.http.put(this.url + '/' + endpoint + '/', body, { 'headers': options });
   }
 

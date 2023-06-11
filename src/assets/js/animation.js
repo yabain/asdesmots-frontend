@@ -190,4 +190,17 @@ wow = new WOW(
     offset: 50
   }
 );
+
+$(document).ready(function() {
 wow.init();
+var wow = new WOW({
+  animateClass: 'animated',
+  offset: 50
+});
+
+wow.init();
+
+if (window.matchMedia('(max-width: 768px)').matches) {
+  wow.disable();
+}
+});

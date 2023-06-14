@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-link-recieve',
-  templateUrl: './link-recieve.component.html',
-  styleUrls: ['./link-recieve.component.css'],
+  selector: 'app-link-receive',
+  templateUrl: './link-receive.component.html',
+  styleUrls: ['./link-receive.component.css'],
 })
-export class LinkRecieveComponent implements OnInit {
+export class LinkReceiveComponent implements OnInit {
   token = '';
 
   textDir: String = 'ltr';
@@ -66,7 +66,6 @@ export class LinkRecieveComponent implements OnInit {
   ngOnInit() {
     this.storage.Checkuser();
     this.translate.use(this.translationService.getLanguage());
-
   }
 
   submit() {

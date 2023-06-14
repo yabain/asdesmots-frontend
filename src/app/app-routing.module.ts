@@ -3,7 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthenticationGuard } from './shared/guard/auth/authentication.guard';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'auth', redirectTo: 'login', pathMatch: 'full'},
   // { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
   { path: 'reset', redirectTo: 'auth/rest-password', pathMatch: 'full' },
@@ -29,7 +29,7 @@ const routes: Routes = [
       import(
         './front-office/authentication/mail-link/mail-link.module'
       ).then((m) => m.MailLinkModule),
-      canActivate: [AuthenticationGuard],
+      // canActivate: [AuthenticationGuard],
   },
   {
     path: 'forgot-pwd',
@@ -80,7 +80,7 @@ const routes: Routes = [
       import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule),
     canActivate: [AuthenticationGuard],
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

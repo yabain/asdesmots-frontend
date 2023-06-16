@@ -479,17 +479,9 @@ export class UserService {
           return 0;
 
         }, error => {
-          if (error.status == 401) {
-            this.authService.logOut();
-            localStorage.clear();
-            this.router.navigate(["/login"]);
-            this.toastr.error("Your session has expired. Please log in again.", 'Error', { timeOut: 5000 });
+          this.errorsService.errorsInformations(error, "get all users");
             reject(error);
-          } else {
-            this.toastr.error("Can't get users", 'Error', { timeOut: 5000 });
-            console.log("Une erreur: ", error);
-            reject(error);
-          }
+          
         });
     });
   }

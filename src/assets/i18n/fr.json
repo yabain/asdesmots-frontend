@@ -106,6 +106,7 @@
     "needAccound": "Sollicitez un compte marchant",
     "selectCountry": "Votre Pays",
     "selectCity": "Votre ville",
+    "select": "Sélectionnez",
     "countryRequired": "Votre pays est requis.",
     "cityRequired": "Votre ville est requis.",
     "seeMore": "Découvrir",
@@ -274,7 +275,7 @@
 
     },
     "words": {
-        "word": "Mots",
+        "word": "Mot",
         "wordList": "List des mots",
         "level": "Niveau",
         "wordsCount": "Nombre de mots",

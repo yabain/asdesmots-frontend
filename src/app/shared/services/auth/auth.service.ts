@@ -176,7 +176,7 @@ export class AuthService {
         'email': user.field_email,
         'profilePicture': '' + user.field_profilPicture,
         'country': user.field_country,
-        // 'location': user.field_location,
+        'phoneNumber': user.field_phone,
         'location': user.field_location,
       };
 
@@ -250,19 +250,18 @@ export class AuthService {
           if (response.data.user.emailConfirmed === false) {
             this.logOut();
             this.toastr.warning('Your email was not verified. Go to your mail box.', null, { timeOut: 10000 });
-            return false;
-          }
-
-          if (response.data.user.isDisabled === true) {
+            // return false;
+          } else if (response.data.user.isDisabled === true) {
             this.logOut();
             this.toastr.warning('Your account was desabled. Please contact administrator.', null, { timeOut: 10000 });
-            return false;
+            // return false;
+          } else {
+            // this.webStorage.Login(user);
+            this.api.setAccessToken(response.data.access_token);
+            // console.log('User infos: ', response.data.user);
+            this.router.navigate(['index']);
+            this.toastr.success('Welcome !!');
           }
-          // this.webStorage.Login(user);
-          this.api.setAccessToken(response.data.access_token);
-          // console.log('User infos: ', response.data.user);
-          this.router.navigate(['index']);
-          this.toastr.success('Welcome !!');
           resolve(response);
         }, error => {
           this.errorsService.errorsInformations(error, 'login');

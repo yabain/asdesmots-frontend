@@ -92,13 +92,13 @@ export class CustomerListComponent implements OnInit {
     //     this.customers = res;
     //   },
     // );
-    if (this.usersList) {
-      this.customers = JSON.parse(localStorage.getItem('users-list'));
-      console.log('users here also: ', this.customers);
-    } else {
-      this.refreshList();
+    // if (this.usersList) {
+    //   this.customers = JSON.parse(localStorage.getItem('users-list'));
+    //   console.log('users here also: ', this.customers);
+    // } else {
+    //   this.refreshList();
 
-    }
+    // }
   }
 
   filter() { }

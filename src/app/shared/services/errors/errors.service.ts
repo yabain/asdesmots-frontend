@@ -34,24 +34,23 @@ export class ErrorsService {
 *  Set the user informations.
 */
   errorsInformations(error: any, action?: string, errorType?: string) {
-    console.log("Errors service: " + action, error);
+    console.log("Errors service: " + action, error.status);
     if (action) {
       this.toastr.error("Can not " + action, 'Sorry', { timeOut: 10000 });
     }
     if (errorType && errorType === '0') {
       this.toastr.warning("This fonction is not available. Try later", "Sorry", { timeOut: 10000 });
-      return 0
     }
 
-    if (error.status == 500) {
+    if (error.status === 500) {
       this.error500(action);
-    } else if (error.status == 400) {
+    } else if (error.status === 400) {
       this.error400(action);
-    } else if (error.status == 401) {
+    } else if (error.status === 401) {
       this.error401(action);
-    } else if (error.status == 403) {
+    } else if (error.status === 403) {
       this.error403(action);
-    } else if (error.status == 404) {
+    } else if (error.status === 404) {
       this.error404(action);
     } else {
       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
@@ -68,6 +67,7 @@ export class ErrorsService {
   }
 
   error401(action) {
+    console.log("error401: ", action);
     if (action === 'login') { this.toastr.error("Incorrect email or password! Please verify your information.", 'Error', { timeOut: 10000 });}
     else if (action === 'create account') { this.toastr.error("This email address is already used.", 'Error', { timeOut: 10000 })}
     else if (action === 'logout') {

@@ -17,6 +17,29 @@ export class WordsService {
   wordData: any;
 
   wordsList: Word[] = [];
+  wordsListfixed: Word[] = [
+    {
+      id: 'sdfsdfsdfsdfs',
+      name: 'Maison',
+      gameLevelId: 'jfhdsjklfghdskflhd',
+      description: 'Ici la description du mot',
+      type: '80',
+    },
+    {
+      id: 'sdqhdfhsfghjfgf',
+      name: 'Hôpital',
+      gameLevelId: 'jfhdsjklfghdskflhd',
+      description: 'Ici la description du mot',
+      type: '80',
+    },
+    {
+      id: 'dfdfgdfgdghjghj,',
+      name: 'Bouteil',
+      gameLevelId: 'jfhdsjklfghdskflhd',
+      description: 'Ici la description du mot',
+      type: '80',
+    }
+  ];
 
   constructor(
     private api: ApiService,
@@ -30,9 +53,8 @@ export class WordsService {
     return new Promise((resolve, reject) => {
 
       const headers = {
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
         'Content-Type': 'application/json',
-        // 'X-CSRF-Token': '97dKe-0-qukVOMY1YNBhsZ-POfPUArpL11YLfRJFD94',
-        // 'Accept': 'application/json'
       };
       const params = {
         'name': word.name,
@@ -46,7 +68,7 @@ export class WordsService {
           if (response) {
             if (response.statusCode === 201) {
               // this.router.navigate(['login']);
-              this.toastr.success("Word has been add", 'Success', {timeOut: 5000});
+              this.toastr.success("Word has been add", 'Success', { timeOut: 5000 });
             }
             resolve(response);
           }
@@ -57,6 +79,7 @@ export class WordsService {
     });
 
   }
+
   // permet d'update les infos d'un user
   updateWord(wordId: any, wordData?: any): Promise<any> {
     console.log("upsate user: ", wordData);
@@ -65,9 +88,7 @@ export class WordsService {
 
       const headers = {
         'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/hal+json',
-        'Accept': 'application/json',
-        'X-CSRF-Token': 'FWjJkOClVTMzyhEPEhz_OPR3PulweXUqi-NePcofKU8' || JSON.parse(localStorage.getItem('app-token'))
+        'Content-Type': 'application/json',
       }
 
       this.params = wordData;
@@ -86,30 +107,103 @@ export class WordsService {
     });
   }
 
+  // Get News to server
+  getAllWords(): Promise<any> {
+    console.log('Get all words.')
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+        'Content-Type': 'application/json',
+      };
+
+      console.log('Get all words 2.')
+      this.api.get('users', headers)
+        .subscribe(result => {
+          // console.log("words-- -refresh: ", result);
+          let tab: any = result.data;
+          // console.log("users-- -refresh: ", result.data);
+          // for (let i = 0; i < tab.length; i++) {
+          //   tab[i] = this.parseDataFromApi(tab[i]);
+          //   console.log('user ', i, ': ', tab[i]);
+          // }
+          localStorage.setItem("users-list", JSON.stringify(tab));
+          resolve(result);
+          return 0;
+
+        }, error => {
+          this.errorsService.errorsInformations(error, "get all word", '0')
+          reject(error);
+        });
+    });
+  }
+
   //recuperer les informations d'un utilisateur
   getWordById(id: String): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let word: Word = this.wordsList.find((u) => u.id == id);
-      if (word != undefined) resolve(word);
-      else {
-        this.api.get(`user/profil/${id}`, {
-          'Authorization': 'Bearer ' + this.api.getAccessToken(),
+    return new Promise((resolve, reject) => {
+      const headers = {
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+        'Content-Type': 'application/json',
+      };
 
-        }).subscribe(success => {
-          if (success) {
-            // console.log("Success ",success)
-            if (success.resultCode == 0) {
-              // resolve(this.parseDataFromApi(success.result));
-            }
-            else reject(success)
+      console.log('Get all words 2.')
+      this.api.get('users', headers)
+        .subscribe(result => {
+          // console.log("words-- -refresh: ", result);
+          let tab: any = result.data;
+          // console.log("users-- -refresh: ", result.data);
+          // for (let i = 0; i < tab.length; i++) {
+          //   tab[i] = this.parseDataFromApi(tab[i]);
+          //   console.log('user ', i, ': ', tab[i]);
+          // }
+          localStorage.setItem("users-list", JSON.stringify(tab));
+          resolve(result);
+          return 0;
 
-          }
-          else reject(success)
         }, error => {
+          this.errorsService.errorsInformations(error, "get all word", '0')
           reject(error);
-        })
-      }
+        });
+    });
+  }
+
+  //recuperer les informations d'un utilisateur
+  getWordListBylevel(levelId): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      // let word: Word = this.wordsList.find((u) => u.gameLevelId == levelId);
+      // if (word != undefined) resolve(word);
+      // else {
+      this.api.get(`gamelevel/${levelId}/words`, {
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+      }).subscribe(response => {
+        // response.data = this.wordsListfixed;
+        // this.wordsList = response.data;
+        localStorage.setItem(levelId, JSON.stringify(response.data));
+
+        resolve(response.data);
+      }, error => {
+        this.errorsService.errorsInformations(error, "get word's list", "0")
+        reject(error);
+      })
+      // }
     })
   }
 
+  deleteWord(word: Word): Promise<any> {
+    const headers = {
+      'Authorization': 'Bearer ' + this.api.getAccessToken(),
+      'Content-Type': 'application/json',
+    };
+
+    return new Promise((resolve, reject) => {
+      this.api.delete(`gamelevel/${word.gameLevelId}/words/${word.id}`, headers)
+        .subscribe(response => {
+          this.toastr.success('Word was deleted !!', null, { timeOut: 5000 });
+          resolve(response);
+        }, error => {
+          this; this.errorsService.errorsInformations(error, "delete word")
+          reject(error);
+        });
+    });
+
+  }
 }

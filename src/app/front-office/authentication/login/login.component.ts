@@ -108,7 +108,6 @@ export class LoginComponent implements OnInit {
       this.waitingResponse = false;
     })
     .catch((error) => {
-      console.error('Erreur: ', error.message);
       this.waitingResponse = false;
       this.errorMsg = error.message;
       this.error = true;

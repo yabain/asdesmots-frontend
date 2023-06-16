@@ -37,7 +37,7 @@ const routes: Routes = [
       import(
         './front-office/authentication/forgot-pwd/forgot-pwd.module'
       ).then((m) => m.ForgotPwdModule),
-      canActivate: [AuthenticationGuard],
+      // canActivate: [AuthenticationGuard],
   },
   {
     path: 'new-pwd',

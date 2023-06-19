@@ -1,10 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Event,
+  NavigationStart,
+  Router,
+  ActivatedRoute,
+} from '@angular/router';
+import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AllModulesService } from 'src/app/services/all-modules.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { ActivatedRoute } from '@angular/router';
 import { WordsService } from 'src/app/shared/services/words/words.service';
+import { LevelService } from 'src/app/shared/services/level/level.service';
+import { Level } from 'src/app/shared/entities/level';
 
 @Component({
   selector: 'app-words-list',
@@ -18,20 +26,50 @@ export class WordsListComponent implements OnInit {
   levelId: string = '';
   wating = true;
   wordData?: any = '';
+  level : Level;
+  url;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
     private translationService: TranslationService,
     private srvModuleService: AllModulesService,
+    location: Location,
     private wordsService: WordsService,
-    private toastr: ToastrService) { }
+    private levelService: LevelService,
+    private toastr: ToastrService) { 
+    }
 
   ngOnInit(): void {
     this.scrollToTop();
     this.translate.use(this.translationService.getLanguage());
     this.levelId = this.route.snapshot.params['id'];
     console.log('levelId: ' + this.levelId);
+    this.levelService.getLevelById(this.levelId)
+    .then((response) => {
+      this.level =  response
+      console.log('Level 00000: ', response)
+    });
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        if (event instanceof NavigationStart) {
+          let splitVal = event.url.split('/');
+          this.levelId = splitVal[3];
+          console.log("splitVal: ", this.levelId)
+        }
+      }
+    });
+    // this.url = this.location.path();
+    // if (this.url) {
+    //   let splitVal = this.url.split('/');
+    //   if (splitVal[3] != undefined) {
+    //     this.levelId = splitVal[3];
+    // } else {
+    //   this.levelId = 'sdfsdfsd';
+    // }
+    // }
 
     // this.wordsList = localStorage.getItem('words-list');
     this.wordsList = this.wordsService.getWordListBylevel(this.levelId)

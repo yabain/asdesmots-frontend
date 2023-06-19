@@ -52,7 +52,7 @@
                 <tr *ngFor="let level of levelList; let i = index" (click)="navigateToLevel(level._id)" [class.selected]="curentLevel === level._id">
                   <!-- <tr [routerLink]="'/words/words-list'"> -->
                   <td>{{level.name}}</td>
-                  <td>({{level.wordsCount}} {{'words.word' | translate }}s)</td>
+                  <td>({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal"
                       data-bs-target="#editLevel"><i class="far fa-edit me-1"></i></a>
@@ -174,9 +174,11 @@
           </button>
         </div>
         <div class="text-end mt-4">
-          <button type="button" class="btn btn-success" (click)="addLevel()">
-            <span *ngIf="!waitingResponse"> {{'save' | translate }}</span>
-            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addLevel()">
+            <span> {{'add' | translate }}</span>
+          </button>
+          <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
+            <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
           </button>
         </div>
       </div>

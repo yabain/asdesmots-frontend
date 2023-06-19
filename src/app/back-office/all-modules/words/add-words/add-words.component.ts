@@ -1,13 +1,13 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 // import { CommonServiceService } from 'src/app/services/common-service.service';
-import { Event, Router, NavigationStart, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AllModulesService } from 'src/app/services/all-modules.service';
 import { DatePipe } from "@angular/common";
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { LevelService } from 'src/app/shared/services/level/level.service';
+import { WordsService } from 'src/app/shared/services/words/words.service';
 
 @Component({
   selector: 'app-add-words',
@@ -15,20 +15,25 @@ import { TranslationService } from 'src/app/shared/services/translation/language
   styleUrls: ['./add-words.component.css']
 })
 export class AddWordsComponent implements OnInit {
-  public id:any
-  public url: any = "customers";
-  page = 'Add Customer';
   public pipe = new DatePipe("en-US");
-  myDate = new Date();
-  public addCustomerForm!: FormGroup;
+  public wordEnForm!: FormGroup;
+  levelList?: any = '';
+  waitingResponse = false
+
   constructor(public router: Router,
-    location: Location,
-    private allModulesService: AllModulesService,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private toastr: ToastrService,
     private translate: TranslateService,
+    private formLog: FormBuilder,
+    private levelService: LevelService,
+    private wordService: WordsService,
     private translationService: TranslationService) {
+
+      this.levelService.getAllLevels()
+        .then(() => {
+          // this.waitingResponse = false;
+          this.levelList = this.levelService.levelList;
+          console.log('levelList good: ', this.levelList)
+        });
   }
 
   scrollToTop(): void {
@@ -37,48 +42,52 @@ export class AddWordsComponent implements OnInit {
 
   ngOnInit(): void {
     this.translate.use(this.translationService.getLanguage());
-  this.scrollToTop();
+    this.scrollToTop();
 
-    this.addCustomerForm = this.formBuilder.group({
-      customerName: ["", [Validators.required]],
-      customerEmail: ["", [Validators.required]],
-      customerCurrency: ["", [Validators.required]],
-      customerPrimaryContact: ["", [Validators.required]],
+    this.wordEnForm = this.formLog.group({
+      'name': ['', Validators.required
+      ],
+      'description': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])
+      ],
+      'gameLevelId': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])
+      ],
+      'type': ['en', Validators.required
+      ]
     });
   }
+
   private markFormGroupTouched(formGroup: FormGroup) {
-    (<any>Object).values(formGroup.controls).forEach((control:any) => {
+    (<any>Object).values(formGroup.controls).forEach((control: any) => {
       control.markAsTouched();
       if (control.controls) {
         this.markFormGroupTouched(control);
       }
     });
   }
+
   addWords() {
-    if(this.addCustomerForm.invalid){
-      this.markFormGroupTouched(this.addCustomerForm)
-      return
+    if (this.wordEnForm.invalid) {
+      return;
     }
-    else {
+      this.waitingResponse = true;
+      this.wordService.createWord(this.wordEnForm.value)
+      .then(() => {
+        this.waitingResponse = false;
+        this.toastr.success('French word was added', 'Done',{timeOut: 10000} )
+      })
+      .catch((error) => {
+        this.waitingResponse = false;
+      });
+    
+  }
 
-    let DateJoin = this.pipe.transform(
-      this.myDate,"dd-MM-yyyy"
-    );
-    let obj = {
-      name : this.addCustomerForm.value.customerName,
-      email : this.addCustomerForm.value.customerEmail,
-      phone : this.addCustomerForm.value.customerPrimaryContact,
-      amount_due : "$8295",
-      registered_on : DateJoin,
-      status : "Active",
-      role: "Customer"
-    };
-    this.allModulesService.add(obj, this.url).subscribe((data) => {
 
-    });
-    this.router.navigate(["/words-list"]);
-    this.toastr.success("Words added sucessfully...!", "Success");
-    }
+  get f() {
+    return this.wordEnForm.controls;
   }
 
 }

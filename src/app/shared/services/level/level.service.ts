@@ -110,10 +110,10 @@ export class LevelService {
   //recuperer les informations d'un utilisateur
   getLevelById(id: String): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      let level: Level = this.levelList.find((u) => u._id == id);
+      let level: Level = JSON.parse(localStorage.getItem('levels-list')).find((u) => u._id == id);
       if (level != undefined) resolve(level);
       else {
-        this.api.get(`user/profil/${id}`, {
+        this.api.get(`gamelevel/${id}`, {
           'Authorization': 'Bearer ' + this.api.getAccessToken(),
 
         }).subscribe(success => {
@@ -146,7 +146,7 @@ export class LevelService {
           //   console.log('level ', i, ': ', tab[i]);
           // }
           localStorage.setItem("levels-list", JSON.stringify(this.levelList));
-          resolve(result);
+          resolve(result.data);
         }, error => {
           this.errorsService.errorsInformations(error, 'get level list', '0')
           reject(error);

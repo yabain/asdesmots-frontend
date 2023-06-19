@@ -113,6 +113,7 @@ export class CustomerListComponent implements OnInit {
     // this.wating = true;
     this.submitted = true;
     this.waitingResponse = true;
+    this.scrollToTop();
     // this.toastr.warning("Cette fonctionnalité n'est pas encore achevée et le changement risque ne pas marcher. Veuillez essayer ultérieurement", 'Warning', { timeOut: 10000 });
     this.userService.changeStatus(userId, userStatus)
     .then((result) => {
@@ -135,6 +136,7 @@ export class CustomerListComponent implements OnInit {
   deleteUser(userId){
     this.submitted = true;
     this.waitingResponse = true;
+    this.scrollToTop();
     this.userService.deleteUser(userId)
     .then((result) => {
       this.wating = true;

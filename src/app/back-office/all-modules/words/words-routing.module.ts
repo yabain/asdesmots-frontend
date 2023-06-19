@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       { path: 'words-list/:id', component: WordsListComponent },
       { path: "words-list", component: WordsListComponent },
-      { path: "add-words", component: AddWordsComponent},
+      { path: "add-word", component: AddWordsComponent},
       { path: "edit-words", component: EditWordsComponent},
       { path: "add-category", component: AddWordsComponent},
     ]

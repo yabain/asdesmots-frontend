@@ -7,12 +7,12 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { MailLinkRoutingModule } from './mail-link-routing.module';
-import { LinkRecieveComponent } from './link-recieve/link-recieve.component';
+import { LinkReceiveComponent } from './link-receive/link-receive.component';
 import { MailLinkComponent } from './mail-link/mail-link.component';
 
 @NgModule({
   declarations: [
-    LinkRecieveComponent,
+    LinkReceiveComponent,
     MailLinkComponent],
   imports: [
     CommonModule,

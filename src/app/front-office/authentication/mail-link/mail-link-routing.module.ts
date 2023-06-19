@@ -1,25 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LinkRecieveComponent } from './link-recieve/link-recieve.component';
+import { LinkReceiveComponent } from './link-receive/link-receive.component';
 import { MailLinkComponent } from './mail-link/mail-link.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'link-recieve', pathMatch: 'full' },
-  {
-    path: '',
-    component: LinkRecieveComponent
-  },
+  { path: '', redirectTo: 'link-receive', pathMatch: 'full' },
   {
     path: 'mail-confirm',
     component: MailLinkComponent
   },
   {
-    path: 'link-recieve',
-    component: LinkRecieveComponent
+    path: 'link-receive',
+    component: LinkReceiveComponent
   },
   {
     path: '**',
-    component: LinkRecieveComponent
+    redirectTo: 'link-receive', pathMatch: 'full'
   },
 ]
 @NgModule({

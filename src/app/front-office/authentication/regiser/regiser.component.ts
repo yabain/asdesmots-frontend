@@ -106,7 +106,7 @@ export class RegiserComponent implements OnInit {
       'field_email': ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])],
-      'field_profilPicture': ['assets/img/ynkap-user-profile.png'],
+      'field_profilPicture': ['https://asdesmots.yaba-in.com/assets/img/ynkap-user-profile.png'],
       'field_country': ['', Validators.required],
       'field_location': ['', Validators.required],
       'field_agree': ['', Validators.required],

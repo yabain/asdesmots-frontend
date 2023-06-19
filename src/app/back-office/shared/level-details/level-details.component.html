@@ -11,38 +11,38 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.firstName' | translate }}
-                                        :</b></label>
+                                <label for="id" class="col-sm-3 col-form-label input-label"><b>
+                                        Id :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.firstName}}" disabled>
+                                    <input type="text" class="form-control" id="id" placeholder=""
+                                        value="{{levelData.id}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.lastName' | translate }}
+                                        {{'words.level' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.lastName}}" disabled>
+                                        value="{{levelData.name}}" disabled>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label for="wordsCount" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'words.wordsCount' | translate }}
+                                        :</b></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="wordsCount" placeholder=""
+                                        value="{{levelData.wordsCount}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.creationDate' | translate }}
+                                        {{'description' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <label for="name" class="col-sm-3 col-form-label input-label"><b> Bio
-                                        :</b></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.bio}}" disabled>
+                                    <input type="text" class="form-control" id="description" placeholder=""
+                                        value="{{levelData.description}}" disabled>
                                 </div>
                             </div>
                         </form>
@@ -63,38 +63,38 @@
                     <div class="card-body">
                         <form>
                             <div class="row form-group">
-                                <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.firstName' | translate }}
-                                        :</b></label>
+                                <label for="id" class="col-sm-3 col-form-label input-label"><b>
+                                        Id :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.firstName}}" disabled>
+                                    <input type="text" class="form-control" id="id" placeholder=""
+                                        value="{{levelData.id}}">
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.lastName' | translate }}
+                                        {{'words.level' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.lastName}}" disabled>
+                                        value="{{levelData.name}}">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label for="wordsCount" class="col-sm-3 col-form-label input-label"><b>
+                                        {{'words.wordsCount' | translate }}
+                                        :</b></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="wordsCount" placeholder=""
+                                        value="{{levelData.wordsCount}}">
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <label for="name" class="col-sm-3 col-form-label input-label"><b>
-                                        {{'user.creationDate' | translate }}
+                                        {{'description' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <label for="name" class="col-sm-3 col-form-label input-label"><b> Bio
-                                        :</b></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" placeholder=""
-                                        value="{{userData.bio}}" disabled>
+                                    <input type="text" class="form-control" id="description" placeholder=""
+                                        value="{{levelData.description}}">
                                 </div>
                             </div>
                         </form>

@@ -1,5 +1,139 @@
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <!-- <h3 class="page-title">{{'words.word' | translate }}s</h3> -->
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'words.level' | translate }}</a></li>
+        <li class="breadcrumb-item active" *ngIf="level">{{ level.name }}</li>
+      </ul>
+    </div>
+    <div class="col-auto">
+      <a [routerLink]="'/words/add-word'" class="btn btn-primary me-2"
+        style="color: #035858 !important; background-color: #ffff !important;">
+        <i class="fas fa-plus"></i>
+      </a>
+      <a (click)="refreshList()" class="btn btn-primary me-2"
+        style="color: #035858 !important; background-color: #ffff !important;">
+        <i class="fas fa-refresh"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+
 <div class="row">
   <div class="col-sm-12">
-    <app-progress-indeterminate></app-progress-indeterminate>
+    <div class="card card-table">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table datatable class="table table-stripped table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>{{'words.word' | translate }}s</th>
+                <th>{{'description' | translate }}</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <div class="row text-center" *ngIf="wating">
+              <div class="col-sm-12">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+            </div>
+            <tbody *ngIf="!wating">
+              <tr *ngFor="let word of wordsList; let i = index" (click)="wordData = word" data-bs-toggle="modal"
+                data-bs-target="#details">
+                <td>{{ word.name }}</td>
+                <td>{{ word.description }}</td>
+                <td class="text-end">
+                  <a (click)="tempId = word.name" data-bs-toggle="modal" data-bs-target="#changeStatus" [ngClass]="
+                          word.isDisabled === false
+                            ? 'bg-danger-light btn btn-sm btn-white'
+                            : 'bg-success-light btn btn-sm btn-white'
+                        " style="margin-right: 10px;">
+                    <i class="fa fa-power-off"></i></a>
+                  <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
+                      class="far fa-edit me-1"></i></a>
+                  <a (click)="tempId = word.firstName" data-bs-toggle="modal" data-bs-target="#delete_word"
+                    class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="delete_word" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </div>
+        <div class="modal-text text-center">
+          <h2>{{'deleteUser' | translate }}</h2>
+          <!-- <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{wordData.name}}</b>? </p> -->
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+          {{'close' | translate }}
+        </button>
+        <!-- <button type="button" class="btn btn-danger" (click)="deleteUser(wordData._id)">
+          <span *ngIf="!waitingResponse">{{'delete' | translate }}</span>
+                  <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt=""
+                          width="30px"></span>
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Tax Modal -->
+
+<div class="modal custom-modal fade" id="details" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="card">
+          <!-- <app-word-details [wordData]="wordData" [isAdmin]="true" [isEditable]="false"></app-word-details> -->
+
+          <div class="text-left">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
+            </button>
+            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{'cancel' | translate }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="deleteword()" data-bs-dismiss="modal">
+          Delete
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="edit" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="card">
+          <app-word-details [isAdmin]="true" [isEditable]="true"></app-word-details>
+
+          <div class="text-left">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
+            </button>
+            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

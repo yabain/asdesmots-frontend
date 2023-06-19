@@ -1,8 +1,9 @@
 
 // user representation
 export class Level {
-  id: string;
+  _id: string;
   name: string;
   description: string;
-  gameLevelId: string;
+  words: any;
+  createAt: string;
 }

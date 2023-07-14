@@ -274,7 +274,7 @@ export class ApiService {
       endpoint += '?' + req;
     }
     console.log(this.url + '/' + endpoint);
-    return this.http.get(this.url + '/' + endpoint, { 'headers': options });
+    return this.http.get(this.url + '/' + endpoint, { 'headers': options , });
   }
 
   // HTTP post

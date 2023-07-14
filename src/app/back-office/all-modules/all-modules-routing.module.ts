@@ -37,6 +37,16 @@ const routes: Routes = [
 
       },
       {
+        path: 'arcarde',
+        loadChildren: ()=> import('./arcarde/arcarde.module').then((m)=>m.ArcardeModule),
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'undercompetition',
+        loadChildren: ()=> import('./undercompetition/undercompetition.module').then((m)=> m.UndercompetitionModule),
+        canActivate: [AuthenticationGuard]
+      },
+      {
         path: 'setting',
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),

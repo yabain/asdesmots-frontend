@@ -42,6 +42,8 @@ export class UserDetailsComponent implements OnInit, OnChanges {
       this.userData = this.userService.getLocalStorageUser();
       console.log("user details0: ", this.userData);
     }
+
+    console.log('user details');
   }
 
   // splitTime(userDateReg:any){

@@ -9,7 +9,7 @@ export const environment = {
     // url:  'http://srv.yaba-in.com:3000',
     // urlProd:  'http://srv.yaba-in.com:3000'
     url:  'https://asdesmots-api.yaba-in.com',
-    urlProd:  'https://asdesmots-api.yaba-in.com'
+    urlProd:  'https://asdesmots-api.yaba-in.com/'
 };
 
 /*

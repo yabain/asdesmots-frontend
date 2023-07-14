@@ -117,7 +117,18 @@
 				<li [class.active]="base === 'words'">
 					<a [routerLink]="'/words/words-list'"><i data-feather="file-text"></i>
 						<span>{{'words.word' | translate}}</span></a>
+				</li>
+
+				<li [class.active]="base === 'arcarde'">
+					<a [routerLink]="'arcarde'"><i class="fa fa-star-half" aria-hidden="true"></i>
+						<span>{{'Arcarde' | translate}}</span></a>
+				</li>
+
+				<li [class.active]="base === 'undercompetition'">
+					<a [routerLink]="'undercompetition'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+						<span>{{'Sous-Competition' | translate}}</span></a>
 				</li><br><br>
+
 				<li [class.active]="base === 'setting'">
 					<a [routerLink]="'setting/profile'"><i data-feather="settings"></i> <span>{{'settings' |
 							translate}}</span></a>

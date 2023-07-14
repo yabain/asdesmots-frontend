@@ -41,6 +41,7 @@ export class WordDetailsComponent implements OnInit, OnChanges {
       this.userData = this.userService.getLocalStorageUser();
       console.log("user details1: ", this.userData);
     }
+    console.log('user details');
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userData && this.generalForm) {

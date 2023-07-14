@@ -23,4 +23,9 @@ export class User {
   authType: string;
   role: [];
   userSetting: [];
+
+
+
+
+  _id: string;
 }

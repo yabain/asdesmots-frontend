@@ -16,20 +16,26 @@ export class ArcardeComponent implements OnInit {
               private translate: TranslateService,
               public userServ:  UserService,
               private translationService: TranslationService,  
-              ) { this.arcadeServ.initFormControl() }
+              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde()}
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
-
+    this.loadAllArcarde();
     setTimeout(()=>{
         this.loadAllUser();
     }, 2500);
 
-    console.log('arcarde load');
   }
 
   loadArcardeCurrentUser(){
-    this.arcadeServ.loadArcade();
+    this.arcadeServ.loadArcade();//user arcarde
+
+  }
+
+  loadAllArcarde(){
+      if(this.arcadeServ.listAllArcarde.length == 0){
+          this.arcadeServ.loadAllArcarde();
+      }
   }
 
   async loadAllUser(){
@@ -44,8 +50,28 @@ export class ArcardeComponent implements OnInit {
   }
 
   doUnsuscription(){
-     // this.arcadeServ.UnsuscribeUserToAcarde({ userID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData.id, localisation: this.arcardeData.name});
-     console.log('user id', this.userServ.getLocalStorageUser()._id)
+     this.arcadeServ.UnsuscribeUserToAcarde({ userID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData._id});
+   }
+
+   createArcarde(){
+    if(this.arcadeServ.formControlCreateArcarde.valid){
+      this.arcadeServ.createNewArcarde()
+
+    }
+   }
+
+   doDelete(){
+      this.arcadeServ.deleteArcarde(this.arcardeData._id);
+   }
+
+   resetFormCreation(){
+      this.arcadeServ.formControlCreateArcarde.reset();
+      this.arcadeServ.isCreationDone = false;
+   }
+
+   resetFormSuscribtion(){
+      this.arcadeServ.formControlSuscription.reset();
+      this.arcadeServ.unsuscriptionDone = false;
    }
 
    refresh(){

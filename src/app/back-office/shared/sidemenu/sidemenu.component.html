@@ -127,6 +127,11 @@
 				<li [class.active]="base === 'undercompetition'">
 					<a [routerLink]="'undercompetition'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 						<span>{{'Sous-Competition' | translate}}</span></a>
+				</li>
+				
+				<li [class.active]="base === 'role'">
+					<a [routerLink]="'/role/list'"><i class="fa fa-wrench" aria-hidden="true"></i>
+						<span>{{'Role' | translate}}</span></a>
 				</li><br><br>
 
 				<li [class.active]="base === 'setting'">

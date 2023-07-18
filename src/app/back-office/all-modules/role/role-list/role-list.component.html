@@ -1,0 +1,42 @@
+<div class="text-center" *ngIf="roleService.waitingResponse">
+    <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px">
+</div>
+
+<div class="row" *ngIf="!roleService.waitingResponse" >
+    <div class="col-sm-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable class="table table-stripped table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Description </th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let role of roleService.listRole; let i = index"
+                  (click)="roleChoose = role"
+                  >
+                  <td>
+                    <h2 class="table-avatar">
+                        <span> {{ role.name }} </span>
+                    </h2>
+                  </td>
+                  <td>{{ role.description }}</td>
+            
+                  <td class="col-auto text-end">
+                    <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
+                        class="far fa-edit me-1"></i></a>
+                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="deleteRole(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

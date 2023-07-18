@@ -21,7 +21,8 @@ export class UserService {
   public static isUser = true;
 
   listUser: User[] = [];
-
+  listUsers: User[] = [];
+  
   params: any;
   userData: any;
 
@@ -469,6 +470,7 @@ export class UserService {
         .subscribe(result => {
           console.log("users-- -refresh: ", result);
           let tab: any = result.data;
+          this.listUsers = tab;
           // console.log("users-- -refresh: ", result.data);
           // for (let i = 0; i < tab.length; i++) {
           //   tab[i] = this.parseDataFromApi(tab[i]);

@@ -82,7 +82,7 @@ export class WordsService {
 
   // permet d'update les infos d'un user
   updateWord(wordId: any, wordData?: any): Promise<any> {
-    console.log("upsate user: ", wordData);
+    console.log("update user: ", wordData);
 
     return new Promise((resolve, reject) => {
 
@@ -169,9 +169,10 @@ export class WordsService {
   //recuperer les informations d'un utilisateur
   getWordListBylevel(levelId): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      // let word: Word = this.wordsList.find((u) => u.gameLevelId == levelId);
-      // if (word != undefined) resolve(word);
-      // else {
+      let wordsList = JSON.parse(localStorage.getItem(levelId));
+      // let wordList: Word = this.wordsList.find((u) => u.gameLevelId == levelId);
+      if (wordsList != undefined) resolve(wordsList);
+      else {
       this.api.get(`gamelevel/${levelId}/words`, {
         'Authorization': 'Bearer ' + this.api.getAccessToken(),
       }).subscribe(response => {
@@ -184,7 +185,7 @@ export class WordsService {
         this.errorsService.errorsInformations(error, "get word's list", "0")
         reject(error);
       })
-      // }
+      }
     })
   }
 
@@ -206,4 +207,5 @@ export class WordsService {
     });
 
   }
+  
 }

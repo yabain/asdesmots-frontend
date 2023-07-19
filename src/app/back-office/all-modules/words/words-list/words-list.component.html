@@ -26,7 +26,7 @@
     <div class="card card-table">
       <div class="card-body">
         <div class="table-responsive">
-          <table datatable class="table table-stripped table-hover">
+          <table datatable class="table table-stripped table-hover" *ngIf="!wating">
             <thead class="thead-light">
               <tr>
                 <th>{{'words.word' | translate }}s</th>
@@ -34,22 +34,17 @@
                 <th class="text-end">Actions</th>
               </tr>
             </thead>
-            <div class="row text-center" *ngIf="wating">
-              <div class="col-sm-12">
-                <app-progress-indeterminate></app-progress-indeterminate>
-              </div>
-            </div>
-            <tbody *ngIf="!wating">
+            <tbody *ngIf="haveToShow">
               <tr *ngFor="let word of wordsList; let i = index" (click)="wordData = word" data-bs-toggle="modal"
                 data-bs-target="#details">
                 <td>{{ word.name }}</td>
                 <td>{{ word.description }}</td>
                 <td class="text-end">
                   <a (click)="tempId = word.name" data-bs-toggle="modal" data-bs-target="#changeStatus" [ngClass]="
-                          word.isDisabled === false
-                            ? 'bg-danger-light btn btn-sm btn-white'
-                            : 'bg-success-light btn btn-sm btn-white'
-                        " style="margin-right: 10px;">
+                            word.isDisabled === false
+                              ? 'bg-danger-light btn btn-sm btn-white'
+                              : 'bg-success-light btn btn-sm btn-white'
+                          " style="margin-right: 10px;">
                     <i class="fa fa-power-off"></i></a>
                   <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
                       class="far fa-edit me-1"></i></a>
@@ -58,6 +53,30 @@
                 </td>
               </tr>
             </tbody>
+            <tbody *ngIf="!haveToShow">
+              <tr>
+                <td></td>
+                <td class="text-center">
+                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                  <br>{{'words.noWords' | translate}}
+                </td>
+                <td></td>
+              </tr>                
+            </tbody>
+          </table>
+          <table datatable class="table table-stripped table-hover" *ngIf="wating">
+            <thead class="thead-light">
+              <tr>
+                <th>{{'words.word' | translate }}s</th>
+                <th>{{'description' | translate }}</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <div class="row text-center">
+              <div class="col-sm-12">
+                <app-progress-indeterminate></app-progress-indeterminate>
+              </div>
+            </div>
           </table>
         </div>
       </div>
@@ -124,7 +143,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="card">
-          <app-word-details [isAdmin]="true" [isEditable]="true"></app-word-details>
+          <!-- <app-word-details [isAdmin]="true" [isEditable]="true"></app-word-details> -->
 
           <div class="text-left">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

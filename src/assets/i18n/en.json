@@ -285,10 +285,13 @@
         "advence": "Advence",
         "hard": "Hard",
         "wordStat": "escription in french",
-        "addNewWords": "Add a new word",
+        "addNewWords": "Add a word",
+        "addNewLevel": "Add a level",
         "wordInFr": "Word in french",
         "wordInEn": "Word in english",
         "wordDescriptionEn": "Description in english",
-        "wordDescriptionFr": "Description in french"
+        "wordDescriptionFr": "Description in french",
+        "whichLevel": "What level do you want to transfer his words to",
+        "noWords": "No words to show"
     }
 }

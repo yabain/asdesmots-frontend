@@ -19,8 +19,14 @@ export class WordsComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.scrollToTop();
 
   }
+  
+scrollToTop(): void {
+  window.scrollTo(0, 0);
+}
+
   refreshList(){
     this.wating = true;
     this.userService.getAllUsers()

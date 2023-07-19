@@ -79,6 +79,34 @@ export class LevelService {
 
   }
 
+  deleteLevel(level): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      const headers = {
+        'Authorization': 'Bearer ' + this.api.getAccessToken(),
+        'Content-Type': 'application/json',
+      };
+
+      const params = {
+        'gamelevelID': level._id,
+      };
+
+      this.api.delete(`gamelevel/${level._id}`, headers)
+        .subscribe((response: any) => {
+          console.log('Level deleted', response);
+          this.getAllLevels();
+          if (response.statusCode === 200) {
+            this.toastr.success("Level has been deleted successfully", 'Success', { timeOut: 5000 });
+          }
+          resolve(response);
+        },(error: any) => {
+          this.errorsService.errorsInformations(error, "delete level");
+          reject(error);
+        });
+    });
+
+  }
+
   // permet d'update les infos d'un user
   updateLevel(levelId: any, levelData?: any): Promise<any> {
     console.log("upsate user: ", levelData);
@@ -108,7 +136,7 @@ export class LevelService {
   }
 
   //recuperer les informations d'un utilisateur
-  getLevelById(id: String): Promise<any> {
+  getLevelById(id): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let level: Level = JSON.parse(localStorage.getItem('levels-list')).find((u) => u._id == id);
       if (level != undefined) resolve(level);
@@ -117,8 +145,10 @@ export class LevelService {
           'Authorization': 'Bearer ' + this.api.getAccessToken(),
 
         }).subscribe(success => {
-          resolve(success);
+          localStorage.setItem(id, JSON.stringify(success.data));
+          resolve(success.data);
         }, error => {
+          console.log(error);
           this.errorsService.errorsInformations(error, 'get level', '0');
           reject(error);
         })

@@ -34,7 +34,8 @@ export class SidemenuComponent implements OnInit {
   page;
   url;
   curentLevel;
-  levelForm: FormGroup
+  levelForm: FormGroup;
+  deleteLevelForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -48,47 +49,36 @@ export class SidemenuComponent implements OnInit {
     private formLog: FormBuilder,
   ) {
 
-    router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        if (event instanceof NavigationStart) {
-          this.splitVal = event.url.split('/');
-          this.base = this.splitVal[1];
-          this.page = this.splitVal[2];
-          this.curentLevel = this.splitVal[3];
-          console.log("splitVal: ", this.splitVal)
-        }
-      }
-    });
-    this.url = location.path();
-    if (this.url) {
-      this.splitVal = this.url.split('/');
-      this.base = this.splitVal[1];
-      this.page = this.splitVal[2];
-      if (this.splitVal[3] !== undefined) {
-        this.curentLevel = this.splitVal[3];
-        console.log("splitUrl1: ", this.url)
-      } else {
-        this.curentLevel = 'sdfsdfsd';
-      }
-    }
+    // router.events.subscribe((event: Event) => {
+    //   if (event instanceof NavigationStart) {
+    //     if (event instanceof NavigationStart) {
+    //       this.splitVal = event.url.split('/');
+    //       this.base = this.splitVal[1];
+    //       this.page = this.splitVal[2];
+    //       this.curentLevel = this.splitVal[3];
+    //       console.log("splitVal: ", this.splitVal)
+    //     }
+    //   }
+    // });
+    // this.url = location.path();
+    // if (this.url) {
+    //   this.splitVal = this.url.split('/');
+    //   this.base = this.splitVal[1];
+    //   this.page = this.splitVal[2];
+    //   if (this.splitVal[3] !== undefined) {
+    //     this.curentLevel = this.splitVal[3];
+    //     console.log("splitUrl1: ", this.url)
+    //   } else {
+    //     this.curentLevel = 'sdfsdfsd';
+    //   }
+    // }
 
-    console.log("la liste des level00: ", JSON.parse(localStorage.getItem('levels-list')));
-    if (localStorage.getItem('evels-list')) {
-      this.levelList = localStorage.getItem('levels-list');
-    }
-    else {
-      this.waitingResponse = true;
-      this.levelService.getAllLevels()
-        .then((result) => {
-          this.waitingResponse = false;
-          this.levelList = result;
-        });
-    }
+    this.getLevelList();
   }
 
   ngOnInit() {
     this.translate.use(this.translationService.getLanguage());
-    this.levels = localStorage.getItem('levels-list');
+    this.getLevelList();
     this.levelForm = this.formLog.group({
       'name': ['', Validators.required
       ],
@@ -97,6 +87,15 @@ export class SidemenuComponent implements OnInit {
         Validators.minLength(4)])
       ]
     });
+
+    this.deleteLevelForm = this.formLog.group({
+      'levelDataId': [''],
+      'groupHeriterId': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])
+      ]
+    });
+
   }
 
   navigateToLevel(levelId) {
@@ -113,12 +112,36 @@ export class SidemenuComponent implements OnInit {
       .then(() => {
         this.submitted = false;
         this.waitingResponse = false;
+        this.refreshList();
         $('#cancel-btn1').click();
       })
       .catch((error) => {
         this.submitted = false;
         this.waitingResponse = false;
-      });;
+      });
+  }
+
+  deleteLevel(){
+    this.deleteLevelForm.value.levelDataId = this.levelData._id;
+
+    console.log(this.deleteLevelForm.value)
+    if (this.deleteLevelForm.invalid) {
+      return;
+    }
+
+    this.waitingResponse = true
+    console.log('deleteLevelForm: ', this.deleteLevelForm.value);
+    this.levelService.deleteLevel(this.deleteLevelForm.value)
+      .then(() => {
+        this.submitted = false;
+        this.waitingResponse = false;
+        this.refreshList();
+        $('#cancel-btn').click();
+      })
+      .catch((error) => {
+        this.submitted = false;
+        this.waitingResponse = false;
+      });
   }
 
   navigate(name: any) {
@@ -130,17 +153,35 @@ export class SidemenuComponent implements OnInit {
     this.waitingResponse = true;
     this.levelService.getAllLevels()
       .then((result) => {
-        // this.customers = JSON.parse(localStorage.getItem('users-list'));
-        this.waitingResponse = true;
-        setTimeout(() => {
-          this.waitingResponse = false;
-        }, 3000);
+        this.levelList = result;
+        this.waitingResponse = false;
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
         this.toastr.error(error.message, 'Error', { timeOut: 10000 });
         this.waitingResponse = false;
       });
+  }
+
+  getLevelList() {
+    console.log("la liste des level00: ", JSON.parse(localStorage.getItem('levels-list')));
+    if (JSON.parse(localStorage.getItem('levels-list'))) {
+      this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+    }
+    else {
+      this.waitingResponse = true;
+      this.levelService.getAllLevels()
+        .then((result) => {
+          this.waitingResponse = false;
+          this.levelList = result;
+        })
+        .catch((error) => {
+          console.error('Erreur: ', error.message);
+          this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+          this.waitingResponse = false;
+        });;
+    }
+
   }
 
   get f() {

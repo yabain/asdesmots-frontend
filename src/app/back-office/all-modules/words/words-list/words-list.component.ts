@@ -118,21 +118,33 @@ export class WordsListComponent implements OnInit {
 
   filter() { }
 
-  deleteWord(wordId) {
-    this.wating = true;
-    this.wordsService.deleteWord(wordId)
-      .then((result) => {
-        // setTimeout(() => {
-        this.refreshList();
-        this.wating = false;
-        // }, 3000);
-      })
-      .catch((error) => {
-        console.error('Erreur: ', error.message);
-        this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-        this.wating = false;
-      });
-  }
+  // deleteWord(wordId) {
+  //   this.wating = true;
+  //   this.wordsService.deleteWord(wordId)
+  //     .then((result) => {
+  //       this.refreshList();
+  //       this.wating = false;
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erreur: ', error.message);
+  //       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+  //       this.wating = false;
+  //     });
+  // }
+
+  // addWord(wordData) {
+  //   this.wating = true;
+  //   this.wordsService.createWord(wordData)
+  //     .then((result) => {
+  //       this.refreshList();
+  //       this.wating = false;
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erreur: ', error.message);
+  //       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+  //       this.wating = false;
+  //     });
+  // }
 
   findLevelById(levelId){
     this.wating = true;

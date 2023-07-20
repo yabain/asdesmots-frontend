@@ -48,7 +48,6 @@ export class LevelService {
     private toastr: ToastrService,
     private errorsService: ErrorsService
   ) {
-
   }
 
   createLevel(level): Promise<any> {
@@ -99,7 +98,7 @@ export class LevelService {
             this.toastr.success("Level has been deleted successfully", 'Success', { timeOut: 5000 });
           }
           resolve(response);
-        },(error: any) => {
+        }, (error: any) => {
           this.errorsService.errorsInformations(error, "delete level");
           reject(error);
         });
@@ -160,38 +159,42 @@ export class LevelService {
   getAllLevels(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
+      this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+      if (this.levelList != undefined) { resolve(this.levelList) }
+      else {
+        const headers = {
+          'Authorization': 'Bearer ' + this.api.getAccessToken(),
+          'Content-Type': 'application/json',
+        };
+
+        this.api.get('gamelevel', headers)
+          .subscribe(result => {
+            // result.data = this.levelListfixed; // prendre les valeurs statique de levelListFixed car aucune valeurs venant du backend
+            this.levelList = result.data;
+            console.log("resultat de get list: ", result.data);
+            // let tab: any = result.data;
+            // for (let i = 0; i < tab.length; i++) {
+            //   tab[i] = this.parseLevelFromApi(tab[i]);
+            //   console.log('level ', i, ': ', tab[i]);
+            // }
+            localStorage.setItem("levels-list", JSON.stringify(this.levelList));
+            resolve(result.data);
+          }, error => {
+            this.errorsService.errorsInformations(error, 'get level list', '0')
+            reject(error);
+          });
       };
+  })
+}
 
-      this.api.get('gamelevel', headers)
-        .subscribe(result => {
-          // result.data = this.levelListfixed; // prendre les valeurs statique de levelListFixed car aucune valeurs venant du backend
-          this.levelList = result.data;
-          console.log("resultat de get list: ", result.data);
-          // let tab: any = result.data;
-          // for (let i = 0; i < tab.length; i++) {
-          //   tab[i] = this.parseLevelFromApi(tab[i]);
-          //   console.log('level ', i, ': ', tab[i]);
-          // }
-          localStorage.setItem("levels-list", JSON.stringify(this.levelList));
-          resolve(result.data);
-        }, error => {
-          this.errorsService.errorsInformations(error, 'get level list', '0')
-          reject(error);
-        });
-    });
-  }
+parseLevelFromApi(levelApiData: Record<string | number, any>): Level {
+  let level: Level = new Level();
+  level._id = levelApiData.id;
+  level.name = levelApiData.name;
+  level.description = levelApiData.description;
+  level.words = levelApiData.words;
+  level.createAt = levelApiData.createAt;
 
-  parseLevelFromApi(levelApiData: Record<string | number, any>): Level {
-    let level: Level = new Level();
-    level._id = levelApiData.id;
-    level.name = levelApiData.name;
-    level.description = levelApiData.description;
-    level.words = levelApiData.words;
-    level.createAt = levelApiData.createAt;
-
-    return level;
-  }
+  return level;
+}
 }

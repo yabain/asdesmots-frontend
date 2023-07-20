@@ -36,6 +36,7 @@ export class SidemenuComponent implements OnInit {
   curentLevel;
   levelForm: FormGroup;
   deleteLevelForm: FormGroup;
+  wordToSpeak: string = '';
 
   constructor(
     private router: Router,
@@ -164,7 +165,7 @@ export class SidemenuComponent implements OnInit {
   }
 
   getLevelList() {
-    console.log("la liste des level00: ", JSON.parse(localStorage.getItem('levels-list')));
+    // console.log("la liste des level00: ", JSON.parse(localStorage.getItem('levels-list')));
     if (JSON.parse(localStorage.getItem('levels-list'))) {
       this.levelList = JSON.parse(localStorage.getItem('levels-list'));
     }
@@ -186,6 +187,13 @@ export class SidemenuComponent implements OnInit {
 
   get f() {
     return this.levelForm.controls;
+  }
+
+
+  speak() {
+    const utterance = new SpeechSynthesisUtterance(this.wordToSpeak);
+    utterance.lang = "fr-FR";
+    speechSynthesis.speak(utterance);
   }
 
 }

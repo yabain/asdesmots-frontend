@@ -292,6 +292,8 @@
         "wordDescriptionEn": "Description in english",
         "wordDescriptionFr": "Description in french",
         "whichLevel": "What level do you want to transfer his words to",
-        "noWords": "No words to show"
+        "noWords": "No words to show",
+        "inEnglish": "in english",
+        "inFrench": "in french"
     }
 }

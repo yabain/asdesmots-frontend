@@ -292,6 +292,8 @@
         "wordDescriptionEn": "Description en englais",
         "wordDescriptionFr": "Description en français",
         "whichLevel": "Dans quel niveau voulez-vous transférer ses mots",
-        "noWords": "Aucun mots à afficher"
+        "noWords": "Aucun mots à afficher",
+        "inEnglish": "en englais",
+        "inFrench": "en français"
     }
 }

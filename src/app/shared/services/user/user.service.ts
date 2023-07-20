@@ -168,6 +168,7 @@ export class UserService {
     });
   }
 
+  
   parseDataFromApi(userApiData: Record<string | number, any>): User {
     let user: User = new User();
     user.id = userApiData._id;

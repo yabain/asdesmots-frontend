@@ -106,9 +106,12 @@ export class LevelService {
     console.log("upsate user: ", levelData);
 
     return new Promise((resolve, reject) => {
-      this.params = levelData;
+      let params = {
+        "name": levelData.name,
+        "description": levelData.description,
+      }
 
-      this.api.put(`gamelevel/${levelId}`, this.params, this.headers)
+      this.api.put(`gamelevel/gamelevel/${levelId}`, params, this.headers)
         .subscribe((response: any) => {
           this.getAllLevels();
           if (response.statusCode === 201) {

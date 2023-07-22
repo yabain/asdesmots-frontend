@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import {
   Event,
   NavigationStart,
@@ -27,6 +27,7 @@ export class SidemenuComponent implements OnInit {
   levelList?: any = '';
   levelData?: any = '';
   public levelControler: any
+  waiting: boolean = false;
 
   name: any
   splitVal;
@@ -81,9 +82,11 @@ export class SidemenuComponent implements OnInit {
     this.translate.use(this.translationService.getLanguage());
     this.getLevelList();
     this.levelForm = this.formLog.group({
-      'name': ['', Validators.required
+      '_id': [this.levelData._id
       ],
-      'description': ['', Validators.compose([
+      'name': [this.levelData.name, Validators.required
+      ],
+      'description': [this.levelData.description, Validators.compose([
         Validators.required,
         Validators.minLength(4)])
       ]
@@ -96,7 +99,25 @@ export class SidemenuComponent implements OnInit {
         Validators.minLength(4)])
       ]
     });
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.wordData && this.levelForm) {
+      this.levelData = changes.levelData.currentValue;
+      this.levelForm.controls._id.setValue(this.levelData._id);
+      this.levelForm.controls.name.setValue(this.levelData.name);
+      this.levelForm.controls.description.setValue(this.levelData.description);
+    }
+  }
+
+  updateLevelForm(level) {
+    this.levelForm.controls._id.setValue(level._id);
+    this.levelForm.controls.name.setValue(level.name);
+    this.levelForm.controls.description.setValue(level.description);
+  }
+
+  resetForm() {
+    this.levelForm.reset();
   }
 
   navigateToLevel(levelId) {
@@ -187,5 +208,28 @@ export class SidemenuComponent implements OnInit {
 
   get f() {
     return this.levelForm.controls;
+  }
+
+  updateLevel(){
+    if (this.levelForm.invalid) {
+      return;
+    }
+    let updateData = {
+      "name": this.levelForm.value.name,
+      "description": this.levelForm.value.description,
+      "_id": this.levelData._id
+    }
+    console.log("updateData: ", updateData);
+    this.waiting = true;
+    console.log("General datas: ", this.levelForm.value);
+    this.levelService.updateLevel(this.levelForm.value._id, this.levelForm.value)
+      .then((result) => {
+        this.waiting = false;
+        this.refreshList();
+        $('#close-modal').click();
+      })
+      .catch((error) => {
+        this.waiting = false;
+      });
   }
 }

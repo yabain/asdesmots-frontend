@@ -110,7 +110,7 @@ export class AddWordsComponent implements OnInit {
           this.levelService.getAllLevels(true);
           this.addingWords = false;
           this.toastr.success('English word was added', 'Done', { timeOut: 10000 });
-          this.wordEnForm.reset();
+          this.wordEnForm.reset(); // reset form after submit
         setTimeout(() => {location.reload();}, 1000);
         })
         .catch((error) => {

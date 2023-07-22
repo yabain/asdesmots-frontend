@@ -219,8 +219,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateForm(word) {
-    console.log("777477: ", word)
-    console.log("wordData 11: ", this.wordData)
     this.wordForm.controls._id.setValue(word._id);
     this.wordForm.controls.name.setValue(word.name);
     this.wordForm.controls.description.setValue(word.description);

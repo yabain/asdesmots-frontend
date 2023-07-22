@@ -4,11 +4,11 @@ import { AllModulesComponent } from 'src/app/back-office/all-modules/all-modules
 import { AuthenticationGuard } from 'src/app/services/guard/auth/authentication.guard';
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "index",
-    pathMatch: "full",
-  },
+  // {
+  //   path: "",
+  //   redirectTo: "index",
+  //   pathMatch: "full",
+  // },
   {
     path: "",
     component: AllModulesComponent,

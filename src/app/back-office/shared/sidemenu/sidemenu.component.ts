@@ -59,8 +59,6 @@ export class SidemenuComponent implements OnInit {
         this.splitVal = event.url.split('/');
         this.base = this.splitVal[1];
         this.page = this.splitVal[2];
-        console.log('this base', this.base);
-        console.log('this.page', this.page);
       }
     });
 

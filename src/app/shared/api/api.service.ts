@@ -309,6 +309,7 @@ export class ApiService {
   // HTTP delete
   delete(endpoint: string, options?: any): Observable<any> {
     const headers = options;
+    console.log('delete url request', this.url + '/' + endpoint)
     return this.http.delete(this.url + '/' + endpoint, {
       headers
     });

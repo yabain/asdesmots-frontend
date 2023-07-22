@@ -15,27 +15,31 @@ export class WordsService {
 
   params: any;
   wordData: any;
+  headers = {
+    'Authorization': 'Bearer ' + this.api.getAccessToken(),
+    'Content-Type': 'application/json',
+  }
 
   wordsList: Word[] = [];
   wordsListfixed: Word[] = [
     {
-      id: 'sdfsdfsdfsdfs',
+      _id: 'sdfsdfsdfsdfs',
       name: 'Maison',
-      gameLevelId: 'jfhdsjklfghdskflhd',
+      createdAt: '',
       description: 'Ici la description du mot',
       type: '80',
     },
     {
-      id: 'sdqhdfhsfghjfgf',
+      _id: 'sdqhdfhsfghjfgf',
       name: 'Hôpital',
-      gameLevelId: 'jfhdsjklfghdskflhd',
+      createdAt: '',
       description: 'Ici la description du mot',
       type: '80',
     },
     {
-      id: 'dfdfgdfgdghjghj,',
+      _id: 'dfdfgdfgdghjghj,',
       name: 'Bouteil',
-      gameLevelId: 'jfhdsjklfghdskflhd',
+      createdAt: '',
       description: 'Ici la description du mot',
       type: '80',
     }
@@ -48,22 +52,18 @@ export class WordsService {
     private errorsService: ErrorsService
   ) { }
 
-  createWord(word: Word): Promise<any> {
+  createWord(word: Word, gameLevelId: string): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-      };
       const params = {
         'name': word.name,
         'description': word.description,
-        'gameLevelId': word.gameLevelId,
         'type': word.type,
+        'gameLevelId': gameLevelId,
       };
 
-      this.api.post('gamelevel/word', params, headers)
+      this.api.post('gamelevel/word', params, this.headers)
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode === 201) {
@@ -77,31 +77,29 @@ export class WordsService {
           reject(error);
         });
     });
-
   }
 
   // permet d'update les infos d'un user
-  updateWord(wordId: any, wordData?: any): Promise<any> {
-    console.log("update user: ", wordData);
-
+  updateWord(wordData: any): Promise<any> {
+    console.log("update word: ", wordData);
     return new Promise((resolve, reject) => {
-
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-      }
-
-      this.params = wordData;
-
-      this.api.put(`gamelevel/word/${wordId}`, this.params, headers)
+      let params = {
+        "name": wordData.name,
+        "description": wordData.description,
+        "type": wordData.type,
+        "gameLevelId": wordData.gameLevelId
+      };
+      this.api.put(`gamelevel/${wordData.gameLevelId}/word/${wordData._id}`, params, this.headers)
         .subscribe((response: any) => {
-          if (response.statusCode === 201) {
-            this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success', { timeOut: 7000 });
-          }
+            this.toastr.success("The word has been updated", 'Success', { timeOut: 7000 });
           console.log("respose: ", response)
           resolve(response);
-        }, (error: any) => {
-          this.errorsService.errorsInformations(error, "update account")
+        }, (error) => {
+          if(error.error.message[0].includes('duplicate key') == true){
+            this.toastr.warning("", 'This word exist', { timeOut: 10000 });
+          } else {
+            this.errorsService.errorsInformations(error, "update word")
+          }
           reject(error);
         });
     });
@@ -111,13 +109,7 @@ export class WordsService {
   getAllWords(): Promise<any> {
     console.log('Get all words.')
     return new Promise((resolve, reject) => {
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-      };
-
-      console.log('Get all words 2.')
-      this.api.get('words', headers)
+      this.api.get('words', this.headers)
         .subscribe(result => {
           // console.log("words-- -refresh: ", result);
           let tab: any = result.data;
@@ -168,51 +160,44 @@ export class WordsService {
 
   //recuperer les informations d'un utilisateur
   getWordListBylevel(levelId, isRefresh?: boolean): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      // let wordList: Word = this.wordsList.find((u) => u.gameLevelId == levelId);
-      if (isRefresh){
-        this.api.get(`gamelevel/${levelId}/words`, {
-          'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        }).subscribe(response => {
-          // response.data = this.wordsListfixed;
-          // this.wordsList = response.data;
-          localStorage.setItem(levelId, JSON.stringify(response.data));
-  
-          resolve(response.data);
-        }, error => {
-          this.errorsService.errorsInformations(error, "get word's list", "0")
-          reject(error);
-        })
-        return;
-      }
-      
-      let wordsList = JSON.parse(localStorage.getItem(levelId));
-      if (wordsList != undefined) resolve(wordsList);
-      else {
-      this.api.get(`gamelevel/${levelId}/words`, {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-      }).subscribe(response => {
-        // response.data = this.wordsListfixed;
-        // this.wordsList = response.data;
-        localStorage.setItem(levelId, JSON.stringify(response.data));
-
-        resolve(response.data);
-      }, error => {
-        this.errorsService.errorsInformations(error, "get word's list", "0")
-        reject(error);
+    if (isRefresh === true) {
+      return new Promise<any>((resolve, reject) => {
+        this.api.get(`gamelevel/${levelId}/words`, this.headers)
+          .subscribe(response => {
+            localStorage.setItem(levelId, JSON.stringify(response.data));
+            resolve(response.data);
+          }, error => {
+            this.errorsService.errorsInformations(error, "get word's list", "0")
+            reject(error);
+          })
       })
-      }
-    })
+    }
+    else {
+      return new Promise<any>((resolve, reject) => {
+        // let wordList: Word = this.wordsList.find((u) => u.gameLevelId == levelId);
+        let wordsList = JSON.parse(localStorage.getItem(levelId));
+        if (wordsList != undefined) resolve(wordsList);
+        else {
+          this.api.get(`gamelevel/${levelId}/words`, this.headers)
+            .subscribe(response => {
+              // response.data = this.wordsListfixed;
+              // this.wordsList = response.data;
+              localStorage.setItem(levelId, JSON.stringify(response.data));
+
+              resolve(response.data);
+            }, error => {
+              this.errorsService.errorsInformations(error, "get word's list", "0")
+              reject(error);
+            })
+        }
+      })
+    }
   }
 
-  deleteWord(word: Word): Promise<any> {
-    const headers = {
-      'Authorization': 'Bearer ' + this.api.getAccessToken(),
-      'Content-Type': 'application/json',
-    };
+  deleteWord(word: Word, gameLevelId: string): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      this.api.delete(`gamelevel/${word.gameLevelId}/words/${word.id}`, headers)
+      this.api.delete(`gamelevel/${gameLevelId}/words/${word._id}`, this.headers)
         .subscribe(response => {
           this.toastr.success('Word was deleted !!', null, { timeOut: 5000 });
           resolve(response);
@@ -224,25 +209,25 @@ export class WordsService {
 
   }
 
-  parseWordFromApi(wordData: Record<string | number, any>): Word{
-      let word = new Word(wordData);
-      word.id = wordData.id;
-      word.name = wordData.name;
-      word.description = wordData.description;
-      word.gameLevelId = wordData.gameLevelId;
-      word.type = word.type;
-      return word;
+  parseWordFromApi(wordData: Record<string | number, any>): Word {
+    let word = new Word(wordData);
+    word._id = wordData.id;
+    word.name = wordData.name;
+    word.description = wordData.description;
+    word.createdAt = wordData.createdAt;
+    word.type = word.type;
+    return word;
   }
 
-  parseWordForApi(wordData){
-    let word : any ={
+  parseWordForApi(wordData) {
+    let word: any = {
       _id: wordData.id,
       name: wordData.name,
       description: wordData.description,
       type: wordData.type
     }
     return word;
-    
+
   }
-  
+
 }

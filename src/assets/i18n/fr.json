@@ -131,6 +131,7 @@
     "to": "sur",
     "wanTo": "Êtes-vous sûr de vouloir ",
     "changeStatus": "Changer le status",
+    "selectLangChange": "Changer sa langue",
     "welcome": "Bienvenue",
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",

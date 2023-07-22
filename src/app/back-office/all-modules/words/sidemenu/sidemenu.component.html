@@ -16,14 +16,12 @@
           <tbody>
             <!-- <tr *ngFor="let word of words; let i = index" (click)="wordData = word" data-bs-toggle="modal" data-bs-target="#details"> -->
             <tr>
-              <td style="text-align: center;">00</td>
-              <td style="text-align: center;">00</td>
-              <td style="text-align: center;">00</td>
+              <td style="text-align: center;">NAN</td>
+              <td style="text-align: center;">NAN</td>
+              <td style="text-align: center;">NAN</td>
             </tr>
           </tbody>
         </table>
-        <!-- <input type="text" [(ngModel)]="wordToSpeak" placeholder="Entrez un mot">
-        <button (click)="speak()">Parler <i class="fas fa-volume-up me-1"></i></button> -->
       </div>
 
       <div class="card">
@@ -51,11 +49,11 @@
                                 </tr>
                             </thead> -->
               <tbody>
-                <tr *ngFor="let level of levelList; let i = index" (click)="navigateToLevel(level._id)"
+                <tr *ngFor="let level of levelList; let i = index"
                   [class.selected]="curentLevel === level._id">
                   <!-- <tr [routerLink]="'/words/words-list'"> -->
-                  <td>{{level.name}}</td>
-                  <td>({{level.words.length}} {{'words.word' | translate }}s)</td>
+                  <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
+                  <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#editLevel"
                       (click)="levelData = level"><i class="far fa-edit me-1"></i></a>

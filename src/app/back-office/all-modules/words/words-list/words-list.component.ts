@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   Event,
   NavigationStart,
@@ -14,21 +14,27 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { WordsService } from 'src/app/shared/services/words/words.service';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
+import { SpeakService } from 'src/app/shared/services/speak/speak.service';
+import { Word } from 'src/app/shared/entities/word';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-words-list',
   templateUrl: './words-list.component.html',
   styleUrls: ['./words-list.component.css']
 })
-export class WordsListComponent implements OnInit {
+export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   public wordsList: any = [];
   errorMessage: any;
   public tempId: any;
   levelId: string = '';
-  wating : boolean = false;
-  wordData?: any = '';
+  waiting: boolean = false;
+  wordData: any = '';
   haveToShow: boolean = false;
   level: Level;
+  wordForm: FormGroup;
+  routerSubscribe: any;
+  levelList = JSON.parse(localStorage.getItem('levels-list'));
   url;
 
   constructor(
@@ -36,145 +42,189 @@ export class WordsListComponent implements OnInit {
     private route: ActivatedRoute,
     private translate: TranslateService,
     private translationService: TranslationService,
+    private formLog: FormBuilder,
     private srvModuleService: AllModulesService,
     private location: Location,
     private wordsService: WordsService,
     private levelService: LevelService,
-    private toastr: ToastrService) {
-      
-    router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.scrollToTop();
-        if (this.route.snapshot.params['id'] != undefined) {
-          this.levelId = this.route.snapshot.params['id'];
-          this.findLevelById(this.levelId);
-          this.getWordListBylevel(this.levelId);
-          console.log("new levelId: ", this.levelId)
-        } else {
-          this.levelId = 'sdfsdfsd';
-        }
-      }
-        
-      // router.events.forEach((event) => {
-      //   if(event instanceof NavigationEnd) {
-          // this.url = location.path();
-          //   if (this.route.snapshot.params['id'] != undefined) {
-          //     this.levelId = this.route.snapshot.params['id'];
-          //     this.getLevelById(this.levelId);
-          //     this.getWordListBylevel(this.levelId);
-          //     console.log("new levelId: ", this.levelId)
-          //   } else {
-          //     this.levelId = 'sdfsdfsd';
-          //   }
-        // }
+    private toastr: ToastrService,
+    private speakService: SpeakService) {
 
-        // NavigationEnd
-        // NavigationCancel
-        // NavigationError
-        // RoutesRecognized
-      // });
-      
+    this.routerSubscribe = router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.waiting = true;
+        this.wordsList = undefined;
+        this.getLevelIdToUrl();
+        this.findLevelById(this.levelId);
+        this.scrollToTop();
+        setTimeout(() => {
+          this.getWordListBylevel(this.levelId);
+        }, 1000);
+      }
     });
   }
 
   ngOnInit(): void {
     this.translate.use(this.translationService.getLanguage());
-    this.levelId = this.route.snapshot.params['id'];
-    console.log('levelId: ' + this.levelId);
-    this.findLevelById(this.levelId);
+    // this.getLevelIdToUrl();
+    // this.findLevelById(this.levelId);
+    // this.getWordListBylevel(this.levelId);
+    console.log("wordData00: ", this.wordData)
 
-    // this.router.events.subscribe((event: Event) => {
-    //   if (event instanceof NavigationStart) {
-    //     if (event instanceof NavigationStart) {
-    //       let splitVal = event.url.split('/');
-    //       this.levelId = splitVal[3];
-    //       console.log("splitVal: ", this.levelId)
-    //     }
-    //   }
-    // });
+    this.wordForm = this.formLog.group({
+      '_id': [this.wordData._id, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'name': [this.wordData.name, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'description': [this.wordData.description, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'gameLevelId': [this.wordData.gamelevelId, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'type': [this.wordData.type, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+    });
+  }
 
-    // this.wordsList = localStorage.getItem('words-list');
-    this.getWordListBylevel(this.levelId);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.wordData && this.wordForm) {
+      this.wordData = changes.wordData.currentValue;
+      this.wordForm.controls._id.setValue(this.wordData._id);
+      this.wordForm.controls.name.setValue(this.wordData.name);
+      this.wordForm.controls.description.setValue(this.wordData.description);
+      this.wordForm.controls.gameLevelId.setValue(this.wordData.gamelevelId);
+    }
+  }
+
+  ngOnDestroy() {
+    this.routerSubscribe.unsubscribe();
   }
 
   scrollToTop(): void {
     window.scrollTo(0, 0);
   }
 
+  getLevelIdToUrl() {
+    if (this.route.snapshot.params['id'] && this.route.snapshot.params['id'] != undefined) {
+      this.levelId = this.route.snapshot.params['id'];
+      console.log("new levelId: ", this.levelId);
+    } else {
+      // this.levelId = JSON.parse(localStorage.getItem('levels-list'))[0]._id;
+      // console.log("first levelId: ", this.levelId);
+      // if (!this.levelId) {
+      //   console.log("no levelId: ", this.levelId);
+      this.haveToShow = false
+      this.waiting = false;
+      // }
+    }
+  }
+
   refreshList() {
-    this.wating = true;
-    this.wordsService.getWordListBylevel(this.levelId)
+    this.waiting = true;
+    this.wordsService.getWordListBylevel(this.levelId, true)
       .then((result) => {
+        this.levelService.getAllLevels(true);
         this.wordsList = JSON.parse(localStorage.getItem(this.levelId));
-        // setTimeout(() => {
-        this.wating = false;
-        // }, 3000);
+        this.waiting = false;
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
-        this.wating = false;
+        this.waiting = false;
       });
   }
 
   filter() { }
 
-  // deleteWord(wordId) {
-  //   this.wating = true;
-  //   this.wordsService.deleteWord(wordId)
-  //     .then((result) => {
-  //       this.refreshList();
-  //       this.wating = false;
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erreur: ', error.message);
-  //       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-  //       this.wating = false;
-  //     });
-  // }
+  deleteWord(word) {
+    this.waiting = true;
+    console.log('Deleting word: ', word);
+    this.wordsService.deleteWord(word, this.levelId)
+      .then((result) => {
+        this.refreshList();
+        this.waiting = false;
+        $('#cancel-btn00').click();
+        setTimeout(() => {location.reload();}, 1000);
+      })
+      .catch((error) => {
+        console.error('Erreur: ', error.message);
+        this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+        this.waiting = false;
+      });
+  }
 
-  // addWord(wordData) {
-  //   this.wating = true;
-  //   this.wordsService.createWord(wordData)
-  //     .then((result) => {
-  //       this.refreshList();
-  //       this.wating = false;
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erreur: ', error.message);
-  //       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-  //       this.wating = false;
-  //     });
-  // }
-
-  findLevelById(levelId){
-    this.wating = true;
-    let level: Level = JSON.parse(localStorage.getItem('levels-list')).find((u) => u._id == levelId);
-    this.level = level
-    if (!this.level) {
+  findLevelById(levelId) {
     this.levelService.getLevelById(levelId)
       .then((response) => {
         this.level = response
-        this.wating = false;
+        // this.waiting = false;
       })
-      .catch((erro) =>{
-        this.wating = false;
+      .catch((erro) => {
+        // this.waiting = false;
       });
+  }
+
+  getWordListBylevel(levelId) {
+    this.waiting = true;
+    console.log('jqhsjdhqj jqhsdjkqhk: ', levelId);
+    if (levelId && levelId != undefined) {
+      this.wordsList = this.wordsService.getWordListBylevel(levelId)
+        .then((result) => {
+          console.log('0000: ', result);
+          if (result.length > 0) {
+            this.haveToShow = true
+          } else { this.haveToShow = false }
+          this.wordsList = result;
+          this.waiting = false;
+        })
+        .catch((error) => {
+          // console.log("55555: ", error);
+          this.toastr.warning('Can not get word list', 'Warning', { timeOut: 20000 });
+          this.haveToShow = false;
+          this.waiting = false;
+        });
+    } else {
+      this.haveToShow = false;
+      this.waiting = false;
     }
   }
 
-  getWordListBylevel(levelId){
-    this.wating = true;
-    this.wordsList = this.wordsService.getWordListBylevel(levelId)
+  speak(word: Word) {
+    if (word.name && word.name != undefined) {
+      this.speakService.speak(word.name, word.type);
+    } else {
+      this.toastr.warning('', "Can't read word");
+    }
+  }
+
+  editeWord() {
+    this.waiting = true;
+    console.log("General datas: ", this.wordForm.value);
+    this.wordsService.updateWord(this.wordForm.value)
       .then((result) => {
-        if (result.length > 0) {
-          this.haveToShow = true
-        } else { this.haveToShow = false }
-        this.wordsList = result;
-        this.wating = false;
+        this.waiting = false;
+        this.refreshList();
+        $('#close-modal').click();
       })
       .catch((error) => {
-        this.wating = false;
+        this.waiting = false;
       });
+  }
 
+  get f() {
+    return this.wordForm.controls;
+  }
+
+  updateForm(word) {
+    console.log("777477: ", word)
+    console.log("wordData 11: ", this.wordData)
+    this.wordForm.controls._id.setValue(word._id);
+    this.wordForm.controls.name.setValue(word.name);
+    this.wordForm.controls.description.setValue(word.description);
+    this.wordForm.controls.gameLevelId.setValue(this.levelId);
+    this.wordForm.controls.type.setValue(word.type);
   }
 }

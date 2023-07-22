@@ -119,8 +119,8 @@
                                 <div class="col-sm-9">
                                     <!-- <input type="text" class="form-control" id="name" placeholder=""
                                         value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled> -->
-                                        <input type="text" class="form-control" id="name" placeholder=""
-                                            value=" {{userData.createdAt  | date:'full'}}" disabled>
+                                    <input type="text" class="form-control" id="name" placeholder=""
+                                        value=" {{userData.createdAt  | date:'full'}}" disabled>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -312,8 +312,9 @@
 
 <div *ngIf="isEditable">
     <div class="card-body" style="padding: 0 !important;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="display: none;" id="close-user-details">
-          {{'close' | translate }}
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="display: none;"
+            id="close-user-details">
+            {{'close' | translate }}
         </button>
         <!-- Form -->
         <form>
@@ -427,8 +428,8 @@
                                 <div class="col-sm-9">
                                     <!-- <input type="text" class="form-control" id="name" placeholder=""
                                         value=" {{creationDate }} {{'at' | translate }} {{creationTime}}" disabled> -->
-                                        <input type="text" class="form-control" id="name" placeholder=""
-                                            value=" {{userData.createdAt  | date:'full'}}" disabled>
+                                    <input type="text" class="form-control" id="name" placeholder=""
+                                        value=" {{userData.createdAt  | date:'full'}}" disabled>
                                 </div>
                             </div>
 
@@ -464,8 +465,7 @@
                                     style="margin-left: 20px;">{{'save' |
                                     translate }} {{'general' | translate
                                     }}</button>
-                                <button *ngIf="waitingResponse" class="btn btn-success"
-                                    style="margin-left: 20px;">
+                                <button *ngIf="waitingResponse" class="btn btn-success" style="margin-left: 20px;">
                                     <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
                                 </button>
                             </div>
@@ -504,13 +504,13 @@
                                 </div>
                             </div> -->
                             <div class="text-end">
-                                <button *ngIf="!waitingResponse" type="submit" class="btn btn-success" style="margin-left: 20px;">{{'save' |
+                                <button *ngIf="!waitingResponse" type="submit" class="btn btn-success"
+                                    style="margin-left: 20px;">{{'save' |
                                     translate }} {{'contact' | translate
                                     }}</button>
-                                    <button *ngIf="waitingResponse" class="btn btn-success"
-                                        style="margin-left: 20px;">
-                                        <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-                                    </button>
+                                <button *ngIf="waitingResponse" class="btn btn-success" style="margin-left: 20px;">
+                                    <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                                </button>
                             </div>
                         </form>
                     </div>

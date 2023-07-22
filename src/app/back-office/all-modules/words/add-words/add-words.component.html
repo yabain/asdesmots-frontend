@@ -1,8 +1,20 @@
+<div class="page-header">
+	<div class="row align-items-center">
+	  <div class="col">
+		<!-- <h3 class="page-title">{{'words.word' | translate }}s</h3> -->
+			<a (click)="backClicked()" class="btn btn-primary me-2"
+			  style="color: #035858 !important; background-color: #ffff !important;">
+			  <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+			</a>
+	  </div>
+	</div>
+  </div>
+
 <div class="row">
 	<div class="col-md-12">
-		<div class="card">
+		<div class="card"  *ngIf="!waitingResponse">
 			<div class="card-body">
-				<h4 class="card-title">{{ 'words.addNewWords' | translate }}</h4><br>
+				<h4 class="card-title text-center">{{ 'words.addNewWords' | translate }}</h4><br>
 				<div class="row">
 					<div class="col-md-6">
 						<form (ngSubmit)="addWords()" [formGroup]="wordEnForm">
@@ -59,7 +71,7 @@
 								<label for="name">{{ 'words.word' | translate }} {{ 'words.inFrench' | translate }}<span
 										class="mandatory">*</span></label>
 								<input class="form-control" type="text" formControlName="name"
-									placeholder="{{ 'words.word' | translate }}" id="name" [ngClass]="{
+									placeholder="{{ 'words.word' | translate }}" id="nameEn" [ngClass]="{
 								  'is-invalid': f['name'].touched && f['name'].invalid
 								}" required />
 								<div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
@@ -105,14 +117,23 @@
 				</div>
 				<div class="text-end mt-4">
 					<div class="text-end mt-4">
-						<button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addWords()">
+						<button *ngIf="!addingWords" type="button" class="btn btn-success" (click)="addWords()">
 							<span> {{'add' | translate }}</span>
 						</button>
-						<button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
+						<button type="button" class="btn btn-success" *ngIf="addingWords" disabled>
 							<span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
 						</button>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div class="card" *ngIf="waitingResponse">
+			<div class="card-body text-center">
+				<h4 class="card-title">{{ 'words.addNewWords' | translate }}</h4><br>
+				<br>
+				<img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+				<br>No level found to add word
 			</div>
 		</div>
 	</div>

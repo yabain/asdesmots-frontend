@@ -133,6 +133,7 @@
     "to": "to",
     "wanTo": "Are you sure want to ",
     "changeStatus": "Change Status",
+    "selectLangChange": "Change language",
     "welcome": "Welcome",
     "emailResetSended": "A verification email has been sent to your email",
     "seeSpam": "Vérifiez également dans vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",

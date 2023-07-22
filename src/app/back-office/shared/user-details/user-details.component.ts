@@ -63,12 +63,14 @@ export class UserDetailsComponent implements OnInit, OnChanges {
       // this.generalForm.controls.websiteLink.setValue(this.userData.websiteLink);
       // this.generalForm.controls.bio.setValue(this.userData.bio);
     }
+
     if (changes.userData && this.contactForm) {
       this.userData = changes.userData.currentValue;
       this.contactForm.controls.phoneNumber.setValue(this.userData.phoneNumber);
       this.contactForm.controls.email.setValue(this.userData.email);
       // this.contactForm.controls.zip.setValue(this.userData.zip);
     }
+
     if (changes.userData && this.locationForm) {
       this.userData = changes.userData.currentValue;
       this.locationForm.controls.country.setValue(this.userData.country);
@@ -76,6 +78,7 @@ export class UserDetailsComponent implements OnInit, OnChanges {
       // this.locationForm.controls.address1.setValue(this.userData.address1);
       // this.locationForm.controls.address2.setValue(this.userData.address2);
     }
+    
     if (changes.userData && this.accountForm) {
       this.userData = changes.userData.currentValue;
       this.accountForm.controls.userId.setValue(this.userData._id);

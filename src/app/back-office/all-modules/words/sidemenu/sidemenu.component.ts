@@ -152,7 +152,7 @@ export class SidemenuComponent implements OnInit {
 
   refreshList() {
     this.waitingResponse = true;
-    this.levelService.getAllLevels()
+    this.levelService.getAllLevels(true)
       .then((result) => {
         this.levelList = result;
         this.waitingResponse = false;
@@ -188,12 +188,4 @@ export class SidemenuComponent implements OnInit {
   get f() {
     return this.levelForm.controls;
   }
-
-
-  speak() {
-    const utterance = new SpeechSynthesisUtterance(this.wordToSpeak);
-    utterance.lang = "fr-FR";
-    speechSynthesis.speak(utterance);
-  }
-
 }

@@ -1,6 +1,8 @@
+import { WinnigsCriterias } from "./winnigCriterias";
+
 export class SousCompetion{
         constructor(
-            public id?: any,
+            public _id?: any,
             public name?: any,
             public description?: any,
             public level?: any,
@@ -14,7 +16,7 @@ export class SousCompetion{
             public maxOfWinners?: any,
             public lang?: any,
             public parentCompetition?: any,
-            public gameWinnerCriterias?: any[],
+            public gameWinnerCriterias?: WinnigsCriterias[],
             public gameJudgesID?: any[],
             public gameParts?: any[]
         ){}

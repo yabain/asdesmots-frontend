@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RoleService } from './service/role.service';
 
 @Component({
   selector: 'app-role',
@@ -9,11 +10,16 @@ import { Router } from '@angular/router';
 export class RoleComponent implements OnInit {
   currentRoute: string;
 
-  constructor(private router: Router){
+  constructor(private roleService: RoleService){
         
     }
     
   ngOnInit(): void {
   }
+
+  refreshList(){
+      this.roleService.getListRole();
+  }
+
 
 }

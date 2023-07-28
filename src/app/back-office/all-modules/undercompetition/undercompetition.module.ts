@@ -4,13 +4,21 @@ import { CommonModule } from '@angular/common';
 import { UndercompetitionRoutingModule } from './undercompetition-routing.module';
 import { UndercompetitionComponent } from './undercompetition.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
+import { ListCompetitionComponent } from './list-competition/list-competition.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { UpdateCompetitionComponent } from './update-competition/update-competition.component';
+import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
 
 
 @NgModule({
   declarations: [
-    UndercompetitionComponent
+    UndercompetitionComponent,
+    UpdateCompetitionComponent,
+    ListCompetitionComponent,
+    ListCretariasComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +26,14 @@ import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-in
     TranslateModule,
     ProgressIndeterminateModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    }),
   ]
 })
 export class UndercompetitionModule { }

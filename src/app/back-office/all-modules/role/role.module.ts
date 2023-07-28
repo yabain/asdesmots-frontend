@@ -7,6 +7,12 @@ import { RoleListComponent } from './role-list/role-list.component';
 import { RoleUsersComponent } from './role-users/role-users.component';
 import { RoleCreateComponent } from './role-create/role-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { SidemenuroleComponent } from './sidemenurole/sidemenurole.component';
+import { RolepermissionlistComponent } from './rolepermissionlist/rolepermissionlist.component';
+import { ListUsersComponent } from './list-users/list-users.component';
 
 
 @NgModule({
@@ -15,11 +21,22 @@ import { ReactiveFormsModule } from '@angular/forms';
     RoleListComponent,
     RoleUsersComponent,
     RoleCreateComponent,
+    SidemenuroleComponent,
+    RolepermissionlistComponent,
+    ListUsersComponent,
+    
   ],
   imports: [
     CommonModule,
     RoleRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  }),
   ]
 })
 export class RoleModule { }

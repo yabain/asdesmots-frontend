@@ -4,6 +4,8 @@ import { RoleListComponent } from './role-list/role-list.component';
 import { RoleComponent } from './role.component';
 import { RoleUsersComponent } from './role-users/role-users.component';
 import { RoleCreateComponent } from './role-create/role-create.component';
+import { RolepermissionlistComponent } from './rolepermissionlist/rolepermissionlist.component';
+import { ListUsersComponent } from './list-users/list-users.component';
 
 const routes: Routes = [
   {
@@ -15,13 +17,22 @@ const routes: Routes = [
         component: RoleListComponent
       },
       {
-        path: 'users',
+        path: 'users/:idrole',
         component: RoleUsersComponent,
       },
       {
         path: 'create',
         component: RoleCreateComponent
+      },
+      {
+        path: 'list/permission/:id',
+        component: RolepermissionlistComponent
+      },
+      {
+        path: 'addrole/users',
+        component: ListUsersComponent
       }
+
     ]
   },
   {

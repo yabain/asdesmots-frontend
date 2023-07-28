@@ -1,28 +1,33 @@
-<div class="row">
-    <div class="col-auto">
-        <form [formGroup]="roleService.formCreateRole">
-            <div class="form-group">
-                <div class="form-group">
-                    <label for="name">Role Name</label>
-                    <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                    [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}"
-                    >
-                </div>
-                <div class="form-group">
-                    <label for="description">Role Description</label>
-                    <input type="text" name="description" class="form-control" formControlName="description" id="description"
-                    [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}"
-                    >
-                </div>
-            </div>
 
-            <div class="text-end col-auto">
-                <button class="btn btn-success" [disabled]="roleService.formCreateRole.invalid" (click)="createRole()" >
-                    <span *ngIf="roleService.waitingResponse" >Creation... <img src="../../../../../assets/img/loader.gif" alt=""
-                        width="30px"> </span>
-                    <span *ngIf="!roleService.waitingResponse" >Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
-                </button>
+<div class="row">
+    <div class="card card-table">
+        <div class="card-body">
+            <div class="col-auto">
+                <form [formGroup]="roleService.formCreateRole">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="name">Role Name</label>
+                            <input type="text" name="name" class="form-control" formControlName="name" id="name"
+                            [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Role Description</label>
+                            <input type="text" name="description" class="form-control" formControlName="description" id="description"
+                            [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-end col-auto">
+                        <button class="btn btn-success" [disabled]="roleService.formCreateRole.invalid" (click)="createRole()" >
+                            <span *ngIf="roleService.waitingResponse" >Creation... <img src="../../../../../assets/img/loader.gif" alt=""
+                                width="30px"> </span>
+                            <span *ngIf="!roleService.waitingResponse" >Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+ </div>

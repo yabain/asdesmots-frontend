@@ -20,16 +20,16 @@ export class ArcardeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
-    this.loadAllArcarde();
+   // this.loadAllArcarde();
     setTimeout(()=>{
         this.loadAllUser();
     }, 2500);
-
   }
 
   loadArcardeCurrentUser(){
-    this.arcadeServ.loadArcade();//user arcarde
-
+      if(this.arcadeServ.listArcardeUser.length == 0){
+            this.arcadeServ.loadArcade();//user arcarde
+      }
   }
 
   loadAllArcarde(){

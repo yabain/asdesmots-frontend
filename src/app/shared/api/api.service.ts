@@ -307,11 +307,12 @@ export class ApiService {
   // }
 
   // HTTP delete
-  delete(endpoint: string, options?: any): Observable<any> {
+  delete(endpoint: string, options?: any, body?: any): Observable<any> {
     const headers = options;
     return this.http.delete(this.url + '/' + endpoint, {
-      headers
-    });
+      headers,
+      body: body
+    },);
   }
 
   // HTTP pact

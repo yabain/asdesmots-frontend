@@ -1,0 +1,128 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Role</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/list'">Competion</a></li>
+                        <li class="breadcrumb-item active"> Critère </li>
+                    </ul>
+                </div>
+                 <div class="col-auto">
+                    <a  class="btn btn-primary me-2" 
+                        data-bs-target="#addCritearia"
+                        data-bs-toggle="modal"
+                        style="color: #035858 !important; background-color: #ffff !important;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div> 
+            </div>
+        </div>
+        <div class="row">
+                <div class="card card-table">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table datatable class="table table-stripped table-hover">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>{{'Criteria Name' | translate }}</th>
+                            <th>{{'Description' | translate }}</th>
+                            <th> Type </th>                            
+                            <th>Date Creation</th>
+                            <th class="text-end">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let criteria of listCriterias; let i = index"
+                            (click)="criteriaChooseData = criteria" >
+                            <td>
+                              {{ criteria.name }}
+                            </td>
+                            <td>{{ criteria.description }}</td>
+                            <!-- <td>{{ customer.country }}</td> -->
+                            <td>{{ criteria.gameWinnerCriteriaType }}</td>
+                            <td>{{ criteria.createdAt }}</td>
+                            <td class="text-end">
+                              <a data-bs-toggle="modal" data-bs-target="#delete"
+                                class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+
+
+
+        <div class="modal custom-modal fade" id="addCriteria" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+        
+                <div class="modal-body">
+                  <div class="modal-icon text-center mb-3">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </div>
+                  <div class="modal-text text-center">
+                    <h2>Ajouter Critère </h2>
+                    <p class="text-center" *ngIf="competitionSrv.waitingResponse">
+                        <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
+                    </p>
+                    <form [formGroup]="formAddCriteria">
+                        <div class="form-group">
+                            <label for="idCriteria">Criterias </label>
+                            <select name="idCriteria" id="idCriteria" formControlName="idCriteria" class="form-control">
+                               <option value="">--choose criteria--</option>
+                               <option *ngFor="let criteria of competitionSrv.listWinningCriterias"  [value]="criteria._id">
+                                    {{ criteria.name }}
+                               </option>
+                            </select>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+        
+                <div class="modal-footer text-center">
+                  <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-danger" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
+                    <span *ngIf="!competitionSrv.waitingCriteriasResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                    <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal custom-modal fade" id="deleteRole" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+        
+                <div class="modal-body">
+                  <div class="modal-icon text-center mb-3">
+                    <i class="fa fa-user-times" aria-hidden="true"></i>
+                  </div>
+                  <div class="modal-text text-center">
+                    <h2> Supprimer Critère </h2>
+                    <p>{{'wanTo' | translate }} vous supprimer le  Critère: << <b>{{ criteriaChooseData.name }}>> </b> à cette competition ? </p>
+                  </div>
+                </div>
+        
+                <div class="modal-footer text-center">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-danger" *ngIf="!competitionSrv.creteriaDeletingDone" (click)="doDelete()" >
+                    <span *ngIf="!competitionSrv.waitingCriteriasResp">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+                    <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>

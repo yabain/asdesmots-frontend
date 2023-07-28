@@ -20,6 +20,7 @@ export class ListCretariasComponent implements OnInit {
       private route:ActivatedRoute,
       private fb: FormBuilder
   ) { 
+    this.initForm();
       this.getData();
   }
 
@@ -34,16 +35,17 @@ export class ListCretariasComponent implements OnInit {
   }
 
   getData(){
+    if(this.competitionSrv.listWinningCriterias.length == 0){
+        this.competitionSrv.loadGameCriterias();
+    }
       this.idCompetition = this.route.snapshot.params['id'];
-      this.listCriterias = Array.from(this.competitionSrv.getData(this.idCompetition).gameWinnerCriterias);
+      this.listCriterias = this.competitionSrv.getData(this.idCompetition).gameWinnerCriterias;
 
-      if(this.competitionSrv.listWinningCriterias.length == 0){
-          this.competitionSrv.loadGameCriterias();
-      }
+     
   }
 
   addCriteria(){
-      console.log('criteria id', this.formAddCriteria.value);
+      this.competitionSrv.addCriteria(this.idCompetition, [this.formAddCriteria.get('idCriteria').value]);
   }
 
   doDelete(){

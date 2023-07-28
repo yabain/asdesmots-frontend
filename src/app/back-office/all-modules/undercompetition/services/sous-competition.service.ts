@@ -211,6 +211,24 @@ export class SousCompetitionService {
         });
   }
 
+  addCriteria(gameId: string, criteriaId: string[]){
+    this.waitingCriteriasAdd = true;
+    const requestBody = { gameID: gameId, gammeWinnersID: criteriaId }
+
+    this.api.put(EndpointSousCompetion.ADD_CRITERIAS_GAME, requestBody, this.authorization).subscribe((resp)=>{
+        this.waitingCriteriasAdd = false;
+        this.toastr.success('Criteria Add', 'SUCCESS', {timeOut: 7100});
+    }, (error: any)=>{
+      if (error.status == 500) {
+        this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+      } else if (error.status == 401) {
+        this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+      } else {
+        this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+      }
+      this.waitingCriteriasAdd = false;
+    })
+  }
   removeWinningCriteria(gameId: string , gammeCriteriasId: string[]){
       this.waitingCriteriasResp = true;
       const requestBody = { gameID: gameId, gammeWinnersID: gammeCriteriasId }

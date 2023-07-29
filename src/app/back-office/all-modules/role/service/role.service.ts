@@ -6,6 +6,7 @@ import { EndpointRole } from './Endpoint';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/entities/user';
 import { Permission } from 'src/app/shared/entities/permission';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class RoleService {
   listRole: Role[] = [];
   listPermission: Permission[] = [];
   waitinPermissionResp: boolean = false;
+  roleAdded: boolean = false;
 
   listUsers: User[] = [];
   formCreateRole: FormGroup;
@@ -33,6 +35,7 @@ export class RoleService {
   waitingResponseUser: boolean = false;
   deleteDone: boolean = false;
   removeDone: boolean = false;
+
   constructor(
         private api: ApiService,
         private fb: FormBuilder,
@@ -47,6 +50,7 @@ export class RoleService {
    get formUpdating(){
       return this.updateForm.controls;
    }
+
   initFormCreatingRole(){
       this.formCreateRole = this.fb.group({
           name: ['', Validators.required],
@@ -218,10 +222,30 @@ export class RoleService {
       })
   }
 
+  addRoleOnUser(requestBody: {userId: string, roleId: string }){
+      this.waitingResponse = true;
+      this.roleAdded = false;
+      this.api.post(EndpointRole.ADD_ROLE_ON_USER, requestBody, this.authorisation).subscribe((resp)=>{
+          this.waitingResponse =false;
+          this.roleAdded = true;
+          this.toastr.success('Role Add', 'SUCCESS', {timeOut: 7000});
+      }, (error: any)=>{
+        if (error.status == 500) {
+          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+        } else if (error.status == 401) {
+          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+        }else {
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        }
+        this.waitingResponse =false;
+        this.roleAdded = false;
+      })
+  }
+
   removeRole(requestBody: {roleId: string, userId: string}){
       this.waitingResponse = true;
       this.removeDone = false;
-      this.api.delete(EndpointRole.REMOVE_ROLE+'/'+requestBody.roleId+'/'+requestBody.userId, this.authorisation).subscribe((resp)=>{
+      this.api.delete(EndpointRole.REMOVE_ROLE, this.authorisation, requestBody).subscribe((resp)=>{
           this.removeDone = true;
           this.toastr.success('Remove Done', 'Success', {timeOut : 7000});
           this.waitingResponse = false;

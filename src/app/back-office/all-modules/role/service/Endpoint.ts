@@ -8,5 +8,6 @@ export enum EndpointRole{
         ADD_PERMISSION_ROLE = 'roles/add-perm',
         REMOVE_ROLE = 'roles/remove-user',
         REMOVE_ROLE_PERMISSION = 'roles/remove-perm',
+        ADD_ROLE_ON_USER = 'roles/add-user', 
 
 }

@@ -39,9 +39,7 @@ export class ListCretariasComponent implements OnInit {
         this.competitionSrv.loadGameCriterias();
     }
       this.idCompetition = this.route.snapshot.params['id'];
-      this.listCriterias = this.competitionSrv.getData(this.idCompetition).gameWinnerCriterias;
-
-     
+      this.listCriterias = this.competitionSrv.getData(this.idCompetition).gameWinnerCriterias;  
   }
 
   addCriteria(){
@@ -49,11 +47,11 @@ export class ListCretariasComponent implements OnInit {
   }
 
   doDelete(){
-
+    this.competitionSrv.removeWinningCriteria(this.idCompetition, [this.formAddCriteria.get('idCriteria').value]);
   }
 
   reset(){
 
-  }
+    }
 
 }

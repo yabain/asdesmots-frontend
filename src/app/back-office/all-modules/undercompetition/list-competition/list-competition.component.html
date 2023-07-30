@@ -38,11 +38,6 @@
                     <th>{{'Competition Name' | translate }}</th>
                     <th>{{'Competition Parent Name' | translate }}</th>
                     <th>{{'Description' | translate }}</th>
-                    <th>{{'Level Number' | translate }}</th>
-                    <th>{{'Localisation' | translate }}</th>
-                    <th>{{'Start Date' | translate }}</th>
-                    <th>{{'End Date' | translate }}</th>
-                    <th>{{'Max Player Life' | translate }}</th>
                     <th> {{ 'Criterias' | translate }} </th>
                     <th>{{'Parts' | translate }}</th>
                     <th>Action</th>
@@ -68,33 +63,14 @@
                               <span> {{ sousCompetion.description }} </span>
                         </td>
 
-                        <td>
-                              <span> {{ sousCompetion.level  }} </span>
-                        </td>
-
-                        <td>
-                              <span> {{ sousCompetion.localisation  }} </span>
-                        </td>
-
-                        <td>
-                              <span> {{ sousCompetion.startDate  }} </span>
-                        </td>
-                        
-                        <td>
-                              <span> {{ sousCompetion.endDate }} </span>
-                        </td>
-                        <td>
-                              <span> 
-                                  {{ sousCompetion.maxPlayerLife }}  
-                              </span>
-                        </td>
+                       
                         <td>
                               <span class="badge badge-pill bg-primary-light" (click)="goToCriteriasList(sousCompetion._id)" style="cursor: pointer;">
                                   <i class="fa fa-list" aria-hidden="true"></i>
                               </span>
                         </td>
                         <td> 
-                              <span class="badge badge-pill bg-primary-light" (click)="goToPartsList(sousCompetion._id)" style="cursor: pointer;">
+                              <span class="badge badge-pill bg-success-light" (click)="goToPartsList(sousCompetion._id)" style="cursor: pointer;">
                                   <i class="fa fa-list" aria-hidden="true"></i>
                               </span>
                         </td>
@@ -104,7 +80,7 @@
                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#details">
                               <i class="fa fa-eye" aria-hidden="true"></i> </span>
 
-                               <span class="badge badge-pill bg-primary-light" 
+                               <span class="badge badge-pill bg-warning-light" 
                                style="cursor: pointer;" (click)="initUpdatingForm(sousCompetion)">
                                <i class="fa fa-pencil-square" aria-hidden="true"> </i>
                               </span>
@@ -132,7 +108,7 @@
 
       <div class="modal-body">
         <div class="modal-icon text-center mb-3">
-          <i class="fa fa-plus" aria-hidden="true"></i>
+          <i class="fa fa-eye" aria-hidden="true"></i>
         </div>
         <div class="modal-text">
           <h2 class="text-center">Details Competitions {{ sousCompetitionSelctedData.name }} </h2>
@@ -159,14 +135,115 @@
 
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  1..
+                  <form>
+                    <div class="row form-group">
+                      <label for="name" class="col-sm-3 col-form-label input-label"><b>
+                              Name
+                              :</b></label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="name" placeholder=""
+                              [value]="sousCompetitionSelctedData.name" disabled>
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <label for="lang" class="col-sm-3 col-form-label input-label"><b>
+                              {{ 'language' | translate }}
+                              :</b></label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="lang" placeholder=""
+                          [value]="sousCompetitionSelctedData.lang" disabled>
+                      </div>
+                  </div>
+
+                   <div class="row form-group">
+                      <label for="location" class="col-sm-3 col-form-label input-label"><b>
+                              Location
+                              :</b></label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="location" placeholder=""
+                          [value]="sousCompetitionSelctedData.localisation" disabled>
+                      </div>
+                  </div>
+                  </form>
               </div>
+
               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                  .2.
+                  <form>
+                    <div class="row form-group">
+                      <label for="desc" class="col-sm-3 col-form-label input-label"><b>
+                        Description
+                        :</b></label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="desc" placeholder=""
+                          [value]="sousCompetitionSelctedData.description" disabled>
+                      </div>
+                    </div>
+
+                      <div class="row form-group">
+                        <label for="startDate" class="col-sm-3 col-form-label input-label"><b>
+                                Start Date
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="startDate" placeholder=""
+                            [value]="sousCompetitionSelctedData.startDate" disabled>
+                        </div>
+                      </div>
+
+                      <div class="row form-group">
+                        <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
+                                End Date
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="endDate" placeholder=""
+                            [value]="sousCompetitionSelctedData.endDate" disabled>
+                        </div>
+                      </div>
+
+                      <div class="row form-group">
+                        <label for="level" class="col-sm-3 col-form-label input-label"><b>
+                                {{ 'LevelNumber' | translate }}
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="level" placeholder=""
+                            [value]="sousCompetitionSelctedData.level" disabled>
+                        </div>
+                    </div>
+                  </form>
               </div>
               
               <div class="tab-pane fade" id="listPartis" role="tabpanel" aria-labelledby="contact-tab">
-                  ..4
+                  <form>
+                    <div class="row form-group">
+                        <label for="singlePart" class="col-sm-3 col-form-label input-label"><b>
+                                {{ 'isSinglePart' | translate }}
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="singlePart" placeholder=""
+                            [value]="sousCompetitionSelctedData.isSinglePart" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label for="timetoplay" class="col-sm-3 col-form-label input-label"><b>
+                                {{ 'Max Time to play' | translate }}
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="timetoplay" placeholder=""
+                            [value]="sousCompetitionSelctedData.maxTimeToPlay" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label for="maxPlayerLife" class="col-sm-3 col-form-label input-label"><b>
+                                {{ 'Life' | translate }}
+                                :</b></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="maxPlayerLife" placeholder=""
+                            [value]="sousCompetitionSelctedData.maxPlayerLife" disabled>
+                        </div>
+                    </div>
+                  </form>
               </div>
             </div>
 
@@ -177,7 +254,7 @@
     
 
       <div class="modal-footer text-center">
-          <button data-bs-dismiss="modal">
+          <button data-bs-dismiss="modal" class="btn btn-success">
               {{ 'close' | translate }}
           </button>
       </div>

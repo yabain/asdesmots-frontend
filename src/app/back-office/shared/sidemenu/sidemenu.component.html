@@ -120,17 +120,17 @@
 				</li>
 
 				<li [class.active]="base === 'arcarde'">
-					<a [routerLink]="'arcarde'"><i class="fa fa-star-half" aria-hidden="true"></i>
+					<a [routerLink]="'/arcarde/list-arcarde'"><i class="fa fa-star-half" aria-hidden="true"></i>
 						<span>{{'Arcarde' | translate}}</span></a>
 				</li>
 
 				<li [class.active]="base === 'undercompetition'">
-					<a [routerLink]="'undercompetition'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+					<a [routerLink]="'/undercompetition/competition/list'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 						<span>{{'Sous-Competition' | translate}}</span></a>
 				</li>
 				
 				<li [class.active]="base === 'role'">
-					<a [routerLink]="'/role/list'"><i class="fa fa-wrench" aria-hidden="true"></i>
+					<a [routerLink]="'/role/create'"><i class="fa fa-wrench" aria-hidden="true"></i>
 						<span>{{'Role' | translate}}</span></a>
 				</li><br><br>
 

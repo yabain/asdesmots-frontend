@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleService } from '../service/role.service';
+import { User } from 'src/app/shared/entities/user';
 
 @Component({
   selector: 'app-role-users',
@@ -6,10 +9,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./role-users.component.css']
 })
 export class RoleUsersComponent implements OnInit {
+  id : string = '';
+  userData: User = new User();
+  roleChooseName: any;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, 
+              public roleService: RoleService
+              ) { 
+                  
+              }
 
   ngOnInit(): void {
+  }
+  ngAfterViewInit() {
+    this.getIDRole();
+    this.loadListUsers();
+  }
+
+
+  getIDRole(){
+    this.id = this.route.snapshot.params['idrole'];  
+  }
+
+  getRoleName(){
+   this.roleChooseName = this.roleService.getNameOfRole(this.id);
+  }
+
+  doRemove(){
+      this.roleService.removeRole({roleId : this.id, userId: this.userData._id});
+  }
+
+  loadListUsers(){
+      this.roleService.getUsersByRoleId(this.id);
   }
 
 }

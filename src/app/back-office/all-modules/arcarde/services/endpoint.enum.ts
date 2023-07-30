@@ -4,4 +4,6 @@ export enum Endpoint{
         ADD_USER_TO_ARCARDE = 'game-arcarde/subscription',
         GET_LIST_ARCARDE = 'game-arcarde/', //complete with -1/-1 to get the global list
         CREATE_ARCARDE = 'game-arcarde',
+        GET_USERS_ARCARDE = 'game-arcarde/', //+ /idAcarde/subscription
+        DELETE_ARCARDE = 'game-arcarde/',
 }

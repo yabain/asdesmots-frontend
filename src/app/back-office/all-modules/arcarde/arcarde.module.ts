@@ -6,11 +6,15 @@ import { ArcardeComponent } from './arcarde.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressIndeterminateModule } from "../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
+import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 
 
 @NgModule({
     declarations: [
-        ArcardeComponent
+        ArcardeComponent,
+        ListUserArcardeComponent,
+        ListArcardeComponent
     ],
     imports: [
         CommonModule,

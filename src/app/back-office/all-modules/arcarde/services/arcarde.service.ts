@@ -5,6 +5,8 @@ import { Endpoint } from './endpoint.enum';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/entities/user';
+import { SousCompetitionService } from '../../undercompetition/services/sous-competition.service';
+import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,15 @@ export class ArcardeService {
   listArcardeUser: Arcarde[] = [];
   listAllArcarde: Arcarde[] = [];
   listLocationArcarde: string[] = [];
+  listUnderCompetion: SousCompetion[]=[];
+
+  competitionParent: any[] = [];
 
   listUser : User[] = [];
   authorization : any;
   waitingResponse: boolean = false;
   unsuscriptionDone : boolean = false;
-
+  suscriptionDone : boolean = false;
 
   formControlSuscription!: FormGroup;
   souscriptionParam: any;
@@ -28,10 +33,11 @@ export class ArcardeService {
   isCreationDone: boolean = false;
 
   deleteDone : boolean = false;
+  waitingResponseSuscrib : boolean = false;
 
   constructor(private api: ApiService, 
               private toastr: ToastrService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
     ) { this.authorization = {  'Authorization': 'Bearer ' + this.api.getAccessToken() }}
 
   get f(){
@@ -99,7 +105,8 @@ export class ArcardeService {
     this.api.get(Endpoint.LOAD_ARCARDE_LIST,  this.authorization).subscribe((resp: any)=>{
             this.waitingResponse = false;
             this.listArcardeUser = Array.from(resp.data);
-          
+            this.buildListUnderCompetion(this.listArcardeUser);
+            this.buildListLocation(this.listArcardeUser);
       },(error: any) => {
         this.waitingResponse = false;
           
@@ -115,11 +122,33 @@ export class ArcardeService {
       });
   }
 
+
+
+  getListUsersOfArcardes(id: string){
+        this.waitingResponse = true;
+
+        this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
+              console.log(resp);
+              this.listUser = Array.from(resp.data);
+              this.waitingResponse = false;
+        },(error)=>{
+          if (error.status == 500) {
+            this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          } else if (error.status == 401) {
+            this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          }else{
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+           this.waitingResponse = false;
+        });
+  }
+
   loadAllArcarde(){
     //call the endpoint to get list of arcades
     this.listAllArcarde = [];
     this.api.get(Endpoint.GET_LIST_ARCARDE+-1+'/'+-1, this.authorization).subscribe((response)=>{
         this.listAllArcarde = Array.from(response.data);
+        this.buildListUnderCompetion(this.listAllArcarde);
     },(error: any) => {
       this.waitingResponse = false;
         
@@ -178,6 +207,22 @@ export class ArcardeService {
 
   deleteArcarde(id: string){
       console.log('id arcarde to delete', id);
+     /* this.waitingResponse = true;
+      this.deleteDone = false;
+      this.api.delete(Endpoint.DELETE_ARCARDE+id, this.authorization).subscribe((resp)=>{
+            this.waitingResponse = false;
+            this.deleteDone = true;
+            this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000});
+      }, (error)=>{
+        if (error.status == 500) {
+          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+        } else if (error.status == 401) {
+          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+        } else {
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        }
+        this.waitingResponse = false;
+      });*/
   }
 
   getArcardeById(id: string){
@@ -198,12 +243,14 @@ export class ArcardeService {
   }
 
   addUserToAccarde(){
-       this.waitingResponse = true;
+       this.waitingResponseSuscrib = true;
+       this.suscriptionDone = false;
+       //add user on a competion game
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
-            console.log('response', resp);
+           
             this.toastr.success('Suscription Done and Save', 'Success', {timeOut: 10000});
-            this.waitingResponse = false;
-
+            this.waitingResponseSuscrib = false;
+            this.suscriptionDone = true;
         }, (error: any) => {
           
           if (error.status == 500) {
@@ -215,7 +262,8 @@ export class ArcardeService {
           } else {
             this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
-          this.waitingResponse = false;
+          this.waitingResponseSuscrib = false;
+          this.suscriptionDone = false;
         });
   }
 
@@ -240,6 +288,31 @@ export class ArcardeService {
           }
           this.waitingResponse = false;
         });
+  }
+
+ async buildListUnderCompetion(listArcarde: Arcarde[]){
+    this.listUnderCompetion = [];
+     listArcarde.forEach((arcarde)=>{
+            this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames))
+      });
+      
+  }
+
+  async buildListLocation(listArcarde: Arcarde[]){
+    this.listLocationArcarde = [];
+     let i_arcarde = 0;
+     
+    if(listArcarde.length > 0){
+        listArcarde.forEach((arcade)=>{
+          if(arcade.competitionGames.length > 0){
+              arcade.competitionGames.forEach((compet)=>{
+              this.listLocationArcarde[i_arcarde] = compet.localisation; 
+              i_arcarde++;
+            }); 
+          }  
+      });
+    }
+      
   }
 }
 

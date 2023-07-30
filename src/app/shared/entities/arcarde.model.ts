@@ -1,3 +1,5 @@
+import { SousCompetion } from "./scompetion.model";
+
 export class Arcarde{
         constructor(
             public _id?: any,
@@ -10,7 +12,8 @@ export class Arcarde{
             public startDate?: any,
             public endDate?: any,
             public startRegistrationDate?: any,
-            public endRegistrationDate?: any 
+            public endRegistrationDate?: any,
+            public competitionGames?:SousCompetion[],
         ){
 
         }

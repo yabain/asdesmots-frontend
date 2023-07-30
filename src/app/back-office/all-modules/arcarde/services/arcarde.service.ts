@@ -293,7 +293,7 @@ export class ArcardeService {
  async buildListUnderCompetion(listArcarde: Arcarde[]){
     this.listUnderCompetion = [];
      listArcarde.forEach((arcarde)=>{
-            this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames))
+            this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames));
       });
       
   }

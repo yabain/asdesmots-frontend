@@ -14,7 +14,7 @@ import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
     declarations: [
         ArcardeComponent,
         ListUserArcardeComponent,
-        ListArcardeComponent
+        ListArcardeComponent,
     ],
     imports: [
         CommonModule,
@@ -22,7 +22,7 @@ import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
         TranslateModule,
         ProgressIndeterminateModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
     ]
 })
 export class ArcardeModule { }

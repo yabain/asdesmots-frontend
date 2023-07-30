@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { UpdateCompetitionComponent } from './update-competition/update-competition.component';
 import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
+import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ListCretariasComponent } from './list-cretarias/list-cretarias.componen
     UndercompetitionComponent,
     UpdateCompetitionComponent,
     ListCompetitionComponent,
-    ListCretariasComponent
+    ListCretariasComponent,
+    GetParentNamePipe
   ],
   imports: [
     CommonModule,

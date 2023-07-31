@@ -4,11 +4,11 @@ import { AllModulesComponent } from 'src/app/back-office/all-modules/all-modules
 import { AuthenticationGuard } from 'src/app/services/guard/auth/authentication.guard';
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "index",
-    pathMatch: "full",
-  },
+  // {
+  //   path: "",
+  //   redirectTo: "index",
+  //   pathMatch: "full",
+  // },
   {
     path: "",
     component: AllModulesComponent,
@@ -35,6 +35,21 @@ const routes: Routes = [
           import('./words/words.module').then((m) => m.WordsModule),
         canActivate: [AuthenticationGuard],
 
+      },
+      {
+        path: 'arcarde',
+        loadChildren: ()=> import('./arcarde/arcarde.module').then((m)=>m.ArcardeModule),
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'undercompetition',
+        loadChildren: ()=> import('./undercompetition/undercompetition.module').then((m)=> m.UndercompetitionModule),
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'role',
+        loadChildren: ()=> import('./role/role.module').then((m)=> m.RoleModule),
+        canActivate: [AuthenticationGuard]
       },
       {
         path: 'setting',

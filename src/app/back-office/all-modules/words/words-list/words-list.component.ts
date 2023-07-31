@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   Event,
   NavigationStart,
   Router,
   ActivatedRoute,
+  NavigationEnd,
 } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,20 +14,27 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { WordsService } from 'src/app/shared/services/words/words.service';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
+import { SpeakService } from 'src/app/shared/services/speak/speak.service';
+import { Word } from 'src/app/shared/entities/word';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-words-list',
   templateUrl: './words-list.component.html',
   styleUrls: ['./words-list.component.css']
 })
-export class WordsListComponent implements OnInit {
+export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   public wordsList: any = [];
   errorMessage: any;
   public tempId: any;
   levelId: string = '';
-  wating = true;
-  wordData?: any = '';
-  level : Level;
+  waiting: boolean = false;
+  wordData: any = '';
+  haveToShow: boolean = false;
+  level: Level;
+  wordForm: FormGroup;
+  routerSubscribe: any;
+  levelList = JSON.parse(localStorage.getItem('levels-list'));
   url;
 
   constructor(
@@ -34,89 +42,187 @@ export class WordsListComponent implements OnInit {
     private route: ActivatedRoute,
     private translate: TranslateService,
     private translationService: TranslationService,
+    private formLog: FormBuilder,
     private srvModuleService: AllModulesService,
-    location: Location,
+    private location: Location,
     private wordsService: WordsService,
     private levelService: LevelService,
-    private toastr: ToastrService) { 
-    }
+    private toastr: ToastrService,
+    private speakService: SpeakService) {
 
-  ngOnInit(): void {
-    this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
-    this.levelId = this.route.snapshot.params['id'];
-    console.log('levelId: ' + this.levelId);
-    this.levelService.getLevelById(this.levelId)
-    .then((response) => {
-      this.level =  response
-      console.log('Level 00000: ', response)
-    });
-
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        if (event instanceof NavigationStart) {
-          let splitVal = event.url.split('/');
-          this.levelId = splitVal[3];
-          console.log("splitVal: ", this.levelId)
-        }
+    this.routerSubscribe = router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.waiting = true;
+        this.wordsList = undefined;
+        this.getLevelIdToUrl();
+        this.findLevelById(this.levelId);
+        this.scrollToTop();
+        setTimeout(() => {
+          this.getWordListBylevel(this.levelId);
+        }, 1000);
       }
     });
-    // this.url = this.location.path();
-    // if (this.url) {
-    //   let splitVal = this.url.split('/');
-    //   if (splitVal[3] != undefined) {
-    //     this.levelId = splitVal[3];
-    // } else {
-    //   this.levelId = 'sdfsdfsd';
-    // }
-    // }
+  }
 
-    // this.wordsList = localStorage.getItem('words-list');
-    this.wordsList = this.wordsService.getWordListBylevel(this.levelId)
-      .then((result) => {
-        this.wordsList = result;
-        this.wating = true;
-      })
-      .catch((error) => {
-        this.wating = false;
-      });
+  ngOnInit(): void {
+    this.translate.use(this.translationService.getLanguage());
+    // this.getLevelIdToUrl();
+    // this.findLevelById(this.levelId);
+    // this.getWordListBylevel(this.levelId);
+    console.log("wordData00: ", this.wordData)
+
+    this.wordForm = this.formLog.group({
+      '_id': [this.wordData._id, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'name': [this.wordData.name, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'description': [this.wordData.description, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'gameLevelId': [this.wordData.gamelevelId, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+      'type': [this.wordData.type, Validators.compose([
+        Validators.required,
+        Validators.minLength(1)])],
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.wordData && this.wordForm) {
+      this.wordData = changes.wordData.currentValue;
+      this.wordForm.controls._id.setValue(this.wordData._id);
+      this.wordForm.controls.name.setValue(this.wordData.name);
+      this.wordForm.controls.description.setValue(this.wordData.description);
+      this.wordForm.controls.gameLevelId.setValue(this.wordData.gamelevelId);
+    }
+  }
+
+  ngOnDestroy() {
+    this.routerSubscribe.unsubscribe();
   }
 
   scrollToTop(): void {
     window.scrollTo(0, 0);
   }
 
+  getLevelIdToUrl() {
+    if (this.route.snapshot.params['id'] && this.route.snapshot.params['id'] != undefined) {
+      this.levelId = this.route.snapshot.params['id'];
+      console.log("new levelId: ", this.levelId);
+    } else {
+      // this.levelId = JSON.parse(localStorage.getItem('levels-list'))[0]._id;
+      // console.log("first levelId: ", this.levelId);
+      // if (!this.levelId) {
+      //   console.log("no levelId: ", this.levelId);
+      this.haveToShow = false
+      this.waiting = false;
+      // }
+    }
+  }
+
   refreshList() {
-    this.wating = true;
-    this.wordsService.getWordListBylevel(this.levelId)
+    this.waiting = true;
+    this.wordsService.getWordListBylevel(this.levelId, true)
       .then((result) => {
+        this.levelService.getAllLevels(true);
         this.wordsList = JSON.parse(localStorage.getItem(this.levelId));
-        // setTimeout(() => {
-        this.wating = false;
-        // }, 3000);
+        this.waiting = false;
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
-        this.wating = false;
+        this.waiting = false;
       });
   }
 
   filter() { }
 
   deleteWord(word) {
-    this.wating = true;
-    this.wordsService.deleteWord(word)
+    this.waiting = true;
+    console.log('Deleting word: ', word);
+    this.wordsService.deleteWord(word, this.levelId)
       .then((result) => {
-        // setTimeout(() => {
         this.refreshList();
-        this.wating = false;
-        // }, 3000);
+        this.waiting = false;
+        $('#cancel-btn00').click();
+        setTimeout(() => {location.reload();}, 1000);
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
         this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-        this.wating = false;
+        this.waiting = false;
       });
   }
 
+  findLevelById(levelId) {
+    this.levelService.getLevelById(levelId)
+      .then((response) => {
+        this.level = response
+        // this.waiting = false;
+      })
+      .catch((erro) => {
+        // this.waiting = false;
+      });
+  }
+
+  getWordListBylevel(levelId) {
+    this.waiting = true;
+    console.log('jqhsjdhqj jqhsdjkqhk: ', levelId);
+    if (levelId && levelId != undefined) {
+      this.wordsList = this.wordsService.getWordListBylevel(levelId)
+        .then((result) => {
+          console.log('0000: ', result);
+          if (result.length > 0) {
+            this.haveToShow = true
+          } else { this.haveToShow = false }
+          this.wordsList = result;
+          this.waiting = false;
+        })
+        .catch((error) => {
+          // console.log("55555: ", error);
+          this.toastr.warning('Can not get word list', 'Warning', { timeOut: 20000 });
+          this.haveToShow = false;
+          this.waiting = false;
+        });
+    } else {
+      this.haveToShow = false;
+      this.waiting = false;
+    }
+  }
+
+  speak(word: Word) {
+    if (word.name && word.name != undefined) {
+      this.speakService.speak(word.name, word.type);
+    } else {
+      this.toastr.warning('', "Can't read word");
+    }
+  }
+
+  editeWord() {
+    this.waiting = true;
+    console.log("General datas: ", this.wordForm.value);
+    this.wordsService.updateWord(this.wordForm.value)
+      .then((result) => {
+        this.waiting = false;
+        this.refreshList();
+        $('#close-modal').click();
+      })
+      .catch((error) => {
+        this.waiting = false;
+      });
+  }
+
+  get f() {
+    return this.wordForm.controls;
+  }
+
+  updateForm(word) {
+    this.wordForm.controls._id.setValue(word._id);
+    this.wordForm.controls.name.setValue(word.name);
+    this.wordForm.controls.description.setValue(word.description);
+    this.wordForm.controls.gameLevelId.setValue(this.levelId);
+    this.wordForm.controls.type.setValue(word.type);
+  }
 }

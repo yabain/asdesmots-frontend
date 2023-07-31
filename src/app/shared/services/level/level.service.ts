@@ -42,29 +42,28 @@ export class LevelService {
   ];
   result: any;
 
+  headers = {
+    'Authorization': 'Bearer ' + this.api.getAccessToken(),
+    'Content-Type': 'application/json',
+  };
+
   constructor(
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
     private errorsService: ErrorsService
   ) {
-
   }
 
   createLevel(level): Promise<any> {
     return new Promise((resolve, reject) => {
-
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-      };
 
       const params = {
         'name': level.name,
         'description': level.description,
       };
 
-      this.api.post('gamelevel', params, headers)
+      this.api.post('gamelevel', params, this.headers)
         .subscribe((response: any) => {
           this.getAllLevels();
           if (response.statusCode === 201) {
@@ -79,20 +78,40 @@ export class LevelService {
 
   }
 
+  deleteLevel(level): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const params = {
+        'gamelevelID': level.gamelevelID,
+        'groupHeriterId': level.groupHeriterId
+      };
+
+      this.api.delete(`gamelevel/${level.levelDataId}`, this.headers)
+        .subscribe((response: any) => {
+          console.log('Level deleted', response);
+          this.getAllLevels();
+          if (response.statusCode === 200) {
+            this.toastr.success("Level has been deleted successfully", 'Success', { timeOut: 5000 });
+          }
+          resolve(response);
+        }, (error: any) => {
+          this.errorsService.errorsInformations(error, "delete level");
+          reject(error);
+        });
+    });
+
+  }
+
   // permet d'update les infos d'un user
   updateLevel(levelId: any, levelData?: any): Promise<any> {
     console.log("upsate user: ", levelData);
 
     return new Promise((resolve, reject) => {
-
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
+      let params = {
+        "name": levelData.name,
+        "description": levelData.description,
       }
 
-      this.params = levelData;
-
-      this.api.put(`gamelevel/${levelId}`, this.params, headers)
+      this.api.put(`gamelevel/gamelevel/${levelId}`, params, this.headers)
         .subscribe((response: any) => {
           this.getAllLevels();
           if (response.statusCode === 201) {
@@ -108,7 +127,7 @@ export class LevelService {
   }
 
   //recuperer les informations d'un utilisateur
-  getLevelById(id: String): Promise<any> {
+  getLevelById(id): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let level: Level = JSON.parse(localStorage.getItem('levels-list')).find((u) => u._id == id);
       if (level != undefined) resolve(level);
@@ -117,8 +136,10 @@ export class LevelService {
           'Authorization': 'Bearer ' + this.api.getAccessToken(),
 
         }).subscribe(success => {
-          resolve(success);
+          localStorage.setItem(id, JSON.stringify(success.data));
+          resolve(success.data);
         }, error => {
+          console.log(error);
           this.errorsService.errorsInformations(error, 'get level', '0');
           reject(error);
         })
@@ -127,31 +148,45 @@ export class LevelService {
   }
 
   // Get News to server
-  getAllLevels(): Promise<any> {
+  getAllLevels(refresh?: boolean): Promise<any> {
+    if (refresh === true) {
+      return new Promise((resolve, reject) => {
+          this.api.get('gamelevel', this.headers)
+            .subscribe(result => {
+              this.levelList = result.data;
+              console.log("refresh resultat de get list: ", result.data);
+              localStorage.setItem("levels-list", JSON.stringify(this.levelList));
+              resolve(result.data);
+            }, error => {
+              this.errorsService.errorsInformations(error, 'get level list', '0')
+              reject(error);
+            });
+      })
+    } 
+    else {
+      return new Promise((resolve, reject) => {
+        this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+        if (this.levelList != undefined) { resolve(this.levelList) }
+        else {
+          this.api.get('gamelevel', this.headers)
+            .subscribe(result => {
+              this.levelList = result.data;
+              console.log("resultat de get list: ", result.data);
+              // let tab: any = result.data;
+              // for (let i = 0; i < tab.length; i++) {
+              //   tab[i] = this.parseLevelFromApi(tab[i]);
+              //   console.log('level ', i, ': ', tab[i]);
+              // }
+              localStorage.setItem("levels-list", JSON.stringify(this.levelList));
+              resolve(result.data);
+            }, error => {
+              this.errorsService.errorsInformations(error, 'get level list', '0')
+              reject(error);
+            });
+        };
+      })
 
-    return new Promise((resolve, reject) => {
-      const headers = {
-        'Authorization': 'Bearer ' + this.api.getAccessToken(),
-        'Content-Type': 'application/json',
-      };
-
-      this.api.get('gamelevel', headers)
-        .subscribe(result => {
-          // result.data = this.levelListfixed; // prendre les valeurs statique de levelListFixed car aucune valeurs venant du backend
-          this.levelList = result.data;
-          console.log("resultat de get list: ", result.data);
-          // let tab: any = result.data;
-          // for (let i = 0; i < tab.length; i++) {
-          //   tab[i] = this.parseLevelFromApi(tab[i]);
-          //   console.log('level ', i, ': ', tab[i]);
-          // }
-          localStorage.setItem("levels-list", JSON.stringify(this.levelList));
-          resolve(result.data);
-        }, error => {
-          this.errorsService.errorsInformations(error, 'get level list', '0')
-          reject(error);
-        });
-    });
+    }
   }
 
   parseLevelFromApi(levelApiData: Record<string | number, any>): Level {

@@ -62,12 +62,14 @@ export class ProfileComponent implements OnInit {
     // document.getElementById('about').classList.add('active');
     // document.getElementById('pass').classList.remove('active');
   }
+
   pass() {
     this.changePass = true;
     this.personalDetails = false;
     // document.getElementById('about').classList.remove('active');
     // document.getElementById('pass').classList.add('active');
   }
+  
   editModal(template: TemplateRef<any>) {
     this.id = 1;
   }

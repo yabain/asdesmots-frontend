@@ -60,6 +60,7 @@ export class AddCustomerComponent implements OnInit {
       }
     });
   }
+
   addCustomer() {
     if(this.addCustomerForm.invalid){
       this.markFormGroupTouched(this.addCustomerForm)
@@ -74,7 +75,7 @@ export class AddCustomerComponent implements OnInit {
       name : this.addCustomerForm.value.customerName,
       email : this.addCustomerForm.value.customerEmail,
       phone : this.addCustomerForm.value.customerPrimaryContact,
-      amount_due : "$8295",
+      amount_due : "8295",
       registered_on : DateJoin,
       status : "Active",
       role: "Customer"

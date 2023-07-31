@@ -1,0 +1,366 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="page-title"></h3>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item active">Arcarde</li>
+            </ul>
+          </div>
+          <div class="col-auto">
+            <!-- <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
+              style="color: #035858 !important; background-color: #ffff !important;">
+              <i class="fas fa-plus"></i>
+            </a> -->
+            <a class="btn btn-primary me-2"
+              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#suscribe_arcarde">
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-primary me-2"
+              style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
+              <i class="fas fa-refresh"></i>
+            </a>
+            <a class="btn btn-primary me-2"
+              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcarde">
+              <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+  
+
+      <div class="row" *ngIf="arcadeServ.waitingResponse">
+        <div class="col-sm-12">
+          <app-progress-indeterminate></app-progress-indeterminate>
+        </div>
+      </div>
+      
+  
+      <div class="row" *ngIf="!arcadeServ.waitingResponse">
+        <div class="col-sm-12">
+          <div class="card card-table">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table datatable class="table table-stripped table-hover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>{{'Competition Name' | translate }}s</th>
+                      <th>{{'Description' | translate }}</th>
+                      <th>{{'Max Players Number ' | translate }}</th>
+                      <th>{{'Start Date' | translate }}</th>
+                      <th>{{'End Date' | translate }}</th>
+                      <th>{{'is Online Game' | translate }}</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                      <div class="text-center">
+                          <span *ngIf="arcadeServ.waitingResponse">
+                            <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                          </span>
+                      </div>
+
+                      <tr *ngFor="let arcarde of arcadeServ.listArcardeUser" data-bs-toggle="modal"
+                      data-bs-target="#details" (click)="arcardeData = arcarde" >
+                          <td>
+                                <span> {{ arcarde.name }} </span>
+                          </td>
+                          <td>
+                                <span> {{ arcarde.description }} </span>
+                          </td>
+
+                          <td>
+                                <span> {{ arcarde.maxPlayersNumber  }} </span>
+                          </td>
+
+                          <td>
+                                <span> {{ arcarde.startDate  }} </span>
+                          </td>
+                          
+                          <td>
+                                <span> {{ arcarde.endDate }} </span>
+                          </td>
+                          <td>
+                                <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' "> 
+                                    {{ arcarde.isOnlineGame }}  
+                                </span>
+                          </td>
+                          <td>
+                            <div class="col-auto">
+                           
+                               <a class="badge badge-pill bg-danger-light" 
+                               style="cursor: pointer;" (click)="goToListUser(arcarde._id)">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                              </a>
+
+                              <a class="badge badge-pill bg-danger-light" 
+                               style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </a>
+                            </div>
+
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- delete arcarde modal -->
+  <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2> Supprimer Role </h2>
+            <p>{{'wanTo' | translate }} vous supprimer l'arcarde :  << <b>{{ arcardeData.name }}>> </b>? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger"  (click)="doDelete()" >
+            <span *ngIf="!arcadeServ.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal custom-modal fade" id="unsuscribe_arcarde" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2> Desinscription Competition </h2>
+            <p>{{'wanTo' | translate }} vous desinscrire de la <b>{{ arcardeData.name }} </b>? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="arcadeServ.unsuscriptionDone = false">
+            {{'close' | translate }}
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!arcadeServ.unsuscriptionDone" (click)="doUnsuscription()" >
+            <span *ngIf="!arcadeServ.waitingResponse">Desinscrire </span>
+            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal custom-modal fade" id="suscribe_arcarde" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text">
+            <h2 class="text-center">Inscription Arcade</h2>
+
+            <div class="row">
+              <form [formGroup]="arcadeServ.formControlSuscription">
+                <div class="form-group">
+                  <label for="playerID">Utilisateur</label>
+                  <select class="form-control" formControlName="playerID" 
+                    id="playerID" [ngClass]="{
+                      'is-invalid': arcadeServ.f['playerID'].touched && arcadeServ.f['playerID'].invalid
+                    }">
+                    <option value="">--choisir un utilisateur--</option>
+                    <option value="" *ngIf="userServ.listUsers.length == 0"> 
+                      <span class="text-center"><img src="../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                    </option>
+                    <option *ngFor="let user of userServ.listUsers" [value]="user._id"> {{ user.firstName }} {{ user.lastName }} </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="gameID">Arcarde</label>
+                  <select name="gameID" id="gameID" formControlName="gameID" class="form-control" [ngClass]="
+                      {'is-invalid': arcadeServ.f['gameID'].touched && arcadeServ.f['gameID'].invalid }
+                    ">
+                    <option value="">--choisir une arcarde--</option>
+                    <option *ngFor="let arcarde of arcadeServ.listArcardeUser"  [value]="arcarde._id"> {{ arcarde.name }} </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location <img src="../../../../assets/img/loader.gif" *ngIf="arcadeServ.waitingResponse" alt="" class="text-center" width="30px" height="25px"> </label>
+                    <select name="location" id="location" formControlName="location" class="form-control"
+                      [ngClass]="{'is-invalid': arcadeServ.f['location'].touched && arcadeServ.f['location'].invalid}"
+                    >
+                      <option value="">--choisir une location--</option>
+                      <option *ngFor="let location of arcadeServ.listLocationArcarde"  [value]="location"> {{ location }} </option>
+                    </select>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="resetFormSuscribtion()">
+            {{'close' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary" [disabled]="!arcadeServ.formControlSuscription.valid" *ngIf="!arcadeServ.suscriptionDone" (click)="doSuscription()" >
+            <span *ngIf="!arcadeServ.waitingResponseSuscrib">Inscrire <i class="fa fa-plus" aria-hidden="true"></i> </span>
+            <span *ngIf="arcadeServ.waitingResponseSuscrib"><img src="../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal custom-modal fade" id="createArcarde" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-mortar-board" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2>Creation Arcarde</h2>
+          </div>
+          <div class="row">
+              <form [formGroup]="arcadeServ.formControlCreateArcarde">
+                      <div class="form-group">
+                        <label for="name"> Nom </label>
+                        <input type="text" name="name" class="form-control" formControlName="name" id="name"
+                        [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc"> Description </label>
+                        <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
+                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
+                        >
+                    </div>
+
+                    <div class="form-check form-switch text-center">
+                        <input class="form-check-input" type="checkbox" formControlName="isOnlineGame" role="switch" id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Partie En ligne </label>
+                    </div>
+
+                    <div class="form-check form-switch text-center">
+                        <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Enregister des joueurs </label>
+                    </div>
+
+                     <div class="form-check form-switch text-center">
+                        <input class="form-check-input" type="checkbox" formControlName="isFreeRegistrationPlayer" role="switch" id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Enregistrement  de joueurs gratuit</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxPlayersNumber">Max players number  </label>
+                        <input type="number" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
+                        >
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="startDate">Date de Debut </label>
+                        <input type="date" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate"> Date de Fin </label>
+                        <input type="date" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                      <label for="startRegistrationDate">Date Debut d'enregistrement </label>
+                      <input type="date" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
+                      [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
+                      >
+                  </div>
+
+                  <div class="form-group">
+                      <label for="endRegistrationDate"> Date fin d'enregistrement</label>
+                      <input type="date" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
+                      [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
+                      >
+                  </div>
+
+              </form>
+
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="resetFormCreation()">
+            {{'close' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
+            <span *ngIf="!arcadeServ.waitingResponse"> Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
+            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2> Suppresion Arcarde </h2>
+            <p>{{'wanTo' | translate }} vous supprimer de la <b>{{ arcardeData.name }} </b>? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="arcadeServ.unsuscriptionDone = false">
+            {{'close' | translate }}
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!arcadeServ.deleteDone" (click)="doDelete()" >
+            <span *ngIf="!arcadeServ.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

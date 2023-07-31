@@ -131,6 +131,7 @@
     "to": "sur",
     "wanTo": "Êtes-vous sûr de vouloir ",
     "changeStatus": "Changer le status",
+    "selectLangChange": "Changer sa langue",
     "welcome": "Bienvenue",
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
@@ -285,10 +286,15 @@
         "advence": "Avancé",
         "hard": "Dificile",
         "wordStat": "Statistiques",
-        "addNewWords": "Ajouter un nouveau mot",
+        "addNewWords": "Ajouter un mot",
+        "addNewLevel": "Ajouter un niveau",
         "wordInFr": "Mot en française",
         "wordInEn": "Mot en anglais",
         "wordDescriptionEn": "Description en englais",
-        "wordDescriptionFr": "Description en français"
+        "wordDescriptionFr": "Description en français",
+        "whichLevel": "Dans quel niveau voulez-vous transférer ses mots",
+        "noWords": "Aucun mots à afficher",
+        "inEnglish": "en englais",
+        "inFrench": "en français"
     }
 }

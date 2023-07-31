@@ -1,0 +1,181 @@
+<div class="text-center" *ngIf="roleService.waitingResponse">
+    <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px">
+</div>
+
+<div class="row" *ngIf="!roleService.waitingResponse" >
+      <div class="card card-table">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable class="table table-stripped table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Description </th>
+                  <th>Liste Permission</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let role of roleService.listRole; let i = index"
+                     (click)="roleChoose = role;" 
+                  >
+                  <td>
+                    <h2>
+                        <span> {{ role.name }} </span>
+                    </h2>
+                  </td>
+
+                  <td>{{ role.description }}</td>
+
+                  <td>
+                      <a class="btn btn-sm btn-white text-success me-2" (click)="navigateToPermissionList(role._id)">
+                          <i class="fa fa-list" aria-hidden="true"></i>
+                      </a>
+                  </td>
+            
+                  <td class="col-auto text-end">
+                    <a class="btn btn-sm btn-white text-success me-2" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                        class="far fa-edit me-1"></i>
+                    </a>
+
+                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+
+                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="navigate(role._id)">
+                      <i class="fa fa-users" aria-hidden="true"></i>
+                    </a>
+
+                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                    
+                    
+                </tr>
+              </tbody>
+            </table>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="modal custom-modal fade" id="editRole" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text">
+            <h2 class="text-center">Modification Role </h2>
+
+            <div class="row">
+                <form [formGroup]="roleService.updateForm">
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="name">Role Name</label>
+                                <input type="text" name="name" class="form-control" formControlName="name" id="name"
+                                [ngClass]="{ 'is-invalid':  roleService.formUpdating['name'].touched &&  roleService.formUpdating['name'].invalid}"
+                                >
+                            </div>
+                            
+                                <div class="form-group">
+                                    <label for="description">Role Description</label>
+                                    <input type="text" name="description" class="form-control" formControlName="description" id="description"
+                                    [ngClass]="{ 'is-invalid':  roleService.formUpdating['description'].touched &&  roleService.formUpdating['description'].invalid}"
+                                    >
+                                </div>
+                        </div>
+                </form>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                
+                <button class="btn btn-success" *ngIf="!roleService.updateDone"  [disabled]="roleService.updateForm.invalid" >
+                    <span *ngIf="roleService.waitingResponse" ><img src="../../../../../assets/img/loader.gif" alt=""
+                        width="30px"> </span>
+                    <span *ngIf="!roleService.waitingResponse" >Modifier <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                </button>
+               
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal custom-modal fade" id="deleteRole" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2> Supprimer Role </h2>
+            <p>{{'wanTo' | translate }} vous supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()" >
+            <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="modal custom-modal fade" id="addPermission" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2>Ajouter une Permission à un Role</h2>
+            <p class="text-center" *ngIf="roleService.waitinPermissionResp">
+                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
+            </p>
+            <form [formGroup]="roleService.formAddPermission">
+                <div class="form-group">
+                    <label for="idPermission">Permission</label>
+                    <select name="idPermission" id="idPermission" formControlName="idPermission" class="form-control">
+                       <option value="">--choisir une permission--</option>
+                       <option *ngFor="let perms of roleService.listPermission"  [value]="perms._id">
+                            {{ perms.description }}
+                       </option>
+                    </select>
+                </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.permissionAdded" (click)="addPermission()" >
+            <span *ngIf="!roleService.waitinPermissionResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+            <span *ngIf="roleService.waitinPermissionResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

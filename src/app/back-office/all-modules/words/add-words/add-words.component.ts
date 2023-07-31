@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { WordsService } from 'src/app/shared/services/words/words.service';
+import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-words',
@@ -17,7 +19,9 @@ import { WordsService } from 'src/app/shared/services/words/words.service';
 export class AddWordsComponent implements OnInit {
   public pipe = new DatePipe("en-US");
   public wordEnForm!: FormGroup;
+  public wordFrForm!: FormGroup;
   levelList?: any = '';
+  addingWords: boolean = false;
   waitingResponse = false
 
   constructor(public router: Router,
@@ -26,14 +30,23 @@ export class AddWordsComponent implements OnInit {
     private formLog: FormBuilder,
     private levelService: LevelService,
     private wordService: WordsService,
-    private translationService: TranslationService) {
+    private translationService: TranslationService,
+    private errorsService: ErrorsService,
+    private location: Location) {
+    this.waitingResponse = true;
 
+    if (!localStorage.getItem('levels-list')) {
       this.levelService.getAllLevels()
         .then(() => {
-          // this.waitingResponse = false;
-          this.levelList = this.levelService.levelList;
-          console.log('levelList good: ', this.levelList)
+          this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+          console.log('levelList good: ', this.levelList);
+          this.waitingResponse = false;
         });
+    }
+    else {
+          this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+      this.waitingResponse = false;
+    }
   }
 
   scrollToTop(): void {
@@ -58,6 +71,21 @@ export class AddWordsComponent implements OnInit {
       'type': ['en', Validators.required
       ]
     });
+
+    this.wordFrForm = this.formLog.group({
+      'name': ['', Validators.required
+      ],
+      'description': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])
+      ],
+      'gameLevelId': ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4)])
+      ],
+      'type': ['fr', Validators.required
+      ]
+    });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -70,24 +98,59 @@ export class AddWordsComponent implements OnInit {
   }
 
   addWords() {
-    if (this.wordEnForm.invalid) {
+    if (this.wordEnForm.invalid && this.wordFrForm.invalid) {
+      this.toastr.error('The form is invalid', 'Infalid form', { timeOut: 10000 });
       return;
     }
-      this.waitingResponse = true;
-      this.wordService.createWord(this.wordEnForm.value)
-      .then(() => {
-        this.waitingResponse = false;
-        this.toastr.success('French word was added', 'Done',{timeOut: 10000} )
-      })
-      .catch((error) => {
-        this.waitingResponse = false;
-      });
-    
+
+    if (this.wordEnForm.valid) {
+      this.addingWords = true;
+      this.wordService.createWord(this.wordEnForm.value, this.wordEnForm.value.gameLevelId)
+        .then(() => {
+          this.levelService.getAllLevels(true);
+          this.addingWords = false;
+          this.toastr.success('English word was added', 'Done', { timeOut: 10000 });
+          this.wordEnForm.reset(); // reset form after submit
+        setTimeout(() => {location.reload();}, 1000);
+        })
+        .catch((error) => {
+          this.errorsService.errorsInformations(error, 'add english word');
+          // console.log('en form: ', this.wordEnForm.value);
+          this.addingWords = false;
+        });
+    }
+
+    if (this.wordFrForm.valid) {
+      this.addingWords = true;
+      this.wordService.createWord(this.wordFrForm.value, this.wordFrForm.value.gameLevelId)
+        .then(() => {
+          this.addingWords = false;
+          this.toastr.success('French word was added', 'Done', { timeOut: 10000 });
+          this.wordFrForm.reset();
+        })
+        .catch((error) => {
+          // console.log('fr form: ', this.wordFrForm.value);
+          this.errorsService.errorsInformations(error, 'add french word');
+          this.addingWords = false;
+        });
+    }
+
+    this.removeWordListInLevel();
+    this.levelService.getAllLevels(true);
   }
 
-
+  removeWordListInLevel() {
+    for (let i = 0; i < this.levelList.length; i++) {
+      // console.log("test id key", this.levelList[i]._id);
+      localStorage.removeItem(this.levelList[i]._id);
+    }
+  }
+  
   get f() {
     return this.wordEnForm.controls;
   }
 
+  backClicked() {
+    this.location.back();
+  }
 }

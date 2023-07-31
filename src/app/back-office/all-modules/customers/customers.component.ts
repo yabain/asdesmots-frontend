@@ -11,7 +11,12 @@ export class CustomersComponent implements OnInit {
   constructor(private srvModuleService: AllModulesService) {}
 
   ngOnInit(): void {
+    this.scrollToTop();
 
   }
 
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
+  
 }

@@ -16,9 +16,9 @@
           <tbody>
             <!-- <tr *ngFor="let word of words; let i = index" (click)="wordData = word" data-bs-toggle="modal" data-bs-target="#details"> -->
             <tr>
-              <td style="text-align: center;">00</td>
-              <td style="text-align: center;">00</td>
-              <td style="text-align: center;">00</td>
+              <td style="text-align: center;">NAN</td>
+              <td style="text-align: center;">NAN</td>
+              <td style="text-align: center;">NAN</td>
             </tr>
           </tbody>
         </table>
@@ -28,7 +28,7 @@
         <div class="card-header">
           <h5 class="card-title d-flex justify-content-between">
             <span>{{'words.level' | translate }} ({{levelList.length}})</span>
-            <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#addLevel"><i
+            <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#addLevel" (click)="resetForm()"><i
                 class="fas fa-plus"></i></a>
           </h5>
         </div>
@@ -49,14 +49,14 @@
                                 </tr>
                             </thead> -->
               <tbody>
-                <tr *ngFor="let level of levelList; let i = index" (click)="navigateToLevel(level._id)" [class.selected]="curentLevel === level._id">
+                <tr *ngFor="let level of levelList; let i = index" [class.selected]="curentLevel === level._id">
                   <!-- <tr [routerLink]="'/words/words-list'"> -->
-                  <td>{{level.name}}</td>
-                  <td>({{level.words.length}} {{'words.word' | translate }}s)</td>
+                  <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
+                  <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
-                    <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal"
-                      data-bs-target="#editLevel"><i class="far fa-edit me-1"></i></a>
-                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel"
+                    <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#editLevel"
+                      (click)="updateLevelForm(level)"><i class="far fa-edit me-1"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="levelData = level"
                       class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                   </td>
                 </tr>
@@ -78,25 +78,42 @@
           <i class="fas fa-trash-alt text-danger"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>Delete level ?</h2>
+          <h2>{{'delete' | translate}} <b>{{levelData.name}}</b> ?</h2>
+          <br>
+          <form (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
+            <p>{{"words.whichLevel" | translate}}</p>
+            <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId">
+              <option value="">{{"select" | translate}}</option>
+              <option *ngFor="let level of levelList" value="{{level._id}}"> {{level.name}}
+              </option>
+            </select>
+            <br>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                {{'close' | translate }}
+              </button>
+              <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
+                (click)="deleteLevel()" [disabled]="!deleteLevelForm.valid">
+                {{'delete' | translate }}
+              </button>
+              <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+              </button>
+              <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
+                (click)="changeStatus(userData._id, true)">
+                <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
+                <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+              </button>
+              <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
+                (click)="changeStatus(userData._id, false)">
+                <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
+                <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+              </button> -->
+            </div>
+          </form>
           <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
             <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
         </div>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
-          {{'close' | translate }}
-        </button>
-        <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
-            (click)="changeStatus(userData._id, true)">
-            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
-            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button>
-          <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
-            (click)="changeStatus(userData._id, false)">
-            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
-            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button> -->
       </div>
     </div>
   </div>
@@ -112,24 +129,35 @@
         </div>
         <div class="modal-text text-center">
           <h2>Edit level</h2>
-          <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
-            <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
         </div>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-          {{'close' | translate }}
-        </button>
-        <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
-            (click)="changeStatus(userData._id, true)">
-            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
-            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button>
-          <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
-            (click)="changeStatus(userData._id, false)">
-            <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
-            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button> -->
+        <div class="modal-text">
+          <div class="card text-left">
+            <form (ngSubmit)="updateLevel()" [formGroup]="levelForm">
+              <div class="form-group">
+                <label for="name">{{ 'words.level' | translate }}<span class="mandatory"></span> *</label>
+                <input class="form-control" type="text" formControlName="name" id="name" required />
+              </div>
+              <div class="form-group">
+                <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
+                <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
+                  formControlName="description" id="description" required></textarea>
+              </div>
+              <br>
+              <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal"
+                  id="close-modal" style="margin-right: 20px;">
+                  {{'close' | translate }}
+                </button>
+                <button type="submit" *ngIf="!waiting" class="btn btn-success" (click)="updateLevel()">
+                  {{'save' | translate }}
+                </button>
+                <button type="button" *ngIf="waiting" class="btn btn-success" disabled>
+                  <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -144,7 +172,7 @@
           <i class="fas fa-plus-circle text-secondary"></i>
         </div>
         <div class="modal-text">
-          <h2 class="text-center">Add level</h2>
+          <h2 class="text-center">{{'words.addNewLevel' | translate}}</h2><br>
           <form (ngSubmit)="addLevel()" [formGroup]="levelForm">
             <div class="row">
               <div class="col-md-12">

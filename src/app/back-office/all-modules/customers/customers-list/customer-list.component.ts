@@ -16,7 +16,7 @@ export class CustomerListComponent implements OnInit {
   errorMessage: any;
   public tempId: any;
   url: any = 'customers';
-  wating = true;
+  waiting = true;
   usersList: any;
   userData?: any = '';
   creationDate: string;
@@ -38,26 +38,26 @@ export class CustomerListComponent implements OnInit {
     this.customers = localStorage.getItem('users-list');
     if (this.customers) {
       this.customers = JSON.parse(localStorage.getItem('users-list'));
-      this.wating = false;
+      this.waiting = false;
     } else {
       this.userService.getAllUsers()
       .then((result) => {
         this.customers = JSON.parse(localStorage.getItem('users-list'));
-        this.wating = true;
+        this.waiting = true;
           setTimeout(() => {
-            this.wating = false;
+            this.waiting = false;
           }, 3000);
       })
       .catch((error) => {
         this.errorsService.errorsInformations(error, 'get users')
         // console.error('Erreur: ', error.message);
         // this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-        this.wating = false;
+        this.waiting = false;
       });
     }
     // else {
     //   setTimeout(() => {
-    //     this.wating = false;
+    //     this.waiting = false;
     //   }, 3000);
     // }
 
@@ -69,19 +69,19 @@ export class CustomerListComponent implements OnInit {
 
 
   refreshList(){
-    this.wating = true;
+    this.waiting = true;
     this.userService.getAllUsers()
     .then((result) => {
       this.customers = JSON.parse(localStorage.getItem('users-list'));
-      this.wating = true;
+      this.waiting = true;
         setTimeout(() => {
-          this.wating = false;
+          this.waiting = false;
         }, 3000);
     })
     .catch((error) => {
       console.error('Erreur: ', error.message);
       this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-      this.wating = false;
+      this.waiting = false;
     });
   }
 
@@ -110,7 +110,7 @@ export class CustomerListComponent implements OnInit {
   }
 
   changeStatus(userId, userStatus){
-    // this.wating = true;
+    // this.waiting = true;
     this.submitted = true;
     this.waitingResponse = true;
     this.scrollToTop();
@@ -119,7 +119,7 @@ export class CustomerListComponent implements OnInit {
     .then((result) => {
         setTimeout(() => {
           this.refreshList();
-          // this.wating = false;
+          // this.waiting = false;
           this.submitted = false;
           this.waitingResponse = false;
           $('#cancel-btn1').click();
@@ -127,7 +127,7 @@ export class CustomerListComponent implements OnInit {
     })
     .catch((error) => {
       this.errorsService.errorsInformations(error, 'change status');
-      this.wating = false;
+      this.waiting = false;
       this.submitted = false;
       this.waitingResponse = false;
     });
@@ -139,10 +139,10 @@ export class CustomerListComponent implements OnInit {
     this.scrollToTop();
     this.userService.deleteUser(userId)
     .then((result) => {
-      this.wating = true;
+      this.waiting = true;
         setTimeout(() => {
           this.refreshList();
-          this.wating = false;
+          this.waiting = false;
           this.submitted = false;
           this.waitingResponse = false;
           $('#cancel-btn2').click();
@@ -152,7 +152,7 @@ export class CustomerListComponent implements OnInit {
       this.errorsService.errorsInformations(error, 'delete user');
       // console.error('Erreur: ', error.message);
       // this.toastr.error(error.message, 'Error', { timeOut: 10000 });
-      this.wating = false;
+      this.waiting = false;
       this.submitted = false;
       this.waitingResponse = false;
     });

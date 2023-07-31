@@ -274,7 +274,7 @@ export class ApiService {
       endpoint += '?' + req;
     }
     console.log(this.url + '/' + endpoint);
-    return this.http.get(this.url + '/' + endpoint, { 'headers': options });
+    return this.http.get(this.url + '/' + endpoint, { 'headers': options , });
   }
 
   // HTTP post
@@ -307,11 +307,13 @@ export class ApiService {
   // }
 
   // HTTP delete
-  delete(endpoint: string, options?: any): Observable<any> {
+  delete(endpoint: string, options?: any, body?: any): Observable<any> {
     const headers = options;
+    console.log('delete url request', this.url + '/' + endpoint)
     return this.http.delete(this.url + '/' + endpoint, {
-      headers
-    });
+      headers,
+      body: body
+    },);
   }
 
   // HTTP pact

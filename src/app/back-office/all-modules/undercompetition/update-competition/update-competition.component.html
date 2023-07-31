@@ -1,0 +1,134 @@
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="page-title"></h3>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item">Sous Competitions</li>
+              <li class="breadcrumb-item active">mise a jour</li>
+            </ul>
+          </div>
+      
+<div class="row" *ngIf="!sousCompetion.waitingResponse">
+    <div class="card card-table">
+      <div class="card-body">
+                <h6 class="text-end">  {{ sousCompetitionSelctedData.name }} </h6>
+                <form [formGroup]="sousCompetion.formUpdate">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name"> Nom </label>
+                                <input type="text" name="name" [value]="sousCompetion.formUpdate.get('name').value" class="form-control" formControlName="name" id="name"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['name'].touched && sousCompetion.formUpdt['name'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="desc"> Description </label>
+                                <input type="text" name="desc" class="form-control" [value]="sousCompetion.formUpdate.get('description').value" formControlName="description" id="desc"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['description'].touched && sousCompetion.formUpdt['description'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="level"> Niveau </label>
+                                <input type="number" name="level" class="form-control" formControlName="level" id="level"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['level'].touched && sousCompetion.formUpdt['level'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-check form-switch text-center">
+                                <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch" id="flexSwitchCheckChecked">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Partie Unique ?</label>
+                            </div>
+        
+                            <div class="form-check form-switch text-center">
+                                <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" (click)="sousCompetion.f['canRegisterPlayer'].setValue(sousCompetion.form.get('canRegisterPlayer')?.value ? false:true);" role="switch" id="flexSwitchCheckChecked">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">can Register Player ?</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="localisation"> Localisation </label>
+                                <input type="text" name="localisation" class="form-control" formControlName="localisation" id="localisation"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['localisation'].touched && sousCompetion.formUpdt['localisation'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="maxPlayerLife"> max Player Life </label>
+                                <input type="number" name="maxPlayerLife" class="form-control" formControlName="maxPlayerLife" id="maxPlayerLife"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['maxPlayerLife'].touched && sousCompetion.formUpdt['maxPlayerLife'].invalid}"
+                                >
+                            </div>
+        
+                            
+                        </div>
+
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="maxTimeToPlay"> max Time To Play </label>
+                                <input type="number" name="maxTimeToPlay" class="form-control" formControlName="maxTimeToPlay" id="maxTimeToPlay"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['maxTimeToPlay'].touched && sousCompetion.formUpdt['maxTimeToPlay'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="startDate"> start Date </label>
+                                <input type="text" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['startDate'].touched && sousCompetion.formUpdt['startDate'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="endDate"> End Date </label>
+                                <input type="text" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['endDate'].touched && sousCompetion.formUpdt['endDate'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="maxOfWinners">Max of Winners </label>
+                                <input type="number" name="maxOfWinners" class="form-control" formControlName="maxOfWinners" id="maxOfWinners"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['maxOfWinners'].touched && sousCompetion.formUpdt['maxOfWinners'].invalid}"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="lang">Lang </label>
+                                <select name="lang" class="form-control" formControlName="lang" id="lang"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['lang'].touched && sousCompetion.formUpdt['lang'].invalid}"
+                                >
+                                    <option value="">--choisir une langue--</option>
+                                    <option value="fr">Français</option>
+                                    <option value="en">Anglais</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="parentCompetition">Parent Competition*</label>
+                                <input type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition"
+                                [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['parentCompetition'].touched && sousCompetion.formUpdt['parentCompetition'].invalid}"
+                                >
+                            </div>        
+                        
+                            <button type="button" class="btn btn-success text-end" *ngIf="!sousCompetion.creationDone"  (click)="doUpdate()">
+                              <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../assets/img/loader.gif" alt="" width="30px"> </span>
+                                  
+                              <span *ngIf="!sousCompetion.waitingResponse" >Terminé  <i class="fa fa-plus" aria-hidden="true"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                    
+
+                   
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

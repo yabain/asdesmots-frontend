@@ -79,8 +79,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule),
     canActivate: [AuthenticationGuard],
-  },
-  // { path: '**', redirectTo: '', pathMatch: 'full' },
+  } // { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -1,0 +1,122 @@
+
+      <!-- /Page Header -->
+  
+      <!-- Search Filter -->
+      <div id="filter_inputs" class="card filter-card">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Search Filter -->
+  
+      <div class="row" *ngIf="wating">
+        <div class="col-sm-12">
+          <img src="../../../../../assets/img/loader.gif" height="30px" alt="">
+        </div>
+      </div>
+  
+      <div class="row" *ngIf="!wating">
+          <div class="card card-table">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table datatable class="table table-stripped table-hover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>{{'user.user' | translate }}s</th>
+                      <th>{{'user.email' | translate }}</th>
+                      <th>{{'user.phone' | translate }}</th>
+                      <!-- <th>{{'status' | translate }}</th> -->
+                      <th class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let customer of customers; let i = index"
+                      (click)="userData = customer">
+                      <td>
+                        <h2 class="table-avatar">
+                          <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
+                              src="assets/img/user-profile.png" alt="User Image" /></a>
+                          <a>{{ customer.firstName }} {{ customer.lastName }}<span>{{ customer.phone }}</span></a>
+                        </h2>
+                      </td>
+                      <td>{{ customer.email }}</td>
+                      <!-- <td>{{ customer.country }}</td> -->
+                      <!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
+                      <td>{{ customer.phoneNumber}}</td>
+                      
+                      <td class="text-end">
+                        
+                        <a  data-bs-toggle="modal" data-bs-target="#AddRole"
+                          class="btn btn-sm btn-white text-danger me-2">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+      </div>
+
+  <div class="modal custom-modal fade" id="AddRole" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2>Ajouter un Role Utilisateur {{ userData.firstName }} </h2>
+            <p class="text-center" *ngIf="roleService.waitinPermissionResp">
+                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
+            </p>
+            <form [formGroup]="formAddRole">
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select name="role" id="role" formControlName="idRole" class="form-control">
+                       <option value="">--choisir un role--</option>
+                       <option *ngFor="let role of roleService.listRole"  [value]="role._id">
+                            {{ role.description }}
+                       </option>
+                    </select>
+                </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" (click)="doAddRole()" >
+            <span *ngIf="!roleService.waitingResponse">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  

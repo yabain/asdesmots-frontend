@@ -1,0 +1,45 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Role</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/role'">Role</a></li>
+                        <li class="breadcrumb-item active"> {{ currentRoute }} </li>
+                    </ul>
+                </div>
+                 <div class="col-auto">
+                    <a [routerLink]="'create'" class="btn btn-primary me-2"
+                        style="color: #035858 !important; background-color: #ffff !important;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                   
+                     <a [routerLink]="'list'" class="btn btn-primary me-2"
+                        style="color: #035858 !important; background-color: #ffff !important;">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                    </a>
+
+                    <a class="btn btn-primary me-2"
+                    style="color: #035858 !important; background-color: #ffff !important;" (click)="refreshList()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </a>
+                    <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" style="color: #035858 !important;background-color: #ffff !important;" >
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </a>
+                </div> 
+            </div>
+        </div>
+        <div>
+
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-md-4">
+                <app-sidemenurole></app-sidemenurole>
+            </div>
+            <div class="col-xl-8 col-md-8">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

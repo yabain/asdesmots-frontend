@@ -133,6 +133,7 @@
     "to": "to",
     "wanTo": "Are you sure want to ",
     "changeStatus": "Change Status",
+    "selectLangChange": "Change language",
     "welcome": "Welcome",
     "emailResetSended": "A verification email has been sent to your email",
     "seeSpam": "Vérifiez également dans vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
@@ -285,10 +286,15 @@
         "advence": "Advence",
         "hard": "Hard",
         "wordStat": "escription in french",
-        "addNewWords": "Add a new word",
+        "addNewWords": "Add a word",
+        "addNewLevel": "Add a level",
         "wordInFr": "Word in french",
         "wordInEn": "Word in english",
         "wordDescriptionEn": "Description in english",
-        "wordDescriptionFr": "Description in french"
+        "wordDescriptionFr": "Description in french",
+        "whichLevel": "What level do you want to transfer his words to",
+        "noWords": "No words to show",
+        "inEnglish": "in english",
+        "inFrench": "in french"
     }
 }

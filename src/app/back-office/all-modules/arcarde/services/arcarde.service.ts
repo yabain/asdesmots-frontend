@@ -102,6 +102,7 @@ export class ArcardeService {
     //get the list arcarde of the current user
     this.listArcardeUser = [];
     this.waitingResponse = true;
+    this.listUnderCompetion = [];
     this.api.get(Endpoint.LOAD_ARCARDE_LIST,  this.authorization).subscribe((resp: any)=>{
             this.waitingResponse = false;
             this.listArcardeUser = Array.from(resp.data);

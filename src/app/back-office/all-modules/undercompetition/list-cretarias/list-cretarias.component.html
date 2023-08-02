@@ -18,7 +18,19 @@
                 </div> 
             </div>
         </div>
-        <div class="row">
+
+        <div class="row text-center" *ngIf="listCriterias.length == 0">
+            <div class="col">
+                         Aucun critère pour ce Jeu !  <a  class="btn btn-primary me-2" 
+                         data-bs-target="#addCriteria"
+                         data-bs-toggle="modal"
+                         style="color: #035858 !important; background-color: #ffff !important;">
+                        Ajouter  <i class="fa fa-plus" aria-hidden="true"></i>
+                     </a>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="listCriterias.length !== 0 ">
                 <div class="card card-table">
                   <div class="card-body">
                     <div class="table-responsive">
@@ -33,7 +45,6 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <span *ngIf="listCriterias.length == 0" > Aucun Critère pour ce Jeu ! </span>
                           <tr *ngFor="let criteria of listCriterias; let i = index"
                             (click)="criteriaChooseData = criteria" >
                             <td>
@@ -87,10 +98,10 @@
                 </div>
         
                 <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+                  <button type="button" class="btn btn-danger" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     Close
                   </button>
-                  <button type="button" class="btn btn-danger" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
+                  <button type="button" class="btn btn-primary" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
                     <span *ngIf="!competitionSrv.waitingCriteriasResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
                     <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>

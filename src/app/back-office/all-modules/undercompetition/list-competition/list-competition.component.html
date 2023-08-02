@@ -28,7 +28,13 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="!sousCompetion.waitingResponse">
+    <div class="text-center">
+      <span *ngIf="arcardeSrv.waitingResponse">
+        <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+      </span>
+    </div>
+
+    <div class="row" *ngIf="!arcardeSrv.waitingResponse">
         <div class="card card-table">
           <div class="card-body">
             <div class="table-responsive">
@@ -45,11 +51,7 @@
                 </thead>
 
                 <tbody>
-                    <div class="text-center">
-                        <span *ngIf="arcardeSrv.waitingResponse">
-                          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-                        </span>
-                    </div>
+                  
 
                     <tr *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion"
                          (click)="sousCompetitionSelctedData = sousCompetion" >

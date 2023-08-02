@@ -50,9 +50,7 @@
                     <tr>
                       <th>{{'Competition Name' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-                      <th>{{'Max Players Number ' | translate }}</th>
-                      <th>{{'Start Date' | translate }}</th>
-                      <th>{{'End Date' | translate }}</th>
+                      
                       <th>{{'is Online Game' | translate }}</th>
                       <th>Action</th>
                     </tr>
@@ -74,17 +72,7 @@
                                 <span> {{ arcarde.description }} </span>
                           </td>
 
-                          <td>
-                                <span> {{ arcarde.maxPlayersNumber  }} </span>
-                          </td>
-
-                          <td>
-                                <span> {{ arcarde.startDate  }} </span>
-                          </td>
                           
-                          <td>
-                                <span> {{ arcarde.endDate }} </span>
-                          </td>
                           <td>
                                 <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' "> 
                                     {{ arcarde.isOnlineGame }}  
@@ -93,13 +81,18 @@
                           <td>
                             <div class="col-auto">
                            
-                               <a class="badge badge-pill bg-danger-light" 
+                              <a class="badge badge-pill bg-primary-light" 
                                style="cursor: pointer;" (click)="goToListUser(arcarde._id)">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                               </a>
 
+                              <a class="badge badge-pill bg-warning-light" 
+                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#details">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </a>
+
                               <a class="badge badge-pill bg-danger-light" 
-                               style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
+                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                               </a>
                             </div>
@@ -115,6 +108,83 @@
       </div>
     </div>
   </div>
+
+  <div class="modal custom-modal fade" id="details" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          </div>
+          <div class="text-center">
+            <h3> {{ arcardeData.name }} </h3>
+          </div>
+
+              <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-Date" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                       Date
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                      Max Players 
+                    </button>
+                  </li>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-Date" role="tabpanel" aria-labelledby="pills-home-tab">
+                     <form>
+                       
+                      <div class="row form-group">
+                              <label for="startDate" class="col-sm-3 col-form-label input-label">
+                                  Start 
+                              </label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" [value]="arcardeData.startDate" name="startDate" id="startDate" disabled>
+                              </div>
+                        </div>
+                          <div class="row form-group">
+                            <label for="endDate" class="col-sm-3 col-form-label input-label">
+                              End
+                            </label>
+
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" [value]="arcardeData.endDate" name="endDate" id="endDate" disabled>
+                            </div>
+
+                          </div>
+                        </form>
+                       </div>
+
+                    <div class="tab-pane fade" id="pills-PlayersNumber" role="tabpanel" aria-labelledby="pills-profile-tab">
+                      <form>
+                            
+                        <div class="row form-group" style="position: relative; top: 0px !important;">
+                                <label for="maxPlayersNumber" class="col-sm-3 col-form-label input-label">
+                                    Max Players Number
+                                </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" [value]="arcardeData.maxPlayersNumber" id="maxPlayersNumber" name="maxPlayersNumber" disabled>
+                                </div>
+                            </div>
+                      </form>
+
+                    </div>            
+               </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 
   <!-- delete arcarde modal -->
   <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">

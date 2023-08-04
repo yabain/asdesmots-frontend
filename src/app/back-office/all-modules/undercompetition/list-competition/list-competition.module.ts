@@ -7,13 +7,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { ListPartsComponent } from '../list-parts/list-parts.component';
 
 
 @NgModule({
   declarations: [
     UpdateCompetitionComponent,
-    ListPartsComponent,
   ],
   imports: [
     CommonModule,

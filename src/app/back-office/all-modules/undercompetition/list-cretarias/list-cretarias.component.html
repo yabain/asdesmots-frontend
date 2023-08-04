@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/competition/list'">Competion</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/competition/list'">Competition</a></li>
                         <li class="breadcrumb-item active"> Critère </li>
                     </ul>
                 </div>
@@ -19,18 +19,8 @@
             </div>
         </div>
 
-        <div class="row text-center" *ngIf="listCriterias.length == 0">
-            <div class="col">
-                         Aucun critère pour ce Jeu !  <a  class="btn btn-primary me-2" 
-                         data-bs-target="#addCriteria"
-                         data-bs-toggle="modal"
-                         style="color: #035858 !important; background-color: #ffff !important;">
-                        Ajouter  <i class="fa fa-plus" aria-hidden="true"></i>
-                     </a>
-            </div>
-        </div>
 
-        <div class="row" *ngIf="listCriterias.length !== 0 ">
+        <div class="row">
                 <div class="card card-table">
                   <div class="card-body">
                     <div class="table-responsive">
@@ -44,7 +34,7 @@
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="listCriterias.length !== 0 ">
                           <tr *ngFor="let criteria of listCriterias; let i = index"
                             (click)="criteriaChooseData = criteria" >
                             <td>
@@ -59,6 +49,17 @@
                                 class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                             </td>
                           </tr>
+                        </tbody>
+
+                        <tbody *ngIf="listCriterias.length == 0 " >
+                            <tr>
+                                <td></td>
+                                <td class="text-center">
+                                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                                  <br>Aucune Partie !
+                                </td>
+                                <td></td>
+                              </tr>
                         </tbody>
                       </table>
                     </div>
@@ -111,7 +112,7 @@
           </div>
 
 
-          <div class="modal custom-modal fade" id="deleteRole" role="dialog">
+          <div class="modal custom-modal fade" id="delete" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
         

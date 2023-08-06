@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/competition/list'">Competion</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/competition/list'">Competition</a></li>
                         <li class="breadcrumb-item active"> Critère </li>
                     </ul>
                 </div>
@@ -18,6 +18,8 @@
                 </div> 
             </div>
         </div>
+
+
         <div class="row">
                 <div class="card card-table">
                   <div class="card-body">
@@ -27,27 +29,34 @@
                           <tr>
                             <th>{{'Criteria Name' | translate }}</th>
                             <th>{{'Description' | translate }}</th>
-                            <th> Type </th>                            
-                            <th>Date Creation</th>
+                            
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <span *ngIf="listCriterias.length == 0" > Aucun Critère pour ce Jeu ! </span>
+                        <tbody *ngIf="listCriterias.length !== 0 ">
                           <tr *ngFor="let criteria of listCriterias; let i = index"
                             (click)="criteriaChooseData = criteria" >
                             <td>
                               {{ criteria.name }}
                             </td>
                             <td>{{ criteria.description }}</td>
-                            <!-- <td>{{ customer.country }}</td> -->
-                            <td>{{ criteria.gameWinnerCriteriaType }}</td>
-                            <td>{{ criteria.createdAt }}</td>
+                            
                             <td class="text-end">
                               <a data-bs-toggle="modal" data-bs-target="#delete"
                                 class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                             </td>
                           </tr>
+                        </tbody>
+
+                        <tbody *ngIf="listCriterias.length == 0 " >
+                            <tr>
+                                <td></td>
+                                <td class="text-center">
+                                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                                  <br>Aucun Critère !
+                                </td>
+                                <td></td>
+                              </tr>
                         </tbody>
                       </table>
                     </div>
@@ -87,10 +96,10 @@
                 </div>
         
                 <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+                  <button type="button" class="btn btn-danger" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     Close
                   </button>
-                  <button type="button" class="btn btn-danger" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
+                  <button type="button" class="btn btn-primary" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
                     <span *ngIf="!competitionSrv.waitingCriteriasResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
                     <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>
@@ -100,7 +109,7 @@
           </div>
 
 
-          <div class="modal custom-modal fade" id="deleteRole" role="dialog">
+          <div class="modal custom-modal fade" id="delete" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
         

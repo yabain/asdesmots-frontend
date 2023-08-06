@@ -14,7 +14,7 @@
                             <th> Actions </th>
                           </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="listPermission.length !== 0 " >
                         <tr *ngFor="let permission of listPermission"
                             (click)="permissionData = permission"     
                         >
@@ -22,24 +22,32 @@
                             <td> {{ permission.description }} </td>
                             <td> {{ permission.modules }} </td>
                             <td>
-                                <a class="btn btn-sm btn-white text-danger me-2"
-                                    data-bs-toogle="modal"
-                                    data-bs-target="#confirmRemove" 
-                                    
+                                <a  data-bs-toogle="modal"
+                                    data-bs-target="#confirmRemove"
+                                    (click)="doRemovePermission(permission._id)"
+                                    class="btn btn-sm btn-white text-danger me-2"
                                  >
-                                    <span>
                                         <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </span>
                                 </a>
                             </td>
                         </tr>
                     </tbody>
+                    <tbody *ngIf="listPermission.length == 0 " >
+                      <tr>
+                          <td></td>
+                          <td class="text-center">
+                            <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
+                            <br>Aucune Partie !
+                          </td>
+                          <td></td>
+                        </tr>
+                  </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
+<!--
 <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -66,3 +74,4 @@
       </div>
     </div>
   </div>
+-->

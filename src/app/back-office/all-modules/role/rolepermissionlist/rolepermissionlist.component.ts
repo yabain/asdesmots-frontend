@@ -16,7 +16,7 @@ export class RolepermissionlistComponent implements OnInit {
 
   constructor(
       private router:  ActivatedRoute,
-      public roleService: RoleService
+      public roleService: RoleService,
   ) { 
       this.getRoleData();
   }
@@ -33,10 +33,6 @@ export class RolepermissionlistComponent implements OnInit {
 
   doRemovePermission(idPermission: string){
     this.roleService.removePermission({roleId : this.roleId, permissionId: idPermission});
-  }
-
-  doDelete(){
-
   }
 
 }

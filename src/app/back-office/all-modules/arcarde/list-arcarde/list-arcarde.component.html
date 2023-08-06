@@ -17,15 +17,15 @@
               <i class="fas fa-plus"></i>
             </a> -->
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#suscribe_arcarde">
+              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="subscribe to an arcade" (click)="goToAcradeSuscription()">
               <i class="fa fa-user-plus" aria-hidden="true"></i>
             </a>
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
+              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="refresh the list" (click)="refresh()">
               <i class="fas fa-refresh"></i>
             </a>
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcarde">
+              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcade">
               <i class="fa fa-graduation-cap" aria-hidden="true"></i>
             </a>
           </div>
@@ -50,11 +50,9 @@
                     <tr>
                       <th>{{'Competition Name' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-                      <th>{{'Max Players Number ' | translate }}</th>
-                      <th>{{'Start Date' | translate }}</th>
-                      <th>{{'End Date' | translate }}</th>
-                      <th>{{'is Online Game' | translate }}</th>
-                      <th>Action</th>
+                      
+                      <th>{{'Online Game' | translate }}</th>
+                      <th align="center">Action</th>
                     </tr>
                   </thead>
 
@@ -65,8 +63,7 @@
                           </span>
                       </div>
 
-                      <tr *ngFor="let arcarde of arcadeServ.listArcardeUser" data-bs-toggle="modal"
-                      data-bs-target="#details" (click)="arcardeData = arcarde" >
+                      <tr *ngFor="let arcarde of arcadeServ.listArcardeUser"  (click)="arcardeData = arcarde" >
                           <td>
                                 <span> {{ arcarde.name }} </span>
                           </td>
@@ -74,17 +71,7 @@
                                 <span> {{ arcarde.description }} </span>
                           </td>
 
-                          <td>
-                                <span> {{ arcarde.maxPlayersNumber  }} </span>
-                          </td>
-
-                          <td>
-                                <span> {{ arcarde.startDate  }} </span>
-                          </td>
                           
-                          <td>
-                                <span> {{ arcarde.endDate }} </span>
-                          </td>
                           <td>
                                 <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' "> 
                                     {{ arcarde.isOnlineGame }}  
@@ -93,13 +80,18 @@
                           <td>
                             <div class="col-auto">
                            
-                               <a class="badge badge-pill bg-danger-light" 
+                              <a class="badge badge-pill bg-primary-light" 
                                style="cursor: pointer;" (click)="goToListUser(arcarde._id)">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                               </a>
 
+                              <a class="badge badge-pill bg-warning-light" 
+                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#details">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </a>
+
                               <a class="badge badge-pill bg-danger-light" 
-                               style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
+                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                               </a>
                             </div>
@@ -115,6 +107,83 @@
       </div>
     </div>
   </div>
+
+  <div class="modal custom-modal fade" id="details" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          </div>
+          <div class="text-center">
+            <h3> {{ arcardeData.name }} </h3>
+          </div>
+
+              <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-Date" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                       Date
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                      Max Players 
+                    </button>
+                  </li>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-Date" role="tabpanel" aria-labelledby="pills-home-tab">
+                     <form>
+                       
+                      <div class="row form-group">
+                              <label for="startDate" class="col-sm-3 col-form-label input-label">
+                                  Start 
+                              </label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate" id="startDate" disabled>
+                              </div>
+                        </div>
+                          <div class="row form-group">
+                            <label for="endDate" class="col-sm-3 col-form-label input-label">
+                              End
+                            </label>
+
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="{{arcardeData.endDate | formatDate}}" name="endDate" id="endDate" disabled>
+                            </div>
+
+                          </div>
+                        </form>
+                       </div>
+
+                    <div class="tab-pane fade" id="pills-PlayersNumber" role="tabpanel" aria-labelledby="pills-profile-tab">
+                      <form>
+                            
+                        <div class="row form-group" style="position: relative; top: 0px !important;">
+                                <label for="maxPlayersNumber" class="col-sm-3 col-form-label input-label">
+                                    Max Players Number
+                                </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" [value]="arcardeData.maxPlayersNumber" id="maxPlayersNumber" name="maxPlayersNumber" disabled>
+                                </div>
+                            </div>
+                      </form>
+
+                    </div>            
+               </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 
   <!-- delete arcarde modal -->
   <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">
@@ -239,7 +308,7 @@
     </div>
   </div>
 
-  <div class="modal custom-modal fade" id="createArcarde" role="dialog">
+  <div class="modal custom-modal fade" id="createArcade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
 
@@ -292,28 +361,28 @@
 
                     <div class="form-group">
                         <label for="startDate">Date de Debut </label>
-                        <input type="date" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                        <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
                         [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
                         >
                     </div>
 
                     <div class="form-group">
                         <label for="endDate"> Date de Fin </label>
-                        <input type="date" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                        <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
                         [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
                         >
                     </div>
 
                     <div class="form-group">
                       <label for="startRegistrationDate">Date Debut d'enregistrement </label>
-                      <input type="date" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
+                      <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
                       [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
                       >
                   </div>
 
                   <div class="form-group">
                       <label for="endRegistrationDate"> Date fin d'enregistrement</label>
-                      <input type="date" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
+                      <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
                       [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
                       >
                   </div>

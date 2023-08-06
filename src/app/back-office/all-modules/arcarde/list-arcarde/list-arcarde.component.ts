@@ -49,7 +49,6 @@ export class ListArcardeComponent implements OnInit {
 
   doSuscription(){
       this.arcadeServ.addUserToAccarde();
-      
   }
 
   doUnsuscription(){
@@ -65,7 +64,6 @@ export class ListArcardeComponent implements OnInit {
 
    doDelete(){
       this.arcadeServ.deleteArcarde(this.arcardeData._id);
-    
    }
 
    resetFormCreation(){
@@ -85,6 +83,10 @@ export class ListArcardeComponent implements OnInit {
    goToListUser(id: string){
       this.arcadeServ.getListUsersOfArcardes(id);
       this.router.navigateByUrl('/arcarde/list-user/'+id);
+   }
+
+   goToAcradeSuscription(){
+      this.router.navigateByUrl('/arcarde/suscribe');
    }
  
 }

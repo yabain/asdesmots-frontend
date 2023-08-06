@@ -28,7 +28,13 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="!sousCompetion.waitingResponse">
+    <div class="text-center">
+      <span *ngIf="arcardeSrv.waitingResponse">
+        <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+      </span>
+    </div>
+
+    <div class="row" *ngIf="!arcardeSrv.waitingResponse">
         <div class="card card-table">
           <div class="card-body">
             <div class="table-responsive">
@@ -45,11 +51,7 @@
                 </thead>
 
                 <tbody>
-                    <div class="text-center">
-                        <span *ngIf="arcardeSrv.waitingResponse">
-                          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-                        </span>
-                    </div>
+                  
 
                     <tr *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion"
                          (click)="sousCompetitionSelctedData = sousCompetion" >
@@ -186,7 +188,7 @@
                                 :</b></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="startDate" placeholder=""
-                            [value]="sousCompetitionSelctedData.startDate" disabled>
+                            value="{{sousCompetitionSelctedData.startDate | formatDate }}" disabled>
                         </div>
                       </div>
 
@@ -196,7 +198,7 @@
                                 :</b></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="endDate" placeholder=""
-                            [value]="sousCompetitionSelctedData.endDate" disabled>
+                            value="{{sousCompetitionSelctedData.endDate | formatDate}}" disabled>
                         </div>
                       </div>
 
@@ -299,11 +301,14 @@
                   </div>
 
                   <div class="form-group">
-                      <label for="level"> Niveau </label>
-                      <input type="number" name="level" class="form-control" formControlName="level" id="level"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['level'].touched && sousCompetion.f['level'].invalid}"
-                      >
-                  </div>
+                    <label for="level" class="form-control-label"> Niveau </label>
+                    <select name="level" formControlName="gameLevel" id="level" class="form-control">
+                        <option value="">--choisir un niveau--</option>
+                        <option *ngFor="let item of level.levelList"  [value]="item._id">
+                                {{ item.name }}
+                        </option>
+                    </select>
+                 </div>
 
                   <div class="form-check form-switch text-center">
                       <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch" id="flexSwitchCheckChecked">
@@ -338,14 +343,14 @@
 
                   <div class="form-group">
                       <label for="startDate"> start Date </label>
-                      <input type="date" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                      <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
                       [ngClass]="{ 'is-invalid': sousCompetion.f['startDate'].touched && sousCompetion.f['startDate'].invalid}"
                       >
                   </div>
 
                   <div class="form-group">
                       <label for="endDate"> End Date </label>
-                      <input type="date" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                      <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
                       [ngClass]="{ 'is-invalid': sousCompetion.f['endDate'].touched && sousCompetion.f['endDate'].invalid}"
                       >
                   </div>

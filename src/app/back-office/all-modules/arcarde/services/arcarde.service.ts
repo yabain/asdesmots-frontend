@@ -102,6 +102,7 @@ export class ArcardeService {
     //get the list arcarde of the current user
     this.listArcardeUser = [];
     this.waitingResponse = true;
+    this.listUnderCompetion = [];
     this.api.get(Endpoint.LOAD_ARCARDE_LIST,  this.authorization).subscribe((resp: any)=>{
             this.waitingResponse = false;
             this.listArcardeUser = Array.from(resp.data);
@@ -146,9 +147,14 @@ export class ArcardeService {
   loadAllArcarde(){
     //call the endpoint to get list of arcades
     this.listAllArcarde = [];
+    this.waitingResponse = true;
     this.api.get(Endpoint.GET_LIST_ARCARDE+-1+'/'+-1, this.authorization).subscribe((response)=>{
         this.listAllArcarde = Array.from(response.data);
         this.buildListUnderCompetion(this.listAllArcarde);
+        this.waitingResponse = false;
+        
+       // this.buildListLocation(this.listAllArcarde);
+        
     },(error: any) => {
       this.waitingResponse = false;
         
@@ -305,8 +311,10 @@ export class ArcardeService {
     if(listArcarde.length > 0){
         listArcarde.forEach((arcade)=>{
           if(arcade.competitionGames.length > 0){
-              arcade.competitionGames.forEach((compet)=>{
-              this.listLocationArcarde[i_arcarde] = compet.localisation; 
+              arcade.competitionGames.forEach((compet)=>{ 
+              if(compet.localisation.toString() !== '' || compet.localisation.toString().length != 0){
+                this.listLocationArcarde[i_arcarde] = compet.localisation; 
+              }
               i_arcarde++;
             }); 
           }  

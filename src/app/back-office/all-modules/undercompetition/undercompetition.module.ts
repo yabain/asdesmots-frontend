@@ -12,6 +12,8 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { UpdateCompetitionComponent } from './update-competition/update-competition.component';
 import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
 import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe';
+import { ListPartsComponent } from './list-parts/list-parts.component';
+import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe'
     UpdateCompetitionComponent,
     ListCompetitionComponent,
     ListCretariasComponent,
-    GetParentNamePipe
+    GetParentNamePipe,
+    FormatDatePipe,
+    ListPartsComponent
   ],
   imports: [
     CommonModule,

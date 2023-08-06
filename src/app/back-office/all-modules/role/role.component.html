@@ -11,18 +11,23 @@
                 </div>
                  <div class="col-auto">
                     <a [routerLink]="'create'" class="btn btn-primary me-2"
-                        style="color: #035858 !important; background-color: #ffff !important;">
+                        style="color: #035858 !important; background-color: #ffff !important;"
+                        data-toggle="tooltip" data-placement="top" title="create new role"
+                        >
                         <i class="fas fa-plus"></i>
                     </a>
                    
                      <a [routerLink]="'list'" class="btn btn-primary me-2"
-                        style="color: #035858 !important; background-color: #ffff !important;">
+                        style="color: #035858 !important; background-color: #ffff !important;" 
+                        data-toggle="tooltip" data-placement="top" title="role list"
+                        >
                         <i class="fa fa-list" aria-hidden="true"></i>
                     </a>
 
                     <a class="btn btn-primary me-2"
-                    style="color: #035858 !important; background-color: #ffff !important;" (click)="refreshList()">
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                        data-toggle="tooltip" data-placement="top" title="refresh role list"
+                        style="color: #035858 !important; background-color: #ffff !important;" (click)="refreshList()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
                     </a>
                     <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" style="color: #035858 !important;background-color: #ffff !important;" >
                         <i class="fa fa-users" aria-hidden="true"></i>

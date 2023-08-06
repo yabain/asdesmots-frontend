@@ -22,6 +22,7 @@ export class ListCretariasComponent implements OnInit {
   ) { 
     this.initForm();
       this.getData();
+      this.getCompetitionCriteria();
   }
 
   ngOnInit(): void {
@@ -39,7 +40,10 @@ export class ListCretariasComponent implements OnInit {
         this.competitionSrv.loadGameCriterias();
     }
       this.idCompetition = this.route.snapshot.params['id'];
-      this.listCriterias = this.competitionSrv.getData(this.idCompetition).gameWinnerCriterias;  
+  }
+
+  async getCompetitionCriteria(){
+     this.listCriterias = await this.competitionSrv.getCompetionWiningsCriteria(this.idCompetition);
   }
 
   addCriteria(){

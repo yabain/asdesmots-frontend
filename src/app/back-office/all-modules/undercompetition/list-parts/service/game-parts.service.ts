@@ -62,7 +62,6 @@ export class GamePartsService {
         name: ['', Validators.required],
         description: ['', Validators.required],
         gameCompetitionID: ['', Validators.required],
-        gameLevel: ['', Validators.required],
         numberOfWord: ['', Validators.required],
         startDate: [''],
         endDate: ['']

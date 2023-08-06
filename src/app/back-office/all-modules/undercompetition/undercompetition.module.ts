@@ -13,6 +13,7 @@ import { UpdateCompetitionComponent } from './update-competition/update-competit
 import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
 import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe';
 import { ListPartsComponent } from './list-parts/list-parts.component';
+import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ListPartsComponent } from './list-parts/list-parts.component';
     ListCompetitionComponent,
     ListCretariasComponent,
     GetParentNamePipe,
+    FormatDatePipe,
     ListPartsComponent
   ],
   imports: [

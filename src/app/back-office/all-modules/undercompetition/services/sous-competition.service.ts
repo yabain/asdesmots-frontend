@@ -48,7 +48,7 @@ export class SousCompetitionService {
     this.formUpdate = this.fb.group({
         name : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(60)])],
         description : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(65)])],
-        level : ['', Validators.required],
+        gameLevel : ['', Validators.required],
         isSinglePart : ['', Validators.required],
         canRegisterPlayer: [''],
         localisation: ['', Validators.required],
@@ -59,9 +59,7 @@ export class SousCompetitionService {
         maxOfWinners: ['', Validators.required],
         lang: ['', Validators.required],
         parentCompetition : ['', Validators.required],
-        //gameWinnerCriterias : ['', Validators.required],
-        //gameJudgesID: ['', Validators.required],
-       // gameParts : ['', Validators.required]
+       
     });
 
     this.form.valueChanges.subscribe((data: any)=>{
@@ -112,7 +110,7 @@ export class SousCompetitionService {
     this.form = this.fb.group({
         name : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(60)])],
         description : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(65)])],
-        level : ['', Validators.required],
+        gameLevel : ['', Validators.required],
         isSinglePart : ['', Validators.required],
         canRegisterPlayer: [''],
         localisation: ['', Validators.required],
@@ -141,13 +139,13 @@ export class SousCompetitionService {
     this.form.controls['canRegisterPlayer'].setValue(false);
   }
   createCompetition(competionData: SousCompetion, dataArcarde: any){
-      competionData.gameParts = [];
      
       this.waitingResponse = true;
       this.creationDone = false;
 
       this.api.post(EndpointSousCompetion.CREATED_NEW_S_C+dataArcarde.idArcarde, competionData, this.authorization).subscribe((resp)=>{
-          console.log('created respo', resp);
+          this.arcardeService.loadArcade();
+          this.loadListUnderCompetition();
           this.toastr.success('Competion Created', 'Success', { timeOut: 7000 });
           this.waitingResponse = false;
           this.creationDone = true;
@@ -211,6 +209,27 @@ export class SousCompetitionService {
         });
   }
 
+  getCompetionWiningsCriteria(idCompetition: string): Promise<WinnigsCriterias[]>{
+    this.waitingCriteriasResp = true;
+    return new Promise((resole, reject)=>{
+          this.api.get(EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS+idCompetition, this.authorization).subscribe((resp)=>{
+            this.waitingCriteriasResp = false;
+            resole(resp.data);
+        }, (error: any)=> {
+
+          reject([]);
+          if (error.status == 500) {
+            this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          } else if (error.status == 401) {
+            this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingCriteriasResp = false;
+          })
+        });
+  }
+
   addCriteria(gameId: string, criteriaId: string[]){
     this.waitingCriteriasAdd = true;
     const requestBody = { gameID: gameId, gammeWinnersID: criteriaId }
@@ -229,10 +248,11 @@ export class SousCompetitionService {
       this.waitingCriteriasAdd = false;
     })
   }
+
   removeWinningCriteria(gameId: string , gammeCriteriasId: string[]){
       this.waitingCriteriasResp = true;
       const requestBody = { gameID: gameId, gammeWinnersID: gammeCriteriasId }
-
+      console.log('request', requestBody)
       this.api.delete(EndpointSousCompetion.REMOVE_GAME_CRITERIAS, this.authorization, requestBody).subscribe((resp:any)=>{
             this.waitingCriteriasResp = false;
             this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
@@ -263,10 +283,8 @@ export class SousCompetitionService {
   getData(id: any){
       const index = this.listUnderCompetition.findIndex((compet)=> compet._id === id);
       if(index != -1){
-        console.log('find', this.listUnderCompetition[index]);
           return this.listUnderCompetition[index];
       }
-      console.log('not found');
       return new SousCompetion();
   }
 }

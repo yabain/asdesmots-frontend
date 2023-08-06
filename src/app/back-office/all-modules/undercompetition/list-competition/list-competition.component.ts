@@ -4,6 +4,7 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { Router } from '@angular/router';
+import { LevelService } from 'src/app/shared/services/level/level.service';
 
 @Component({
   selector: 'app-list-competition',
@@ -17,6 +18,7 @@ export class ListCompetitionComponent implements OnInit {
   constructor(public sousCompetion: SousCompetitionService, 
               private fb: FormBuilder,
               private route: Router,
+              public level: LevelService,
               public arcardeSrv: ArcardeService
               ) {
 
@@ -24,6 +26,7 @@ export class ListCompetitionComponent implements OnInit {
       this.sousCompetion.initFormControl();
       this.sousCompetion.initFormUpdate();
       this.initArcardeFormID();
+      this.getLevel();
    }
 
   ngOnInit(): void {
@@ -76,5 +79,10 @@ export class ListCompetitionComponent implements OnInit {
 
    goToCriteriasList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/criterias/'+id);
+  }
+   getLevel(){
+      if(this.level.levelList.length === 0){
+          this.level.getAllLevels();
+      }
   }
 }

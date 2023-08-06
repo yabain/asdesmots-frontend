@@ -17,15 +17,15 @@
               <i class="fas fa-plus"></i>
             </a> -->
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#suscribe_arcarde">
+              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="subscribe to an arcade" (click)="goToAcradeSuscription()">
               <i class="fa fa-user-plus" aria-hidden="true"></i>
             </a>
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
+              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="refresh the list" (click)="refresh()">
               <i class="fas fa-refresh"></i>
             </a>
             <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcarde">
+              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcade">
               <i class="fa fa-graduation-cap" aria-hidden="true"></i>
             </a>
           </div>
@@ -51,8 +51,8 @@
                       <th>{{'Competition Name' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
                       
-                      <th>{{'is Online Game' | translate }}</th>
-                      <th>Action</th>
+                      <th>{{'Online Game' | translate }}</th>
+                      <th align="center">Action</th>
                     </tr>
                   </thead>
 
@@ -63,8 +63,7 @@
                           </span>
                       </div>
 
-                      <tr *ngFor="let arcarde of arcadeServ.listArcardeUser" data-bs-toggle="modal"
-                      data-bs-target="#details" (click)="arcardeData = arcarde" >
+                      <tr *ngFor="let arcarde of arcadeServ.listArcardeUser"  (click)="arcardeData = arcarde" >
                           <td>
                                 <span> {{ arcarde.name }} </span>
                           </td>
@@ -143,7 +142,7 @@
                                   Start 
                               </label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control" [value]="arcardeData.startDate" name="startDate" id="startDate" disabled>
+                                <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate" id="startDate" disabled>
                               </div>
                         </div>
                           <div class="row form-group">
@@ -152,7 +151,7 @@
                             </label>
 
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" [value]="arcardeData.endDate" name="endDate" id="endDate" disabled>
+                              <input type="text" class="form-control" value="{{arcardeData.endDate | formatDate}}" name="endDate" id="endDate" disabled>
                             </div>
 
                           </div>
@@ -309,7 +308,7 @@
     </div>
   </div>
 
-  <div class="modal custom-modal fade" id="createArcarde" role="dialog">
+  <div class="modal custom-modal fade" id="createArcade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
 
@@ -362,28 +361,28 @@
 
                     <div class="form-group">
                         <label for="startDate">Date de Debut </label>
-                        <input type="date" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                        <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
                         [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
                         >
                     </div>
 
                     <div class="form-group">
                         <label for="endDate"> Date de Fin </label>
-                        <input type="date" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                        <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
                         [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
                         >
                     </div>
 
                     <div class="form-group">
                       <label for="startRegistrationDate">Date Debut d'enregistrement </label>
-                      <input type="date" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
+                      <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
                       [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
                       >
                   </div>
 
                   <div class="form-group">
                       <label for="endRegistrationDate"> Date fin d'enregistrement</label>
-                      <input type="date" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
+                      <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
                       [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
                       >
                   </div>

@@ -123,15 +123,7 @@
                                         <input type="text" class="form-control" formControlName="name" name="name" id="name">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="level" class="form-control-label"> Niveau </label>
-                                        <select name="level" formControlName="gameLevel" id="gameLevel" class="form-control">
-                                            <option value="">--choisir un niveau--</option>
-                                            <option *ngFor="let item of level.levelList"  [value]="item._id">
-                                                    {{ item.name }}
-                                            </option>
-                                        </select>
-                                    </div>
+                                   
 
                                     <div class="form-group">
                                         <label for="description"> Description </label>

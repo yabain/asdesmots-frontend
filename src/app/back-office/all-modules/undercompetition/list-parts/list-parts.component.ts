@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GamePart } from 'src/app/shared/entities/gamePart.model';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
+import { SousCompetitionService } from '../services/sous-competition.service';
 
 @Component({
   selector: 'app-list-parts',
@@ -17,6 +18,7 @@ export class ListPartsComponent implements OnInit {
 
   constructor(public gamePartSrv: GamePartsService, 
               private route: ActivatedRoute,
+              private SousCompetSrv: SousCompetitionService,
               public level: LevelService
              ) { 
                 this.gamePartSrv.initForm();
@@ -30,7 +32,6 @@ export class ListPartsComponent implements OnInit {
   getListParts(){
     this.competitionID = this.route.snapshot.params['id'];
     this.gamePartSrv.f['gameCompetitionID'].setValue(this.competitionID);
-
     this.gamePartSrv.getListGamePart(this.competitionID);
   }
 

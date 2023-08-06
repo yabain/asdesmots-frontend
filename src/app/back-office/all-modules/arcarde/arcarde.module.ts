@@ -8,6 +8,8 @@ import { ProgressIndeterminateModule } from "../../../shared/elements/progress-i
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
+import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
+import { FormatDatePipe } from './services/format-date.pipe';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
         ArcardeComponent,
         ListUserArcardeComponent,
         ListArcardeComponent,
+        ArcadesuscriptionComponent,
+        FormatDatePipe,
     ],
     imports: [
         CommonModule,

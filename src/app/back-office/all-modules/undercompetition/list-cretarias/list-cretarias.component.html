@@ -29,8 +29,7 @@
                           <tr>
                             <th>{{'Criteria Name' | translate }}</th>
                             <th>{{'Description' | translate }}</th>
-                            <th> Type </th>                            
-                            <th>Date Creation</th>
+                            
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
@@ -41,9 +40,7 @@
                               {{ criteria.name }}
                             </td>
                             <td>{{ criteria.description }}</td>
-                            <!-- <td>{{ customer.country }}</td> -->
-                            <td>{{ criteria.gameWinnerCriteriaType }}</td>
-                            <td>{{ criteria.createdAt }}</td>
+                            
                             <td class="text-end">
                               <a data-bs-toggle="modal" data-bs-target="#delete"
                                 class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>

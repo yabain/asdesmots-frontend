@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item">Competition</li>
+                      <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
                         <li class="breadcrumb-item active"> Partie </li>
                     </ul>
                 </div>
@@ -19,8 +19,13 @@
             </div>
         </div>
 
+        <div class="text-center">
+          <span *ngIf="gamePartSrv.waitingResponse">
+            <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+          </span> 
+        </div>
 
-        <div class="row">
+        <div class="row" *ngIf="!gamePartSrv.waitingResponse">
                 <div class="card card-table">
                   <div class="card-body">
                     <div class="table-responsive">
@@ -107,15 +112,15 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title"></h5>
+                  <h5 class="modal-title"> Ajouter Partie  </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    
                   </div>
                   <div class="modal-text text-center">
-                    <h2>Ajouter Partie </h2>
+                    
                     <p class="text-center" *ngIf="gamePartSrv.waitingResponse">
                         <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
                     </p>
@@ -181,15 +186,13 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title"></h5>
+                  <h5 class="modal-title">  {{ partChooseData.name }} </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
-                       <i class="fa fa-eye" aria-hidden="true"></i>
                   </div>
                   <div class="modal-text text-center">
-                    <h2> Partie {{ partChooseData.name }}</h2>
                         <form>
                             <div class="row form-group">
                                 <label for="nbrWords" class="col-sm-3 col-form-label input-label"><b>

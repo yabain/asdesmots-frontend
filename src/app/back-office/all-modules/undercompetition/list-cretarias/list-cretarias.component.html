@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/undercompetion/competition/list'">Competition</a></li>
+                        <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
                         <li class="breadcrumb-item active"> Critère </li>
                     </ul>
                 </div>
@@ -19,8 +19,13 @@
             </div>
         </div>
 
+        <div class="text-center">
+          <span *ngIf="competitionSrv.waitingCriteriasResp">
+            <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+          </span> 
+        </div>
 
-        <div class="row">
+        <div class="row" *ngIf="!competitionSrv.waitingCriteriasResp">
                 <div class="card card-table">
                   <div class="card-body">
                     <div class="table-responsive">
@@ -74,7 +79,7 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title"></h5>
+                  <h5 class="modal-title"> Ajouter Critère </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -82,7 +87,6 @@
                    
                   </div>
                   <div class="modal-text text-center">
-                    <h2>Ajouter Critère </h2>
                     <p class="text-center" *ngIf="competitionSrv.waitingResponse">
                         <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
                     </p>
@@ -118,7 +122,7 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title"></h5>
+                  <h5 class="modal-title"> Supprimer Critère</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -126,7 +130,7 @@
                     
                   </div>
                   <div class="modal-text text-center">
-                    <h2> Supprimer Critère </h2>
+                    
                     <p>{{'wanTo' | translate }} vous supprimer le  Critère: << <b>{{ criteriaChooseData.name }}>> </b> à cette competition ? </p>
                   </div>
                 </div>

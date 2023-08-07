@@ -52,6 +52,7 @@ export class CreateCompetitionComponent implements OnInit {
   resetFormCreation(){
     this.sousCompetion.form.reset();
     this.sousCompetion.creationDone = false;
+    this.route.navigateByUrl('/undercompetition/competition/list')
   }
 
   async loadListOfArcarde(){

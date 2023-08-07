@@ -35,17 +35,16 @@
             <table datatable class="table table-stripped table-hover">
               <thead class="thead-light">
                 <tr>
-                  <th>{{'UserName' | translate }}</th>
+                  <th>{{'Name' | translate }}</th>
                   <th>{{'Location' | translate }}</th>
                   <th>{{'Phone' | translate }}</th>
                   <th>{{'Action' | translate }}</th>
                 
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf="roleService.listUsers.length != 0 ">
                 <tr *ngFor="let user of roleService.listUsers; let i = index"
-                  (click)="userData = user" data-bs-toggle="modal"
-                  data-bs-target="#details">
+                  (click)="userData = user">
                   <td>
                     <h2 class="table-avatar">
                       <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
@@ -66,6 +65,19 @@
                   </td>
                 </tr>
               </tbody>
+
+                  <tbody *ngIf="roleService.listUsers.length == 0 " >
+                    <tr>
+                        <td></td>
+                        <td class="text-center">
+                          <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                          <br>Aucun Critère !
+                        </td>
+                        <td></td>
+                      </tr>
+                </tbody>
+            
+                            
             </table>
           </div>
         </div>
@@ -77,15 +89,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title"> Supprimer Role </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <h2> Supprimer Role </h2>
-            <p>{{'wanTo' | translate }} vous vraiment retirer le role:  << <b>{{ roleChooseName }}>> à l'utilisateur ' {{ userData.firstName }} ' </b>? </p>
+            <p>Voulez vous vraiment retirer le role:  << <b>{{ roleChooseName }}>> à l'utilisateur ' {{ userData.firstName }} ' </b>? </p>
           </div>
         </div>
 

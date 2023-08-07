@@ -82,15 +82,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title"> Ajouter un Role Utilisateur  </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
-            <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
           <div class="modal-text text-center">
-            <h2>Ajouter un Role Utilisateur {{ userData.firstName }} </h2>
+            <h2>{{ userData.firstName }} </h2>
             <p class="text-center" *ngIf="roleService.waitinPermissionResp">
                 <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
             </p>

@@ -7,9 +7,9 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
-              <li class="breadcrumb-item active">Competition</li>
-              <li class="breadcrumb-item"></li>
+              <li class="breadcrumb-item " style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item" style="cursor: pointer;" ><a [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
+              <li class="breadcrumb-item active">Creation</li>
             </ul>
           </div>
       
@@ -146,8 +146,10 @@
                                 </select>
                             </div>
 
-                          
-                            <button type="button" class="btn btn-success text-end" [disabled]="!sousCompetion.form.valid" *ngIf="!sousCompetion.creationDone"  (click)="doCreationCompetion()">
+                            <button class="btn btn-danger" (click)="resetFormCreation()">
+                                Annuler
+                            </button>
+                            <button type="button"  style="float: right;" class="btn btn-success text-end" [disabled]="!sousCompetion.form.valid" *ngIf="!sousCompetion.creationDone"  (click)="doCreationCompetion()">
                               <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../assets/img/loader.gif" alt="" width="30px"> </span>
                                   
                               <span *ngIf="!sousCompetion.waitingResponse" >Terminé  <i class="fa fa-plus" aria-hidden="true"></i></span>

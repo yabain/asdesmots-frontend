@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class UpdateCompetitionComponent implements OnInit {
 
   constructor(public sousCompetion: SousCompetitionService, 
               private route: ActivatedRoute, 
+              public router: Router,
               public level: LevelService,
               private fb: FormBuilder,
               public arcardeSrv: ArcardeService
@@ -26,6 +27,7 @@ export class UpdateCompetitionComponent implements OnInit {
       this.sousCompetion.initFormUpdate();
 
       this.getID();
+      this.getLevel();
    }
 
   ngOnInit(): void {
@@ -50,8 +52,14 @@ export class UpdateCompetitionComponent implements OnInit {
 
   
   resetFormCreation(){
-      this.sousCompetion.form.reset();
-      this.sousCompetion.creationDone = false;
+      this.sousCompetion.formUpdate.reset();
+      this.router.navigateByUrl('/undercompetition/competition/list');
+  }
+
+  getLevel(){
+      if(this.level.levelList.length === 0){
+          this.level.getAllLevels();
+      }
   }
 
   doUpdate(){

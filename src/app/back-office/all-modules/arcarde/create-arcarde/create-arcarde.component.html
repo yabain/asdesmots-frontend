@@ -7,9 +7,9 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
-              <li class="breadcrumb-item active"><a [routerLink]="'/index'">Arcarde</a></li>
-              <li class="breadcrumb-item"></li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a></li>
+              <li class="breadcrumb-item active">Creation</li>
             </ul>
           </div>
       
@@ -89,8 +89,10 @@
                               >
                           </div>
         
-                       
-                          <button type="button" class="btn btn-primary " style="float: right;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
+                          <button (click)="resetFormCreation()" class="btn btn-danger" style="margin-right: 10px;">
+                              Annuler
+                          </button>
+                          <button type="button" class="btn btn-primary " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
                             <span *ngIf="!arcadeServ.waitingResponse"> Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
                             <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                           </button>

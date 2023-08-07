@@ -1,7 +1,10 @@
 <p>
     <span><b>Role</b>/permissions/</span>
 </p>
-<div>
+<div class="text-center" *ngIf="roleService.waitinPermissionResp ">
+  <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px">
+</div>
+<div *ngIf="!roleService.waitinPermissionResp" >
     <div class="card card-table">
         <div class="card-body">
           <div class="table-responsive">

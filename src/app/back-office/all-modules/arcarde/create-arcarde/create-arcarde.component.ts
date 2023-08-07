@@ -33,6 +33,7 @@ export class CreateArcardeComponent implements OnInit {
     resetFormCreation(){
       this.arcadeServ.formControlCreateArcarde.reset();
       this.arcadeServ.isCreationDone = false;
+      this.router.navigateByUrl('/arcarde/list-arcarde');
    }
   
 

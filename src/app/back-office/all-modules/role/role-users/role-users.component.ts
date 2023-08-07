@@ -21,6 +21,7 @@ export class RoleUsersComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   ngAfterViewInit() {
     this.getIDRole();
     this.loadListUsers();

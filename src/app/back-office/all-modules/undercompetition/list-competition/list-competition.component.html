@@ -16,13 +16,13 @@
             style="color: #035858 !important; background-color: #ffff !important;">
             <i class="fas fa-plus"></i>
           </a> -->
-          <a class="btn btn-primary me-2"
-            style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createNew">
-            <i class="fas fa-plus"></i>
+          <a class="btn btn-primary me-2" [routerLink]="'/undercompetition/competition/create'"
+            style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="Create new competition">
+            <i class="fas fa-plus"  ></i>
           </a>
           <a class="btn btn-primary me-2"
             style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
-            <i class="fas fa-refresh"></i>
+            <i class="fas fa-refresh"  data-toggle="tooltip" data-placement="top" title="refresh this list"></i>
           </a>
         </div>
       </div>
@@ -67,12 +67,12 @@
 
                        
                         <td>
-                              <span class="badge badge-pill bg-primary-light" (click)="goToCriteriasList(sousCompetion._id)" style="cursor: pointer;">
+                              <span class="badge badge-pill bg-primary-light" data-toggle="tooltip" data-placement="top" title="show criterias list of this competition" (click)="goToCriteriasList(sousCompetion._id)" style="cursor: pointer;">
                                   <i class="fa fa-list" aria-hidden="true"></i>
                               </span>
                         </td>
                         <td> 
-                              <span class="badge badge-pill bg-success-light" (click)="goToPartsList(sousCompetion._id)" style="cursor: pointer;">
+                              <span class="badge badge-pill bg-success-light" data-toggle="tooltip" data-placement="top" title="show all parts of this competition" (click)="goToPartsList(sousCompetion._id)" style="cursor: pointer;">
                                   <i class="fa fa-list" aria-hidden="true"></i>
                               </span>
                         </td>
@@ -80,11 +80,11 @@
                           <div class="col-auto">
                               <span class="badge badge-pill bg-primary-light" 
                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#details">
-                              <i class="fa fa-eye" aria-hidden="true"></i> </span>
+                              <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details for this competition"></i> </span>
 
                                <span class="badge badge-pill bg-warning-light" 
                                style="cursor: pointer;" (click)="initUpdatingForm(sousCompetion)">
-                               <i class="fa fa-pencil-square" aria-hidden="true"> </i>
+                               <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="update this competition"> </i>
                               </span>
                           </div> 
                         </td>
@@ -107,10 +107,12 @@
 <div class="modal custom-modal fade" id="details" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
       <div class="modal-body">
         <div class="modal-icon text-center mb-3">
-          <i class="fa fa-eye" aria-hidden="true"></i>
         </div>
         <div class="modal-text">
           <h2 class="text-center">Details Competitions {{ sousCompetitionSelctedData.name }} </h2>
@@ -208,7 +210,7 @@
                                 :</b></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="level" placeholder=""
-                            [value]="sousCompetitionSelctedData.level" disabled>
+                            [value]="sousCompetitionSelctedData.gameLevel?.name" disabled>
                         </div>
                     </div>
                   </form>
@@ -259,144 +261,6 @@
           <button data-bs-dismiss="modal" class="btn btn-success">
               {{ 'close' | translate }}
           </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal custom-modal fade" id="createNew" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </div>
-        <div class="modal-text">
-          <h2 class="text-center">Nouvelle Sous Competition</h2>
-              <form [formGroup]="formIdArcarde">
-                     <div class="form-group">
-                      <label for="arceadID"> Arcarde </label>
-                      <select type="text" name="arceadID" formControlName="idArcarde" class="form-control" id="arceadID"
-                      [ngClass]="{ 'is-invalid': formIdArcarde.controls['idArcarde'].touched && formIdArcarde.controls['idArcarde'].invalid}"
-                      >
-                      <option value="">--Chosir une arcarde--</option>
-                      <option *ngFor="let arcarde of arcardeSrv.listArcardeUser" [value]="arcarde._id"> {{ arcarde.name }} </option>
-                    </select>
-                  </div>
-              </form>
-              <form [formGroup]="sousCompetion.form">
-                  <div class="form-group">
-                      <label for="name"> Nom </label>
-                      <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['name'].touched && sousCompetion.f['name'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="desc"> Description </label>
-                      <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['description'].touched && sousCompetion.f['description'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                    <label for="level" class="form-control-label"> Niveau </label>
-                    <select name="level" formControlName="gameLevel" id="level" class="form-control">
-                        <option value="">--choisir un niveau--</option>
-                        <option *ngFor="let item of level.levelList"  [value]="item._id">
-                                {{ item.name }}
-                        </option>
-                    </select>
-                 </div>
-
-                  <div class="form-check form-switch text-center">
-                      <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch" id="flexSwitchCheckChecked">
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Partie Unique ?</label>
-                  </div>
-
-                  <div class="form-check form-switch text-center">
-                      <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" (click)="sousCompetion.f['canRegisterPlayer'].setValue(sousCompetion.form.get('canRegisterPlayer')?.value ? false:true);" role="switch" id="flexSwitchCheckChecked">
-                      <label class="form-check-label" for="flexSwitchCheckChecked">can Register Player ?</label>
-                  </div>
-
-                  <div class="form-group">
-                      <label for="localisation"> Localisation </label>
-                      <input type="text" name="localisation" class="form-control" formControlName="localisation" id="localisation"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['localisation'].touched && sousCompetion.f['localisation'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="maxPlayerLife"> max Player Life </label>
-                      <input type="number" name="maxPlayerLife" class="form-control" formControlName="maxPlayerLife" id="maxPlayerLife"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['maxPlayerLife'].touched && sousCompetion.f['maxPlayerLife'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="maxTimeToPlay"> max Time To Play </label>
-                      <input type="number" name="maxTimeToPlay" class="form-control" formControlName="maxTimeToPlay" id="maxTimeToPlay"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['maxTimeToPlay'].touched && sousCompetion.f['maxTimeToPlay'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="startDate"> start Date </label>
-                      <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['startDate'].touched && sousCompetion.f['startDate'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="endDate"> End Date </label>
-                      <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['endDate'].touched && sousCompetion.f['endDate'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="maxOfWinners">Max of Winners </label>
-                      <input type="number" name="maxOfWinners" class="form-control" formControlName="maxOfWinners" id="maxOfWinners"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['maxOfWinners'].touched && sousCompetion.f['maxOfWinners'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="lang">Lang </label>
-                      <select type="num" name="lang" class="form-control" formControlName="lang" id="lang"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['lang'].touched && sousCompetion.f['lang'].invalid}"
-                      >
-                          <option value="">--choisir une langue--</option>
-                          <option value="fr">Français</option>
-                          <option value="en">Anglais</option>
-                      </select>
-                  </div>
-
-                  <div class="form-group">
-                      <label for="parentCompetition">Parent Competition*</label>
-                      <select type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition"
-                      [ngClass]="{ 'is-invalid': sousCompetion.f['parentCompetition'].touched && sousCompetion.f['parentCompetition'].invalid}"
-                      >
-                        <option value="">--choisir une competition parent--</option>
-                        <option *ngFor="let location of sousCompetion.listCompetionParent"  [value]="location._id"> {{ location.name }} </option>
-                      </select>
-                  </div>
-
-              </form>
-
-        </div>
-      </div>
-
-      <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="resetFormCreation()">
-              {{'close' | translate }}
-            </button>
-            <button type="button" class="btn btn-success" [disabled]="!sousCompetion.form.valid" *ngIf="!sousCompetion.creationDone"  (click)="doCreationCompetion()">
-              <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../assets/img/loader.gif" alt="" width="30px"> </span>
-                  
-              <span *ngIf="!sousCompetion.waitingResponse" >Terminé  <i class="fa fa-plus" aria-hidden="true"></i></span>
-            </button>
       </div>
     </div>
   </div>

@@ -10,18 +10,20 @@
                   </ul>
               </div>
                <div class="col-auto">
-                  <a [routerLink]="'create'" class="btn btn-primary me-2"
+                  <a [routerLink]="'create'"  data-toggle="tooltip" data-placement="top" title="create arcarde competition" class="btn btn-primary me-2"
                       style="color: #035858 !important; background-color: #ffff !important;">
                       <i class="fas fa-plus"></i>
                   </a>
                  
                    <a [routerLink]="'users'" class="btn btn-primary me-2"
+                   data-toggle="tooltip" data-placement="top" title="list of users "
                       style="color: #035858 !important; background-color: #ffff !important;">
                       <i class="fa fa-users" aria-hidden="true"></i> 
                   </a>
 
                    <a [routerLink]="'list'" class="btn btn-primary me-2"
-                      style="color: #035858 !important; background-color: #ffff !important;">
+                   data-toggle="tooltip" data-placement="top" title="show arcarde list"
+                      style="color: #035858  !important; background-color: #ffff !important;">
                       <i class="fa fa-list" aria-hidden="true"></i>
                   </a>
               </div> 

@@ -67,7 +67,7 @@
                         
                         <a  data-bs-toggle="modal" data-bs-target="#AddRole"
                           class="btn btn-sm btn-white text-danger me-2">
-                          <i class="fa fa-plus" aria-hidden="true"></i>
+                          <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add role on this user"></i>
                         </a>
                       </td>
                     </tr>
@@ -81,7 +81,10 @@
   <div class="modal custom-modal fade" id="AddRole" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
             <i class="fa fa-plus" aria-hidden="true"></i>

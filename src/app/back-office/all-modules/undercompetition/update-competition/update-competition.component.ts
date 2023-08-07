@@ -4,6 +4,7 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { ActivatedRoute } from '@angular/router';
+import { LevelService } from 'src/app/shared/services/level/level.service';
 
 @Component({
   selector: 'app-update-competition',
@@ -13,14 +14,18 @@ import { ActivatedRoute } from '@angular/router';
 export class UpdateCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   idCompetition: string = '';
+  formUpdate: FormGroup;
 
   constructor(public sousCompetion: SousCompetitionService, 
               private route: ActivatedRoute, 
+              public level: LevelService,
+              private fb: FormBuilder,
               public arcardeSrv: ArcardeService
               ) {
-      this.sousCompetion.loadListUnderCompetition()
-      this.getID();
+      this.sousCompetion.loadListUnderCompetition(),
       this.sousCompetion.initFormUpdate();
+
+      this.getID();
    }
 
   ngOnInit(): void {
@@ -43,6 +48,7 @@ export class UpdateCompetitionComponent implements OnInit {
       this.sousCompetion.initUpdatingValues(this.sousCompetitionSelctedData);
   }
 
+  
   resetFormCreation(){
       this.sousCompetion.form.reset();
       this.sousCompetion.creationDone = false;

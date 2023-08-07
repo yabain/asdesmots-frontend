@@ -22,6 +22,7 @@ export class SousCompetitionService {
 
   form : FormGroup;//created
   formUpdate: FormGroup;
+  tmpIDLevel: string ='';
 
   authorization : any;
 
@@ -62,7 +63,7 @@ export class SousCompetitionService {
        
     });
 
-    this.form.valueChanges.subscribe((data: any)=>{
+    this.formUpdate.valueChanges.subscribe((data: any)=>{
         Object.assign(this.newUnderCompetionParam, data);
     });
 
@@ -90,13 +91,14 @@ export class SousCompetitionService {
         {
           name: data.name,
           description: data.description,
-          level: data.level,
+          gameLevel: data.gameLevel,
           isSinglePart: data.isSinglePart,
           canRegisterPlayer: data.canRegisterPlayer,
           localisation: data.localisation,
           maxPlayerLife: data.maxPlayerLife,
           maxTimeToPlay: data.maxTimeToPlay,
           startDate: data.startDate,
+          endDate: data.endDate,
           maxOfWinners: data.maxOfWinners,
           lang: data.lang,
           parentCompetition: data.parentCompetition
@@ -167,12 +169,12 @@ export class SousCompetitionService {
  
   update(idCompetition: string){
 
-      /*this.waitingResponse = true;
-      this.api.put(EndpointSousCompetion.UPDATE_S_C+idCompetition, competionData, this.authorization).subscribe((resp)=>{
+      this.waitingResponse = true;
+      this.api.put(EndpointSousCompetion.UPDATE_S_C+idCompetition, this.newUnderCompetionParam, this.authorization).subscribe((resp)=>{
           console.log('update response', resp);
           this.toastr.success('Update Done ', 'SUCCESS', {timeOut : 7000});
           this.waitingResponse = false;
-
+          this.arcardeService.loadArcade();
       },(error: any) => {
           
         if (error.status == 500) {
@@ -183,7 +185,7 @@ export class SousCompetitionService {
           this.toastr.error(error.message, 'Error', { timeOut: 7000 });
         }
         this.waitingResponse = false;
-      });*/
+      });
       console.log(this.formUpdate.value);
   }
 

@@ -61,7 +61,7 @@
                               data-bs-toggle="modal"
                               (click)="getRoleName()"
                       >
-                          Retirer le role  <i class="fa fa-user-times" aria-hidden="true"></i>
+                          Retirer le role  <i class="fa fa-user-times" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove role on this user"></i>
                       </button>
                   </td>
                 </tr>
@@ -76,10 +76,12 @@
   <div class="modal custom-modal fade" id="removeRole" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
-            <i class="fa fa-user-times" aria-hidden="true"></i>
           </div>
           <div class="modal-text text-center">
             <h2> Supprimer Role </h2>

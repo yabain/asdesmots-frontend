@@ -13,7 +13,7 @@
                         data-bs-target="#addParts"
                         data-bs-toggle="modal"
                         style="color: #035858 !important; background-color: #ffff !important;">
-                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Create new Parts for this competition"></i>
                     </a>
                 </div> 
             </div>
@@ -45,11 +45,11 @@
                             <td class="text-end">
                                 <a data-bs-toggle="modal" data-bs-target="#details"
                                 class="btn btn-sm btn-white text-warning me-2">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details"></i>
                                 </a>
                               
                                 <a data-bs-toggle="modal" data-bs-target="#deletePart"
-                                class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
+                                  class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1" data-toggle="tooltip" data-placement="top" title="delete this part of this competition"></i></a>
                             </td>
                           </tr>
                         </tbody>
@@ -75,10 +75,12 @@
           <div class="modal custom-modal fade" id="deletePart" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
-        
+                <div class="modal-header">
+                  <h5 class="modal-title"></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
-                        <i class="fa fa-times" aria-hidden="true"></i>
                   </div>
                   <div class="modal-text text-center">
                     <h2> Supprimer Partie </h2>
@@ -104,7 +106,10 @@
           <div class="modal custom-modal fade" id="addParts" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
-        
+                <div class="modal-header">
+                  <h5 class="modal-title"></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -175,7 +180,10 @@
           <div class="modal custom-modal fade" id="details" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
-        
+                <div class="modal-header">
+                  <h5 class="modal-title"></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
                        <i class="fa fa-eye" aria-hidden="true"></i>

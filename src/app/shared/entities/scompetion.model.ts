@@ -5,7 +5,7 @@ export class SousCompetion{
             public _id?: any,
             public name?: any,
             public description?: any,
-            public level?: any,
+            public gameLevel?: any,
             public isSinglePart?: any,
             public canRegisterPlayer?: any,
             public localisation?: any,

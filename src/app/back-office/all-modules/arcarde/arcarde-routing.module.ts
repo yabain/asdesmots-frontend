@@ -4,12 +4,14 @@ import { ArcardeComponent } from './arcarde.component';
 import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
+import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 
 const routes: Routes = [
   { path: '', component: ArcardeComponent},
   { path: 'list-user/:idArcarde', component: ListUserArcardeComponent },
   { path: 'list-arcarde', component: ListArcardeComponent },
   { path:  'suscribe', component: ArcadesuscriptionComponent },
+  { path: 'create', component:CreateArcardeComponent },
   {
     path: '**',
     redirectTo: "'list-arcarde'",

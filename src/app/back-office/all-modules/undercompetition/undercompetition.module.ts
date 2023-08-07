@@ -14,6 +14,7 @@ import { ListCretariasComponent } from './list-cretarias/list-cretarias.componen
 import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe';
 import { ListPartsComponent } from './list-parts/list-parts.component';
 import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
+import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
     ListCretariasComponent,
     GetParentNamePipe,
     FormatDatePipe,
-    ListPartsComponent
+    ListPartsComponent,
+    CreateCompetitionComponent
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,7 @@ import { ListCompetitionComponent } from './list-competition/list-competition.co
 import { UpdateCompetitionComponent } from './update-competition/update-competition.component';
 import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
 import { ListPartsComponent } from './list-parts/list-parts.component';
+import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 
 const routes: Routes = [
   { path: '', component: UndercompetitionComponent, 
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'competition/criterias/:id',
         component: ListCretariasComponent
+      },
+      {
+        path:'competition/create',
+        component: CreateCompetitionComponent
       }
 
     ]

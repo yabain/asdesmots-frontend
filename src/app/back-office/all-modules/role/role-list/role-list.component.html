@@ -28,26 +28,26 @@
                   <td>{{ role.description }}</td>
 
                   <td>
-                      <a class="btn btn-sm btn-white text-success me-2" (click)="navigateToPermissionList(role._id)">
+                      <a class="btn btn-sm btn-white text-success me-2" data-toggle="tooltip" data-placement="top" title="get list of permission of this role" (click)="navigateToPermissionList(role._id)">
                           <i class="fa fa-list" aria-hidden="true"></i>
                       </a>
                   </td>
             
                   <td class="col-auto text-end">
-                    <a class="btn btn-sm btn-white text-success me-2" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                    <a class="btn btn-sm btn-white text-success me-2" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
                         class="far fa-edit me-1"></i>
                     </a>
 
                     <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
-                      <i class="fa fa-plus" aria-hidden="true"></i>
+                      <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
                     </a>
 
-                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="navigate(role._id)">
+                    <a class="btn btn-sm btn-white text-danger me-2" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
                       <i class="fa fa-users" aria-hidden="true"></i>
                     </a>
 
                     <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
                     </a>
                     
                     
@@ -62,10 +62,12 @@
   <div class="modal custom-modal fade" id="editRole" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
-            <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
           <div class="modal-text">
             <h2 class="text-center">Modification Role </h2>
@@ -114,10 +116,12 @@
   <div class="modal custom-modal fade" id="deleteRole" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
-            <i class="fa fa-user-times" aria-hidden="true"></i>
           </div>
           <div class="modal-text text-center">
             <h2> Supprimer Role </h2>
@@ -143,7 +147,10 @@
   <div class="modal custom-modal fade" id="addPermission" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
             <i class="fa fa-plus" aria-hidden="true"></i>

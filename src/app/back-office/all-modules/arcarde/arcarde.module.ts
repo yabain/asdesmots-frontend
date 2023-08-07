@@ -10,6 +10,7 @@ import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
 import { FormatDatePipe } from './services/format-date.pipe';
+import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { FormatDatePipe } from './services/format-date.pipe';
         ListArcardeComponent,
         ArcadesuscriptionComponent,
         FormatDatePipe,
+        CreateArcardeComponent,
     ],
     imports: [
         CommonModule,

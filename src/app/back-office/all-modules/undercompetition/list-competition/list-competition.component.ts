@@ -23,26 +23,12 @@ export class ListCompetitionComponent implements OnInit {
               ) {
 
       this.loadListOfArcarde();
-      this.sousCompetion.initFormControl();
-      this.sousCompetion.initFormUpdate();
-      this.initArcardeFormID();
-      this.getLevel();
    }
 
   ngOnInit(): void {
 
   }
 
-  initArcardeFormID(){
-     this.formIdArcarde = this.fb.group({
-        idArcarde: ['', Validators.required]
-    });
-    
-    this.formIdArcarde.valueChanges.subscribe((idChoossed)=>{
-        this.id_Arcarde = idChoossed;
-        this.sousCompetion.buildListParentCompetition(idChoossed.idArcarde);
-    });
-  }
 
  async loadListOfArcarde(){
       if(this.arcardeSrv.listArcardeUser.length == 0){
@@ -63,15 +49,6 @@ export class ListCompetitionComponent implements OnInit {
     this.arcardeSrv.loadArcade();
   }
 
-  doCreationCompetion(){
-    
-      this.sousCompetion.createCompetition(this.sousCompetion.newUnderCompetionParam, this.id_Arcarde);
-  }
-
-  resetFormCreation(){
-      this.sousCompetion.form.reset();
-      this.sousCompetion.creationDone = false;
-  }
 
   goToPartsList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/parts/'+id);
@@ -79,10 +56,5 @@ export class ListCompetitionComponent implements OnInit {
 
    goToCriteriasList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/criterias/'+id);
-  }
-   getLevel(){
-      if(this.level.levelList.length === 0){
-          this.level.getAllLevels();
-      }
   }
 }

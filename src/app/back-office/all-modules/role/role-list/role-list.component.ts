@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RoleService } from '../service/role.service';
 import { Role } from '../service/role.model';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-role-list',
@@ -11,9 +13,13 @@ import { Router } from '@angular/router';
 export class RoleListComponent implements OnInit {
   roleChoose: Role = new Role();
   idRole: string = '';
+  
   constructor(public roleService: RoleService, 
+              private translate: TranslateService,
+              private translation: TranslationService,
               private router: Router  
               ) {
+      this.translate.use(this.translation.getLanguage());
       this.loadListRole();
       this.roleService.initFormUpdate();
       this.roleService.initAddingForm();

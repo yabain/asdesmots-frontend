@@ -11,6 +11,7 @@ import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
 import { FormatDatePipe } from './services/format-date.pipe';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { CreateArcardeComponent } from './create-arcarde/create-arcarde.componen
         ListArcardeComponent,
         ArcadesuscriptionComponent,
         FormatDatePipe,
-        CreateArcardeComponent,
+        CreateArcardeComponent
     ],
     imports: [
         CommonModule,
@@ -29,6 +30,8 @@ import { CreateArcardeComponent } from './create-arcarde/create-arcarde.componen
         ProgressIndeterminateModule,
         ReactiveFormsModule,
         FormsModule,
+        DataTablesModule
+
     ]
 })
 export class ArcardeModule { }

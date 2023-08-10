@@ -89,10 +89,11 @@
                               >
                           </div>
         
-                          <button (click)="resetFormCreation()" class="btn btn-danger" style="margin-right: 10px;">
-                              Annuler
+                          <button (click)="backClicked()" class="btn btn-primary me-2"
+                          style="color: #035858 !important; background-color: #ffff !important;">
+                          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
                           </button>
-                          <button type="button" class="btn btn-primary " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
+                          <button type="button" class="btn btn-success " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
                             <span *ngIf="!arcadeServ.waitingResponse"> Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
                             <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                           </button>

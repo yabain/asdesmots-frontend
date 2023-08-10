@@ -5,6 +5,8 @@ import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { Router } from '@angular/router';
 import { LevelService } from 'src/app/shared/services/level/level.service';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-list-competition',
@@ -15,13 +17,15 @@ export class ListCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   id_Arcarde : string = ''; //id arcade of the new register competion;
   formIdArcarde!: FormGroup;
-  constructor(public sousCompetion: SousCompetitionService, 
+  constructor(public sousCompetion: SousCompetitionService,
+              private translate: TranslateService,
+              private translataion: TranslationService, 
               private fb: FormBuilder,
               private route: Router,
               public level: LevelService,
               public arcardeSrv: ArcardeService
               ) {
-
+      this.translate.use(this.translataion.getLanguage());
       this.loadListOfArcarde();
    }
 

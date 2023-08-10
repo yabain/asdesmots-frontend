@@ -11,7 +11,6 @@
                 <tr>
                   <th>Name</th>
                   <th>Description </th>
-                  <th>Permissions</th>
                   <th class="text-end">Actions</th>
                 </tr>
               </thead>
@@ -28,27 +27,37 @@
                   <td>{{ role.description }}</td>
 
                   <td>
-                      <a class="btn btn-sm btn-white text-success me-2" data-toggle="tooltip" data-placement="top" title="get list of permission of this role" (click)="navigateToPermissionList(role._id)">
-                          <i class="fa fa-list" aria-hidden="true"></i>
-                      </a>
+                    <div class="dropdown dropdown-action">
+                      <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                              class="far fa-edit me-1"></i>
+                              <span style="margin-left: 5px;">Edit </span>
+                          </a>
+
+                          <a  class="dropdown-item" data-toggle="tooltip" data-placement="top" title="get list of permission of this role" (click)="navigateToPermissionList(role._id)">
+                            <i class="fa fa-list" aria-hidden="true"></i> 
+                            <span style="margin-left: 5px;">Permissions list </span>
+                          </a>
+      
+                          <a class="dropdown-item"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
+                            <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
+                             <span style="margin-left: 5px;">Add permission</span>
+                          </a>
+      
+                          <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span style="margin-left: 5px;">Lists users </span>
+                          </a>
+      
+                          <a class="dropdown-item"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                              <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
+                               <span style="margin-left: 5px;">Delete</span>
+                          </a>
+                      </div>
+                    </div>
                   </td>
             
-                  <td class="col-auto text-end">
-                    <a class="btn btn-sm btn-white text-success me-2" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
-                        class="far fa-edit me-1"></i>
-                    </a>
-
-                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
-                      <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
-                    </a>
-
-                    <a class="btn btn-sm btn-white text-danger me-2" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
-                      <i class="fa fa-users" aria-hidden="true"></i>
-                    </a>
-
-                    <a class="btn btn-sm btn-white text-danger me-2"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
-                        <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
-                    </a>
                     
                     
                 </tr>
@@ -117,21 +126,24 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title">
+            Supprimer Role
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <h2> Supprimer Role </h2>
+            <h2>  </h2>
             <p>{{'wanTo' | translate }} vous supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
           </div>
         </div>
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
+            {{'close'| translate}}
+            
           </button>
           <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()" >
             <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
@@ -176,9 +188,9 @@
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
+            {{'close'| translate}}
           </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.permissionAdded" (click)="addPermission()" >
+          <button type="button" class="btn btn-primary" *ngIf="!roleService.permissionAdded" (click)="addPermission()" >
             <span *ngIf="!roleService.waitinPermissionResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitinPermissionResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>

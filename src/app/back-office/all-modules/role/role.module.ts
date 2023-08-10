@@ -13,6 +13,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { SidemenuroleComponent } from './sidemenurole/sidemenurole.component';
 import { RolepermissionlistComponent } from './rolepermissionlist/rolepermissionlist.component';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
           deps: [HttpClient]
       }
   }),
+  DataTablesModule
   ]
 })
 export class RoleModule { }

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { RoleService } from '../service/role.service';
 import { User } from 'src/app/shared/entities/user';
 
@@ -15,6 +15,7 @@ export class RoleUsersComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
               public roleService: RoleService,
+              private router: Router,
               private cdRef:ChangeDetectorRef
               ) { 
                   
@@ -26,6 +27,7 @@ export class RoleUsersComponent implements OnInit {
   ngAfterViewInit() {
     this.getIDRole();
     this.loadListUsers(); 
+    this.startListener();
     this.cdRef.detectChanges();
   }
 
@@ -37,6 +39,15 @@ export class RoleUsersComponent implements OnInit {
 
   getRoleName(){
    this.roleChooseName = this.roleService.getNameOfRole(this.id);
+  }
+
+  startListener(){
+      this.router.events.subscribe((event)=>{
+          if(event instanceof NavigationStart){
+              this.getIDRole();
+              this.loadListUsers();
+          }
+      })
   }
 
   doRemove(){

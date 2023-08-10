@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
@@ -18,7 +18,9 @@ export class ListArcardeComponent implements OnInit {
               public userServ:  UserService,
               private router: Router,
               private translationService: TranslationService,  
-              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde()}
+              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde();
+                  this.translate.use(this.translationService.getLanguage());
+            }
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
@@ -28,6 +30,8 @@ export class ListArcardeComponent implements OnInit {
     }, 2500);
 
   }
+
+  
 
   loadArcardeCurrentUser(){
       if(this.arcadeServ.listArcardeUser.length == 0){

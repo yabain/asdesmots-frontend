@@ -1,3 +1,4 @@
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -5,6 +6,8 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-competition',
@@ -17,11 +20,14 @@ export class CreateCompetitionComponent implements OnInit {
   formIdArcarde!: FormGroup;
   constructor(public sousCompetion: SousCompetitionService, 
               private fb: FormBuilder,
+              private translate: TranslateService,
+              private translation: TranslationService,
               private route: Router,
               public level: LevelService,
+              private location: Location,
               public arcardeSrv: ArcardeService
               ) {
-
+      this.translate.use(this.translation.getLanguage());
       this.loadListOfArcarde();
       this.sousCompetion.initFormControl();
       this.sousCompetion.initFormUpdate();
@@ -45,7 +51,6 @@ export class CreateCompetitionComponent implements OnInit {
   }
 
   doCreationCompetion(){
-    
       this.sousCompetion.createCompetition(this.sousCompetion.newUnderCompetionParam, this.id_Arcarde);
   }
 
@@ -66,5 +71,9 @@ export class CreateCompetitionComponent implements OnInit {
       if(this.level.levelList.length === 0){
           this.level.getAllLevels();
       }
+  }
+
+  backClicked(){
+    this.location.back();
   }
 }

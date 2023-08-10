@@ -44,9 +44,8 @@
                     <th>{{'Competition Name' | translate }}</th>
                     <th>{{'Competition Parent Name' | translate }}</th>
                     <th>{{'Description' | translate }}</th>
-                    <th> {{ 'Criterias' | translate }} </th>
-                    <th>{{'Parts' | translate }}</th>
-                    <th>Action</th>
+                  
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
 
@@ -65,28 +64,27 @@
                               <span> {{ sousCompetion.description }} </span>
                         </td>
 
-                       
-                        <td>
-                              <span class="badge badge-pill bg-primary-light" data-toggle="tooltip" data-placement="top" title="show criterias list of this competition" (click)="goToCriteriasList(sousCompetion._id)" style="cursor: pointer;">
-                                  <i class="fa fa-list" aria-hidden="true"></i>
-                              </span>
-                        </td>
-                        <td> 
-                              <span class="badge badge-pill bg-success-light" data-toggle="tooltip" data-placement="top" title="show all parts of this competition" (click)="goToPartsList(sousCompetion._id)" style="cursor: pointer;">
-                                  <i class="fa fa-list" aria-hidden="true"></i>
-                              </span>
-                        </td>
-                        <td>
-                          <div class="col-auto">
-                              <span class="badge badge-pill bg-primary-light" 
-                               style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#details">
-                              <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details for this competition"></i> </span>
-
-                               <span class="badge badge-pill bg-warning-light" 
-                               style="cursor: pointer;" (click)="initUpdatingForm(sousCompetion)">
-                               <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="update this competition"> </i>
-                              </span>
-                          </div> 
+                        <td class="text-center">
+                
+                          <div class="dropdown dropdown-action">
+                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
+                              <a class="dropdown-item" (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a>
+                              <a class="dropdown-item" ><i class="far fa-trash-alt me-2"></i>
+                                 <span style="margin-left: 5px;">Delete</span>
+                              </a>
+                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i class="far fa-eye me-2"></i>
+                                 <span style="margin-left: 5px;">Show more</span>
+                              </a>
+                              <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
+                                
+                                <span style="margin-left: 5px;"> List of parts  </span>
+                              </a>
+                              <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
+                                 <span style="margin-left: 5px;">List of Criterias</span>
+                              </a>
+                            </div>
+                          </div>
                         </td>
                     </tr>
                 </tbody>
@@ -108,31 +106,32 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"> {{ sousCompetitionSelctedData.name }} </h5>
+        <h5 class="modal-title"> Details Competition </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="modal-icon text-center mb-3">
+          <h5> {{ sousCompetitionSelctedData.name }} </h5>
         </div>
         <div class="modal-text">
 
           <div class="row">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs nav-tabs-bottom nav-justified" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                  Presentation <i class="fa fa-address-book" aria-hidden="true"></i>
-                </button>
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                  Presentation 
+                </a>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                  Description <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                </button>
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                  Description 
+                </a>
               </li>
               
               <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#listPartis">
-                   Parties <i class="fa fa-gamepad" aria-hidden="true"></i>
-                  </button>
+                  <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#listPartis">
+                   Parties 
+                  </a>
               </li>
             </ul>
 
@@ -178,8 +177,9 @@
                         Description
                         :</b></label>
                       <div class="col-sm-9">
-                          <input type="text" class="form-control" id="desc" placeholder=""
+                          <textarea type="text" class="form-control" id="desc" placeholder=""
                           [value]="sousCompetitionSelctedData.description" disabled>
+                        </textarea>
                       </div>
                     </div>
 
@@ -257,7 +257,7 @@
     
 
       <div class="modal-footer text-center">
-          <button data-bs-dismiss="modal" class="btn btn-success">
+          <button data-bs-dismiss="modal" class="btn btn-secondary">
               {{ 'close' | translate }}
           </button>
       </div>

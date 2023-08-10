@@ -6,8 +6,10 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
-              <li class="breadcrumb-item active" style="cursor: pointer;" > <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item " style="cursor: pointer;" > <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
+              <li class="breadcrumb-item active">Souscrire </li>
+
             </ul>
           </div>
           <div class="col-auto">
@@ -49,7 +51,7 @@
                       <th>{{'Description' | translate }}</th>
                       
                       <th>{{'is Online Game' | translate }}</th>
-                      <th align="center">Action</th>
+                      <th class="text-center">Action</th>
                     </tr>
                   </thead>
 
@@ -131,7 +133,7 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
             Close
           </button>
           <button type="button" class="btn btn-success" *ngIf="!arcadeServ.suscriptionDone"  (click)="doSuscription()" >

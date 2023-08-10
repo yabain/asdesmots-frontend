@@ -54,7 +54,7 @@
                       <th>{{'Description' | translate }}</th>
                       
                       <th>{{'Online Game' | translate }}</th>
-                      <th align="center">Action</th>
+                      <th class="text-center">Action</th>
                     </tr>
                   </thead>
 
@@ -79,23 +79,28 @@
                                     {{ arcarde.isOnlineGame }}  
                                 </span>
                           </td>
-                          <td>
-                            <div class="col-auto">
-                           
-                              <a class="badge badge-pill bg-primary-light" 
-                               style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
-                                <i class="fa fa-users" aria-hidden="true"></i>
-                              </a>
-
-                              <a class="badge badge-pill bg-warning-light" 
-                                style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#details">
-                                <i class="fa fa-plus"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details"></i>
-                              </a>
-
-                              <a class="badge badge-pill bg-danger-light" 
-                                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
-                                <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="delete this arcarde"></i>
-                              </a>
+                          <td class="text-center">
+                              <div class="dropdown dropdown-action">
+                                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                  <a class="dropdown-item" 
+                                  style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
+                                   <i class="fa fa-users" aria-hidden="true"></i>
+                                   <span style="margin-left: 5px;"> List of subscribers</span> 
+                                 </a>
+   
+                                 <a class="dropdown-item" 
+                                   style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#details">
+                                   <i class="fa fa-eye"></i>
+                                    <span style="margin-left: 5px;"> Show more </span>
+                                 </a>
+   
+                                 <a class="dropdown-item" 
+                                   style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
+                                   <i class="fa fa-trash" aria-hidden="true" ></i>
+                                  <span style="margin-left: 5px;">  Delete  </span>
+                                 </a>
+                                </div>
                             </div>
 
                           </td>
@@ -123,16 +128,16 @@
           <div class="text-center">
           </div>
 
-              <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-bottom nav-justified" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-Date" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                       Date
-                    </button>
+                    <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-Date" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                       Dates
+                    </a>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                    <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
                       Max Players 
-                    </button>
+                    </a>
                   </li>
               </ul>
 
@@ -179,7 +184,7 @@
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
+            {{'Close' | translate}}
           </button>
         </div>
       </div>
@@ -193,7 +198,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"> Supprimer Role </h5>
+          <h5 class="modal-title"> Supprimer Arcarde </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -316,126 +321,4 @@
     </div>
   </div>
 
-  <div class="modal custom-modal fade" id="createArcade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Arcarde</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
-            <i class="fa fa-mortar-board" aria-hidden="true"></i>
-          </div>
-          <div class="modal-text text-center">
-            <h2>Creation Arcarde</h2>
-          </div>
-          <div class="row">
-              <form [formGroup]="arcadeServ.formControlCreateArcarde">
-                      <div class="form-group">
-                        <label for="name"> Nom </label>
-                        <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                        [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="desc"> Description </label>
-                        <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
-                        >
-                    </div>
-
-                    <div class="form-check form-switch text-center">
-                        <input class="form-check-input" type="checkbox" formControlName="isOnlineGame" role="switch" id="flexSwitchCheckChecked">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Partie En ligne </label>
-                    </div>
-
-                    <div class="form-check form-switch text-center">
-                        <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecked">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Enregister des joueurs </label>
-                    </div>
-
-                     <div class="form-check form-switch text-center">
-                        <input class="form-check-input" type="checkbox" formControlName="isFreeRegistrationPlayer" role="switch" id="flexSwitchCheckChecked">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Enregistrement  de joueurs gratuit</label>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="maxPlayersNumber">Max players number  </label>
-                        <input type="number" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
-                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
-                        >
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <label for="startDate">Date de Debut </label>
-                        <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
-                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="endDate"> Date de Fin </label>
-                        <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
-                        [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                      <label for="startRegistrationDate">Date Debut d'enregistrement </label>
-                      <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
-                      [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
-                      >
-                  </div>
-
-                  <div class="form-group">
-                      <label for="endRegistrationDate"> Date fin d'enregistrement</label>
-                      <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
-                      [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
-                      >
-                  </div>
-
-              </form>
-
-          </div>
-        </div>
-
-        <div class="modal-footer text-center">
-         
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Suppresion Arcarde</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
-          </div>
-          <div class="modal-text text-center">
-            <p>{{'wanTo' | translate }} vous supprimer de la <b>{{ arcardeData.name }} </b>? </p>
-          </div>
-        </div>
-
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="arcadeServ.unsuscriptionDone = false">
-            {{'close' | translate }}
-          </button>
-          <button type="button" class="btn btn-danger" *ngIf="!arcadeServ.deleteDone" (click)="doDelete()" >
-            <span *ngIf="!arcadeServ.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
-            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 

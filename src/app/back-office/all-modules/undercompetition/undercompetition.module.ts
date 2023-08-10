@@ -15,6 +15,7 @@ import { GetParentNamePipe } from './list-competition/pipe/get-parent-name.pipe'
 import { ListPartsComponent } from './list-parts/list-parts.component';
 import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CreateCompetitionComponent } from './create-competition/create-competit
     ProgressIndeterminateModule,
     ReactiveFormsModule,
     FormsModule,
+    DataTablesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

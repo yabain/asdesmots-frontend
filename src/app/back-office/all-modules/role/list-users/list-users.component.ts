@@ -4,6 +4,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/entities/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-list-users',
@@ -17,11 +19,14 @@ export class ListUsersComponent implements OnInit {
   formAddRole: FormGroup;
 
   constructor(
+        private translate: TranslateService,
+        private translationService: TranslationService,
         public roleService: RoleService,
         private userService: UserService,
         private toastr: ToastrService,
         private fb: FormBuilder
   ) { 
+    this.translate.use(this.translationService.getLanguage());
     this.initForm();
     this.loadUsers();
   }

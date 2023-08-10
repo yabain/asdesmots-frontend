@@ -9,6 +9,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 
 
+
 @NgModule({
   declarations: [
     UpdateCompetitionComponent,
@@ -24,6 +25,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
           deps: [HttpClient]
       }
     }),
+
   ]
 })
 export class ListCompetitionModule { }

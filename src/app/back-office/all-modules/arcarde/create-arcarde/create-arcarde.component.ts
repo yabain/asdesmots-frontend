@@ -5,6 +5,7 @@ import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-arcarde',
@@ -17,8 +18,12 @@ export class CreateArcardeComponent implements OnInit {
               private translate: TranslateService,
               public userServ:  UserService,
               private router: Router,
+              private location: Location,
               private translationService: TranslationService,  
-              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde()}
+              ) { 
+                  this.translate.use(this.translationService.getLanguage());
+                  this.arcadeServ.initFormControl(); 
+                  this.arcadeServ.initFormCreationArcarde()}
 
   ngOnInit(): void {
   }
@@ -33,8 +38,11 @@ export class CreateArcardeComponent implements OnInit {
     resetFormCreation(){
       this.arcadeServ.formControlCreateArcarde.reset();
       this.arcadeServ.isCreationDone = false;
-      this.router.navigateByUrl('/arcarde/list-arcarde');
    }
-  
+   
+   backClicked(){
+      this.resetFormCreation();
+      this.location.back();
+   }
 
 }

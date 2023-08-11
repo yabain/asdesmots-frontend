@@ -4,6 +4,7 @@ import { Role } from '../service/role.model';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { Permission } from 'src/app/shared/entities/permission';
 
 @Component({
   selector: 'app-role-list',
@@ -13,7 +14,9 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 export class RoleListComponent implements OnInit {
   roleChoose: Role = new Role();
   idRole: string = '';
-  
+  permissionData: Permission = new Permission();
+  openAccordion: boolean[] = [];
+
   constructor(public roleService: RoleService, 
               private translate: TranslateService,
               private translation: TranslationService,
@@ -61,7 +64,11 @@ export class RoleListComponent implements OnInit {
   doDelete(){
       this.roleService.deleteRole(this.roleChoose);
   }
-  
+
+ doRemovePermission(){
+    this.roleService.removePermission({roleId : this.roleChoose._id, permissionId: this.permissionData._id});
+  }
+
   reset(){
     this.roleService.permissionAdded = false;
   }

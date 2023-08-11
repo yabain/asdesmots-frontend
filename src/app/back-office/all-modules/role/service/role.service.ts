@@ -208,6 +208,7 @@ export class RoleService {
       this.permissionAdded = false;
       console.log('request adding ', requestBody);
       this.api.post(EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation).subscribe((resp)=>{
+         this.getListRole();
           this.toastr.success('Permission Added', 'SUCCESS', { timeOut : 7000}); 
           this.waitinPermissionResp = false;
           this.permissionAdded = true;

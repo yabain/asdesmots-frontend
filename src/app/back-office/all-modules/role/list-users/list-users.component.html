@@ -111,7 +111,7 @@
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
             Close
           </button>
-          <button type="button" class="btn btn-danger" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" (click)="doAddRole()" >
+          <button type="button" class="btn btn-primary" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal" (click)="doAddRole()" >
             <span *ngIf="!roleService.waitingResponse">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>

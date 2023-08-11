@@ -55,8 +55,8 @@ export class RolepermissionlistComponent implements OnInit {
       this.Location.back();
   }
 
-  doRemovePermission(idPermission: string){
-    this.roleService.removePermission({roleId : this.roleId, permissionId: idPermission});
+  doRemovePermission(){
+    this.roleService.removePermission({roleId : this.roleId, permissionId: this.permissionData._id});
   }
 
 }

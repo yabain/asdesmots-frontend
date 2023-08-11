@@ -31,10 +31,10 @@
                             <td class="text-center">
                                 <a  data-bs-toogle="modal"
                                     data-bs-target="#confirmRemove"
-                                    (click)="doRemovePermission(permission._id)"
+                                    
                                     class="btn btn-sm btn-white text-danger me-2"
                                  >
-                                        <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove permission on this role"></i>
+                                  Delete   <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove permission on this role"></i>
                                 </a>
                             </td>
                         </tr>
@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-<!--
+
 <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -73,7 +73,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
             Close
           </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()" >
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doRemovePermission()" >
             <span *ngIf="!roleService.waitingResponse">Retirer <i class="fa fa-trash" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
@@ -81,4 +81,3 @@
       </div>
     </div>
   </div>
--->

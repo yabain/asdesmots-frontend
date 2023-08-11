@@ -96,6 +96,7 @@ export class RoleService {
     this.creationDone = false;
     this.api.post(EndpointRole.CREATE_ROLE, this.newRole, this.authorisation).subscribe((resp)=>{
         console.log('resp created role', resp);
+        this.getListRole();
         this.waitingResponse = false;
         this.creationDone = true;
         this.toastr.success('Role Creation Done', 'Success', { timeOut: 5000 });
@@ -168,7 +169,7 @@ export class RoleService {
   }
   getListRole(){
       this.waitingResponse = true;
-
+      this.listRole = [];
       this.api.get(EndpointRole.GET_LIST_ROLE, this.authorisation).subscribe((resp)=>{
           this.listRole = Array.from(resp.data);
           this.waitingResponse = false;
@@ -187,6 +188,7 @@ export class RoleService {
 
   getListPermission(){
       this.waitinPermissionResp = true;
+      this.listPermission = [];
       this.api.get(EndpointRole.GET_LIST_PERMISSION, this.authorisation).subscribe((data: any)=>{
             this.listPermission = Array.from(data.data);
             this.waitinPermissionResp = false;

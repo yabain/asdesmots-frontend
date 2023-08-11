@@ -5,6 +5,7 @@
                 <div class="col">
                     <ul class="breadcrumb">
                       <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
+                        <li class="breadcrumb-item active" style="cursor: pointer;"> {{ competitionData.name }} </li>
                         <li class="breadcrumb-item active"> Partie </li>
                     </ul>
                 </div>
@@ -134,27 +135,22 @@
                                     </div>
 
                                    
-
                                     <div class="form-group">
-                                        <label for="description"> Description </label>
-                                        <input type="text" class="form-control" formControlName="description" name="description" id="description">
+                                      <label for="startDate"> start Date </label>
+                                      <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
                                     </div>
 
-                            
                             </div>
 
                             <div class="col">
                                     
 
                                     <div class="form-group">
-                                        <label for="numberOfWords"> Nombre de Mots </label>
+                                        <label for="numberOfWords"> Nombre de Mots (Par Joueur) </label>
                                         <input type="number" class="form-control" formControlName="numberOfWord" name="numberOfWords" id="numberOfWords">
                                     </div>
 
-                                     <div class="form-group">
-                                        <label for="startDate"> start Date </label>
-                                        <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
-                                    </div>
+                                   
                                     <div class="form-group">
                                         <label for="endDate"> endDate </label>
                                         <input type="date" class="form-control" formControlName="endDate" name="endDate" id="endDate">
@@ -162,16 +158,21 @@
 
                                     
                             </div>
+                            <div class="form-group">
+                              <label for="description"> Description </label>
+                              <textarea type="text" class="form-control" formControlName="description" name="description" id="description">
+                              </textarea>
+                          </div>
                         </div>
                     </form>
                   </div>
                 </div>
         
                 <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-danger" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+                  <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     Fermer
                   </button>
-                  <button type="button" class="btn btn-primary" [disabled]="gamePartSrv.gamePartForm.invalid" *ngIf="!gamePartSrv.partAdded" (click)="addPart()" >
+                  <button type="button" class="btn btn-success" data-bs-dismiss="modal" [disabled]="gamePartSrv.gamePartForm.invalid" *ngIf="!gamePartSrv.partAdded" (click)="addPart()" >
                     <span *ngIf="!gamePartSrv.waitingResponse">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
                     <span *ngIf="gamePartSrv.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>

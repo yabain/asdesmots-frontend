@@ -5,6 +5,7 @@ import { GamePart } from 'src/app/shared/entities/gamePart.model';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
 import { SousCompetitionService } from '../services/sous-competition.service';
+import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 
 @Component({
   selector: 'app-list-parts',
@@ -13,6 +14,8 @@ import { SousCompetitionService } from '../services/sous-competition.service';
 })
 export class ListPartsComponent implements OnInit {
   competitionID: string = '';
+  competitionData: SousCompetion = new SousCompetion();
+
   partChooseData : GamePart = new GamePart();
   listLevel: Level[] = [];
 
@@ -31,6 +34,7 @@ export class ListPartsComponent implements OnInit {
   
   getListParts(){
     this.competitionID = this.route.snapshot.params['id'];
+    this.competitionData = this.SousCompetSrv.getData(this.competitionID);
     this.gamePartSrv.f['gameCompetitionID'].setValue(this.competitionID);
     this.gamePartSrv.getListGamePart(this.competitionID);
   }

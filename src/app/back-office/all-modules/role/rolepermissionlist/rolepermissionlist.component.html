@@ -1,5 +1,9 @@
 <p>
-    <span><b>Role</b>/permissions/</span>
+    
+  <button (click)="backClicked()" class="btn btn-primary me-2"
+  style="color: #035858 !important; background-color: #ffff !important;">
+  <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+  </button>
 </p>
 <div class="text-center" *ngIf="roleService.waitinPermissionResp ">
   <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px">
@@ -23,7 +27,7 @@
                         >
                             <td> {{ permission.name }} </td>
                             <td> {{ permission.description }} </td>
-                            <td> {{ permission.modules }} </td>
+                            <td> {{ permission.module }} </td>
                             <td class="text-center">
                                 <a  data-bs-toogle="modal"
                                     data-bs-target="#confirmRemove"

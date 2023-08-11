@@ -120,13 +120,14 @@
                                 [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['parentCompetition'].touched && sousCompetion.formUpdt['parentCompetition'].invalid}"
                                 >
                             </div>        
-                            <button (click)="resetFormCreation()"  class="btn btn-danger">
-                                Annuler
+                            <button (click)="backClicked()" class="btn btn-primary me-2"
+                            style="color: #035858 !important; background-color: #ffff !important;">
+                            <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
                             </button>
                             <button type="button" style="margin-left: 15px;" class="btn btn-success" *ngIf="!sousCompetion.creationDone"  (click)="doUpdate()">
                               <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../assets/img/loader.gif" alt="" width="30px"> </span>
                                   
-                              <span *ngIf="!sousCompetion.waitingResponse" >Terminé  <i class="fa fa-plus" aria-hidden="true"></i></span>
+                              <span *ngIf="!sousCompetion.waitingResponse" >Sauvegarder  <i class="fa fa-plus" aria-hidden="true"></i></span>
                             </button>
                         </div>
                     </div>

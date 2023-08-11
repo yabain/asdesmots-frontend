@@ -16,8 +16,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let role of roleService.listRole; let i = index"
-                     (click)="roleChoose = role;" 
-                  >
+                     (click)="roleChoose = role;" >
                   <td>
                     <h2>
                         <span> {{ role.name }} </span>
@@ -26,10 +25,10 @@
 
                   <td>{{ role.description }}</td>
 
-                  <td>
+                  <td class="text-center">
                     <div class="dropdown dropdown-action">
                       <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
-                      <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
                           <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
                               class="far fa-edit me-1"></i>
                               <span style="margin-left: 5px;">Edit </span>
@@ -50,7 +49,7 @@
                             <span style="margin-left: 5px;">Lists users </span>
                           </a>
       
-                          <a class="dropdown-item"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                          <a class="dropdown-item"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
                               <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
                                <span style="margin-left: 5px;">Delete</span>
                           </a>
@@ -72,14 +71,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title"> Modification Role</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text">
-            <h2 class="text-center">Modification Role </h2>
+            <h2 class="text-center"> {{ roleChoose.name }}  </h2>
 
             <div class="row">
                 <form [formGroup]="roleService.updateForm">
@@ -107,13 +106,13 @@
 
         <div class="modal-footer text-center">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
+                    {{'close' | translate }}
                 </button>
                 
-                <button class="btn btn-success" *ngIf="!roleService.updateDone"  [disabled]="roleService.updateForm.invalid" >
+                <button class="btn btn-success" data-bs-dismiss="modal" *ngIf="!roleService.updateDone"  [disabled]="roleService.updateForm.invalid" >
                     <span *ngIf="roleService.waitingResponse" ><img src="../../../../../assets/img/loader.gif" alt=""
                         width="30px"> </span>
-                    <span *ngIf="!roleService.waitingResponse" >Modifier <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                    <span *ngIf="!roleService.waitingResponse" >Sauvegarder <i class="fa fa-plus" aria-hidden="true"></i> </span>
                 </button>
                
         </div>
@@ -136,7 +135,7 @@
           </div>
           <div class="modal-text text-center">
             <h2>  </h2>
-            <p>{{'wanTo' | translate }} vous supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
+            <p>{{'wanTo' | translate }} supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
           </div>
         </div>
 

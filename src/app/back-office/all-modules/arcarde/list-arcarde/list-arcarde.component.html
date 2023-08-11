@@ -96,7 +96,7 @@
                                  </a>
    
                                  <a class="dropdown-item" 
-                                   style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteArcarde">
+                                   style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete">
                                    <i class="fa fa-trash" aria-hidden="true" ></i>
                                   <span style="margin-left: 5px;">  Delete  </span>
                                  </a>
@@ -184,17 +184,19 @@
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            {{'Close' | translate}}
+            {{'close' | translate}}
           </button>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 
   
 
   <!-- delete arcarde modal -->
-  <div class="modal custom-modal fade" id="deleteArcarde" role="dialog">
+  <div class="modal custom-modal fade" id="delete" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -205,18 +207,20 @@
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <p>{{'wanTo' | translate }} vous supprimer l'arcarde :  << <b>{{ arcardeData.name }}>> </b>? </p>
+             <p> Fonctionnalité non pris en charge ! </p>
+
+           <!--<p>{{'wanTo' | translate }} vous supprimer l'arcarde :  << <b>{{ arcardeData.name }}</b> >> ? </p>--> 
           </div>
         </div>
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
+            {{ 'close' | translate }}
           </button>
-          <button type="button" class="btn btn-danger"  (click)="doDelete()" >
+         <!-- <button type="button" class="btn btn-danger"  (click)="doDelete()" >
             <span *ngIf="!arcadeServ.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
             <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-          </button>
+          </button>-->
         </div>
       </div>
     </div>
@@ -312,7 +316,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2" (click)="resetFormSuscribtion()">
             {{'close' | translate }}
           </button>
-          <button type="button" class="btn btn-primary" [disabled]="!arcadeServ.formControlSuscription.valid" *ngIf="!arcadeServ.suscriptionDone" (click)="doSuscription()" >
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!arcadeServ.formControlSuscription.valid" *ngIf="!arcadeServ.suscriptionDone" (click)="doSuscription()" >
             <span *ngIf="!arcadeServ.waitingResponseSuscrib">Inscrire <i class="fa fa-plus" aria-hidden="true"></i> </span>
             <span *ngIf="arcadeServ.waitingResponseSuscrib"><img src="../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
@@ -321,4 +325,4 @@
     </div>
   </div>
 
-
+ 

@@ -61,6 +61,7 @@ export class RoleListComponent implements OnInit {
   doDelete(){
       this.roleService.deleteRole(this.roleChoose);
   }
+  
   reset(){
     this.roleService.permissionAdded = false;
   }

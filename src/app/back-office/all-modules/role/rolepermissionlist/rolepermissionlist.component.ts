@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { RoleService } from '../service/role.service';
 import { Permission } from 'src/app/shared/entities/permission';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-rolepermissionlist',
@@ -17,8 +20,12 @@ export class RolepermissionlistComponent implements OnInit {
   constructor(
       private router:  ActivatedRoute,
       private route: Router,
+      private translate: TranslateService,
+      private translation: TranslationService,
+      private Location: Location,
       public roleService: RoleService,
   ) { 
+      this.translate.use(this.translation.getLanguage());
       this.getRoleData();
       this.startListener();
   }
@@ -38,11 +45,15 @@ export class RolepermissionlistComponent implements OnInit {
   startListener(){
     //on id on url change...
     this.route.events.subscribe((event: any) => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof NavigationEnd) {
           this.getRoleData();
       }
     });
   } 
+
+  backClicked(){
+      this.Location.back();
+  }
 
   doRemovePermission(idPermission: string){
     this.roleService.removePermission({roleId : this.roleId, permissionId: idPermission});

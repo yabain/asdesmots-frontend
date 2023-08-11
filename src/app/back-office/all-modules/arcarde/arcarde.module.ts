@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ArcardeRoutingModule } from './arcarde-routing.module';
 import { ArcardeComponent } from './arcarde.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ProgressIndeterminateModule } from "../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
@@ -12,6 +12,8 @@ import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscriptio
 import { FormatDatePipe } from './services/format-date.pipe';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 import { DataTablesModule } from 'angular-datatables';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
 
 @NgModule({
@@ -30,7 +32,14 @@ import { DataTablesModule } from 'angular-datatables';
         ProgressIndeterminateModule,
         ReactiveFormsModule,
         FormsModule,
-        DataTablesModule
+        DataTablesModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
 
     ]
 })

@@ -4,8 +4,9 @@
             <div class="row align-items-center">
                 <div class="col">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
-                        <li class="breadcrumb-item active"> Critère </li>
+                      <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil</a></li>
+                        <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competitions</a></li>
+                        <li class="breadcrumb-item active"> Critères </li>
                     </ul>
                 </div>
                  <div class="col-auto">
@@ -105,10 +106,10 @@
                 </div>
         
                 <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-danger" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+                  <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
+                  <button type="button" class="btn btn-success" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
                     <span *ngIf="!competitionSrv.waitingCriteriasResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
                     <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>

@@ -130,7 +130,7 @@ export class ArcardeService {
 
         this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
               console.log(resp);
-              this.listUser = Array.from(resp.data);
+              this.listUser = Array.from(resp.data[0]);
               this.waitingResponse = false;
         },(error)=>{
           if (error.status == 500) {

@@ -7,9 +7,9 @@
         <div class="row align-items-center">
           <div class="col">
             <h3 class="page-title"></h3>
-            <ul class="breadcrumb">
+            <ul class="breadcrumb" style="cursor: pointer;">
               <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
-              <li class="breadcrumb-item active">Arcarde</li>
+              <li class="breadcrumb-item active"> <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
               <li class="breadcrumb-item active">Users</li>
 
             </ul>
@@ -100,7 +100,9 @@
                         {{ user.email }}
                     </td>
 
-                    <td>
+                    <td> {{ user.phone }} </td>
+
+                    <td class="text-center">
                         <button class="btn btn-danger">
                             remove
                         </button>
@@ -112,7 +114,7 @@
                 <td></td>
                 <td class="text-center">
                   <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                  <br>Aucun Critère !
+                  <br>Aucun Utilisateur !
                 </td>
                 <td></td>
               </tr>

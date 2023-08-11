@@ -53,6 +53,9 @@ export class ListCompetitionComponent implements OnInit {
     this.arcardeSrv.loadArcade();
   }
 
+  doDelete(){
+    
+  }
 
   goToPartsList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/parts/'+id);

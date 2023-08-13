@@ -23,7 +23,12 @@ export class RoleComponent implements OnInit {
 
   getUrl(){
     const url = this.router.url.split('/');
-    this.currentRoute = url[url.length-1];
+    if(/\d/.test(url[url.length-1])){
+      //check if the last url path contains number, in true case, get the role name as current route
+      this.currentRoute = this.roleService.getRoleData(url[url.length-1]).name;
+    }else{
+      this.currentRoute = url[url.length-1];
+    }
   }
 
   refreshList(){

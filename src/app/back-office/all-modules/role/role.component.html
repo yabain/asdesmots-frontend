@@ -17,12 +17,10 @@
                         >
                         <i class="fas fa-plus"></i>
                     </a>
-                   
-                     <a [routerLink]="'list'" class="btn btn-primary me-2"
-                        style="color: #035858 !important; background-color: #ffff !important;" 
-                        data-toggle="tooltip" data-placement="top" title="role list"
-                        >
-                        <i class="fa fa-list" aria-hidden="true"></i>
+                    
+                    <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="list users to add a role"
+                     style="color: #035858 !important;background-color: #ffff !important;" >
+                        <i class="fa fa-users" aria-hidden="true"></i>
                     </a>
 
                     <a class="btn btn-primary me-2"
@@ -30,10 +28,7 @@
                         style="color: #035858 !important; background-color: #ffff !important;" (click)="refreshList()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </a>
-                    <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="list users to add a role"
-                     style="color: #035858 !important;background-color: #ffff !important;" >
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </a>
+                    
                 </div> 
             </div>
         </div>

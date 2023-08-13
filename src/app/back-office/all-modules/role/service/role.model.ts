@@ -3,6 +3,8 @@ export class Role{
             public _id?:any,
             public name?: any,
             public description?: any,
-            public permissions?: any[]
+            public permissions?: any[],
+            public isEnable?: any,
+
         ){}
 }

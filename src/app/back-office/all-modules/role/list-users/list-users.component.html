@@ -28,21 +28,26 @@
       </div>
       <!-- /Search Filter -->
   
-      <div class="row" *ngIf="wating">
-        <div class="col-sm-12">
+        <p class=" text-center" *ngIf="wating">
           <img src="../../../../../assets/img/loader.gif" height="30px" alt="">
-        </div>
-      </div>
-  
-      <div class="row" *ngIf="!wating"> 
-        <div class="card-header">
-          <button (click)="backClicked()" class="btn btn-primary me-2"
+        </p>
+
+  <p>
+     <button (click)="backClicked()" class="btn btn-primary me-2"
                         style="color: #035858 !important; background-color: #ffff !important;">
                         <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
-          </button>
-        </div>
+     </button>
+  </p>
+
+      <div class="row" *ngIf="!wating"> 
+         
           <div class="card card-table">
-           
+            <div class="card-header">
+              <h4 class="card-title">List of Users</h4>
+              <p class="card-text">
+                this table is the global overview of all users to assign them a role
+              </p>
+            </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table datatable class="table table-stripped table-hover">
@@ -57,7 +62,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let customer of customers; let i = index"
-                      (click)="userData = customer">
+                      (click)="buildListRoleChooseUser(customer)">
                       <td>
                         <h2 class="table-avatar">
                           <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
@@ -73,8 +78,8 @@
                       <td class="text-center">
                         
                         <a  data-bs-toggle="modal" data-bs-target="#AddRole"
-                          class="btn btn-sm btn-white text-danger me-2">
-                          <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add role on this user"></i>
+                          class="btn btn-sm btn-white text-danger me-2" >
+                          <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"  data-placement="top" title="add role on this user"></i>
                         </a>
                       </td>
                     </tr>
@@ -86,14 +91,14 @@
       </div>
 
   <div class="modal custom-modal fade" id="AddRole" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"> Ajouter un Role Utilisateur  </h5>
+          <h5 class="modal-title"> Ajouter un Role à un Utilisateur  </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
+          <!-- <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
             <h2>{{ userData.firstName }} </h2>
@@ -111,15 +116,63 @@
                     </select>
                 </div>
             </form>
-          </div>
+          </div>-->
+           <p class="text-center" *ngIf="roleService.waitingResponse">
+                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
+            </p>
+          <div class="card card-table" *ngIf="!roleService.waitingResponse">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table datatable class="table table-stripped table-hover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Name</th>
+                      <th>Description </th>
+                      <th class="text-center">Active</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="roleService.listRoleOfUser.length != 0" >
+                    <tr *ngFor="let role of roleService.listRole; let i = index"
+                          >
+                      <td>
+                        <h2>
+                            <span> {{ role.name }} </span>
+                        </h2>
+                      </td>
+    
+                      <td>{{ role.description }}</td>
+    
+                      <td class="text-center">
+                        <div class="form-check text-center" style="margin-left: 50%;">
+                          <input class="form-check-input" type="checkbox" [checked]="role.isEnable"  value="" id="flexCheckDefault">
+                        
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="roleService.listRoleOfUser.length == 0">
+                    <tr>
+                      <td></td>
+                      <td class="text-center">
+                        <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
+                        <br>Aucun Role !
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+           </div>
+        </div>
+
         </div>
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
+            {{'close' | translate}}
           </button>
-          <button type="button" class="btn btn-primary" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal" (click)="doAddRole()" >
-            <span *ngIf="!roleService.waitingResponse">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+          <button type="button" class="btn btn-primary" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal"  >
+            <span *ngIf="!roleService.waitingResponse">Sauvegarder  <i class="fa fa-save" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
         </div>

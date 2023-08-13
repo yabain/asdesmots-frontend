@@ -23,9 +23,18 @@
     </div>
   </div>
 
+  <p>
+    <button (click)="backClicked()" class="btn btn-primary me-2"
+                            style="color: #035858 !important; background-color: #ffff !important;">
+                            <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+    </button>
+  </p>
+  
   <div class="text-center" *ngIf="roleService.waitingResponseUser">
     <img src="../../../../../assets/img/loader.gif" height="30px"/>
 </div>
+
+
 
 <div class="row" *ngIf="!roleService.waitingResponseUser">
     <div class="col-sm-12">

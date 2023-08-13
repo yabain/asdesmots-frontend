@@ -81,8 +81,14 @@ export class ListUsersComponent implements OnInit {
 
   reset(){
     this.roleService.roleAdded = false;
+    this.roleService.resetListBuild();
   }
 
+  buildListRoleChooseUser(user: User){
+     this.userData = user;
+     this.roleService.getListRoleByUserID(user._id);
+  }
+  
   backClicked(){
       this.location.back();
   }

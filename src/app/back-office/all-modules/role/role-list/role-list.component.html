@@ -71,7 +71,7 @@
       
           <div class="card-header" id="/" (click)="roleChoose = role">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-auto me-auto" style="width: 78%;">
                 <h5 class="accordion-faq m-0 position-relative">
                   <a class="custom-accordion-title text-reset d-block"
                       data-bs-toggle="collapse" [href]="'#accordion' + index"
@@ -81,13 +81,13 @@
                   </a>
                 </h5>
               </div>
-              <div class="col-auto offset-md-4" style="display: flex; flex-direction: row; float: right;">
+              <div class="col-auto" style="display: flex; flex-direction: row; float: right;">
                 <div class="text-end" >
-                                         <a class="btn btn-secondary text-end" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                                         <a class="btn btn-sm btn-white text-success me-2" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
                                                 class="far fa-edit me-1"></i>
                                             </a>
                         
-                                            <a class="btn btn-success text-end"  style="margin-right: 10px;" (click)="navigateToPermissionList(role._id)" >
+                                            <a class="bg-danger-light btn btn-sm btn-white"  style="margin-right: 10px;" (click)="navigateToPermissionList(role._id)" >
                                               <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
                                             </a>
                         
@@ -95,7 +95,7 @@
                                               <i class="fa fa-users" aria-hidden="true"></i>
                                             </a>
                         
-                                            <a class="btn btn-danger text-end"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                                            <a class="btn btn-sm btn-white text-danger me-2"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
                                                 <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
                                             </a>
                 </div>
@@ -109,11 +109,15 @@
           <div [id]="'accordion' + index" class="collapse"
               aria-labelledby="headingSeven"
               data-bs-parent="#custom-accordion-one">
-
+              <div class="card-header">
+                <h4 class="card-title">Role list</h4>
+                <p class="card-text">
+                  this table is the global overview of existing roles
+                </p>
+              </div>
              <div class="card-body">
                 <div class="card card-table">
                     <div class="table-responsive">
-                      <h5 class="text-center"> Permissions list </h5>
                          <table datatable class="table table-stripped table-hover">
                               <thead class="thead-light">
                                   <tr>
@@ -228,7 +232,7 @@
           </div>
           <div class="modal-text text-center">
             <h2>  </h2>
-            <p>{{'wanTo' | translate }} supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
+            <p>{{'wanTo' | translate }} supprimer le role << <b>{{ roleChoose.name }}>> </b>? </p>
           </div>
         </div>
 
@@ -264,8 +268,13 @@
 
             <div class="card-body">
               <div class="card card-table">
+                <div class="card-header">
+									<h4 class="card-title">Permissions list</h4>
+									<p class="card-text">
+										this table is the global overview of existing permissions 
+									</p>
+								</div>
                   <div class="table-responsive">
-                    <h5 class="text-center"> Permissions list </h5>
                        <table datatable class="table table-stripped table-hover">
                             <thead class="thead-light">
                                 <tr>

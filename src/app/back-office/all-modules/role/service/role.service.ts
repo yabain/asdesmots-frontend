@@ -297,6 +297,11 @@ export class RoleService {
       });
   }
 
+  enablePermission(rolePermission: Permission[]){
+     
+
+  }
+
   getUserWithRole(){
 
   }

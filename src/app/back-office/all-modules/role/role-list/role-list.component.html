@@ -81,31 +81,25 @@
                   </a>
                 </h5>
               </div>
-              <div class="col-md-4 offset-md-4">
-                <div class="dropdown dropdown-action text-end">
-                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
-                  <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
-                      <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
-                          class="far fa-edit me-1"></i>
-                          <span style="margin-left: 5px;">Edit </span>
-                      </a>
-  
-                      <a class="dropdown-item"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
-                        <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
-                         <span style="margin-left: 5px;">Add permission</span>
-                      </a>
-  
-                      <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                        <span style="margin-left: 5px;">Lists users </span>
-                      </a>
-  
-                      <a class="dropdown-item"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
-                          <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
-                           <span style="margin-left: 5px;">Delete</span>
-                      </a>
-                  </div>
+              <div class="col-auto offset-md-4" style="display: flex; flex-direction: row; float: right;">
+                <div class="text-end" >
+                                         <a class="btn btn-secondary text-end" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                                                class="far fa-edit me-1"></i>
+                                            </a>
+                        
+                                            <a class="btn btn-success text-end"  style="margin-right: 10px;" (click)="navigateToPermissionList(role._id)" >
+                                              <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
+                                            </a>
+                        
+                                            <a class="btn btn-white text-end" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
+                                              <i class="fa fa-users" aria-hidden="true"></i>
+                                            </a>
+                        
+                                            <a class="btn btn-danger text-end"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                                                <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
+                                            </a>
                 </div>
+                     
               </div>
             </div>
              
@@ -126,7 +120,7 @@
                                       <th>Name</th>
                                       <th>Description </th>
                                       <th>Module</th>
-                                      <th class="text-center"> Actions </th>
+                                    <!--   <th class="text-center"> Actions </th>-->
                                     </tr>
                               </thead>
                               <tbody *ngIf="role.permissions.length !== 0 " >
@@ -136,14 +130,14 @@
                                       <td> {{ permission.name }} </td>
                                       <td> {{ permission.description }} </td>
                                       <td> {{ permission.module }} </td>
-                                      <td class="text-center">
+                                      <!--<td class="text-center">
                                           <a  data-bs-toogle="modal"
                                               data-bs-target="#confirmRemove"
                                               class="btn btn-sm btn-white text-danger me-2"
                                            >
                                                   <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove permission on this role"></i>
                                           </a>
-                                      </td>
+                                      </td>-->
                                   </tr>
                               </tbody>
                               <tbody *ngIf="role.permissions.length == 0 " >
@@ -255,10 +249,10 @@
   
 
   <div class="modal custom-modal fade" id="addPermission" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title">Permissions</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -266,10 +260,44 @@
             <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
           <div class="modal-text text-center">
-            <h2>Ajouter une Permission à un Role</h2>
-            <p class="text-center" *ngIf="roleService.waitinPermissionResp">
-                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
-            </p>
+
+
+            <div class="card-body">
+              <div class="card card-table">
+                  <div class="table-responsive">
+                    <h5 class="text-center"> Permissions list </h5>
+                       <table datatable class="table table-stripped table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description </th>
+                                    <th>Module</th>
+                                    <th class="text-center"> Active </th>
+                                  </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let permission of roleService.listPermission"
+                                    (click)="permissionData = permission"     
+                                >
+                                    <td> {{ permission.name }} </td>
+                                    <td> {{ permission.description }} </td>
+                                    <td> {{ permission.module }} </td>
+                                    <td class="text-center">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" [checked]=""  value="" id="flexCheckDefault">
+                                      
+                                      </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                </div>
+            </div>
+            </div>
+
+
+
             <form [formGroup]="roleService.formAddPermission">
                 <div class="form-group">
                     <label for="idPermission">Permission</label>

@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/entities/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-list-users',
@@ -24,15 +25,22 @@ export class ListUsersComponent implements OnInit {
         public roleService: RoleService,
         private userService: UserService,
         private toastr: ToastrService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private location: Location
+        
   ) { 
     this.translate.use(this.translationService.getLanguage());
     this.initForm();
     this.loadUsers();
+    this.initTranslation();
   }
 
   ngOnInit(): void {
-   
+
+  }
+
+  initTranslation(){
+      this.translate.use(this.translationService.getLanguage());
   }
 
   initForm(){
@@ -73,5 +81,9 @@ export class ListUsersComponent implements OnInit {
 
   reset(){
     this.roleService.roleAdded = false;
+  }
+
+  backClicked(){
+      this.location.back();
   }
 }

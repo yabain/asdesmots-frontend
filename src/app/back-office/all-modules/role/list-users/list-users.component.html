@@ -34,8 +34,15 @@
         </div>
       </div>
   
-      <div class="row" *ngIf="!wating">
+      <div class="row" *ngIf="!wating"> 
+        <div class="card-header">
+          <button (click)="backClicked()" class="btn btn-primary me-2"
+                        style="color: #035858 !important; background-color: #ffff !important;">
+                        <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+          </button>
+        </div>
           <div class="card card-table">
+           
             <div class="card-body">
               <div class="table-responsive">
                 <table datatable class="table table-stripped table-hover">

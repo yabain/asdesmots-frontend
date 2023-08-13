@@ -50,6 +50,9 @@ export class RoleListComponent implements OnInit {
   }
   
   navigateToPermissionList(id: string){
+    if(this.roleService.listPermission.length == 0){
+          this.roleService.getListPermission();
+      }
         this.router.navigateByUrl('role/list/permission/'+id);
   }
 
@@ -71,5 +74,10 @@ export class RoleListComponent implements OnInit {
 
   reset(){
     this.roleService.permissionAdded = false;
+  }
+
+  check(permission: Permission){
+      const include = this.roleChoose.permissions.includes(permission);
+      console.log('is exited', include);
   }
 }

@@ -5,14 +5,10 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">{{ "user.user" | translate }}s</h3>
+          <h3 class="page-title">{{'user.user' | translate }}s</h3>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a [routerLink]="'/index'">{{ "dashboard" | translate }}</a>
-            </li>
-            <li class="breadcrumb-item active">
-              {{ "user.user" | translate }}s
-            </li>
+            <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'dashboard' | translate }}</a></li>
+            <li class="breadcrumb-item active">{{'user.user' | translate }}s</li>
           </ul>
         </div>
         <div class="col-auto">
@@ -20,14 +16,8 @@
             style="color: #035858 !important; background-color: #ffff !important;">
             <i class="fas fa-plus"></i>
           </a> -->
-          <a
-            (click)="refreshList()"
-            class="btn btn-primary me-2"
-            style="
-              color: #035858 !important;
-              background-color: #ffff !important;
-            "
-          >
+          <a (click)="refreshList()" class="btn btn-primary me-2"
+            style="color: #035858 !important; background-color: #ffff !important;">
             <i class="fas fa-refresh"></i>
           </a>
         </div>
@@ -76,35 +66,25 @@
               <table datatable class="table table-stripped table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th>{{ "user.user" | translate }}s</th>
-                    <th>{{ "user.email" | translate }}</th>
-                    <th>Country</th>
-                    <th>{{ "user.location" | translate }}</th>
-                    <th>{{ "user.phone" | translate }}</th>
+                    <th>{{'user.user' | translate }}s</th>
+                    <th>{{'user.email' | translate }}</th>
+                    <th>{{'user.country' | translate }}</th>
+                    <th>{{'user.location' | translate }}</th>
+                    <th>{{'user.phone' | translate }}</th>
                     <!-- <th>{{'status' | translate }}</th> -->
                     <th>Active</th>
                     <th class="text-end">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    *ngFor="let customer of customers; let i = index"
-                    (click)="userData = customer"
-                    data-bs-toggle="modal"
-                    data-bs-target="#details"
-                  >
+                  <tr *ngFor="let customer of customers; let i = index"
+                    (click)="userData = customer" data-bs-toggle="modal"
+                    data-bs-target="#details">
                     <td>
                       <h2 class="table-avatar">
-                        <a class="avatar avatar-sm me-2"
-                          ><img
-                            class="avatar-img rounded-circle"
-                            src="assets/img/user-profile.png"
-                            alt="User Image"
-                        /></a>
-                        <a
-                          >{{ customer.firstName }} {{ customer.lastName
-                          }}<span>{{ customer.phone }}</span></a
-                        >
+                        <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
+                            src="assets/img/user-profile.png" alt="User Image" /></a>
+                        <a>{{ customer.firstName }} {{ customer.lastName }}<span>{{ customer.phone }}</span></a>
                       </h2>
                     </td>
                     <td>{{ customer.email }}</td>
@@ -112,44 +92,26 @@
                     <td>{{ customer.location }}</td>
                     <td>{{ customer.country }}</td>
                     <!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
-                    <td>{{ customer.phoneNumber }}</td>
+                    <td>{{ customer.phoneNumber}}</td>
                     <td>
-                      <span
-                        [ngClass]="
+                      <span [ngClass]="
                           customer.isDisabled === false
                             ? 'badge badge-pill bg-success-light'
                             : 'badge badge-pill bg-danger-light'
-                        "
-                        >{{ !customer.isDisabled }}</span
-                      >
+                        ">{{ !customer.isDisabled }}</span>
                     </td>
                     <td class="text-end">
-                      <a
-                        (click)="tempId = customer.name"
-                        data-bs-toggle="modal"
-                        data-bs-target="#changeStatus"
+                      <a (click)="tempId = customer.name" data-bs-toggle="modal" data-bs-target="#changeStatus"
                         [ngClass]="
                           customer.isDisabled === false
                             ? 'bg-danger-light btn btn-sm btn-white'
                             : 'bg-success-light btn btn-sm btn-white'
-                        "
-                        style="margin-right: 10px"
-                      >
-                        <i class="fa fa-power-off"></i
-                      ></a>
-                      <a
-                        class="btn btn-sm btn-white text-success me-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#edit"
-                        ><i class="far fa-edit me-1"></i
-                      ></a>
-                      <a
-                        (click)="tempId = customer.firstName"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delete_customer"
-                        class="btn btn-sm btn-white text-danger me-2"
-                        ><i class="far fa-trash-alt me-1"></i
-                      ></a>
+                        " style="margin-right: 10px;">
+                        <i class="fa fa-power-off"></i></a>
+                      <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
+                          class="far fa-edit me-1"></i></a>
+                      <a (click)="tempId = customer.firstName" data-bs-toggle="modal" data-bs-target="#delete_customer"
+                        class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -170,35 +132,17 @@
           <i class="fas fa-trash-alt text-danger"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>{{ "deleteUser" | translate }}</h2>
-          <p>
-            {{ "wanTo" | translate }}{{ "delete" | translate }}
-            <b>{{ userData.firstName }} {{ userData.lastName }}</b
-            >?
-          </p>
+          <h2>{{'deleteUser' | translate }}</h2>
+          <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
         </div>
       </div>
       <div class="modal-footer text-center">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-          id="cancel-btn2"
-        >
-          {{ "close" | translate }}
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+          {{'close' | translate }}
         </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="deleteUser(userData._id)"
-        >
-          <span *ngIf="!waitingResponse">{{ "delete" | translate }}</span>
-          <span *ngIf="waitingResponse"
-            ><img
-              src="../../../../../assets/img/loader.gif"
-              alt=""
-              width="30px"
-          /></span>
+        <button type="button" class="btn btn-danger" (click)="deleteUser(userData._id)">
+          <span *ngIf="!waitingResponse">{{'delete' | translate }}</span>
+          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
         </button>
       </div>
     </div>
@@ -215,59 +159,24 @@
           <i class="fa fa-power-off text-secondary"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>{{ "changeStatus" | translate }} ?</h2>
-          <p *ngIf="userData.isDisabled == false">
-            {{ "wanTo" | translate }} {{ "desactive" | translate }}
-            <b>{{ userData.firstName }} {{ userData.lastName }}</b
-            >?
-          </p>
-          <p *ngIf="userData.isDisabled == true">
-            {{ "wanTo" | translate }} {{ "active" | translate }}
-            <b>{{ userData.firstName }} {{ userData.lastName }}</b
-            >?
-          </p>
+          <h2>{{'changeStatus' | translate }} ?</h2>
+          <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
+          <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
         </div>
       </div>
       <div class="modal-footer text-center">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-          id="cancel-btn1"
-        >
-          {{ "close" | translate }}
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn1">
+          {{'close' | translate }}
         </button>
-        <button
-          *ngIf="userData.isDisabled == false"
-          type="button"
-          class="btn btn-danger"
-          (click)="changeStatus(userData._id, true)"
-        >
-          <span *ngIf="!waitingResponse"
-            ><i class="fa fa-power-off"></i> {{ "desactive" | translate }}</span
-          >
-          <span *ngIf="waitingResponse"
-            ><img
-              src="../../../../../assets/img/loader.gif"
-              alt=""
-              width="30px"
-          /></span>
+        <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
+          (click)="changeStatus(userData._id, true)">
+          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
+          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
         </button>
-        <button
-          *ngIf="userData.isDisabled == true"
-          type="button"
-          class="btn btn-success"
-          (click)="changeStatus(userData._id, false)"
-        >
-          <span *ngIf="!waitingResponse"
-            ><i class="fa fa-power-off"></i> {{ "active" | translate }}</span
-          >
-          <span *ngIf="waitingResponse"
-            ><img
-              src="../../../../../assets/img/loader.gif"
-              alt=""
-              width="30px"
-          /></span>
+        <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
+          (click)="changeStatus(userData._id, false)">
+          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
+          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
         </button>
       </div>
     </div>
@@ -279,19 +188,11 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="card">
-          <app-user-details
-            [userData]="userData"
-            [isAdmin]="true"
-            [isEditable]="false"
-          ></app-user-details>
+          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="false"></app-user-details>
 
           <div class="text-left">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              {{ "close" | translate }}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
             </button>
             <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
           </div>
@@ -314,19 +215,11 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="card">
-          <app-user-details
-            [userData]="userData"
-            [isAdmin]="true"
-            [isEditable]="true"
-          ></app-user-details>
+          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="true"></app-user-details>
 
           <div class="text-left">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              {{ "close" | translate }}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {{'close' | translate }}
             </button>
             <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
           </div>

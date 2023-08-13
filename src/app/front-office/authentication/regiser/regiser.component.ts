@@ -130,13 +130,17 @@ export class RegiserComponent implements OnInit {
     this.waitingResponse = true;
 
     if (this.form.value.field_country == '1') {
-      this.form.value.field_country = 'Cameroon'
+      this.form.value.field_country = 'Cameroon';
+      this.form.value.field_phone = '+237' + this.form.value.field_phone;
     } else if (this.form.value.field_country == '2') {
-      this.form.value.field_country = 'Congo'
+      this.form.value.field_country = 'Congo';
+      this.form.value.field_phone = '+242' + this.form.value.field_phone;
     } else if (this.form.value.field_country == '3') {
-      this.form.value.field_country = 'Gabon'
+      this.form.value.field_country = 'Gabon';
+      this.form.value.field_phone = '+241' + this.form.value.field_phone;
     } else if (this.form.value.field_country == '4') {
-      this.form.value.field_country == 'EqGuinee'
+      this.form.value.field_country == 'Guinee-Eq';
+      this.form.value.field_phone = '+240' + this.form.value.field_phone;
     }
 
     console.log("User Datas from reg: ", this.form.value)

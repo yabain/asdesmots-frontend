@@ -68,13 +68,6 @@
                   <label class="form-group-label">{{ 'user.dateofbirth' | translate }} :</label>
                   <input formControlName="field_date" class="form-control" type="date" name="birthdate" id="field_date">
                 </div>
-                <div class="form-group">
-                  <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
-                  <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
-                    [ngClass]="{
-                    'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
-                  }" />
-                </div>
 
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.country' | translate }} :</label>
@@ -107,6 +100,13 @@
                       {{ 'cityRequired' | translate }}
                     </div>
                   </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
+                  <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
+                    [ngClass]="{
+                    'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
+                  }" />
                 </div>
                 <br>
 
@@ -235,7 +235,7 @@
             </div>
             <!-- /Social Login -->
             <div class="text-center dont-have">
-              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'">Connexion</a>
+              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">Connexion</a>
             </div>
           </div>
         </div>
@@ -269,7 +269,7 @@
             </header>
             <div class="w3-padding">
               <p>Cool huh? Ok, enough teasing around..</p>
-              <p>Go to our <a class="w3-btn" href="https://yaba-in.com">W3.CSS Tutorial</a> to learn more!</p>
+              <p>Go to our <a class="w3-btn" href="https://yaba-in.com">Yaba-In Tutorial</a> to learn more!</p>
             </div>
             <footer class="w3-container w3-theme-l1">
               <p>Modal footer</p>

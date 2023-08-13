@@ -5,7 +5,8 @@
                 <div class="col">
                     <h3 class="page-title">Role</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/role'">Role</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/role/list'">Role</a></li>
                         <li class="breadcrumb-item active"> {{ currentRoute }} </li>
                     </ul>
                 </div>
@@ -16,12 +17,10 @@
                         >
                         <i class="fas fa-plus"></i>
                     </a>
-                   
-                     <a [routerLink]="'list'" class="btn btn-primary me-2"
-                        style="color: #035858 !important; background-color: #ffff !important;" 
-                        data-toggle="tooltip" data-placement="top" title="role list"
-                        >
-                        <i class="fa fa-list" aria-hidden="true"></i>
+                    
+                    <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="list users to add a role"
+                     style="color: #035858 !important;background-color: #ffff !important;" >
+                        <i class="fa fa-users" aria-hidden="true"></i>
                     </a>
 
                     <a class="btn btn-primary me-2"
@@ -29,10 +28,7 @@
                         style="color: #035858 !important; background-color: #ffff !important;" (click)="refreshList()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </a>
-                    <a [routerLink]="'addrole/users'" class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="list users to add a role"
-                     style="color: #035858 !important;background-color: #ffff !important;" >
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </a>
+                    
                 </div> 
             </div>
         </div>
@@ -40,10 +36,7 @@
 
         </div>
         <div class="row">
-            <div class="col-xl-4 col-md-4" style="width: 50%; min-width: 45%;">
-                <app-sidemenurole></app-sidemenurole>
-            </div>
-            <div class="col-xl-8 col-md-8" style="width: 50%;">
+            <div class="col-xl-8 col-md-8" style="width: 100%;">
                 <router-outlet></router-outlet>
             </div>
         </div>

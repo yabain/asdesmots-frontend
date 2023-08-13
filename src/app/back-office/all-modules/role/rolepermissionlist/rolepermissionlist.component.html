@@ -10,6 +10,12 @@
 </div>
 <div *ngIf="!roleService.waitinPermissionResp" >
     <div class="card card-table">
+      <div class="card-header">
+        <h4 class="card-title">Permission List</h4>
+        <p class="card-text">
+          this table is the global overview of permission with permission already use on this current Role.
+        </p>
+      </div>
         <div class="card-body">
           <div class="table-responsive">
                 <table datatable class="table table-stripped table-hover">
@@ -18,33 +24,30 @@
                             <th>Name</th>
                             <th>Description </th>
                             <th>Module</th>
-                            <th class="text-center"> Actions </th>
+                            <th class="text-center" style="margin-left: 50%;"> Active </th>
                           </tr>
                     </thead>
-                    <tbody *ngIf="listPermission.length !== 0 " >
-                        <tr *ngFor="let permission of listPermission"
+                    <tbody *ngIf="roleService.listPermission.length !== 0 " >
+                        <tr *ngFor="let permission of roleService.listPermission"
                             (click)="permissionData = permission"     
                         >
                             <td> {{ permission.name }} </td>
                             <td> {{ permission.description }} </td>
                             <td> {{ permission.module }} </td>
                             <td class="text-center">
-                                <a  data-bs-toogle="modal"
-                                    data-bs-target="#confirmRemove"
-                                    (click)="doRemovePermission(permission._id)"
-                                    class="btn btn-sm btn-white text-danger me-2"
-                                 >
-                                        <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove permission on this role"></i>
-                                </a>
+                              <div class="form-check text-center" style="margin-left: 50%;">
+                                <input class="form-check-input"  type="checkbox" [checked]="permission.isEnable"  value="" id="flexCheckDefault">
+                              
+                              </div>
                             </td>
                         </tr>
                     </tbody>
-                    <tbody *ngIf="listPermission.length == 0 " >
+                    <tbody *ngIf="roleService.listPermission.length == 0 " >
                       <tr>
                           <td></td>
                           <td class="text-center">
                             <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
-                            <br>Aucune Partie !
+                            <br>Aucune permission !
                           </td>
                           <td></td>
                         </tr>
@@ -52,9 +55,14 @@
                 </table>
             </div>
         </div>
+        <div class="card-footer">
+            <button class="btn btn-success" style="float: right;">
+                Sauvegarder  <span style="margin-left: 5px;"> <i class="fa fa-save" aria-hidden="true"></i> </span>
+            </button>
+        </div>
     </div>
 </div>
-<!--
+
 <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -73,7 +81,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
             Close
           </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()" >
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doRemovePermission()" >
             <span *ngIf="!roleService.waitingResponse">Retirer <i class="fa fa-trash" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
@@ -81,4 +89,3 @@
       </div>
     </div>
   </div>
--->

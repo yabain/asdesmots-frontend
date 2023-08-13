@@ -6,7 +6,6 @@ import { EndpointRole } from './Endpoint';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/entities/user';
 import { Permission } from 'src/app/shared/entities/permission';
-import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 export class RoleService {
   listRole: Role[] = [];
   listPermission: Permission[] = [];
+  listRoleOfUser: any[] = [];
+
   waitinPermissionResp: boolean = false;
   roleAdded: boolean = false;
 
@@ -208,6 +209,7 @@ export class RoleService {
       this.permissionAdded = false;
       console.log('request adding ', requestBody);
       this.api.post(EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation).subscribe((resp)=>{
+         this.getListRole();
           this.toastr.success('Permission Added', 'SUCCESS', { timeOut : 7000}); 
           this.waitinPermissionResp = false;
           this.permissionAdded = true;
@@ -296,10 +298,47 @@ export class RoleService {
       });
   }
 
-  getUserWithRole(){
+  enablePermission(rolePermission: Permission[]){
+     
 
   }
 
+ async getListRoleByUserID(userID: string){
+      this.waitingResponse = true;
+      this.listRoleOfUser = [];
+      this.api.get(EndpointRole.GET_ROLE_OF_USER+userID, this.authorisation).subscribe((response)=>{
+          this.waitingResponse = false;
+          this.listRoleOfUser = response.data;
+          console.log(typeof response.data);
+          this.buildListCheckedRole();
+
+      }, (error)=>{
+        if (error.status == 500) {
+          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+        } else if (error.status == 401) {
+          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+        }else {
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        }
+        this.waitingResponse = false;
+      })
+  }
+
+  buildListCheckedRole(){
+        this.listRole.forEach((roleList, index)=>{
+          const i = this.listRoleOfUser.findIndex((value)=> value === roleList._id);
+              if(i != -1){
+                  this.listRole[index].isEnable = true;
+              }
+        });
+
+  }
+
+  resetListBuild(){
+      this.listRole.map((role)=>{
+          role.isEnable = false;
+      });
+  }
 }
 
 

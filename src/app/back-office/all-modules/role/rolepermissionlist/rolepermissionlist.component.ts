@@ -26,8 +26,9 @@ export class RolepermissionlistComponent implements OnInit {
       public roleService: RoleService,
   ) { 
       this.translate.use(this.translation.getLanguage());
-      this.getRoleData();
       this.startListener();
+
+      this.getRoleData();
   }
 
   ngOnInit(): void {
@@ -40,23 +41,38 @@ export class RolepermissionlistComponent implements OnInit {
     this.roleId = this.router.snapshot.params['id'];
     this.listPermission = this.roleService.getRoleData(this.roleId).permissions;
     console.log('application permission', this.listPermission);
+
+    this.roleService.listPermission.forEach((permission, index)=>{
+        if(this.listPermission.findIndex((val)=> val._id === permission._id) != -1){
+            this.roleService.listPermission[index].isEnable = true;
+        }
+    });
   }
 
   startListener(){
     //on id on url change...
     this.route.events.subscribe((event: any) => {
+      
       if (event instanceof NavigationEnd) {
+        this.resetPermission();
+
           this.getRoleData();
       }
     });
   } 
 
   backClicked(){
+      this.resetPermission();
       this.Location.back();
   }
 
-  doRemovePermission(idPermission: string){
-    this.roleService.removePermission({roleId : this.roleId, permissionId: idPermission});
+  resetPermission(){
+    this.roleService.listPermission.map((val)=>{
+          val.isEnable = false;
+      });
+  }
+  doRemovePermission(){
+    this.roleService.removePermission({roleId : this.roleId, permissionId: this.permissionData._id});
   }
 
 }

@@ -3,7 +3,7 @@
 </div>
 
 <div class="row" *ngIf="!roleService.waitingResponse" >
-      <div class="card card-table">
+      <!-- <div class="card card-table">
         <div class="card-body">
           <div class="table-responsive">
             <table datatable class="table table-stripped table-hover">
@@ -64,6 +64,103 @@
             </table>
           </div>
        </div>
+    </div>-->
+     <div class="accordion custom-accordion" id="custom-accordion-one">
+      <div *ngFor="let role of roleService.listRole; let index = index">
+      <div class="card mb-1" style="display: flex;">
+      
+          <div class="card-header" id="/" (click)="roleChoose = role">
+            <div class="row">
+              <div class="col-auto me-auto" style="width: 78%;">
+                <h5 class="accordion-faq m-0 position-relative">
+                  <a class="custom-accordion-title text-reset d-block"
+                      data-bs-toggle="collapse" [href]="'#accordion' + index"
+                      (click)='openAccordion[index] = !openAccordion[index]'
+                      aria-expanded="true" aria-controls="collapseSeven">
+                      {{ role.name }}
+                  </a>
+                </h5>
+              </div>
+              <div class="col-auto" style="display: flex; flex-direction: row; float: right;">
+                <div class="text-end" >
+                                         <a class="btn btn-sm btn-white text-success me-2" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
+                                                class="far fa-edit me-1"></i>
+                                            </a>
+                        
+                                            <a class="bg-danger-light btn btn-sm btn-white"  style="margin-right: 10px;" (click)="navigateToPermissionList(role._id)" >
+                                              <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
+                                            </a>
+                        
+                                            <a class="btn btn-white text-end" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
+                                              <i class="fa fa-users" aria-hidden="true"></i>
+                                            </a>
+                        
+                                            <a class="btn btn-sm btn-white text-danger me-2"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
+                                                <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
+                                            </a>
+                </div>
+                     
+              </div>
+            </div>
+             
+              
+              
+          </div>
+          <div [id]="'accordion' + index" class="collapse"
+              aria-labelledby="headingSeven"
+              data-bs-parent="#custom-accordion-one">
+              <div class="card-header">
+                <h4 class="card-title">Role list</h4>
+                <p class="card-text">
+                  this table is the global overview of existing roles
+                </p>
+              </div>
+             <div class="card-body">
+                <div class="card card-table">
+                    <div class="table-responsive">
+                         <table datatable class="table table-stripped table-hover">
+                              <thead class="thead-light">
+                                  <tr>
+                                      <th>Name</th>
+                                      <th>Description </th>
+                                      <th>Module</th>
+                                    <!--   <th class="text-center"> Actions </th>-->
+                                    </tr>
+                              </thead>
+                              <tbody *ngIf="role.permissions.length !== 0 " >
+                                  <tr *ngFor="let permission of role.permissions"
+                                      (click)="permissionData = permission"     
+                                  >
+                                      <td> {{ permission.name }} </td>
+                                      <td> {{ permission.description }} </td>
+                                      <td> {{ permission.module }} </td>
+                                      <!--<td class="text-center">
+                                          <a  data-bs-toogle="modal"
+                                              data-bs-target="#confirmRemove"
+                                              class="btn btn-sm btn-white text-danger me-2"
+                                           >
+                                                  <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove permission on this role"></i>
+                                          </a>
+                                      </td>-->
+                                  </tr>
+                              </tbody>
+                              <tbody *ngIf="role.permissions.length == 0 " >
+                                <tr>
+                                    <td></td>
+                                    <td class="text-center">
+                                      <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
+                                      <br>Aucune Partie !
+                                    </td>
+                                    <td></td>
+                                  </tr>
+                            </tbody>
+                          </table>
+                  </div>
+              </div>
+              </div>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
 
@@ -135,7 +232,7 @@
           </div>
           <div class="modal-text text-center">
             <h2>  </h2>
-            <p>{{'wanTo' | translate }} supprimer le   << <b>{{ roleChoose.name }}>> </b>? </p>
+            <p>{{'wanTo' | translate }} supprimer le role << <b>{{ roleChoose.name }}>> </b>? </p>
           </div>
         </div>
 
@@ -156,10 +253,10 @@
   
 
   <div class="modal custom-modal fade" id="addPermission" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title">Permissions</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -167,10 +264,49 @@
             <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
           <div class="modal-text text-center">
-            <h2>Ajouter une Permission à un Role</h2>
-            <p class="text-center" *ngIf="roleService.waitinPermissionResp">
-                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
-            </p>
+
+
+            <div class="card-body">
+              <div class="card card-table">
+                <div class="card-header">
+									<h4 class="card-title">Permissions list</h4>
+									<p class="card-text">
+										this table is the global overview of existing permissions 
+									</p>
+								</div>
+                  <div class="table-responsive">
+                       <table datatable class="table table-stripped table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description </th>
+                                    <th>Module</th>
+                                    <th class="text-center"> Active </th>
+                                  </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let permission of roleService.listPermission"
+                                    (click)="permissionData = permission"     
+                                >
+                                    <td> {{ permission.name }} </td>
+                                    <td> {{ permission.description }} </td>
+                                    <td> {{ permission.module }} </td>
+                                    <td class="text-center">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" [checked]=""  value="" id="flexCheckDefault">
+                                      
+                                      </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                </div>
+            </div>
+            </div>
+
+
+
             <form [formGroup]="roleService.formAddPermission">
                 <div class="form-group">
                     <label for="idPermission">Permission</label>
@@ -189,9 +325,37 @@
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
             {{'close'| translate}}
           </button>
-          <button type="button" class="btn btn-primary" *ngIf="!roleService.permissionAdded" (click)="addPermission()" >
+          <button type="button" class="btn btn-primary" *ngIf="!roleService.permissionAdded" (click)="addPermission()" data-bs-dismiss="modal" >
             <span *ngIf="!roleService.waitinPermissionResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitinPermissionResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal-text text-center">
+            <h2> Supprimer Permission </h2>
+            <p>{{'wanTo' | translate }} vous supprimer la Permission  << <b>{{ permissionData.name }}>> </b>sur ce Role ? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doRemovePermission()" >
+            <span *ngIf="!roleService.waitingResponse">Retirer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
         </div>
       </div>

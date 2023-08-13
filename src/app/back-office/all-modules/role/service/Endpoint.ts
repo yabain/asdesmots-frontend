@@ -4,6 +4,7 @@ export enum EndpointRole{
         CREATE_ROLE = 'roles',
         DELETE_ROLE = 'roles/',//+idRole,
         GET_USERS_ROLE = 'roles/', //+:roleID/users
+        GET_ROLE_OF_USER = 'roles/user/', //+id
         PERMISSION_LIST = 'perms/',
         ADD_PERMISSION_ROLE = 'roles/add-perm',
         REMOVE_ROLE = 'roles/remove-user',

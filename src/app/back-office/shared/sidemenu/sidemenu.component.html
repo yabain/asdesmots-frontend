@@ -124,6 +124,11 @@
 						<span>{{'Arcarde' | translate}}</span></a>
 				</li>
 
+				<li [class.active]="base === 'game'">
+					<a [routerLink]="'/game/list'"> <i class="fa fa-gamepad" aria-hidden="true"></i>
+						<span> {{'Jeux' | translate}} </span></a>
+				</li>
+
 				<li [class.active]="base === 'undercompetition'">
 					<a [routerLink]="'/undercompetition/competition/list'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 						<span>Competitions</span></a>

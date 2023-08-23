@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ArcardeService } from '../services/arcarde.service';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { UserService } from 'src/app/shared/services/user/user.service';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-arcadesuscription',
@@ -13,9 +16,13 @@ export class ArcadesuscriptionComponent implements OnInit {
   constructor(
     public arcadeServ: ArcardeService, 
     public userServ:  UserService,
+    private location: Location,
+    private translate: TranslateService,
+    private translation: TranslationService
   ) { 
       this.arcadeServ.initFormControl();
       this.loadAllArcarde();
+      this.translate.use(this.translation.getLanguage());
   }
 
   ngOnInit(): void {
@@ -40,6 +47,10 @@ export class ArcadesuscriptionComponent implements OnInit {
   loadLocation(data: any){
       this.arcardeData = data;
       this.arcadeServ.loadLocalisationOfCompetition(this.arcardeData._id);
+  }
+
+  backClicked(){
+      this.location.back();
   }
 
   reset(){

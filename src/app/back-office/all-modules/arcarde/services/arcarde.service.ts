@@ -93,9 +93,9 @@ export class ArcardeService {
   }
 
   initDefaultBooeleanValues(){
-      this.f_Creation['canRegisterPlayer'].setValue(false);
+      this.f_Creation['canRegisterPlayer'].setValue(true);
       this.f_Creation['isFreeRegistrationPlayer'].setValue(false);
-      this.f_Creation['isOnlineGame'].setValue(false);
+      this.f_Creation['isOnlineGame'].setValue(true);
 
   }
   loadArcade(){

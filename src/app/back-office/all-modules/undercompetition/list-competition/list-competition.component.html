@@ -88,6 +88,25 @@
                               <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
                                  <span style="margin-left: 5px;">List of Criterias</span>
                               </a>
+
+                              <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">   
+                              </div>
+                              <ng-template #process_running_gameStarted>
+                                <span style="color: greenyellow;" class="text-center">
+                                      Starting Competition...
+                                </span>
+                             </ng-template>
+
+                             <ng-template #process_running_down>
+                                <a class="dropdown-item" 
+                                  *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
+                                  (click)="startCompetition(sousCompetion._id)"  
+                                  style="cursor: pointer;" >
+                                  
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                    <span style="margin-left: 5px;"> Start Competition </span>
+                                </a>
+                             </ng-template>
                             </div>
                           </div>
                         </td>

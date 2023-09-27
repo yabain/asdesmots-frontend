@@ -1,3 +1,4 @@
+import { GameManagerService } from './../service/game-manager.service';
 import { TranslationService } from './../../../../shared/services/translation/language.service';
 import { Component, OnInit } from '@angular/core';
 import { GameplayService } from '../service/gameplay.service';
@@ -5,6 +6,8 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { SpeakService } from 'src/app/shared/services/speak/speak.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Component({
   selector: 'app-started',
@@ -21,12 +24,15 @@ export class StartedComponent implements OnInit {
   showBadMsg: boolean = false;
   showGoodMsg: boolean = false;
   formword: FormGroup;
+  state = State;
 
   constructor( public gamePlay: GameplayService,
                private translate: TranslateService,
                private translation: TranslationService,
                private speakService: SpeakService,
                private fb: FormBuilder,
+               private userService: UserService,
+               public gameManager: GameManagerService
        ) { 
         this.initForm();
        }
@@ -99,7 +105,6 @@ export class StartedComponent implements OnInit {
   }
 
   showMessage(msg: string, bad?: boolean){
-  
     this.errorMsg = msg;
     if(bad){
       this.showBadMsg = true;
@@ -118,5 +123,21 @@ export class StartedComponent implements OnInit {
   reset(){
     this.formword.reset();
     this.wordEntry = '';
+  }
+
+  joinGame(competitionID: string, localisation: string){
+      const userID = this.userService.getLocalStorageUser()._id;
+      this.gameManager.joinGame({
+          competitionID: competitionID,
+          playerID: userID,
+          localisation: localisation
+      });
+  }
+
+  sendWord(){
+    this.gameManager.sendWord({
+        word: this.wordEntry,
+        playerID: this.userService.getLocalStorageUser()._id
+    });
   }
 }

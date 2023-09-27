@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -140,6 +141,44 @@ export class SousCompetitionService {
     this.form.controls['isSinglePart'].setValue(false);
     this.form.controls['canRegisterPlayer'].setValue(false);
   }
+
+  changeState(data: {gameArcardeID: string, gameCompetitionID: string, state: string }){
+    this.waitingResponse = false;
+    this.clientChangeState(data.gameArcardeID, State.RUNNING);
+    
+    console.log('game competiton id :', data.gameCompetitionID);
+    this.api.put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization).subscribe((response: any)=>{
+        this.toastr.success('Competition Started', 'Success', {timeOut: 10000});
+        this.clientChangeState(data.gameCompetitionID, State.WAITING_PLAYER);
+
+        this.waitingResponse = false;
+
+    }, (error: any)=>{ 
+      if (error.error.statusCode == 500) {
+        this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+      } else if (error.error.statusCode == 401) {
+        this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+      } else if(error.error.statusCode == 403) {
+        this.toastr.error(error.error.message, 'Error', { timeOut: 10000 });
+      } else if (error.error.statusCode == 404) {
+        this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
+      } else {
+        this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
+      }
+      this.waitingResponse = false;
+    });
+
+}
+
+async clientChangeState(idCompet: string, statut: string){
+//change the compett's state on user client (ui)
+
+      const index = this.arcardeService.listUnderCompetion.findIndex(compet => compet._id === idCompet);
+      if(index != -1){
+        this.arcardeService.listUnderCompetion[index].gameState = statut;
+      }
+}
+
   createCompetition(competionData: SousCompetion, dataArcarde: any){
      
       this.waitingResponse = true;
@@ -148,7 +187,7 @@ export class SousCompetitionService {
       this.api.post(EndpointSousCompetion.CREATED_NEW_S_C+dataArcarde.idArcarde, competionData, this.authorization).subscribe((resp)=>{
           this.arcardeService.loadArcade();
           this.loadListUnderCompetition();
-          this.toastr.success('Competion Created', 'Success', { timeOut: 7000 });
+          this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
           this.waitingResponse = false;
           this.creationDone = true;
       },(error: any) => {

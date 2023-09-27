@@ -16,20 +16,29 @@
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="!gamePlay.waitingGameList" >
                     <tr *ngFor="let competition of gamePlay.listCompetitionStart" 
-                    (click)="competitionChoose = competition" 
+                    (click)="gameManager.competitionLaunched = competition" 
                     >
                         <td> {{ competition.name }} </td>
                         <td> {{ competition.description }} </td>
                         <td class="text-center">
                              <button class="btn btn-success" 
                              data-bs-toggle="modal" data-bs-target="#gameInterface"
-                             (click)="buildLifeList(competition.maxPlayerLife, competition.maxTimeToPlay)"
-                             > Rejoindre 
+                             (click)="joinGame(competition._id, competition.localisation)"
+                             > 
+                             Rejoindre 
                             </button> </td>
                     </tr>
                 </tbody>
+                <tbody *ngIf="gamePlay.waitingGameList" >
+                    <div class="text-center">
+                        <span *ngIf="">
+                          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                        </span>
+                    </div>
+                </tbody>
+
             </table>
         </div>
     </div>
@@ -39,12 +48,18 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"> {{ competitionChoose.name }} </h5>
+          <h5 class="modal-title"> {{ gameManager.competitionLaunched.name }} </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <hr class="hr" /> <br>
 
-        <div class="modal-body" style="background-color: #f7f8f9;">
+        <div *ngIf="gameManager.competitionLaunched.gameState === state.RUNNING" >
+            <div class="text-center">
+                <img src="../../../../../assets/img/loader.gif" alt="waiting_player" height="80" width="100">
+            </div>
+        </div>
+
+        <div class="modal-body" style="background-color: #f7f8f9;" *ngIf="gameManager.competitionLaunched.gameState !== state.RUNNING" >
 
             <div class="row text-center">
                 <div class="col-auto me-auto">
@@ -71,7 +86,7 @@
                             <h5 class="card-title mb-0">Informations</h5>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Difficulte: {{ competitionChoose.gameLevel }}</li>
+                            <li class="list-group-item">Difficulte: {{gameManager.competitionLaunched.gameLevel }}</li>
                             <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li>
                             <li class="list-group-item">Joueurs restants: 5 joueur(s)</li>
                             <li class="list-group-item">Joueurs connectes: 6 joueur(s)</li>
@@ -106,9 +121,9 @@
                     
                     <div class="input-group mb-3">
                         <span class="input-group-text">Entrer le mot</span>
-                        <input type="text" class="form-control" placeholder="" formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="checkWord()"
-                        [disabled]="formword.invalid"
+                        <input type="text" class="form-control" placeholder="" [disabled]="(!gameManager.itsToThisUserToPlay)" formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()"
+                        [disabled]="(formword.invalid && !gameManager.itsToThisUserToPlay)"
                         >
                             Valider
                         </button>
@@ -118,7 +133,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Quitter la partie</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()">Quitter la partie</button>
         </div>
       </div>
     </div>

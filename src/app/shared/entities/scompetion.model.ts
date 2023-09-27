@@ -18,6 +18,8 @@ export class SousCompetion{
             public parentCompetition?: any,
             public gameWinnerCriterias?: WinnigsCriterias[],
             public gameJudgesID?: any[],
-            public gameParts?: any[]
+            public gameParts?: any[],
+            public gameState?: any,
+            public arcardeParentID?: any,
         ){}
 }

@@ -5,6 +5,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
 import { Router } from '@angular/router';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Component({
   selector: 'app-list-arcarde',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 })
 export class ListArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
+  userID: string ='';
+  gameState = State;
   constructor(public arcadeServ: ArcardeService, 
               private translate: TranslateService,
               public userServ:  UserService,
@@ -46,9 +49,22 @@ export class ListArcardeComponent implements OnInit {
   }
 
   async loadAllUser(){
+
     if(this.userServ.listUsers.length == 0){
         this.userServ.getAllUsers();
+        this.userID = JSON.parse(localStorage.getItem('user-data'))._id;
     }
+
+  }
+
+
+  startArcarde(arcardeID: any){
+      
+      this.arcadeServ.changeState(
+                                    { gameArcardeID: arcardeID,
+                                      state: State.WAITING_PLAYER
+                                    } 
+                                 )
   }
 
   doSuscription(){

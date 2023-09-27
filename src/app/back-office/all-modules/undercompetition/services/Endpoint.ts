@@ -5,4 +5,5 @@ export enum EndpointSousCompetion{
         GAME_LIST_WINNINGS_CRITERIAS = 'winner-criteria/', //+:competitionID
         REMOVE_GAME_CRITERIAS = 'game-competition/remove-criteria',
         ADD_CRITERIAS_GAME = 'game-competition/apply-criteria',
+        COMPETITION_STATE = 'game-competition/state',
 }

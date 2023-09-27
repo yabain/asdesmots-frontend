@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameplayService } from '../service/gameplay.service';
 
 @Component({
   selector: 'app-list',
@@ -8,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class ListComponent implements OnInit {
   currentRoute: string =' On coming';
 
-  constructor() { }
+  constructor(
+      private gameplayService: GameplayService
+  ) { 
+
+    this.loadListCompetition();
+  }
 
   ngOnInit(): void {
   }
@@ -18,7 +24,12 @@ export class ListComponent implements OnInit {
   }
 
   refresh(){
-
+      this.gameplayService.loadUserCompetition();
   }
 
+  loadListCompetition(){
+      if(this.gameplayService.listCompetitionOnComming.length == 0 || this.gameplayService.listCompetitionStart.length == 0){
+          this.gameplayService.loadUserCompetition();
+      }
+  }
 }

@@ -21,6 +21,7 @@ export class GameManagerService {
   };
 
   competitionLaunched: SousCompetion = new SousCompetion();
+  socket: any;
 
   constructor(
       private toastr: ToastrService,
@@ -30,8 +31,16 @@ export class GameManagerService {
       this.loadUserData();
   }
   
-  socket = io('http://127.0.0.1:3000');
-
+  initConnection(){
+    this.socket = io('https://asdesmots-api.yaba-in.com/');
+    this.socket.on("connect", (err: any) => {
+      console.log("Connexion réussie !");
+    });
+    this.socket.on('error', (err: any)=>{
+        console.log('ws error', err);
+    })
+  }
+  
   setGamerLife(){
     this.playerLife.length = this.competitionLaunched.maxPlayerLife;
     this.playerLife.map((life)=> life++)

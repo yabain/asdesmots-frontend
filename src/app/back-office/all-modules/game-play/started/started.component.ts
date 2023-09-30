@@ -34,6 +34,7 @@ export class StartedComponent implements OnInit {
                private userService: UserService,
                public gameManager: GameManagerService
        ) { 
+        this.initConenction();
         this.initForm();
        }
 
@@ -56,6 +57,10 @@ export class StartedComponent implements OnInit {
         this.wordEntry = data.word;
     });
 
+  }
+
+  initConenction(){
+    this.gameManager.initConnection();
   }
   buildLifeList(maxPlayerLife: number, maxTimeToPlay: number){
     let init = 0;

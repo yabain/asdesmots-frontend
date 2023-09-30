@@ -123,9 +123,9 @@
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <h2> Choisir location </h2>
+            <h2> Confirmation </h2>
 
-            <form [formGroup]="arcadeServ.formControlSuscription">
+           <!-- /> <form [formGroup]="arcadeServ.formControlSuscription">
                     <div class="form-group">
                         <label for="location">Location</label>
                         <select name="location" id="location" formControlName="location" class="form-control"
@@ -135,13 +135,16 @@
                         <option *ngFor="let location of arcadeServ.listLocationArcarde"  [value]="location"> {{ location }} </option>
                       </select>
                     </div>
-            </form>
+            </form>-->
+            <div class="text-center">
+                <span> Voulez-vous vraiment souscrire à l'arcarde <strong> {{ arcardeData.name }} </strong>  ? </span>
+            </div>
           </div>
         </div>
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
-            Close
+            {{'close' | translate}}
           </button>
           <button type="button" class="btn btn-success" *ngIf="!arcadeServ.suscriptionDone"  (click)="doSuscription()" >
             <span *ngIf="!arcadeServ.waitingResponseSuscrib">Souscrire <i class="fa fa-plus" aria-hidden="true"></i> </span>

@@ -62,7 +62,7 @@ export class ArcardeService {
           this.souscriptionParam = {
               gameID: data.gameID,
               playerID: data.playerID,
-              localisation: data.location
+              localisation: ''
           }
       });
 
@@ -218,7 +218,7 @@ export class ArcardeService {
         console.log('game arcarde id :', data.gameArcardeID);
         this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe((response: any)=>{
             this.toastr.success('Arcarde Started', 'Success', {timeOut: 10000});
-            this.clientChangeState(data.gameArcardeID, State.WAITING_PLAYER);
+            this.clientChangeState(data.gameArcardeID, State.RUNNING);
 
             this.waitingResponse = false;
 

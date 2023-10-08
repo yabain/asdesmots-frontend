@@ -16,6 +16,7 @@ export class Arcarde{
             public gameState?: any,
             public owner?: any,
             public competitionGames?:SousCompetion[],
+            public localisation?: any,
         ){
 
         }

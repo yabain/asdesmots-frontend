@@ -3,6 +3,9 @@ import { SousCompetitionService } from '../services/sous-competition.service';
 import { ActivatedRoute } from '@angular/router';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-list-cretarias',
@@ -18,7 +21,10 @@ export class ListCretariasComponent implements OnInit {
   constructor(
       public competitionSrv: SousCompetitionService,
       private route:ActivatedRoute,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private location: Location,
+      private translateService: TranslateService,
+      private translation: TranslationService
   ) { 
     this.initForm();
       this.getData();
@@ -26,7 +32,7 @@ export class ListCretariasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.translateService.use(this.translation.getLanguage());
   }
 
   initForm(){
@@ -58,4 +64,7 @@ export class ListCretariasComponent implements OnInit {
 
     }
 
+    backClicked(){
+        this.location.back();
+    }
 }

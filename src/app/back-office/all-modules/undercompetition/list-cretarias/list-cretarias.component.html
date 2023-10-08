@@ -25,6 +25,14 @@
             <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
           </span> 
         </div>
+        
+        <p>
+    
+          <button (click)="backClicked()" class="btn btn-primary me-2"
+          style="color: #035858 !important; background-color: #ffff !important;">
+          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+          </button>
+        </p>
 
         <div class="row" *ngIf="!competitionSrv.waitingCriteriasResp">
                 <div class="card card-table">

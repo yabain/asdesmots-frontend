@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArcardeService } from '../services/arcarde.service';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-list-user-arcarde',
@@ -15,6 +16,7 @@ export class ListUserArcardeComponent implements OnInit {
   constructor(public arcardeServ: ArcardeService,
               private translate: TranslateService,
               private translation: TranslationService,
+              private location: Location,
               private activedRouter: ActivatedRoute) {
              this.initTranslation();
              this.getId();
@@ -33,6 +35,8 @@ export class ListUserArcardeComponent implements OnInit {
   }
 
 
-
+  backClicked(){
+    this.location.back();
+  }
 
 }

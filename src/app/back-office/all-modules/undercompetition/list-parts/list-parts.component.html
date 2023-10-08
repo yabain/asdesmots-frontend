@@ -26,6 +26,14 @@
           </span> 
         </div>
 
+        <p>
+    
+          <button (click)="backClicked()" class="btn btn-primary me-2"
+          style="color: #035858 !important; background-color: #ffff !important;">
+          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+          </button>
+        </p>
+
         <div class="row" *ngIf="!gamePartSrv.waitingResponse">
                 <div class="card card-table">
                   <div class="card-header">

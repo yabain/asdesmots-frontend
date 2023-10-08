@@ -35,7 +35,9 @@
                     <div class="text-center">
                         <span *ngIf="">
                           <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-                        </span>
+                        </span><br>
+                        
+
                     </div>
                 </tbody>
 
@@ -57,6 +59,7 @@
             <div class="text-center">
                 <img src="../../../../../assets/img/loader.gif" alt="waiting_player" height="80" width="100">
             </div>
+            <span>Please wait...</span>
         </div>
 
         <div class="modal-body" style="background-color: #f7f8f9;" *ngIf="gameManager.competitionLaunched.gameState !== state.RUNNING" >
@@ -68,7 +71,7 @@
                             <h5 class="card-title mb-0">Word information</h5>
                         </div>
                         <div class="card-body text-center">  
-                            <span style="font-size: 25px;cursor: pointer;" (click)="speak('exemple')">
+                            <span style="font-size: 25px;cursor: pointer;" (click)="speak(gameManager.gameDetails.gameWord)">
                                 <i class="fas fa-volume-up"></i>
                             </span>
                              <br>
@@ -87,13 +90,13 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Difficulte: {{gameManager.competitionLaunched.gameLevel }}</li>
-                            <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li>
-                            <li class="list-group-item">Joueurs restants: 5 joueur(s)</li>
-                            <li class="list-group-item">Joueurs connectes: 6 joueur(s)</li>
+                            <!-- <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li>
+                            <li class="list-group-item">Joueurs restants: 5 joueur(s)</li>-->
+                            <li class="list-group-item">Joueurs connectés: {{ gameManager.listOfPlayer.length }} </li>
 							<li class="list-group-item">
                                 <div class="text-center">
                                     Vie Restantes : 
-                                    <span *ngFor="let i of Life" style="color: red;">
+                                    <span *ngFor="let i of gameManager.gamePlayerLifeGame" style="color: red;">
                                      <i class="fa fa-heart" aria-hidden="true"></i>
                                     </span> 
                                 </div>
@@ -109,21 +112,21 @@
 
                     <div class="container">
                         <div class="row">
-                        <div class="col-md-4">Temps restant :  {{ restTime }}s</div>
+                        <div class="col-md-4">Temps restant : <span style="font-size: 20px; margin-right: 10px;">{{ gameManager.restTime }}</span> s</div>
                         <div class="col-md-4 ms-auto">
-                            <span *ngIf="showBadMsg" style="color: red;"> {{ errorMsg }} </span>
-                            <span *ngIf="showGoodMsg" style="color: greenyellow;"> {{ errorMsg }} </span>
+                            <span *ngIf="gameManager.showTimeOutMEssage" style="color: red;"> {{ gameManager.TimeOutMessage }} </span>
+                            <!--<span *ngIf="showGoodMsg" style="color: greenyellow;"> {{ errorMsg }} </span>-->
 
                         </div>
                         </div>
                     </div>
-                <form [formGroup]="formword">
+                <form [formGroup]="gameManager.formword">
                     
                     <div class="input-group mb-3">
                         <span class="input-group-text">Entrer le mot</span>
                         <input type="text" class="form-control" placeholder="" [disabled]="(!gameManager.itsToThisUserToPlay)" formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()"
-                        [disabled]="(formword.invalid && !gameManager.itsToThisUserToPlay)"
+                        [disabled]="(gameManager.formword.invalid && !gameManager.itsToThisUserToPlay)"
                         >
                             Valider
                         </button>
@@ -133,7 +136,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()">Quitter la partie</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Quitter la partie</button>
         </div>
       </div>
     </div>
@@ -150,7 +153,7 @@
           <p> {{ 'WanTo' }} de quitter cette partie ? </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" (click)="reset();" data-bs-dismiss="modal">Quitter la partie</button>
+          <button type="button" class="btn btn-danger" (click)="Quit();" data-bs-dismiss="modal">Quitter la partie</button>
           <button type="button" class="btn btn-primary"> Rester </button>
         </div>
       </div>

@@ -16,118 +16,31 @@ import { State } from 'src/app/shared/entities/state.enum';
 })
 export class StartedComponent implements OnInit {
   competitionChoose: SousCompetion = new SousCompetion();
-  Life: number[] = [];
-  restTime: number = 0;
-  errorMsg : string = '';
-  interval: any;
-  wordEntry: string = '';
-  showBadMsg: boolean = false;
   showGoodMsg: boolean = false;
-  formword: FormGroup;
   state = State;
 
   constructor( public gamePlay: GameplayService,
                private translate: TranslateService,
                private translation: TranslationService,
                private speakService: SpeakService,
-               private fb: FormBuilder,
                private userService: UserService,
                public gameManager: GameManagerService
        ) { 
         this.initConenction();
-        this.initForm();
+        this.gameManager.initForm();
        }
 
   ngOnInit(): void {
+    this.translate.use(this.translation.getLanguage());
   }
 
   speak(word: string){
       this.speakService.speak(word, 'fr');
   }
 
-  initForm(){
-
-    this.translate.use(this.translation.getLanguage());
-
-    this.formword = this.fb.group({
-      word: ['', Validators.required],
-    });
-
-    this.formword.valueChanges.subscribe((data)=>{
-        this.wordEntry = data.word;
-    });
-
-  }
 
   initConenction(){
     this.gameManager.initConnection();
-  }
-  buildLifeList(maxPlayerLife: number, maxTimeToPlay: number){
-    let init = 0;
-    this.Life.length = maxPlayerLife;
-      this.Life.map((val)=> val = init++)
-
-      this.restTime = maxTimeToPlay;
-      this.startTimer();
-  }
-  
-  startTimer() {
-    this.interval = setInterval(() => {
-      if(this.restTime > 0) {
-        this.restTime--;
-      } else {
-          if(this.wordEntry === '' && this.wordEntry.length == 0){
-            this.showMessage('Time Out !! Echec.', true);
-            this.onBadWord();
-            this.pauseTimer();
-          }else{
-            this.checkWord();
-          }
-      }
-    },1000)
-  }
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
-
-  checkWord(){
-    this.pauseTimer();
-    console.log('wordentry', this.wordEntry);
-      if(this.wordEntry !== '' && this.wordEntry.length !== 0){
-            if(this.wordEntry === 'exemple'){
-              this.showMessage('Bonne reponse !', false);
-            }else{
-              this.showMessage('Echec mauvaise Reponse!', true);
-              this.onBadWord();
-            }
-      }else{
-            this.showMessage('Echec Aucune entree ! ', true);
-      }
-  }
-
-  onBadWord(){
-      this.Life.pop();
-  }
-
-  showMessage(msg: string, bad?: boolean){
-    this.errorMsg = msg;
-    if(bad){
-      this.showBadMsg = true;
-      this.showGoodMsg = false;
-    }else{
-      this.showGoodMsg = true;
-      this.showBadMsg = false;
-    }
-
-    setTimeout(()=> {
-        this.showBadMsg = false;
-        this.showGoodMsg = false;
-    }, 2500)
-  }
-
-  reset(){
-    this.formword.reset();
-    this.wordEntry = '';
   }
 
   joinGame(competitionID: string, localisation: string){
@@ -141,8 +54,11 @@ export class StartedComponent implements OnInit {
 
   sendWord(){
     this.gameManager.sendWord({
-        word: this.wordEntry,
         playerID: this.userService.getLocalStorageUser()._id
     });
+  }
+
+  Quit(){
+
   }
 }

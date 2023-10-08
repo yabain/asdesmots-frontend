@@ -77,12 +77,12 @@ export class GamePartsService {
             this.toastr.success('Part Added', 'SUCCESS', {timeOut: 7000});
             this.partAdded = true;
     }, (error: any)=>{
-      if (error.status == 500) {
+      if (error.error.status == 500) {
         this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-      } else if (error.status == 401) {
+      } else if (error.error.status == 401) {
         this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
       } else {
-        this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
       }
       this.partAdded = false;
       this.waitingResponse = false;
@@ -98,12 +98,12 @@ export class GamePartsService {
               this.toastr.success('Part Deleted', 'SUCCESS', { timeOut: 7000 });
               this.partDeletingDone = true;
       }, (error)=>{
-        if (error.status == 500) {
+        if (error.error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
+        } else if (error.error.status == 401) {
           this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
         } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
         }
         this.waitingResponse = false;
         this.partDeletingDone = false;
@@ -130,7 +130,7 @@ export class GamePartsService {
         } else if (error.status == 401) {
           this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
         } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
         }
         this.waitingResponse = false;
       

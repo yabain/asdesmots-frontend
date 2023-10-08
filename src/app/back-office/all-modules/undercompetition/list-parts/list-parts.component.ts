@@ -6,6 +6,9 @@ import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-list-parts',
@@ -22,7 +25,10 @@ export class ListPartsComponent implements OnInit {
   constructor(public gamePartSrv: GamePartsService, 
               private route: ActivatedRoute,
               private SousCompetSrv: SousCompetitionService,
-              public level: LevelService
+              public level: LevelService,
+              private location: Location,
+              public translateServe: TranslateService,
+              public translation: TranslationService,
              ) { 
                 this.gamePartSrv.initForm();
                 this.getListParts();
@@ -30,6 +36,7 @@ export class ListPartsComponent implements OnInit {
              }
 
   ngOnInit(): void {
+    this.translateServe.use(this.translation.getLanguage());
   }
   
   getListParts(){
@@ -51,6 +58,10 @@ export class ListPartsComponent implements OnInit {
 
   doDelete(){
       this.gamePartSrv.deleteGamePart({competitionID: this.competitionID, gamePartID: this.partChooseData._id});
+  }
+
+  backClicked(){
+      this.location.back();
   }
 
   getLevel(){

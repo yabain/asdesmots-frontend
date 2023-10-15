@@ -128,7 +128,7 @@ export class ArcardeService {
 
   getListUsersOfArcardes(id: string){
         this.waitingResponse = true;
-
+    console.log('loading', id);
         this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
               console.log(resp);
               this.listUser = Array.from(resp.data[0]);
@@ -139,7 +139,7 @@ export class ArcardeService {
           } else if (error.error.status == 401) {
             this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
           }else{
-            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
            this.waitingResponse = false;
         });
@@ -209,7 +209,7 @@ export class ArcardeService {
         } else if (error.error.status == 404) {
           this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
         } else {
-          this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
         }
         this.waitingResponse = false;
       });
@@ -284,7 +284,7 @@ export class ArcardeService {
         } else if (error.error.status == 404) {
           this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
         } else {
-          this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
         }
       });
   }
@@ -307,7 +307,7 @@ export class ArcardeService {
           } else if (error.error.status == 404) {
             this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
           } else {
-            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
           this.waitingResponseSuscrib = false;
           this.suscriptionDone = false;
@@ -331,7 +331,7 @@ export class ArcardeService {
           } else if (error.error.status == 404) {
             this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
           } else {
-            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
           this.waitingResponse = false;
         });

@@ -18,6 +18,7 @@ export class ListUsersComponent implements OnInit {
   wating:  boolean = false;
   userData : User = new User();
   formAddRole: FormGroup;
+  roleChoose: {userId: string, roleId: string }[] = [];
 
   constructor(
         private translate: TranslateService,
@@ -70,16 +71,46 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  doAddRole(){
-      console.log('data to add', {userId: this.userData._id, roleId: this.formAddRole.get('idRole').value})
-      this.roleService.addRoleOnUser({userId: this.userData._id, roleId: this.formAddRole.get('idRole').value});
-  }
-
   refreshList(){
     this.loadUsers();
   }
 
+  async addRole(roleID: string, isEnable: boolean){
+    const isRoleIDalreadyPresent = async (id: string)=>{
+        const index = this.roleChoose.findIndex((role)=> role.roleId === id);
+        
+        return (index == -1) ;
+    }
+
+    const getIndex = async (id: string )=>{
+          return this.roleChoose.findIndex((role)=> role.roleId === id);
+    }
+
+      if(await isRoleIDalreadyPresent(roleID)){
+          if(!isEnable){
+            this.roleChoose.push({
+              userId: '', 
+              roleId: roleID
+             });
+          }
+      }else{
+          this.roleChoose.splice(await getIndex(roleID), 1);
+      }
+
+  }
+
+  saveChange(){
+      this.roleChoose.map((value)=>{
+        value.userId = this.userData._id
+      });
+
+      console.log('list role', this.roleChoose);
+      //this.roleService.addRoleOnUser(this.roleChoose);
+      this.roleChoose = [];
+  }
+
   reset(){
+    this.roleChoose = [];
     this.roleService.roleAdded = false;
     this.roleService.resetListBuild();
   }

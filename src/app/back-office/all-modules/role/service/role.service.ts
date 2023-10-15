@@ -226,9 +226,12 @@ export class RoleService {
       })
   }
 
-  addRoleOnUser(requestBody: {userId: string, roleId: string }){
+  addRoleOnUser(data: {userId: string, roleId: string }[]){
       this.waitingResponse = true;
       this.roleAdded = false;
+
+      const requestBody = { type: 'Role change', data: data };
+
       this.api.post(EndpointRole.ADD_ROLE_ON_USER, requestBody, this.authorisation).subscribe((resp)=>{
           this.waitingResponse =false;
           this.roleAdded = true;
@@ -308,8 +311,7 @@ export class RoleService {
       this.listRoleOfUser = [];
       this.api.get(EndpointRole.GET_ROLE_OF_USER+userID, this.authorisation).subscribe((response)=>{
           this.waitingResponse = false;
-          this.listRoleOfUser = response.data;
-          console.log(typeof response.data);
+          this.listRoleOfUser = response.data.roles;
           this.buildListCheckedRole();
 
       }, (error)=>{
@@ -325,10 +327,13 @@ export class RoleService {
   }
 
   buildListCheckedRole(){
+    
         this.listRole.forEach((roleList, index)=>{
           const i = this.listRoleOfUser.findIndex((value)=> value === roleList._id);
               if(i != -1){
                   this.listRole[index].isEnable = true;
+              }else{
+                  this.listRole[index].isEnable = false;
               }
         });
 

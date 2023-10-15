@@ -131,7 +131,7 @@
                       <th class="text-center">Active</th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="roleService.listRoleOfUser.length != 0" >
+                  <tbody *ngIf="roleService.listRole.length != 0" >
                     <tr *ngFor="let role of roleService.listRole; let i = index"
                           >
                       <td>
@@ -144,13 +144,12 @@
     
                       <td class="text-center">
                         <div class="form-check text-center" style="margin-left: 50%;">
-                          <input class="form-check-input" type="checkbox" [checked]="role.isEnable"  value="" id="flexCheckDefault">
-                        
+                          <input class="form-check-input" type="checkbox" [checked]="role.isEnable" (click)="addRole(role._id, role.isEnable)"  value="" id="flexCheckDefault">
                         </div>
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="roleService.listRoleOfUser.length == 0">
+                  <tbody *ngIf="roleService.listRole.length == 0">
                     <tr>
                       <td></td>
                       <td class="text-center">
@@ -171,8 +170,8 @@
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
             {{'close' | translate}}
           </button>
-          <button type="button" class="btn btn-primary" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal"  >
-            <span *ngIf="!roleService.waitingResponse">Sauvegarder  <i class="fa fa-save" aria-hidden="true"></i> </span>
+          <button type="button" class="btn btn-primary" [disabled]="roleChoose.length === 0" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal"  (click)="saveChange()" >
+            <span *ngIf="!roleService.waitingResponse">Enrégistrer  <i class="fa fa-save" aria-hidden="true"></i> </span>
             <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
         </div>

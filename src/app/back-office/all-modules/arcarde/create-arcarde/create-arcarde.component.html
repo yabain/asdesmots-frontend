@@ -7,16 +7,16 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'Dashboard' | translate }}</a></li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
               <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a></li>
-              <li class="breadcrumb-item active">{{ 'Creation' | translate }}</li>
+              <li class="breadcrumb-item active">Creation</li>
             </ul>
           </div>
       
 <div class="row">
     <div class="card card-table">
         <div class="card-header text-center">
-            <h5> {{ 'Create new competition' | translate }} </h5>
+            <h5> Creation nouvelle Arcade</h5>
         </div>
       <div class="card-body">
                 <form [formGroup]="arcadeServ.formControlCreateArcarde">
@@ -24,14 +24,14 @@
 
                      <div class="col">
                         <div class="form-group">
-                            <label for="name"> {{ 'Name' | translate }} </label>
+                            <label for="name"> Nom </label>
                             <input type="text" name="name" class="form-control" formControlName="name" id="name"
                             [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
                             >
                         </div>
 
                         <div class="form-group">
-                            <label for="desc"> {{ 'Description' | translate }} </label>
+                            <label for="desc"> Description </label>
                             <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
                             [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
                             >
@@ -44,17 +44,17 @@
 
                         <div class="form-check form-switch text-center">
                             <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked"> {{ 'Register players ?' | translate }} </label>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Enregistrer des joueurs </label>
                         </div>
 
                         <div class="form-check form-switch text-center">
                             <input class="form-check-input" type="checkbox" formControlName="isFreeRegistrationPlayer" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked"> {{'Free player registration ?' | translate }}</label>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Enregistrement de joueurs gratuit</label>
                         </div>
 
                         <div class="form-group">
-                            <label for="maxPlayersNumber"> {{'Maximum number of players' | translate }} </label>
-                            <input type="number" min="0" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                            <label for="maxPlayersNumber">Nombre max de joueurs </label>
+                            <input type="number" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
                             [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
                             >
                         </div>
@@ -63,28 +63,28 @@
 
                         <div class="col">
                             <div class="form-group">
-                                <label for="startDate"> {{'Start date' | translate }} </label>
+                                <label for="startDate">Date de Debut </label>
                                 <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
                                 [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
                                 >
                             </div>
         
                             <div class="form-group">
-                                <label for="endDate"> {{'End Date' | translate }} </label>
+                                <label for="endDate"> Date de Fin </label>
                                 <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
                                 [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
                                 >
                             </div>
         
                             <div class="form-group">
-                              <label for="startRegistrationDate">{{'Recording start date' | translate }} </label>
+                              <label for="startRegistrationDate">Date Debut d'enregistrement </label>
                               <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
                               [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
                               >
                           </div>
         
                           <div class="form-group">
-                              <label for="endRegistrationDate"> {{'Registration end date' | translate }} </label>
+                              <label for="endRegistrationDate"> Date fin d'enregistrement</label>
                               <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
                               [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
                               >
@@ -92,10 +92,10 @@
         
                           <button (click)="backClicked()" class="btn btn-primary me-2"
                           style="color: #035858 !important; background-color: #ffff !important;">
-                          <i class="fas fa-arrow-left"></i> {{ 'Back' | translate }}
+                          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
                           </button>
                           <button type="button" class="btn btn-success " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
-                            <span *ngIf="!arcadeServ.waitingResponse"> {{ 'Create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                            <span *ngIf="!arcadeServ.waitingResponse"> Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
                             <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                           </button>
                         </div>

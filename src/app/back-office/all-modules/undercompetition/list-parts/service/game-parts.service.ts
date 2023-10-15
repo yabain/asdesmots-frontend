@@ -82,7 +82,7 @@ export class GamePartsService {
       } else if (error.error.status == 401) {
         this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
       } else {
-        this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+        this.toastr.error(error.message, 'Error', { timeOut: 7000 });
       }
       this.partAdded = false;
       this.waitingResponse = false;
@@ -103,7 +103,7 @@ export class GamePartsService {
         } else if (error.error.status == 401) {
           this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
         } else {
-          this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
         }
         this.waitingResponse = false;
         this.partDeletingDone = false;

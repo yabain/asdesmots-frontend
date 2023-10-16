@@ -6,4 +6,5 @@ export enum Endpoint{
         CREATE_ARCARDE = 'game-arcarde',
         GET_USERS_ARCARDE = 'game-arcarde/', //+ /idAcarde/subscription
         DELETE_ARCARDE = 'game-arcarde/',
+        CHANGE_STATE = 'game-arcarde/state',
 }

@@ -13,6 +13,8 @@ export class Arcarde{
             public endDate?: any,
             public startRegistrationDate?: any,
             public endRegistrationDate?: any,
+            public gameState?: any,
+            public owner?: any,
             public competitionGames?:SousCompetion[],
         ){
 

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/entities/user';
 import { SousCompetitionService } from '../../undercompetition/services/sous-competition.service';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -93,9 +94,9 @@ export class ArcardeService {
   }
 
   initDefaultBooeleanValues(){
-      this.f_Creation['canRegisterPlayer'].setValue(false);
+      this.f_Creation['canRegisterPlayer'].setValue(true);
       this.f_Creation['isFreeRegistrationPlayer'].setValue(false);
-      this.f_Creation['isOnlineGame'].setValue(false);
+      this.f_Creation['isOnlineGame'].setValue(true);
 
   }
   loadArcade(){
@@ -211,6 +212,43 @@ export class ArcardeService {
       });
   }  
 
+    changeState(data: {gameArcardeID: string, state: any}){
+        this.waitingResponse = false;
+        
+        console.log('game arcarde id :', data.gameArcardeID);
+        this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe((response: any)=>{
+            this.toastr.success('Arcarde Started', 'Success', {timeOut: 10000});
+            this.clientChangeState(data.gameArcardeID, State.WAITING_PLAYER);
+
+            this.waitingResponse = false;
+
+        }, (error: any)=>{
+          console.log('error ', error);
+          if (error.error.statusCode == 500) {
+            this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          } else if (error.error.statusCode == 401) {
+            this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          } else if(error.error.statusCode == 403) {
+            this.toastr.error(error.error.message, 'Error', { timeOut: 10000 });
+          } else if (error.error.statusCode == 404) {
+            this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
+          }
+          this.waitingResponse = false;
+        });
+
+    }
+
+   async clientChangeState(idArcarde: string, statut: string){
+    //change the arcarde's state on user client (ui)
+
+          const index = this.listArcardeUser.findIndex(arcarde => arcarde._id === idArcarde);
+          if(index != -1){
+            this.listArcardeUser[index].gameState = statut;
+          }
+    }
+
   deleteArcarde(id: string){
       console.log('id arcarde to delete', id);
      /* this.waitingResponse = true;
@@ -259,14 +297,14 @@ export class ArcardeService {
             this.suscriptionDone = true;
         }, (error: any) => {
           
-          if (error.status == 500) {
+          if (error.error.status == 500) {
             this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-          } else if (error.status == 401) {
+          } else if (error.error.status == 401) {
             this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-          } else if (error.status == 404) {
+          } else if (error.error.status == 404) {
             this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
           } else {
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
           }
           this.waitingResponseSuscrib = false;
           this.suscriptionDone = false;
@@ -283,14 +321,14 @@ export class ArcardeService {
             console.log('response', resp);
         }, (error: any) => {
           
-          if (error.status == 500) {
+          if (error.error.status == 500) {
             this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-          } else if (error.status == 401) {
+          } else if (error.error.status == 401) {
             this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-          } else if (error.status == 404) {
+          } else if (error.error.status == 404) {
             this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
           } else {
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
           }
           this.waitingResponse = false;
         });
@@ -302,6 +340,20 @@ export class ArcardeService {
             this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames));
       });
       
+  }
+
+  getCompetitonArcardeID(idCompet: string){
+      let parentArcardeId: string = '';
+
+      this.listArcardeUser.forEach((arcarde)=>{
+          arcarde.competitionGames.forEach((compet)=>{
+              if(compet._id === idCompet){
+                  parentArcardeId = arcarde._id;
+              }
+          });
+      });
+
+      return parentArcardeId;
   }
 
   async buildListLocation(listArcarde: Arcarde[]){

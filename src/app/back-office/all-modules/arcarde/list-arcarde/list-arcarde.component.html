@@ -100,12 +100,33 @@
                                    <i class="fa fa-eye"></i>
                                     <span style="margin-left: 5px;"> Show more </span>
                                  </a>
-   
+
                                  <a class="dropdown-item" 
                                    style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete">
                                    <i class="fa fa-trash" aria-hidden="true" ></i>
                                   <span style="margin-left: 5px;">  Delete  </span>
                                  </a>
+
+                                 <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">   
+                                 </div>
+                                
+                                 <ng-template #process_running_gameStarted>
+                                    <span style="color: greenyellow;" class="text-center">
+                                          Startding Arcarde...
+                                    </span>
+                                 </ng-template>
+
+                                 <ng-template #process_running_down>
+                                    <a class="dropdown-item" 
+                                      *ngIf="(userID === arcarde.owner && arcarde.gameState !== gameState.WAITING_PLAYER)"
+                                      (click)="startArcarde(arcarde._id)"  
+                                      style="cursor: pointer;" >
+                                      
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                        <span style="margin-left: 5px;"> Start Arcarde </span>
+                                    </a>
+                                 </ng-template>
+
                                 </div>
                             </div>
 

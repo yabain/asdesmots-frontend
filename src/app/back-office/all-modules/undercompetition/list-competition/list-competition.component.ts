@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Component({
   selector: 'app-list-competition',
@@ -17,6 +18,9 @@ export class ListCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   id_Arcarde : string = ''; //id arcade of the new register competion;
   formIdArcarde!: FormGroup;
+  gameState = State;
+  userID: string = '';
+
   constructor(public sousCompetion: SousCompetitionService,
               private translate: TranslateService,
               private translataion: TranslationService, 
@@ -30,7 +34,7 @@ export class ListCompetitionComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+      this.loadUserID();
   }
 
 
@@ -53,6 +57,10 @@ export class ListCompetitionComponent implements OnInit {
     this.arcardeSrv.loadArcade();
   }
 
+  loadUserID(){
+        this.userID = JSON.parse(localStorage.getItem('user-data'))._id;
+  }
+
   doDelete(){
     
   }
@@ -63,5 +71,16 @@ export class ListCompetitionComponent implements OnInit {
 
    goToCriteriasList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/criterias/'+id);
+  }
+
+  startCompetition(idCompetition: string){
+        const id = this.arcardeSrv.getCompetitonArcardeID(idCompetition);
+        
+        this.sousCompetion.changeState({
+          gameArcardeID : id,
+          gameCompetitionID: idCompetition,
+          state: State.WAITING_PLAYER
+        });
+
   }
 }

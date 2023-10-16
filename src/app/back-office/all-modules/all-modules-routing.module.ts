@@ -52,12 +52,18 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard]
       },
       {
+        path: 'game',
+        loadChildren: ()=> import('./game-play/game-play.module').then((m)=> m.GamePlayModule),
+        canActivate: [AuthenticationGuard]
+      },
+      {
         path: 'setting',
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),
         canActivate: [AuthenticationGuard],
 
       },
+
       {
         path: 'profile',
         loadChildren: () =>

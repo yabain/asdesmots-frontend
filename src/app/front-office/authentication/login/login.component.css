@@ -7,3 +7,24 @@
  background-size: cover;
  background-color: #3063AD !important;
 }
+.custom-checkbox{
+  padding-top: 1px;
+}
+.text-end{
+  display: inline;
+  width: 172px;
+  margin-left: 20px;
+}
+
+.forgot-link::after{
+  content:"";
+  display: block;
+  width: 0%;
+  height: 1px;
+  background: #3063AD ;
+  transition: width 0.2s ease-in-out;
+}
+.forgot-link:hover::after{
+  width: 100%;
+}
+

@@ -225,4 +225,8 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     this.wordForm.controls.gameLevelId.setValue(this.levelId);
     this.wordForm.controls.type.setValue(word.type);
   }
+
+  afficherMot(): void {
+
+  }
 }

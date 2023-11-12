@@ -16,9 +16,43 @@ import { Router } from '@angular/router';
 })
 
 export class RegiserComponent implements OnInit {
+
+
+
+  emailControl: FormControl = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+
+  );
+
+  phoneControl: FormControl = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern( /^\d+$/),
+  ]));
+
+  passwordControl1: FormControl = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern(/^[A-Z]+$/),
+    Validators.pattern(/^\d+$/),
+    Validators.pattern(/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/),
+  ]));
+
+  passwordControl2: FormControl = new FormControl('', Validators.compose([
+
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern(/^[A-Z]+$/),
+    Validators.pattern(/^\d+$/),
+    Validators.pattern(/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/),
+  ]));
+
+  email!: string;
   sexe: string = '';
-  input1: string = '';
-  input2: string = '';
+  // input1: string = '';
+  // input2: string = '';
   waitingResponse = false;
   submitted = false;
   error = false;
@@ -37,12 +71,22 @@ export class RegiserComponent implements OnInit {
   public subscription: Subscription;
   public CustomControler: any;
 
+  critereLongueur!: boolean;
+  critereMajuscule!: boolean;
+  critereChiffre!: boolean;
+  critereCaractereSpecial!: boolean;
+  isValidEmail: boolean;
+
+
+
   get f() {
     return this.form.controls;
   }
 
   comparer() {
-    if (this.input1 === this.input2) {
+    const password1: string = this.passwordControl1.value;
+    const password2: string = this.passwordControl2.value;
+    if (password1 === password2) {
       console.log('Les deux champs sont identiques');
     } else {
       console.log('Les deux champs sont différents');
@@ -80,6 +124,16 @@ export class RegiserComponent implements OnInit {
       this.CustomControler = data;
     });
     this.authService.isConnected();
+
+    // this.input1 = '';
+    this.critereLongueur = false;
+    this.critereMajuscule = false;
+    this.critereChiffre = false;
+    this.critereCaractereSpecial = false;
+    this.email = '';
+    this.emailControl.valueChanges.subscribe(() => {
+      this.emailControl.updateValueAndValidity();
+    });
   }
 
   ngOnInit() {
@@ -181,7 +235,55 @@ export class RegiserComponent implements OnInit {
 
   setFrLang() {
     this.translationService.setLanguage('fr');
+
   }
 
+  verifierCritereMotDePasse(): void {
 
+    const password1: string = this.passwordControl1.value;
+    const password2: string = this.passwordControl2.value;
+
+
+    if (password1.length >= 8) {
+      console.log("bonjour ronice");
+      this.critereLongueur = true;
+    } else {
+      this.critereLongueur = false;
+    }
+
+    if (/[A-Z]/.test(password1)) {
+      console.log("bonjour ronice");
+      this.critereMajuscule = true;
+    } else {
+      this.critereMajuscule = false;
+    }
+
+    if (/\d/.test(password1)) {
+      this.critereChiffre = true;
+    } else {
+      this.critereChiffre = false;
+    }
+
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password1)) {
+      this.critereCaractereSpecial = true;
+    } else {
+      this.critereCaractereSpecial = false;
+    }
+
+  }
+
+  arePasswordsMatching(): boolean {
+    const password1: string = this.passwordControl1.value;
+    const password2: string = this.passwordControl2.value;
+    return password1 === password2;
+  }
+
+  isEmailValid(): boolean {
+    const email: string = this.emailControl.value.toLowerCase();
+    return this.emailControl.valid && email.endsWith('@gmail.com');
+  }
+
+  isPhoneValid(): boolean {
+    return this.phoneControl.valid && this.phoneControl.touched;
+  }
 }

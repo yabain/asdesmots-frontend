@@ -14,7 +14,7 @@
             <!-- Form -->
             <form [formGroup]="form" (ngSubmit)="submit()">
               <div *ngIf="etape === 1 ">
-                <!-- <p class="account-subtitle">{{ 'persinfo' | translate }}.</p> --> <br>
+                <!-- <p class="account-subtitle">{{ 'persinfo' | translate }}.</p> --><br>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.firstName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_firstName"
@@ -28,8 +28,16 @@
                     </div>
                   </div>
                 </div>
+                <div style="background-color: rgba(248, 180, 71, 0.575);
+                  border-radius: 5px;
+                  padding: 5px;
+                  margin-top: 5px"> <b style="color: #000"> {{ 'votre nom doit contenir' | translate }}: </b><br>
+                  <ol>
+                    <li> {{ 'Au moins 4 caractéres' | translate }} </li>
+                  </ol>
+                </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;">
                   <label class="form-control-label">{{ 'user.lastName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_lastName"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_lastName"
@@ -42,8 +50,16 @@
                     </div>
                   </div>
                 </div>
+                <div style="background-color: rgba(248, 180, 71, 0.575);
+                  border-radius: 5px;
+                  padding: 5px;
+                  margin-top: 5px"> <b style="color: #000"> {{ 'votre prénom doit contenir' | translate }}: </b><br>
+                  <ol>
+                    <li> {{ 'Au moins 4 caractéres' | translate }} </li>
+                  </ol>
+              </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;">
                   <label class="form-control-label">{{ 'user.gender' | translate }}</label>
                   <select class="form-control" id="sexe" formControlName="field_Sexe" [ngClass]="{
                     'is-invalid': f['field_Sexe'].touched && f['field_Sexe'].invalid
@@ -71,12 +87,22 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
                   <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
-                    [ngClass]="{
-                    'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
-                  }" />
+                    [formControl]="phoneControl"
+                    [ngClass]="{ 'valid-phone': isPhoneValid(), 'invalid-phone': !isPhoneValid(), 'initial-border': !phoneControl.touched}"
+
+
+                  />
+                </div>
+                 <div style="background-color: rgba(248, 180, 71, 0.575);
+                  border-radius: 5px;
+                  padding: 5px;
+                  margin-top: 5px"> <b style="color: #000"> {{ 'votre numéro doit contenir' | translate }}: </b><br>
+                  <ol>
+                    <li> {{ 'Au moins 6 chiffres' | translate }} </li>
+                  </ol>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;">
                   <label class="form-control-label">{{ 'user.country' | translate }} :</label>
                   <select (change)="onSelect($event)" name="country" id="country-select" class="form-control"
                     formControlName="field_country" [ngClass]="{
@@ -122,7 +148,8 @@
                 <!-- <p class="account-subtitle">{{ 'userinfo' | translate }}.</p> --> <br>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
-                  <input class="form-control" type="text" formControlName="field_email"
+                  <input class="form-control" type="text"  formControlName="field_email"
+                    [formControl]="emailControl"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
                     [ngClass]="{
                       'is-invalid': f['field_email'].touched && f['field_email'].invalid
@@ -138,25 +165,45 @@
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
+
+                  <span class="message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
+                    {{ isEmailValid() ? 'Email valide' : 'Email invalide' }}
+                  </span>
+
+                  <!--<span [ngClass]="{ 'valid-email': isEmailValid, 'invalid-email': !isEmailValid }" *ngIf="email !== ''">
+                    {{ isEmailValid ? 'Email valide' : 'Email invalide' }}
+                  </span>-->
+                  <!--<div  class="style" style="background-color: rgba(248, 180, 71, 0.575);
+                    border-radius: 5px;
+                    padding: 5px;
+                    margin-top: 18px">
+                  </div>-->
+                  <!--<span class="fa-span1" [ngClass]="{'condition-isvalid': isValidEmail}">  {{ 'Email valide' | translate }} </span>
+                  <span class="fa-span2" [ngClass]="{'condition-isnotvalid': !isValidEmail}">   {{ 'Email invalide' | translate }} </span>-->
                 </div>
+
+
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }} :</label>
                   <div class="pass-group">
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input1" formControlName="field_password"
+                       formControlName="field_password"
+                      [formControl]="passwordControl1"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
+                      (input)="verifierCritereMotDePasse()"
                       [ngClass]="{
                         'is-invalid':
-                          f['field_password'].touched && f['field_password'].invalid
+                          f['field_password'].touched && f['field_password'].invalid, 'different-password': !arePasswordsMatching(), 'same-password': arePasswordsMatching()
                       }" /> <br>
                     <label class="form-control-label">{{ 'user.confpassword' | translate }} :</label>
                     <br>
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input2" formControlName="field_password"
+                       formControlName="field_password"
+                      [formControl]="passwordControl2"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
                         'is-invalid':
-                          f['field_password'].touched && f['field_password'].invalid
+                          f['field_password'].touched && f['field_password'].invalid, 'different-password': !arePasswordsMatching(), 'same-password': arePasswordsMatching()
                       }" />
                     <span
                       [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
@@ -177,10 +224,30 @@
                   padding: 5px;
                   margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
                     <ol>
-                      <li>{{ 'upTo8Char' | translate }}</li>
-                      <li>{{ 'upTo1Captal' | translate }}</li>
-                      <li>{{ 'upTo1Number' | translate }}</li>
-                      <li>{{ 'upTo1SpecialCahr' | translate }}</li>
+                      <li>
+                        <input type="checkbox">
+                        <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereLongueur}" ></i>
+                        {{ 'upTo8Char' | translate }}
+                      </li>
+                      <li>
+                        <input type="checkbox">
+                        <label></label>
+                        <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereMajuscule}" ></i>
+                        {{ 'upTo1Captal' | translate }}
+                      </li>
+
+                      <li>
+                        <input type="checkbox">
+                        <label></label>
+                        <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereChiffre}" ></i>
+                        {{ 'upTo1Number' | translate }}
+                      </li>
+                      <li>
+                        <input type="checkbox">
+                        <label></label>
+                        <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereCaractereSpecial}" ></i>
+                        {{ 'upTo1SpecialCahr' | translate }}
+                      </li>
                     </ol>
                   </div>
                 </div>
@@ -189,8 +256,8 @@
                     <div class="col-12">
                       <div class="custom-control custom-checkbox">
                         <input type="checkbox" formControlName="field_agree" class="custom-control-input" id="cb2" />
-                        <label class="custom-control-label ms-1" for="cb2">{{ 'agreeAll' | translate }} <a href="">{{
-                            'terms' | translate }}</a> {{ 'and' | translate }} <a href="">{{ 'policy' | translate }}</a>
+                        <label class="custom-control-label ms-1" for="cb2">{{ 'agreeAll' | translate }} <a class="terms" href="">{{
+                            'terms' | translate }}</a> {{ 'and' | translate }} <a class="policy" href="">{{ 'policy' | translate }}</a>
                           {{ 'dataUsage' | translate }}</label>
                       </div>
                     </div>
@@ -218,6 +285,7 @@
                   translate}}</button> -->
 
               </div>
+              <!--<label>salut</label> <label>salut</label>-->
 
 
             </form>

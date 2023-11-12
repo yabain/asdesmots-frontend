@@ -31,6 +31,7 @@
     "datatables.net-bs5": "^1.11.3",
     "datatables.net-dt": "^1.11.3",
     "feather-icons": "^4.28.0",
+    "font-awesome": "^4.7.0",
     "fullcalendar": "^5.1.0",
     "google-maps": "^4.3.2",
     "google-maps-infowindow": "0.0.1",

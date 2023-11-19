@@ -18,29 +18,37 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.firstName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_firstName"
+                    [(ngModel)]="firstname"
+                    (ngModelChange)="verifyLengthFirstName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.firstName' | translate }}" id="field_firstName"
                     [ngClass]="{
-                      'is-invalid': f['field_firstName'].touched && f['field_firstName'].invalid
+                      'is-invalid': f['field_firstName'].touched && f['field_firstName'].invalid, 'invalid-input': isInputInvalid, 'valid-input': !isInputInvalid,
+                      'initial-input': isInputInitial
                     }" />
                   <div *ngIf="f['field_firstName'].touched && f['field_firstName'].invalid" class="invalid-feedback">
                     <div *ngIf="f['field_firstName'].errors && f['field_firstName'].errors['required']">
                       {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
+                  <p class="firstname-message" *ngIf="isFirstnameInvalid">Au moins 4 caractères</p>
                 </div>
 
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.lastName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_lastName"
+                   [(ngModel)]="lastname"
+                   (ngModelChange)="verifyLengthLastName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_lastName"
                     [ngClass]="{
-                      'is-invalid': f['field_lastName'].touched && f['field_lastName'].invalid
+                      'is-invalid': f['field_lastName'].touched && f['field_lastName'].invalid,  'invalid-input': isInputInval, 'valid-input': !isInputInval,
+                      'initial-input': isInputInit
                     }" />
                   <div *ngIf="f['field_lastName'].touched && f['field_lastName'].invalid" class="invalid-feedback">
                     <div *ngIf="f['field_lastName'].errors && f['field_lastName'].errors['required']">
                       {{ 'lastNameRequired' | translate }}
                     </div>
                   </div>
+                  <p class="lastname-message" *ngIf="isLastnameInvalid">Au moins 4 caractères</p>
                 </div>
 
                 <div class="form-group">
@@ -104,9 +112,15 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
                   <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
-                    [ngClass]="{
-                    'is-invalid': f['field_phone'].touched && f['field_phone'].invalid
-                  }" />
+                    [(ngModel)]="phoneModel"
+                    [formControl]="phoneControl"
+                    (ngModelChange)="isPhoneModel()"
+                    (ngModelChange)="isPhoneModelUser()"
+
+                    [ngClass]="{ 'valid-phone': isPhoneValid(), 'invalid-phone': !isPhoneValid(), 'initial-border': !phoneControl.touched }"
+                   />
+                   <p class="phone-message" *ngIf="isPhoneModelInvalid">Au moins 6 chiffres</p>
+                   <p class="phone-message" *ngIf="isInvalidFormat">Format de téléphone invalide</p>
                 </div>
                 <br>
 
@@ -124,6 +138,7 @@
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_email"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
+                    [formControl]="emailControl"
                     [ngClass]="{
                       'is-invalid': f['field_email'].touched && f['field_email'].invalid
                     }" />
@@ -138,6 +153,9 @@
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
+                  <span class="email-message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
+                    {{ isEmailValid() ? 'Email valide' : 'Email invalide' }}
+                  </span>
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }} :</label>
@@ -145,6 +163,8 @@
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
                       [(ngModel)]="input1" formControlName="field_password"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
+                      (input)="checkPassword()"
+                      (input)="verifierCritereMotDePasse()"
                       [ngClass]="{
                         'is-invalid':
                           f['field_password'].touched && f['field_password'].invalid
@@ -153,6 +173,7 @@
                     <br>
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
                       [(ngModel)]="input2" formControlName="field_password"
+                      (input)="checkPassword()"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
                         'is-invalid':
@@ -172,16 +193,36 @@
                       {{ CustomControler.message }}
                     </div>
                   </div>
+                  <p class="password-message" *ngIf="showMessage" [ngClass]="{'valid-password': passwordsMatch, 'invalid-password': !passwordsMatch}">
+                    {{ message }}
+                  </p>
                   <div style="background-color: rgba(248, 180, 71, 0.575);
                   border-radius: 5px;
                   padding: 5px;
                   margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
-                    <ol>
-                      <li>{{ 'upTo8Char' | translate }}</li>
-                      <li>{{ 'upTo1Captal' | translate }}</li>
-                      <li>{{ 'upTo1Number' | translate }}</li>
-                      <li>{{ 'upTo1SpecialCahr' | translate }}</li>
-                    </ol>
+                  <ol>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereLongueur}" ></i>
+                      {{ 'upTo8Char' | translate }}
+                    </li>
+
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;"  [ngClass]="{'condition-true': critereMajuscule}"></i>
+                      {{ 'upTo1Captal' | translate }}
+                    </li>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereChiffre}" ></i>
+                      {{ 'upTo1Number' | translate }}
+                    </li>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereCaractereSpecial}" ></i>
+                      {{ 'upTo1SpecialCahr' | translate }}
+                    </li>
+                  </ol>
                   </div>
                 </div>
                 <div class="form-group">
@@ -189,8 +230,8 @@
                     <div class="col-12">
                       <div class="custom-control custom-checkbox">
                         <input type="checkbox" formControlName="field_agree" class="custom-control-input" id="cb2" />
-                        <label class="custom-control-label ms-1" for="cb2">{{ 'agreeAll' | translate }} <a href="">{{
-                            'terms' | translate }}</a> {{ 'and' | translate }} <a href="">{{ 'policy' | translate }}</a>
+                        <label id="label" class="custom-checkbox" for="cb2">{{ 'agreeAll' | translate }} <a class="inside-line" href="">{{
+                            'terms' | translate }}</a> {{ 'and' | translate }} <a class="inside-line" href="">{{ 'policy' | translate }}</a>
                           {{ 'dataUsage' | translate }}</label>
                       </div>
                     </div>

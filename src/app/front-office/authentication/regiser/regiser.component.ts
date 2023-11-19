@@ -67,10 +67,10 @@ export class RegiserComponent implements OnInit {
   public CustomControler: any;
 
 
-  // emailControl: FormControl = new FormControl('', Validators.compose([
-  //   Validators.required,
-  //   Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-  // ]));
+  emailControl: FormControl = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+  ]));
 
   phoneControl: FormControl = new FormControl('', Validators.compose([
     Validators.required,
@@ -105,9 +105,9 @@ export class RegiserComponent implements OnInit {
       this.textDir = event.lang == 'fr' ? 'rtl' : 'ltr';
     });
 
-    // this.emailControl.valueChanges.subscribe(() => {
-    //   this.emailControl.updateValueAndValidity();
-    // });
+    this.emailControl.valueChanges.subscribe(() => {
+      this.emailControl.updateValueAndValidity();
+    });
 
     this.lang = this.translationService.initLanguage();
 
@@ -272,10 +272,10 @@ export class RegiserComponent implements OnInit {
   }
 
 
-  // isEmailValid(): boolean {
-  //   const email: string = this.emailControl.value.toLowerCase();
-  //   return this.emailControl.valid && email.endsWith('@gmail.com');
-  // }
+  isEmailValid(): boolean {
+    const email: string = this.emailControl.value.toLowerCase();
+    return this.emailControl.valid && email.endsWith('@gmail.com');
+  }
 
   isPhoneValid(): boolean {
     return this.phoneControl.valid && this.phoneControl.touched;

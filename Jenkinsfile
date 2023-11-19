@@ -1,32 +1,40 @@
-
 pipeline {
-  agent any
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker-hub-cred')
+  agent {
+    docker {
+      image 'node:16'
+      args '-p 4200:3001 --name as_des_mots_frontend'
+    }
+
   }
   stages {
+    stage('Install Dependencies') {
+      steps {
+        echo 'Install Dependencies'
+        sh 'node --version '
+        sh 'npm i'
+        echo 'Installation Complete'
+      }
+    }
+
     stage('Build') {
       steps {
-        sh 'docker build -t yabain/asdesmots-frontend .'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh './jenkins/scripts/build.sh'
+        echo 'Build Complete'
       }
     }
-    stage('Login') {
+
+    stage('Deploy') {
       steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        sh './jenkins/scripts/deploy.sh'
+        input 'Finished using the web site? (Click "Proceed" to continue)'
+        sh './jenkins/scripts/kill.sh'
       }
     }
-    stage('Push') {
-      steps {
-        sh 'docker push yabain/asdesmots-frontend'
-      }
-    }
+
   }
-  post {
-    always {
-      sh 'docker logout'
-    }
+  environment {
+    CI = 'true'
+    NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
   }
 }

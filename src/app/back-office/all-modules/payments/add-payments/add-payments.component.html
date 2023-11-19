@@ -1,0 +1,107 @@
+<!-- Page Wrapper -->
+			<div class="page-wrapper">
+				<div class="content container-fluid">
+
+					<!-- Page Header -->
+					<div class="page-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 class="page-title">Payments</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a [routerLink]="'/index'">Dashboard</a></li>
+									<li class="breadcrumb-item"><a [routerLink]="'/payments/payments-list'">Payments</a></li>
+									<li class="breadcrumb-item active">Add Payments</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Page Header -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<form (ngSubmit)="addPayment()" [formGroup]="addPaymentForm">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Date:</label>
+													<div class="cal-icon">
+														<input type="text" class="form-control" name="dp" formControlName="paymentDate">
+														<div *ngIf="addPaymentForm.get('paymentDate')?.invalid && addPaymentForm.get('paymentDate')?.touched">
+															<small class="text-danger">*Date required</small>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>Customer:</label>
+													<select class="form-select" formControlName="paymentCustomer">
+														<option>Select Customer</option>
+														<option>Brian Johnson</option>
+														<option>Marie Canales</option>
+														<option>Barbara Moore</option>
+														<option>Greg Lynch</option>
+														<option>Karlene Chaidez</option>
+													</select>
+													<div *ngIf="addPaymentForm.get('paymentCustomer')?.invalid && addPaymentForm.get('paymentCustomer')?.touched">
+                            							<small class="text-danger">*Customer Name required</small>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>Address:</label>
+													<textarea rows="5" cols="5" class="form-control" placeholder="Enter Address" formControlName="paymentAddress"></textarea>
+													<div *ngIf="addPaymentForm.get('paymentAddress')?.invalid && addPaymentForm.get('paymentAddress')?.touched">
+                            							<small class="text-danger">*Address required</small>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Amount:</label>
+													<input type="text" class="form-control" formControlName="paymentAmount">
+													<div *ngIf="addPaymentForm.get('paymentAmount')?.invalid && addPaymentForm.get('paymentAmount')?.touched">
+                            							<small class="text-danger">*Amount required</small>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>Payment Number:</label>
+													<input type="text" class="form-control" formControlName="paymentNumber">
+													<div *ngIf="addPaymentForm.get('paymentNumber')?.invalid && addPaymentForm.get('paymentNumber')?.touched">
+                            							<small class="text-danger">*Number required</small>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>Invoice:</label>
+													<select class="form-select" formControlName="paymentInvoice">
+														<option>Select Invoice</option>
+														<option value="Afganistan">List Empty</option>
+													</select>
+													<div *ngIf="addPaymentForm.get('paymentInvoice')?.invalid && addPaymentForm.get('paymentInvoice')?.touched">
+                            							<small class="text-danger">*Invoice required</small>
+													</div>
+												</div>
+												<div class="form-group">
+													<label>Payment Mode:</label>
+													<select class="form-select" formControlName="paymentMode">
+														<option>Select Payment Mode</option>
+														<option value="Afganistan">Cash</option>
+														<option value="Albania">Credit</option>
+														<option value="Algeria">Cheque</option>
+													</select>
+													<div *ngIf="addPaymentForm.get('paymentMode')?.invalid && addPaymentForm.get('paymentMode')?.touched">
+                            							<small class="text-danger">*Payment Mode required</small>
+													</div>
+												</div>
+												<div class="text-end mt-4">
+													<button type="submit" class="btn btn-primary">Add Payments</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Page Wrapper -->

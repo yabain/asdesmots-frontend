@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { UserService } from 'src/app/shared/services/user/user.service';
 import { WebStorage } from 'src/app/shared/storage/web.storage';
 
 @Component({
@@ -41,9 +39,7 @@ export class LoginComponent implements OnInit {
     private formLog: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService,
-    public translationService: TranslationService,
-    private userService: UserService,
-    private router: Router,
+    public translationService: TranslationService
     ) {
 
       this.lang = this.translationService.initLanguage();
@@ -71,11 +67,10 @@ export class LoginComponent implements OnInit {
         this.CustomControler = data;
       }
     });
-
-    this.authService.isConnected();
   }
 
   ngOnInit() {
+
     this.storage.Checkuser();
     this.translate.use(this.translationService.getLanguage());
     // console.log('111 Venant du service: ', this.translationService.getLanguage());    
@@ -102,32 +97,25 @@ export class LoginComponent implements OnInit {
     // console.log('user datas: ', this.form.value);
     this.authService.authLogin(this.form.value)
     .then((result) => {
-      console.log("UserDatas login", result.data.user);
-      this.userService.setUserInformations(result.data.user)
       this.submitted = false;
       this.waitingResponse = false;
     })
     .catch((error) => {
+      console.error('Erreur: ', error.message);
       this.waitingResponse = false;
       this.errorMsg = error.message;
       this.error = true;
       this.submitted = false;
+
     });
     // this.storage.Login(this.form.value);
   }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-  navigateToHome() {
-    this.router.navigate(['welcome']);
-  }
-
   iconLogle(){
     this.Toggledata = !this.Toggledata
   }
-
   setEnLang(){
     this.translationService.setLanguage('en');
   }

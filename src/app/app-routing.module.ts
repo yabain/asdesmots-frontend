@@ -3,11 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthenticationGuard } from './shared/guard/auth/authentication.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-  { path: 'auth', redirectTo: 'login', pathMatch: 'full'},
-  // { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
-  { path: 'reset', redirectTo: 'auth/rest-password', pathMatch: 'full' },
-  { path: 'error404', redirectTo: 'front/error404', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'forgot-pass', redirectTo: 'forgot-pwd', pathMatch: 'full' },
   {
     path: 'login',
@@ -29,7 +25,6 @@ const routes: Routes = [
       import(
         './front-office/authentication/mail-link/mail-link.module'
       ).then((m) => m.MailLinkModule),
-      // canActivate: [AuthenticationGuard],
   },
   {
     path: 'forgot-pwd',
@@ -37,7 +32,6 @@ const routes: Routes = [
       import(
         './front-office/authentication/forgot-pwd/forgot-pwd.module'
       ).then((m) => m.ForgotPwdModule),
-      // canActivate: [AuthenticationGuard],
   },
   {
     path: 'new-pwd',
@@ -75,11 +69,20 @@ const routes: Routes = [
       ),
   },
   {
-    path: '',
+    path: 'invoice-reports',
     loadChildren: () =>
-      import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule),
+      import('./back-office/all-modules/invoice-reports/invoice-reports.module').then(
+        (m) => m.InvoiceReportsModule
+      ),
     canActivate: [AuthenticationGuard],
-  } // { path: '**', redirectTo: '', pathMatch: 'full' }
+
+  },
+//   {
+//     path: '',
+//     loadChildren: () =>
+//     import('./back-office/all-modules/all-modules.module').then(m => m.AllModulesModule)
+// },
+{path: '**', redirectTo: 'welcome'},
 ];
 
 @NgModule({

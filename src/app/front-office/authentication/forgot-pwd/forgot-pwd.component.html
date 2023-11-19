@@ -5,8 +5,8 @@
       <div class="loginbox">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo" (click)="navigateToHome()"
-            style="height: 10vw; width: 20vw !important;" />
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
+            style="height: 10vw; width: 30vw !important;" />
               <br>
             <h1>{{ 'forgotPwd' | translate }}</h1>
             <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
@@ -15,7 +15,7 @@
               <p class="account-subtitle">
                   {{ 'enterEmailForVerification' | translate }}</p>
               <div class="form-group">
-                <label class="form-control-label">{{ 'user.emailAddress' | translate }}</label>
+                <label class="form-control-label">{{ 'user.emailAdress' | translate }}</label>
                 <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}"
                   id="field_email" [ngClass]="{
                     'is-invalid': f['field_email'].touched && f['field_email'].invalid
@@ -36,8 +36,8 @@
               <div *ngIf="sended" style="background-color: rgba(7, 129, 23, 0.275);
               border-radius: 5px;
               padding: 5px;
-              margin-top: 5px"><b style="color: rgb(31, 31, 31)"> {{ 'emailResetSended' | translate }} </b><br>
-                <p style="color: rgb(26, 26, 26)">{{ 'seeSpam' | translate }}
+              margin-top: 5px"><b style="color: rgb(31, 31, 31)"> Un mail de vérification a été envoyé à votre adresse email. </b><br>
+                <p style="color: rgb(26, 26, 26)">Vérifiez également dans vos "SPAM". Si vous ne l'avez pas reçu, cliquez sur Renvoyer.
                 </p>
               </div>
               <br>

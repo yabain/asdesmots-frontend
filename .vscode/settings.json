@@ -2,6 +2,5 @@
     "git.ignoreLimitWarning": true,
     "i18n-ally.localesPaths": [
         "src/assets/i18n"
-    ],
-    "liveServer.settings.port": 5501
+    ]
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -9,11 +7,9 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 })
 export class DeleteAccountComponent implements OnInit {
 
-  constructor(
-    private translate: TranslateService,
-    private translationService: TranslationService,) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
   }
+
 }

@@ -1,0 +1,80 @@
+<div class="contact-us">
+    <img src="assets/img/bg-shape/wp-shape-2.png" alt="" class="wp-bg-shape-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-8">
+                <div class="part-contact smartestlotto-form">
+                    <h3 class="title">{{ 'contactUs.sendMsg' | translate }}</h3>
+                    <div class="part-form">
+                        <form>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <label for="first_name" class="form-label">{{ 'user.firstName' | translate }}</label>
+                                    <input type="text" id="first_name" placeholder="Ex: Morgan">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <label for="last_name" class="form-label">{{ 'user.lastName' | translate }}</label>
+                                    <input type="text" id="last_name" placeholder="Ex: Dubois">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <label for="mail_address" class="form-label">{{ 'user.emailAddress' | translate }}</label>
+                                    <input type="email" id="mail_address" placeholder="Ex: {{ 'suscription.mailEx' | translate }}">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <label for="phone_number" class="form-label">{{ 'user.phone' | translate }}</label>
+                                    <input type="text" id="phone_number" placeholder="Ex: +000 000-000-000">
+                                </div>
+                                <div class="col-xl-12 col-lg-12">
+                                    <label for="write_message" class="form-label">write a Message</label>
+                                    <textarea id="write_message" placeholder="Hello, admin...."></textarea>
+                                </div>
+                            </div>
+                            <button class="btn-pok">
+                                {{ 'send' | translate }}<i class="fa-solid fa-angle-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-9 col-sm-9 d-xl-flex d-lg-flex d-block align-items-end">
+                <div class="part-img">
+                    <img src="assets/img/contact/contact-img.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-address">
+        <div class="container">
+            <div class="address-elements">
+                <div class="single-element">
+                    <h4 class="title">{{ 'user.phone' | translate }}</h4>
+                    <ul>
+                        <li>+000 000-000-000</li>
+                        <li>+000 000-000-000</li>
+                    </ul>
+                </div>
+                <div class="single-element">
+                    <h4 class="title">{{ 'user.emailAddress' | translate }}</h4>
+                    <ul>
+                        <li>support@asdesmots.io</li>
+                        <li>admin@asdesmots.io</li>
+                    </ul>
+                </div>
+                <div class="single-element">
+                    <h4 class="title">{{ 'user.addressLine' | translate }} 1</h4>
+                    <ul>
+                        <li>129 GENEVE AVENUE, France</li>
+                        <li>+000 000-000-000</li>
+                    </ul>
+                </div>
+                <div class="single-element">
+                    <h4 class="title">{{ 'user.addressLine' | translate }} 2</h4>
+                    <ul>
+                        <li>129 GENEVE AVENUE, France</li>
+                        <li>+000 000-000-000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

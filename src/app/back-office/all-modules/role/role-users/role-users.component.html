@@ -1,0 +1,123 @@
+<div id="filter_inputs" class="card filter-card">
+    <div class="card-body pb-0">
+      <div class="row">
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    <button (click)="backClicked()" class="btn btn-primary me-2"
+                            style="color: #035858 !important; background-color: #ffff !important;">
+                            <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+    </button>
+  </p>
+  
+  <div class="text-center" *ngIf="roleService.waitingResponseUser">
+    <img src="../../../../../assets/img/loader.gif" height="30px"/>
+</div>
+
+
+
+<div class="row" *ngIf="!roleService.waitingResponseUser">
+    <div class="col-sm-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table datatable class="table table-stripped table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th>{{'Name' | translate }}</th>
+                  <th>{{'Location' | translate }}</th>
+                  <th>{{'Phone' | translate }}</th>
+                  <th class="text-center">{{'Action' | translate }}</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngIf="roleService.listUsers.length != 0 ">
+                <tr *ngFor="let user of roleService.listUsers; let i = index"
+                  (click)="userData = user">
+                  <td>
+                    <h2 class="table-avatar">
+                      <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
+                          src="assets/img/user-profile.png" alt="User Image" /></a>
+                      <a>{{ user.firstName }} {{ user.lastName }}<span>{{ user.phone }}</span></a>
+                    </h2>
+                  </td>
+                  <td>{{ user.location }}</td>
+                  <td>{{ user.phoneNumber}}</td>
+                  <td class="text-center">
+                      <button class="btn btn-danger"
+                              data-bs-target="#removeRole" 
+                              data-bs-toggle="modal"
+                              (click)="getRoleName()"
+                      >
+                          Retirer le role  <i class="fa fa-user-times" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove role on this user"></i>
+                      </button>
+                  </td>
+                </tr>
+              </tbody>
+
+                  <tbody *ngIf="roleService.listUsers.length == 0 " >
+                    <tr>
+                        <td></td>
+                        <td class="text-center">
+                          <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                          <br>Aucun Critère !
+                        </td>
+                        <td></td>
+                      </tr>
+                </tbody>
+            
+                            
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal custom-modal fade" id="removeRole" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"> Supprimer Role </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon text-center mb-3">
+          </div>
+          <div class="modal-text text-center">
+            <p>Voulez vous vraiment retirer le role:  << <b>{{ roleChooseName }}>> à l'utilisateur ' {{ userData.firstName }} ' </b>? </p>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" *ngIf="!roleService.removeDone" (click)="doRemove()" >
+            <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

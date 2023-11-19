@@ -249,6 +249,19 @@ export class ApiService {
 
 
 
+  // HTTP get with params in url
+  get2(endpoint: string, options?: any, body?: Record<string, any>): Observable<any> {
+    // if (body) {
+    //   let req: String = '';
+    //   // tslint:disable-next-line:forin
+    //   for (const key in body) {
+    //     req += `${key}=${body[key]}&`;
+    //   }
+    //   endpoint += '?' + req;
+    // }
+    console.log(this.url + endpoint, { 'headers': options });
+    return this.http.get(this.url + endpoint, { 'headers': options });
+  }
 
   // HTTP get
   get(endpoint: string, options?: any, body?: Record<string, any>): Observable<any> {
@@ -261,7 +274,7 @@ export class ApiService {
       endpoint += '?' + req;
     }
     console.log(this.url + '/' + endpoint);
-    return this.http.get(this.url + '/' + endpoint, { 'headers': options });
+    return this.http.get(this.url + '/' + endpoint, { 'headers': options , });
   }
 
   // HTTP post
@@ -280,6 +293,7 @@ export class ApiService {
   // HTTP put
 
   put(endpoint: string, body: any, options?: any): Observable<any> {
+    console.log("put request: ", this.url + endpoint, body);
     return this.http.put(this.url + '/' + endpoint + '/', body, { 'headers': options });
   }
 
@@ -293,11 +307,13 @@ export class ApiService {
   // }
 
   // HTTP delete
-  delete(endpoint: string, options?: any): Observable<any> {
+  delete(endpoint: string, options?: any, body?: any): Observable<any> {
     const headers = options;
+    console.log('delete url request', this.url + '/' + endpoint)
     return this.http.delete(this.url + '/' + endpoint, {
-      headers
-    });
+      headers,
+      body: body
+    },);
   }
 
   // HTTP pact

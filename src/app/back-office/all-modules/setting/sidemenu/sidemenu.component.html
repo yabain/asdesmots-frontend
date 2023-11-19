@@ -2,26 +2,26 @@
 <div class="widget settings-menu">
     <ul>
         <li class="nav-item">
-            <a [routerLink]="'/setting/settings'" class="nav-link active" [class.active]="page === 'settings'">
-                <i class="far fa-user"></i> <span class="ms-1">{{'profileSettings' | translate }}</span>
+            <a [routerLink]="'/setting/profile'" class="nav-link active" [class.active]="page === 'settings'">
+                <i class="far fa-user"></i> <span class="ms-1">{{'account' | translate }}</span>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a [routerLink]="'/setting/preferences'" class="nav-link" [class.active]="page === 'preferences'">
                 <i class="fas fa-cog"></i> <span class="ms-1">{{'preferences' | translate }}</span>
             </a>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <!-- <li class="nav-item">
             <a [routerLink]="'/setting/tax-types'" class="nav-link" [class.active]="page === 'tax-types'">
                 <i class="far fa-check-square"></i> <span class="ms-1">{{'taxType' | translate }}</span>
             </a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item">
             <a [routerLink]="'/setting/expense-category'" class="nav-link" [class.active]="page === 'expense-category'">
                 <i class="far fa-list-alt"></i> <span class="ms-1">Expense Category</span>
             </a>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <!-- <li class="nav-item">
             <a [routerLink]="'/setting/notifications'" class="nav-link" [class.active]="page === 'notifications'">
                 <i class="far fa-bell"></i> <span class="ms-1">Notifications</span>
             </a>
@@ -35,6 +35,23 @@
             <a [routerLink]="'/setting/delete-account'" class="nav-link" [class.active]="page === 'delete-account'">
                 <i class="fas fa-ban"></i> <span class="ms-1">Delete Account</span>
             </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/setting/settings'" class="nav-link" [class.active]="page === 'profile'">
+                <i data-feather="settings" style="margin-right: 20px;"></i>  <span class="ms-1">{{'settings' | translate }}</span>
+            </a>
+        </li><br><br>
+        <li class="nav-item" *ngIf="!waitingResponse">
+            <a (click)="logout()" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="ms-1">{{'logOut' | translate }}</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="waitingResponse">
+            <!-- <a (click)="logout()"> -->
+                  <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                  <span class="ms-1">{{'logOut' | translate }}</span>
+            <!-- </a> -->
         </li>
     </ul>
 </div>

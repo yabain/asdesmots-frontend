@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -42,7 +43,8 @@ export class NewPwdComponent implements OnInit {
     private formLog: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    private router: Router,
   ) {
     //this is to determine the text direction depending on the selected language
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -67,7 +69,7 @@ export class NewPwdComponent implements OnInit {
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)])
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)])
       ],
       'confirm_password': ['', Validators.required]
     },{validator: this.checkIfMatchingPasswords('field_password', 'confirm_password')});
@@ -87,7 +89,6 @@ export class NewPwdComponent implements OnInit {
   }
 
   submit() {
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
@@ -111,10 +112,16 @@ export class NewPwdComponent implements OnInit {
       });
   }
 
+  navigateToHome() {
+    this.router.navigate(['welcome']);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   iconLogle() {
     this.Toggledata = !this.Toggledata
   }
+  
 }

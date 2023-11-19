@@ -1,5 +1,549 @@
-<iframe src="../../../assets/welcome/index.html" height="100%" width="100%" name="Home" style="
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- Pre-header Starts -->
+<!-- <div class="pre-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-8 col-7">
+                <ul class="info">
+                    <li><a href="#"><i class="fa fa-envelope"></i>contact@asdesmots.com</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>010-020-0340</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-5">
+                <ul class="social-media">
+                  <li><a href="#"><i class="fa fa-facebook" [ngClass]="faFacebook"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter" [ngClass]="faTwitter"></i></a></li>
+                  <li><a href="#"><i class="fa fa-instagram" [ngClass]="faInstagram"></i></a></li>
+                </ul>
+            </div>              
+        </div>
+    </div>
+</div> -->
+<!-- Pre-header End -->
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="../../../assets/img/logo-full-white-adesmots.png" alt="" style="width: 250px;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="#top" class="active">Acceuil</a></li>
+                        <li class="scroll-to-section"><a href="#services">Competition</a></li>
+                        <li class="scroll-to-section"><a href="#portfolio">Evenement</a></li>
+                        <li class="scroll-to-section"><a href="#about">Apropos</a></li>                        
+                        <li class="scroll-to-section"><a href="#contact">Contact</a></li>
+                        <li class="scroll-to-section newClass"><a [routerLink]="'/login'">Connexion</a></li>
+                        <li><div class="border-first-button"><a
+                            [routerLink]="'/login'">Connexion</a></div></li>
+                        
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
+
+<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s" style="top: -50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6 align-self-center" style="z-index: 2 !important;">
+                        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
+                            data-wow-delay="1s">
+                            <div class="row">
+                                <a href="index.html" class="logo">
+                                    <img src="../../../assets/img/logo-small.png" alt="">
+                                </a>
+                                <div class="col-lg-12">
+                                    <h6> <a [routerLink]="'/login'">Découvrez</a> </h6>
+                                    <h2>Votre plateforme de compétition d'intelects</h2>
+                                    <p>AsDesMots est une application détenant un brevet de l’OAPI Cameroun
+                                        depuis 2021
+                                        qui offre des compétitions d’épellation en ligne et en présentiel dans les 2
+                                        langues (Français et
+                                        anglais).</p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="border-first-button scroll-to-section">
+                                        <a [routerLink]="'/login'">Lancez-vous</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                            <img src="../../../assets/img/banner-img2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="about" class="about section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="about-left-image  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+                            <img src="../../../assets/img/about-dec.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s"
+                        data-wow-delay="0.5s">
+                        <div class="about-right-content">
+                            <div class="section-heading">
+                                <h6>Apropos de nous</h6>
+                                <h4>Qui est <em>AsDesMots</em></h4>
+                                <div class="line-dec"></div>
+                            </div>
+                            <p>Nous somme une application pour organiser les compétions de deux types : En ligne et en
+                                présentiel.
+                                Une personne seule peut créer son compte, se connecter et jouer seul pour s’entraîner.
+                                Mais quand ils
+                                sont
+                                plusieurs (entre 2 et 100), ils créent une arcade-compétition. <br>
+                                Comme dans les arcades,Ce sont des compétitions qui peuvent être organisées en plusieurs
+                                groupes avec
+                                des parties éliminatoires. Les
+                                éliminations se font à l’intérieur d’un groupe puis les groupes vainqueur s’affrontent
+                                entre eux.</p>
+                            <h3>Nous avons :</h3> <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4">
+                                    <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s"
+                                        data-wow-delay="0s">
+                                        <div class="progress" data-percentage="90">
+                                            <span class="progress-left">
+                                                <span class="progress-bar"></span>
+                                            </span>
+                                            <span class="progress-right">
+                                                <span class="progress-bar"></span>
+                                            </span>
+                                            <div class="progress-value">
+                                                <div>
+                                                    90%<br>
+                                                    <span>En ligne</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4">
+                                    <div class="skill-item second-skill-item wow fadeIn" data-wow-duration="1s"
+                                        data-wow-delay="0s">
+                                        <div class="progress" data-percentage="80">
+                                            <span class="progress-left">
+                                                <span class="progress-bar"></span>
+                                            </span>
+                                            <span class="progress-right">
+                                                <span class="progress-bar"></span>
+                                            </span>
+                                            <div class="progress-value">
+                                                <div>
+                                                    80%<br>
+                                                    <span>En présentiel</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="services" class="services section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+                    <h6>Nos Competition</h6>
+                    <h4>Les types de compétitions visées par <em>AsDesMots</em></h4>
+                    <div class="line-dec"></div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="naccs">
+                    <div class="grid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="menu">
+                                    <div class="first-thumb active">
+                                        <div class="thumb">
+                                            <span class="icon"><img src="../../../assets/img/service-icon-01.png"
+                                                    alt=""></span>
+                                            Interclasses
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="thumb">
+                                            <span class="icon"><img src="../../../assets/img/service-icon-02.png"
+                                                    alt=""></span>
+                                            inter-mairies
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="thumb">
+                                            <span class="icon"><img src="../../../assets/img/service-icon-03.png"
+                                                    alt=""></span>
+                                            Départementales
+                                        </div>
+                                    </div>
+                                    <div class="last-thumb">
+                                        <div class="thumb">
+                                            <span class="icon"><img src="../../../assets/img/service-icon-04.png"
+                                                    alt=""></span>
+                                            Nationale
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <ul class="nacc">
+                                    <li class="active">
+                                        <div>
+                                            <div class="thumb">
+                                                <div class="row">
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="left-text">
+                                                            <h4>Les interclasses</h4>
+                                                            <p>La compétition interclasse est un événement organisé au
+                                                                sein
+                                                                d'une école ou d'un
+                                                                établissement scolaire où les élèves des différentes
+                                                                classes
+                                                                s'affrontent
+                                                                pour remporter des prix et la reconnaissance de leur
+                                                                classe.
+                                                                Les
+                                                                compétitions visent à promouvoir l'esprit d'équipe, la
+                                                                coopération et la
+                                                                compétitivité saine entre les élèves. C'est une occasion
+                                                                pour les élèves de se faire
+                                                                des amis, de s'entraîner et de montrer leur potentiel et
+                                                                leur talent. </p>
+                                                            <h6>Nous avons aussi :</h6> <br>
+                                                            <div class="ticks-list"><span><i class="fa fa-check"></i>
+                                                                    inter-collèges</span>
+                                                                <span><i class="fa fa-check"></i> inter-lycées</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="right-image">
+                                                            <img src="../../../assets/img/mot2.webp" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="thumb">
+                                                <div class="row">
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="left-text">
+                                                            <h4>Les Inter-mairies</h4>
+                                                            <p>La compétition inter-mairies est une compétition qui
+                                                                oppose
+                                                                des équipes de
+                                                                différentes mairies. Les équipes peuvent être composées
+                                                                d'employés municipaux, de
+                                                                conseillers municipaux ou de citoyens de la ville.</p>
+                                                            <div class="ticks-list"><span><i
+                                                                        class="fa fa-check"></i>inter-arrondissements</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="right-image">
+                                                            <img src="../../../assets/img/mot9.webp" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="thumb">
+                                                <div class="row">
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="left-text">
+                                                            <h4>Les competition inter- départementales</h4>
+                                                            <p>La compétition inter-départementales est une compétition
+                                                                qui
+                                                                oppose des équipes représentant différents départements
+                                                                d'une région ou d'un pays.
+                                                                Elle permet de mettre en avant les talents et les
+                                                                compétences des participants, de
+                                                                promouvoir l'esprit d'équipe et de renforcer les liens
+                                                                entre
+                                                                les différentes régions.
+                                                                Les participants sont
+                                                                généralement sélectionnés en amont par les autorités
+                                                                compétentes de chaque
+                                                                département, et les épreuves peuvent se dérouler sur une
+                                                                période de plusieurs jours ou
+                                                                semaines, avec des phases qualificatives et des finales.
+                                                            </p>
+                                                            <div class="ticks-list"><span><i class="fa fa-check"></i>
+                                                                    Regional</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="right-image">
+                                                            <img src="../../../assets/img/mot1.webp" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="thumb">
+                                                <div class="row">
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="left-text">
+                                                            <h4>Nationale</h4>
+                                                            <p>Une compétition qui se déroule à l'échelle d'un pays,
+                                                                dans laquelle des participants de différentes régions du
+                                                                pays s'affrontent pour
+                                                                remporter un titre ou un prix. Les compétitions
+                                                                nationales
+                                                                sont souvent considérées
+                                                                comme un moyen de promouvoir l'excellence et de stimuler
+                                                                la
+                                                                concurrence saine entre les participants,
+                                                                tout en célébrant les réalisations des meilleurs talents
+                                                                du
+                                                                pays. Les compétitions
+                                                                nationales peuvent également servir de tremplin pour des
+                                                                compétitions internationales,
+                                                                où les gagnants de chaque pays s'affrontent pour le
+                                                                titre de
+                                                                champion du monde ou pour
+                                                                d'autres distinctions prestigieuses.</p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 align-self-center">
+                                                        <div class="right-image">
+                                                            <img src="../../../assets/img/mot10.webp" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="portfolio" class="our-portfolio section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <h6>Evenement organiser</h6>
+                    <h4>Les meilleurs<em>Evenements</em></h4>
+                    <div class="line-dec"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="loop owl-carousel">
+                    <div class="item">
+                        <a href="#">
+                            <div class="portfolio-item">
+                                <div class="thumb">
+                                    <img src="../../../assets/img/lasaslle.jpeg" alt="">
+                                </div>
+                                <div class="down-content">
+                                    <h4>Compétitions inter-classes</h4>
+                                    <span>College De La Salle</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <div class="portfolio-item">
+                                <div class="thumb">
+                                    <img src="../../../assets/img/bouda.png" alt="Mbouda">
+                                </div>
+                                <div class="down-content">
+                                    <h4>Compétitions inter-mairies</h4>
+                                    <span>Marie de Mbouda</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <div class="portfolio-item">
+                                <div class="thumb">
+                                    <img src="../../../assets/img/nde.jpg" alt="">
+                                </div>
+                                <div class="down-content">
+                                    <h4>Compétitions départementales</h4>
+                                    <span>Nde</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <div class="portfolio-item">
+                                <div class="thumb">
+                                    <img src="../../../assets/img/cmr.avif" alt="">
+                                </div>
+                                <div class="down-content">
+                                    <h4>Compétitions Nationale</h4>
+                                    <span>Cameroun</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="contact" class="contact-us section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+                    <h6>Contact</h6>
+                    <h4>Nous Sommes à vous en un <em>Clique</em></h4>
+                    <div class="line-dec"></div>
+                </div>
+            </div>
+            <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                <form id="contact" action="" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="contact-dec">
+                                <img src="../../../assets/img/contact-dec.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div id="map">
+                                <img src="../../../assets/img/logo-full-adesmots.png" alt="asdesmots">
+                            </div>
+                            <!-- <div id="map">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    width="100%" height="636px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div> -->
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="fill-form">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="info-post">
+                                            <div class="icon">
+                                                <img src="../../../assets/img/phone-icon.png" alt="">
+                                                <a href="#">010-020-0340</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="info-post">
+                                            <div class="icon">
+                                                <img src="../../../assets/img/email-icon.png" alt="">
+                                                <a href="#">contact@asdesmots.com</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="info-post">
+                                            <div class="icon">
+                                                <img src="../../../assets/img/location-icon.png" alt="">
+                                                <a href="#">123 Doula Cameroun</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright © 2023 ASDESMOTS Ltd. All Rights Reserved.
+                    <br>Design by: <a href="https://yaba-in.com" target="_parent" title="Power by YABA-IN">Yaba-In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- <iframe src="../../../assets/welcome/index.html" height="100%" width="100%" name="Home" style="
 overflow-y: hidden; /* Hide vertical scrollbar */
 overflow-x: hidden; /* Hide horizontal scrollbar */">
 
-</iframe>
+</iframe> -->

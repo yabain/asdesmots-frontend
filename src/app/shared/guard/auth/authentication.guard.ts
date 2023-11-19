@@ -14,11 +14,13 @@ import { Observable } from 'rxjs';
 export class AuthenticationGuard implements CanActivate {
   constructor(public router: Router) {}
 
-  canActivate(): boolean {
-    if (!localStorage.getItem('LoginData')) {
-      this.router.navigate(['/login']);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    // const currentUser = this.authService.userData;
+    if (localStorage.getItem('access-token') && localStorage.getItem('user-data')) {
+      return true;
+    } else {
+      this.router.navigate(['/welcome'], { queryParams: { returnUrl: state.url } });
       return false;
     }
-    return true;
   }
 }

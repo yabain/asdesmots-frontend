@@ -12,14 +12,15 @@ import { AllModulesService } from 'src/app/shared/services/all-modules.service';
 // import { AllModulesData } from 'src/assets/all-modules-data/all-modules-data';
 import { ToastrModule } from 'ngx-toastr';
 import { DataTablesModule } from 'angular-datatables';
-import { AuthService } from './shared/services/auth/auth.service';
-import { UserService } from './shared/services/user/user.service';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { TranslationService } from './shared/services/translation/language.service';
 import { ProgressIndeterminateModule } from './shared/elements/progress-indeterminate/progress-indeterminate.module';
+import { CommonModule } from '@angular/common';
+import { FormatDatePipe } from './back-office/all-modules/undercompetition/list-competition/pipe/format-date.pipe';
+// import { FooterModule } from './back-office/shared/footer/footer.module';
 // import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 // AoT requires an exported function for factories
@@ -35,6 +36,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     ProgressIndeterminateModule,
+    CommonModule,
+    // AuthentificationModule,
+    ProgressIndeterminateModule,
+    // FooterModule,
     ToastrModule.forRoot(
       {
         timeOut: 1500,

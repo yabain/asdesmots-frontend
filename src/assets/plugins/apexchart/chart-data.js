@@ -62,7 +62,7 @@ $(document).ready(function() {
 		},
 		yaxis: {
 			title: {
-				text: '$ (thousands)'
+				text: 'XAF (Franc CFA)'
 			}
 		},
 		fill: {
@@ -71,7 +71,7 @@ $(document).ready(function() {
 		tooltip: {
 			y: {
 				formatter: function (val) {
-					return "$ " + val + " thousands"
+					return "XAF " + val + " Franc CFA"
 				}
 			}
 		}

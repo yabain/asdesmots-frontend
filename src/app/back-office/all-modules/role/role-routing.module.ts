@@ -1,0 +1,49 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RoleListComponent } from './role-list/role-list.component';
+import { RoleComponent } from './role.component';
+import { RoleUsersComponent } from './role-users/role-users.component';
+import { RoleCreateComponent } from './role-create/role-create.component';
+import { RolepermissionlistComponent } from './rolepermissionlist/rolepermissionlist.component';
+import { ListUsersComponent } from './list-users/list-users.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: RoleComponent,
+    children: [
+      {
+        path: 'list',
+        component: RoleListComponent
+      },
+      {
+        path: 'users/:idrole',
+        component: RoleUsersComponent,
+      },
+      {
+        path: 'create',
+        component: RoleCreateComponent
+      },
+      {
+        path: 'list/permission/:id',
+        component: RolepermissionlistComponent
+      },
+      {
+        path: 'addrole/users',
+        component: ListUsersComponent
+      }
+
+    ]
+  },
+  {
+    path:'**',
+    redirectTo: "'list'",
+    pathMatch: 'full'
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class RoleRoutingModule { }

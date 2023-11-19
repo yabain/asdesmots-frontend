@@ -7,7 +7,7 @@ import {
   Params,
 } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
-import { DataService } from 'src/app/shared/services/data.service';
+import { DataService } from 'src/app/services/data.service';
 import * as Feather from 'feather-icons';
 
 @Component({
@@ -67,6 +67,7 @@ export class AllModulesComponent implements OnInit {
         //   document.querySelector('body').classList.add('mat-typography');
         // }
       }
+	  
 
     });
   }
@@ -249,6 +250,7 @@ export class AllModulesComponent implements OnInit {
 	    }
 	});
   }
+  
   ngAfterViewInit() {
     Feather.replace();
 

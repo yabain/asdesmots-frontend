@@ -1,20 +1,72 @@
 .right-side-views {
     display: none;
 }
-.bg-img{
+
+.bg-img {
     background-image: url("../../../../assets/img/elements.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: rgb(2, 52, 99);
-   }
-   .login-nav{
-    background-color: #fff;
-    color: rgb(2, 52, 99);
-    border-radius: 10px
-   }
+    background-color: #124eae;
+}
 
-   .login-nav:hover{
-    background-color: grey;
-    color: #fff;
+.login-nav {
+    background-color: #fff;
+    color: #124eae;
     border-radius: 10px
-   }
+}
+
+.login-nav:hover {
+    background-color: #124eae;
+    color: #fff;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+
+p {
+    color: #171718;
+}
+
+
+/* for next btn */
+
+.wrapper a {
+    display: block;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #4f84da;
+    border: 1px solid #4f84da;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    transition: all .35s;
+}
+
+.wrapper a span {
+    position: relative;
+    z-index: 2;
+}
+
+.wrapper a:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #4f84da;
+    transition: all .35s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.wrapper a:hover {
+    color: #fff;
+    border: none;
+}
+
+.wrapper a:hover:after {
+    width: 100%;
+}

@@ -1,0 +1,172 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Estimate</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/'">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'estimates'">Estimate</a></li>
+                        <li class="breadcrumb-item active">Edit Estimate</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="editEstimate()" [formGroup]="editEstimateForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Customer:</label>
+                                        <select class="form-select" formControlName="customerName">
+                                            <option>Select Customer</option>
+                                            <option>Brian Johnson</option>
+                                            <option>Marie Canales</option>
+                                            <option>Barbara Moore</option>
+                                            <option>Greg Lynch</option>
+                                            <option>Karlene Chaidez</option>
+                                        </select>
+                                        <div *ngIf="editEstimateForm.get('customerName')?.invalid && editEstimateForm.get('customerName')?.touched">
+                                            <small class="text-danger">*Name required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>From</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control" name="dp" formControlName="estimateFrom">
+                                            <div *ngIf="editEstimateForm.get('estimateFrom')?.invalid && editEstimateForm.get('estimateFrom')?.touched">
+                                                <small class="text-danger">*From Date required</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>To</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control" name="dp" formControlName="estimateTo">
+                                            <div *ngIf="editEstimateForm.get('estimateTo')?.invalid && editEstimateForm.get('estimateTo')?.touched">
+                                                <small class="text-danger">*To Date required</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group">
+                                        <label>Estimate Number</label>
+                                        <input type="text" class="form-control" formControlName="estimateNumber">
+                                        <div *ngIf="editEstimateForm.get('estimateNumber')?.invalid && editEstimateForm.get('estimateNumber')?.touched">
+                                            <small class="text-danger">*Estimate Number required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group">
+                                        <label>Ref Number</label>
+                                        <input type="text" class="form-control" formControlName="customerRef">
+                                        <input type="hidden" formControlName="status">
+                                        <input type="hidden" formControlName="amount">
+                                        <div *ngIf="editEstimateForm.get('customerRef')?.invalid && editEstimateForm.get('customerRef')?.touched">
+                                            <small class="text-danger">*Ref Number required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive mt-4">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Items</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Amount</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" disabled>
+                                            </td>
+                                            <td class="add-remove text-end">
+                                                <i class="fas fa-plus-circle me-1"></i > <i class="fas fa-minus-circle"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" disabled>
+                                            </td>
+                                            <td class="add-remove text-end">
+                                                <i class="fas fa-plus-circle me-1"></i > <i class="fas fa-minus-circle"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-responsive mt-4">
+                                <table class="table table-stripped table-center table-hover">
+                                    <thead></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-end">Sub Total</td>
+                                            <td class="text-end">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-end">Discount</td>
+                                            <td class="text-end">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-end">Total</td>
+                                            <td class="text-end">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-primary">Edit Estimate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->

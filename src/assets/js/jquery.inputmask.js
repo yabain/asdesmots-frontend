@@ -2312,7 +2312,7 @@
                 }
             },
             currency: {
-                prefix: "XAF ",
+                prefix: "$ ",
                 groupSeparator: ",",
                 alias: "numeric",
                 placeholder: "0",

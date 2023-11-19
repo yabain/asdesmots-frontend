@@ -1,0 +1,18 @@
+.an-tag {
+    box-shadow: inherit;
+    width: 100%;
+    border-radius: 0;
+	background-color: #fff;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    padding: 0;
+    color: #555;
+    vertical-align: middle;
+    max-width: 100%;
+    cursor: text;
+    border-radius: .25rem;
+    padding-bottom: 10px;
+}
+.an-tag .angular-tag-input__input {
+    padding: 0 !important;
+}

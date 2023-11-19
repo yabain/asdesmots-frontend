@@ -9,7 +9,6 @@ import { TranslationService } from '../../services/translation/language.service'
 })
 export class ProgressIndeterminateComponent implements OnInit {
   @Input() message: String = '';
-  @Input() type: boolean = false; // true for line loader, false for circle loader
   constructor(
     langService: TranslationService,
     translate: TranslateService,

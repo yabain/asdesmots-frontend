@@ -1,0 +1,116 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+	<div class="content container-fluid">
+	
+		<!-- Page Header -->
+		<div class="page-header">
+			<div class="row align-items-center">
+				<div class="col">
+					<h3 class="page-title">Expenses</h3>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a>Dashboard</a></li>
+						<li class="breadcrumb-item active">Expenses</li>
+					</ul>
+				</div>
+				<div class="col-auto">
+					<a [routerLink]="'/add-expenses'"  class="btn btn-primary me-1">
+						<i class="fas fa-plus"></i>
+					</a>
+					<a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
+						<i class="fas fa-filter"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- /Page Header -->
+   
+		<!-- Search Filter -->
+		<div id="filter_inputs" class="card filter-card">
+			<div class="card-body pb-0">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Customer:</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Category:</label>
+							<select class="form-select">
+								<option>Select Category</option>
+								<option>Advertising</option>
+								<option>Marketing</option>
+								<option>Software</option>
+								<option>Travel</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>From</label>
+							<div class="cal-icon">
+								<input type="text" class="form-control" name="dp">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>To</label>
+							<div class="cal-icon">
+								<input type="text" class="form-control" name="dp">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Search Filter -->
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card card-table"> 
+					<div class="card-body">
+						<div class="table-responsive">
+							<table datatable class="table table-center table-hover">
+								<thead class="thead-light">
+									<tr>
+										<th>Category</th>
+										<th>Customer</th>
+										<th>Expense Date</th>
+										<th>Notes</th>
+										<th>Amount</th>
+										<th>Status</th>
+										<th class="text-right">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let expese of expeses">
+										<td>{{expese.category}}</td>
+										<td>
+											<h2 class="table-avatar">
+												<a [routerLink]="'/profile'"><img class="avatar avatar-sm mr-2 avatar-img rounded-circle" src="{{expese.customer_img}}" alt="User Image">{{expese.customer_name}}</a>
+											</h2>
+										</td>
+										<td>{{expese.expense_date | date : 'dd MMM yyyy'}}</td>
+										<td>{{expese.notes}}</td>
+										<td>{{expese.amount}}</td>
+										<td>
+											<span *ngIf="expese.status === 'Approved'" class="badge badge-pill bg-success-light">Approved</span>
+											<span *ngIf="expese.status === 'Pending'" class="badge badge-pill bg-danger-light">Pending</span>
+										</td>
+										<td class="text-right">
+											<a [routerLink]="'/edit-expenses'" class="btn btn-sm btn-white text-success mr-2"><i class="far fa-edit me-1"></i> Edit</a> 
+											<a href="javascript:void(0);" class="btn btn-sm btn-white text-danger"><i class="far fa-trash-alt me-1"></i>Delete</a>
+										</td>
+									</tr>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Page Wrapper -->

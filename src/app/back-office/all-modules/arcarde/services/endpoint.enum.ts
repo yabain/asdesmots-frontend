@@ -8,4 +8,6 @@ export enum Endpoint {
   DELETE_ARCARDE = 'game-arcarde/',
   CHANGE_STATE = 'game-arcarde/state',
   UPDATE_ARCADE = '',
+  CHANGE_STATUS_ARCARDE = 'CHANGE_STATUS_ARCARDE',
+  TOGGLE_ACTIVATION_ARCADE = 'TOGGLE_ACTIVATION_ARCADE',
 }

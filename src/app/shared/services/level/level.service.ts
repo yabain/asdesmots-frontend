@@ -90,12 +90,18 @@ export class LevelService {
           console.log('Level deleted', response);
           this.getAllLevels();
           if (response.statusCode === 200) {
+            //transfert
+            this.transferLevelData(level, response.groupHeriterId);
             this.toastr.success(
               'Level has been deleted successfully',
               'Success',
               { timeOut: 5000 }
             );
           }
+
+          //updating
+          // this.updateLevel(level.groupHeriterId, response);
+
           resolve(response);
         },
         (error: any) => {
@@ -104,6 +110,14 @@ export class LevelService {
         }
       );
     });
+  }
+
+  transferLevelData(level, groupHeriterId) {
+    //recupération des données supprimée
+    const levelData = level.levelData;
+    levelData.groupHeriterId = groupHeriterId;
+
+    this.updateLevel(levelData);
   }
 
   // permet d'update les infos d'un user

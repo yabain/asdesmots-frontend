@@ -173,8 +173,19 @@
                             data-bs-toggle="modal"
                             data-bs-target="#update"
                           >
-                            <i class="fa fa-rotate" aria-hidden="true"></i>
-                            <span style="margin-left: 5px"> Delete </span>
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            <span style="margin-left: 5px"> Edit </span>
+                          </a>
+
+                          <a
+                            class="dropdown-item"
+                            style="cursor: pointer"
+                            activation
+                            data-bs-toggle="modal"
+                            data-bs-target="#activation"
+                          >
+                            <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                            <span style="margin-left: 5px"> Activate </span>
                           </a>
 
                           <div
@@ -406,6 +417,65 @@
     </div>
   </div>
 </div>
+
+<!-- activation/desactivation arcarde modal -->
+<div class="modal custom-modal fade" id="activation" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-body text-center mb-3">
+          {{ "actovation" | translate }} / {{ "desactivation" | translate }}
+        </h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3"></div>
+        <div class="modal-text text-center">
+          <p>
+            {{ "wanTo" | translate }}
+            {{ arcardeData.Active ? "deactiver" : "activer" }} the
+            <b>{{ arcardeData.name }}</b
+            >?
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer text-center">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="cancel-btn2"
+        >
+          {{ "close" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="toggleActivationArcarde(arcardeData._id)"
+        >
+          <span *ngIf="!waitingResponse"
+            ><i class="fa fa-power-off"></i> {{ "desactive" | translate }}</span
+          >
+          <span *ngIf="waitingResponse"
+            ><img
+              src="../../../../../assets/img/loader.gif"
+              alt=""
+              width="30px"
+          /></span>
+          {{ arcardeData.Active ? "Deactivate" : ("Activate" | translate) }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  -->
 
 <div class="modal custom-modal fade" id="unsuscribe_arcarde" role="dialog">
   <div class="modal-dialog modal-dialog-centered">

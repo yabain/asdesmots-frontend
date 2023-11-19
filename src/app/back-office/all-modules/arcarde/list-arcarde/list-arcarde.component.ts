@@ -17,6 +17,7 @@ export class ListArcardeComponent implements OnInit {
   arcardeData: Arcarde = new Arcarde();
   userID: string = '';
   gameState = State;
+  waitingResponse = false;
   constructor(
     public arcadeServ: ArcardeService,
     private translate: TranslateService,
@@ -112,4 +113,8 @@ export class ListArcardeComponent implements OnInit {
   //   updateArcadeDetails() {
   //     this.arcadeServ.updateArcade(id);
   //   }
+
+  toggleActivationArcarde(arcardeID: any) {
+    this.arcadeServ.toggleActivationArcarde();
+  }
 }

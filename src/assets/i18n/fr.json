@@ -136,6 +136,9 @@
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
     "connectPickup": "Connectez-vous et choisissez les numéros chance en un seul clic.",
+    "deleteAccountMsge": "Lorsque vous supprimez votre compte, vous perdez l'accès aux services AsDesMots et nous supprimons définitivement vos données personnelles.",
+    "surDeleteAccount": "Êtes-vous sûr de vouloir fermer votre compte ?",
+    "confirmDeleteAccount": "Je confirmer que je souhaite supprimer mon compte.",
     "user": {
         "user": "Utilisateur",
         "id": "Id",

@@ -35,9 +35,9 @@ export class ErrorsService {
 */
   errorsInformations(error: any, action?: string, errorType?: string) {
     console.log("Errors service: " + action, error.status);
-    if (action) {
-      this.toastr.error("Can not " + action, 'Sorry', { timeOut: 10000 });
-    }
+    // if (action) {
+    //   this.toastr.error("Can not " + action, 'Sorry', { timeOut: 10000 });
+    // }
     if (errorType && errorType === '0') {
       this.toastr.warning("This fonction is not available. Try later", "Sorry", { timeOut: 10000 });
     }
@@ -61,8 +61,8 @@ export class ErrorsService {
   error400(action) {
     if (action === 'login') { this.toastr.error("Email address is not verified. Check your email-box and confirm your email", 'Warning', { timeOut: 10000 }); }
     else if (action === 'logout') { }
-    else if (action === 'create account') { this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error', { timeOut: 10000 })}
-    else if (action === 'reset password') { this.toastr.error("expected field was not submitted or does not have the correct type", 'Error', { timeOut: 10000 });}
+    // else if (action === 'create account') { this.toastr.error("Expected field was not submitted or does not have the correct type.", 'Error', { timeOut: 10000 })}
+    // else if (action === 'reset password') { this.toastr.error("expected field was not submitted or does not have the correct type", 'Error', { timeOut: 10000 });}
     else { this.toastr.error("Unknow error, try again later please", 'Warning', { timeOut: 10000 });}
   }
 

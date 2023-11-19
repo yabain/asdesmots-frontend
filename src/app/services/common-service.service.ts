@@ -21,7 +21,7 @@ export class CommonServiceService {
   }
 
 
-  // Kanakku services
+  // AsDesMots services
   getCustomers() {
     return this.http.get(this.SERVER_URL + 'customers');
   }

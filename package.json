@@ -69,9 +69,5 @@
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.7.2"
-  },
-  "description": "<h1 align=\"center\">ASDESMOTS</h1>",
-  "main": "karma.conf.js",
-  "author": "",
-  "license": "ISC"
+  }
 }

@@ -62,7 +62,7 @@
     "send": "Send",
     "enterEmailForVerification": "Enter your email to receive an account reset link.",
     "mailVerification": "Email address verification",
-    "weWillSendRessetRequest": "For more security, we will send you an account reset email. Click on the reset button and then go to your mailbox to follow the password reset link.",
+    "weWillSendRessetRequest": "or more security, we will send you an account reset email. Click on the reset button and then go to your mailbox to follow the password reset link.",
     "wait": "Please wait",
     "emailSendedTo": "An email has been sent to",
     "ifNotRecMail": "If you did not receive it, you can try again.",
@@ -138,9 +138,6 @@
     "emailResetSended": "A verification email has been sent to your email",
     "seeSpam": "Vérifiez également dans vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
     "connectPickup": "Sign in and pick lucky number with just one click.",
-    "deleteAccountMsge": "When you delete your account, you lose access to AsDesMots account services, and we permanently delete your personal data.",
-    "surDeleteAccount": "Are you sure you want to close your account?",
-    "confirmDeleteAccount": "Confirm that I want to delete my account.",
     "user": {
         "user": "User",
         "id": "Id",

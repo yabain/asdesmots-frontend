@@ -192,11 +192,10 @@ export class AuthService {
             return 0;
           }
         }, (error: any) => {
-          this.toastr.error(error.message, 'Error', {timeOut: 5000});
           this.errorsService.errorsInformations(error, 'create account');
           if (error.status == 400) {
             this.registResult = false;
-            this.toastr.error(error, 'Error', {timeOut: 5000});
+            this.toastr.error("This email address is already used.", 'Error');
             reject(error);
           } else if (error.status == 401) {
             this.registResult = false;
@@ -204,7 +203,7 @@ export class AuthService {
             reject(error);
           } else if (error.status == 500) {
             this.registResult = false;
-            this.toastr.error('Internal server error: ' + error.message, 'Error');
+            this.toastr.error('Intternal server error: ' + error.message, 'Error');
             reject(error);
           }
           this.registResult = false;
@@ -254,7 +253,7 @@ export class AuthService {
             // return false;
           } else if (response.data.user.isDisabled === true) {
             this.logOut();
-            this.toastr.warning('Your account was desabled. Please contact administrator at support@asdesmots.com', null, { timeOut: 10000 });
+            this.toastr.warning('Your account was desabled. Please contact administrator.', null, { timeOut: 10000 });
             // return false;
           } else {
             // this.webStorage.Login(user);

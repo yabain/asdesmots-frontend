@@ -112,7 +112,7 @@ export class DashboardTwoComponent implements OnInit {
       },
       yaxis: {
         title: {
-          text: 'XAF (Franc CFA)'
+          text: '$ (thousands)'
         }
       },
       fill: {
@@ -121,7 +121,7 @@ export class DashboardTwoComponent implements OnInit {
       tooltip: {
         y: {
           formatter: function (val:any) {
-            return "XAF " + val + " Franc CFA"
+            return "$ " + val + " thousands"
           }
         }
       }

@@ -5,9 +5,7 @@ import {
   ViewEncapsulation,
   ViewChild
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import * as ApexCharts from 'apexcharts';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,20 +15,10 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 export class DashboardComponent implements OnInit {
   public chartOptions:any
 
-  constructor(
-    private translate: TranslateService,
-    private translationService: TranslationService
-  ) {
-  }
-
-  scrollToTop(): void {
-    window.scrollTo(0, 0);
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
-
     var options = {
       colors: ['#7638ff', '#ff737b', '#fda600', '#1ec1b0'],
       series: [55, 40, 20, 10],
@@ -58,27 +46,17 @@ export class DashboardComponent implements OnInit {
     chart.render();
 
     var options1 = {
-      colors: ['#dc3545', '#22cc62', '#fda600', '#7638ff'],
+      colors: ['#7638ff', '#fda600'],
       series: [
         {
-          name: "Online arcade",
-        type: "column",
-        data: [50, 100, 85, 67, 93, 32, 27, 41, 122, 212, 160, 65, 80]
-        },
-        {
-        name: "Competitions",
+        name: "Received",
         type: "column",
         data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160, 50]
         },
         {
-        name: "Benefits",
+        name: "Pending",
         type: "column",
-        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 100]
-        },
-        {
-        name: "Invoices",
-        type: "column",
-        data: [30, 20, 15, 60, 10, 200, 17, 63, 97, 30, 55, 6, 180]
+        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 80]
         }
       ],
       chart: {
@@ -105,11 +83,11 @@ export class DashboardComponent implements OnInit {
         colors: ['transparent']
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec', 'Jan'],
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
       },
       yaxis: {
         title: {
-          text: 'XAF (Franc CFA)'
+          text: '$ (thousands)'
         }
       },
       fill: {
@@ -118,7 +96,7 @@ export class DashboardComponent implements OnInit {
       tooltip: {
         y: {
           formatter: function (val:any) {
-            return "XAF " + val + " FCFA"
+            return "$ " + val + " thousands"
           }
         }
       }
@@ -170,7 +148,7 @@ export class DashboardComponent implements OnInit {
     //   },
     //   yaxis: {
     //     title: {
-    //       text: 'XAF (Franc CFA)'
+    //       text: '$ (thousands)'
     //     }
     //   },
     //   fill: {
@@ -179,7 +157,7 @@ export class DashboardComponent implements OnInit {
     //   tooltip: {
     //     y: {
     //       formatter: function (val) {
-    //         return "XAF " + val + " Franc CFA"
+    //         return "$ " + val + " thousands"
     //       }
     //     }
     //   }

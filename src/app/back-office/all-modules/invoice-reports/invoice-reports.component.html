@@ -1,0 +1,158 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Invoices</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/'">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Invoices</li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <a [routerLink]="'/invoices/add-invoice'" class="btn btn-primary me-1">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="btn btn-primary filter-btn" href="javascript:void(0);" id="filter_search">
+                        <i class="fas fa-filter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+   
+        <!-- Search Filter -->
+        <div id="filter_inputs" class="card filter-card">
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                        <label>Customer:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <select class="form-select">
+                                <option>Select Status</option>
+                                <option>Draft</option>
+                                <option>Sent</option>
+                                <option>Viewed</option>
+                                <option>Expired</option>
+                                <option>Accepted</option>
+                                <option>Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>From</label>
+                            <div class="cal-icon">
+                                <input type="text" class="form-control" name="dp">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>To</label>
+                            <div class="cal-icon">
+                                <input type="text" class="form-control" name="dp">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Invoice Number</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Search Filter -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table"> 
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-stripped table-hover datatable">
+                                <thead class="thead-light">
+                                    <tr>
+                                       <th>Invoice Number</th>
+                                       <th>Customer Name</th>
+                                       <th>Created Date</th>
+                                       <th>Amount</th>
+                                       <th>Due Date</th>
+                                       <th>Status</th>
+                                       <th>Paid On</th>
+                                       <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let invoice of invoices; let i = index">
+                                        <td><a [routerLink]="'/invoices/view-invoice'">{{invoice.number}}</a></td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a [routerLink]="'/profile'"><img class="avatar avatar-sm me-2 avatar-img rounded-circle" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt="User Image">{{invoice.customer_name}}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{invoice.created_date | date : 'dd MMM yyyy'}}</td>
+                                        <td>{{invoice.amount}}</td>
+                                        <td>{{invoice.due_date | date : 'dd MMM yyyy'}}</td>
+                                        <td>
+                                            <span *ngIf="invoice.status === 'Paid'" class="badge bg-success-light">{{invoice.status}}</span>
+                                            <span *ngIf="invoice.status === 'Sent'" class="badge bg-info-light">{{invoice.status}}</span>
+                                            <span *ngIf="invoice.status === 'Partially Paid'" class="badge bg-warning-light">{{invoice.status}}</span>
+                                            <span *ngIf="invoice.status === 'Overdue'" class="badge bg-danger-light">{{invoice.status}}</span>
+                                        </td>
+                                        <td>{{invoice.paid_on | date : 'dd MMM yyyy hh mm a'}}</td>
+                                        <td class="text-end">
+                                                        <div class="dropdown dropdown-action">
+                                                            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" routerLink="/edit-invoice/" [queryParams]="{id: invoice.id}"><i class="far fa-edit me-2"></i>Edit</a>
+                                                                <a class="dropdown-item" [routerLink]="'/invoices/view-invoice'"><i class="far fa-eye me-2"></i>View</a>
+                                                                <a (click)="tempId = invoice.id" data-bs-toggle="modal" data-bs-target="#delete_Invoice" class="dropdown-item" href="javascript:void(0);"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"><i class="far fa-check-circle me-2"></i>Mark as sent</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"><i class="far fa-paper-plane me-2"></i>Send Invoice</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"><i class="far fa-copy me-2"></i>Clone Invoice</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+<!-- Delete Tax Modal -->
+<div class="modal custom-modal fade" id="delete_Invoice" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-icon text-center mb-3">
+                    <i class="fas fa-trash-alt text-danger"></i>
+                </div>
+                <div class="modal-text text-center">
+                    <h2>Delete Invoice</h2>
+                    <p>Are you sure want to delete?</p>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="deleteInvoice()" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Delete Tax Modal -->

@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
-  url:  'https://asdesmots-api.yaba-in.com',
-  urlProd:  'https://asdesmots-api.yaba-in.com'
+  // url:  'http://api-dev.y-nkap.com',
+  // url:  'http://ynkap-dev-env.eba-qgbsbenk.eu-central-1.elasticbeanstalk.com',
+  url:  'http://api.y-nkap.com',
   // url:  'http://localhost:3000',
-  // urlProd:  'http://localhost:3000'
+  urlProd:  'http://api.y-nkap.com'
 };

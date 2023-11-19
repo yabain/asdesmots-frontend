@@ -1,0 +1,86 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Expenses</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/'">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/expenses/expenses-list'">Expenses</a>
+                        </li>
+                        <li class="breadcrumb-item active">Edit Expenses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="editExpenses()" [formGroup]="editExpensesForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Category:</label>
+                                        <select class="form-select" formControlName="expensesCategory">
+                                            <option>Select Category</option>
+                                            <option>Advertising</option>
+                                            <option>Marketing</option>
+                                            <option>Software</option>
+                                            <option>Travel</option>
+                                        </select>
+                                        <div *ngIf="editExpensesForm.get('expensesCategory')?.invalid && editExpensesForm.get('expensesCategory')?.touched">
+                                            <small class="text-danger">*Category required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Note:</label>
+                                        <textarea rows="5" cols="5" class="form-control" formControlName="expensesNote"></textarea>
+                                        <div *ngIf="editExpensesForm.get('expensesNote')?.invalid && editExpensesForm.get('expensesNote')?.touched">
+                                            <small class="text-danger">*Note required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date:</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control" name="dp" formControlName="expensesDate">
+                                            <div *ngIf="editExpensesForm.get('expensesDate')?.invalid && editExpensesForm.get('expensesDate')?.touched">
+                                                <small class="text-danger">*Date required</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Customer:</label>
+                                        <input type="text" class="form-control" formControlName="expensesCustomer">
+                                        <div *ngIf="editExpensesForm.get('expensesCustomer')?.invalid && editExpensesForm.get('expensesCustomer')?.touched">
+                                            <small class="text-danger">*Customer required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Amount:</label>
+                                        <input type="text" class="form-control" formControlName="expensesAmount">
+                                        <div *ngIf="editExpensesForm.get('expensesAmount')?.invalid && editExpensesForm.get('expensesAmount')?.touched">
+                                            <small class="text-danger">*Amount required</small>
+                                        </div>
+                                    </div>
+                                    <div class="text-end mt-4">
+                                        <button type="submit" class="btn btn-primary">Edit Expenses</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->

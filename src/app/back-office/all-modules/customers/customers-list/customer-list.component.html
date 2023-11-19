@@ -5,20 +5,23 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">{{'user.user' | translate }}s</h3>
+          <h3 class="page-title">Customers</h3>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'dashboard' | translate }}</a></li>
-            <li class="breadcrumb-item active">{{'user.user' | translate }}s</li>
+            <li class="breadcrumb-item"><a [routerLink]="'/index'">Dashboard</a></li>
+            <li class="breadcrumb-item active">Customers</li>
           </ul>
         </div>
         <div class="col-auto">
-          <!-- <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
-            style="color: #035858 !important; background-color: #ffff !important;">
+          <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2">
             <i class="fas fa-plus"></i>
-          </a> -->
-          <a (click)="refreshList()" class="btn btn-primary me-2"
-            style="color: #035858 !important; background-color: #ffff !important;">
-            <i class="fas fa-refresh"></i>
+          </a>
+          <a
+            class="btn btn-primary filter-btn"
+            href="javascript:void(0);"
+            (click)="filter()"
+            id="filter_search"
+          >
+            <i class="fas fa-filter"></i>
           </a>
         </div>
       </div>
@@ -52,66 +55,70 @@
     </div>
     <!-- /Search Filter -->
 
-    <div class="row" *ngIf="waiting">
-      <div class="col-sm-12">
-        <app-progress-indeterminate></app-progress-indeterminate>
-      </div>
-    </div>
-
-    <div class="row" *ngIf="!waiting">
+    <div class="row">
       <div class="col-sm-12">
         <div class="card card-table">
           <div class="card-body">
             <div class="table-responsive">
-              <table datatable class="table table-stripped table-hover">
+              <table
+              datatable
+                class="table table-stripped table-hover"
+              >
                 <thead class="thead-light">
                   <tr>
-                    <th>{{'user.user' | translate }}s</th>
-                    <th>{{'user.email' | translate }}</th>
-                    <th>{{'user.country' | translate }}</th>
-                    <th>{{'user.location' | translate }}</th>
-                    <th>{{'user.phone' | translate }}</th>
-                    <!-- <th>{{'status' | translate }}</th> -->
-                    <th>Active</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Amount Due</th>
+                    <th>Registered On</th>
+                    <th>Status</th>
                     <th class="text-end">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let customer of customers; let i = index"
-                    (click)="userData = customer" data-bs-toggle="modal"
-                    data-bs-target="#details">
+                  <tr *ngFor="let customer of customers; let i = index">
                     <td>
                       <h2 class="table-avatar">
-                        <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                            src="assets/img/user-profile.png" alt="User Image" /></a>
-                        <a>{{ customer.firstName }} {{ customer.lastName }}<span>{{ customer.phone }}</span></a>
+                        <a
+                          [routerLink]="'/profile'"
+                          class="avatar avatar-sm me-2"
+                          ><img
+                            class="avatar-img rounded-circle"
+                            src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                            alt="User Image"
+                        /></a>
+                        <a [routerLink]="'/profile'"
+                          >{{ customer.name
+                          }}<span>{{ customer.phone }}</span></a
+                        >
                       </h2>
                     </td>
                     <td>{{ customer.email }}</td>
-                    <!-- <td>{{ customer.country }}</td> -->
-                    <td>{{ customer.location }}</td>
-                    <td>{{ customer.country }}</td>
-                    <!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
-                    <td>{{ customer.phoneNumber}}</td>
+                    <td>{{ customer.amount_due }}</td>
+                    <td>{{ customer.registered_on | date: "dd MMM yyyy" }}</td>
                     <td>
-                      <span [ngClass]="
-                          customer.isDisabled === false
+                      <span
+                        [ngClass]="
+                          customer.status === 'Active'
                             ? 'badge badge-pill bg-success-light'
                             : 'badge badge-pill bg-danger-light'
-                        ">{{ !customer.isDisabled }}</span>
+                        "
+                        >{{ customer.status }}</span
+                      >
                     </td>
                     <td class="text-end">
-                      <a (click)="tempId = customer.name" data-bs-toggle="modal" data-bs-target="#changeStatus"
-                        [ngClass]="
-                          customer.isDisabled === false
-                            ? 'bg-danger-light btn btn-sm btn-white'
-                            : 'bg-success-light btn btn-sm btn-white'
-                        " style="margin-right: 10px;">
-                        <i class="fa fa-power-off"></i></a>
-                      <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#edit"><i
-                          class="far fa-edit me-1"></i></a>
-                      <a (click)="tempId = customer.firstName" data-bs-toggle="modal" data-bs-target="#delete_customer"
-                        class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
+                      <a
+                        routerLink="/customers/edit-customer"
+                        [queryParams]="{ id: customer.id }"
+                        class="btn btn-sm btn-white text-success me-2"
+                        ><i class="far fa-edit me-1"></i> Edit</a
+                      >
+                      <a
+                        (click)="tempId = customer.id"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete_customer"
+                        class="btn btn-sm btn-white text-danger me-2"
+                        ><i class="far fa-trash-alt me-1"></i>Delete</a
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -123,7 +130,8 @@
     </div>
   </div>
 </div>
-
+<!-- /Page Wrapper -->
+<!-- Delete Tax Modal -->
 <div class="modal custom-modal fade" id="delete_customer" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -132,99 +140,24 @@
           <i class="fas fa-trash-alt text-danger"></i>
         </div>
         <div class="modal-text text-center">
-          <h2>{{'deleteUser' | translate }}</h2>
-          <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
+          <h2>Delete Customer</h2>
+          <p>Are you sure want to delete?</p>
         </div>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-          {{'close' | translate }}
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
         </button>
-        <button type="button" class="btn btn-danger" (click)="deleteUser(userData._id)">
-          <span *ngIf="!waitingResponse">{{'delete' | translate }}</span>
-          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteCustomer()"
+          data-bs-dismiss="modal"
+        >
+          Delete
         </button>
       </div>
     </div>
   </div>
 </div>
 <!-- /Delete Tax Modal -->
-
-<!-- Delete Tax Modal -->
-<div class="modal custom-modal fade" id="changeStatus" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-          <i class="fa fa-power-off text-secondary"></i>
-        </div>
-        <div class="modal-text text-center">
-          <h2>{{'changeStatus' | translate }} ?</h2>
-          <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
-          <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
-        </div>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn1">
-          {{'close' | translate }}
-        </button>
-        <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
-          (click)="changeStatus(userData._id, true)">
-          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
-          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-        </button>
-        <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
-          (click)="changeStatus(userData._id, false)">
-          <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
-          <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal custom-modal fade" id="details" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="card">
-          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="false"></app-user-details>
-
-          <div class="text-left">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              {{'close' | translate }}
-            </button>
-            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
-          </div>
-        </div>
-      </div>
-      <!-- <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          {{'cancel' | translate }}
-        </button>
-        <button type="button" class="btn btn-primary" (click)="deleteCustomer()" data-bs-dismiss="modal">
-          Delete
-        </button>
-      </div> -->
-    </div>
-  </div>
-</div>
-
-<div class="modal custom-modal fade" id="edit" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="card">
-          <app-user-details [userData]="userData" [isAdmin]="true" [isEditable]="true"></app-user-details>
-
-          <div class="text-left">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              {{'close' | translate }}
-            </button>
-            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

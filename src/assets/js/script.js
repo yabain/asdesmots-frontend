@@ -1,3 +1,8 @@
+/*
+Author       : Dreamguys
+Template Name: Kanakku - Bootstrap Admin Template
+Version      : 1.0
+*/
 
 (function($) {
     "use strict";

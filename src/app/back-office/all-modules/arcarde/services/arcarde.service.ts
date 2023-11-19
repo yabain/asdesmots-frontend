@@ -33,6 +33,8 @@ export class ArcardeService {
   newArcarde: Arcarde = new Arcarde();
   isCreationDone: boolean = false;
 
+  dateNow:Date = new Date();
+
   deleteDone : boolean = false;
   waitingResponseSuscrib : boolean = false;
 
@@ -202,7 +204,7 @@ export class ArcardeService {
         if (error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          this.toastr.error("Invalid Token", 'Error', { timeOut: 10000 });
         } else if (error.status == 404) {
           this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
         } else {
@@ -373,6 +375,26 @@ export class ArcardeService {
       });
     }
       
+  }
+
+  // fonction de test pour les champs de type Date
+  verificationAndCreateNewArcarde() {
+    const newStartDate = new Date(this.newArcarde.startDate);
+    if ( newStartDate < this.dateNow ){
+      return this.toastr.error("Start date must be greater than or equal to today", "Error", { timeOut: 5000 });
+    }
+    else if( this.newArcarde.startRegistrationDate < this.newArcarde.startDate || this.newArcarde.startRegistrationDate > this.newArcarde.endDate ){
+      return this.toastr.error("The recording start date must be greater than or equal to the start date", "Error", { timeOut: 5000 });
+    }
+    else if(this.newArcarde.endRegistrationDate < this.newArcarde.startRegistrationDate || this.newArcarde.endRegistrationDate > this.newArcarde.endDate ) {
+      return this.toastr.error("The recording start date must be greater than to the start date", "Error", { timeOut: 5000 });
+    }
+    else if(this.newArcarde.endDate < this.newArcarde.startDate || this.newArcarde.endDate < this.newArcarde.endRegistrationDate){
+      return this.toastr.error("the end date must be greater than all other dates", "Error", { timeOut: 5000 });
+    }
+    else {
+      this.createNewArcarde();
+    } 
   }
 }
 

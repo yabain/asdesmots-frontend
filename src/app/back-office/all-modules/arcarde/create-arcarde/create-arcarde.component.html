@@ -54,7 +54,7 @@
 
                         <div class="form-group">
                             <label for="maxPlayersNumber">Nombre max de joueurs </label>
-                            <input type="number" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                            <input type="number" min="0" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
                             [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
                             >
                         </div>

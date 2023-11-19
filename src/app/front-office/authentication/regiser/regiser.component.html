@@ -5,50 +5,76 @@
       <div class="loginbox" *ngIf="!mailSended">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo"
-              style="height: 10vw; width: 30vw !important;" />
-            <br>
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo" (click)="navigateToHome()"
+              style="height: 10vw; width: 20vw !important;" />
+            <!-- <br> -->
             <h1>{{ 'register' | translate }}</h1>
             <!-- <p class="account-subtitle">{{ 'needAccound' | translate }}.</p> -->
 
             <!-- Form -->
             <form [formGroup]="form" (ngSubmit)="submit()">
               <div *ngIf="etape === 1 ">
-                <p class="account-subtitle">{{ 'persinfo' | translate }}.</p>
+                <!-- <p class="account-subtitle">{{ 'persinfo' | translate }}.</p> --> <br>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.firstName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_firstName"
+                    [(ngModel)]="firstname"
+                    (ngModelChange)="verifyLengthFirstName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.firstName' | translate }}" id="field_firstName"
                     [ngClass]="{
-                      'is-invalid': f['field_firstName'].touched && f['field_firstName'].invalid
+                      'is-invalid': f['field_firstName'].touched && f['field_firstName'].invalid, 'invalid-input': isInputInvalid, 'valid-input': !isInputInvalid,
+                      'initial-input': isInputInitial
                     }" />
                   <div *ngIf="f['field_firstName'].touched && f['field_firstName'].invalid" class="invalid-feedback">
                     <div *ngIf="f['field_firstName'].errors && f['field_firstName'].errors['required']">
                       {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
+                  <p class="firstname-message" *ngIf="isFirstnameInvalid">Au moins 4 caractères</p>
                 </div>
 
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.lastName' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_lastName"
+                   [(ngModel)]="lastname"
+                   (ngModelChange)="verifyLengthLastName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_lastName"
                     [ngClass]="{
-                      'is-invalid': f['field_lastName'].touched && f['field_lastName'].invalid
+                      'is-invalid': f['field_lastName'].touched && f['field_lastName'].invalid,  'invalid-input': isInputInval, 'valid-input': !isInputInval,
+                      'initial-input': isInputInit
                     }" />
                   <div *ngIf="f['field_lastName'].touched && f['field_lastName'].invalid" class="invalid-feedback">
                     <div *ngIf="f['field_lastName'].errors && f['field_lastName'].errors['required']">
                       {{ 'lastNameRequired' | translate }}
                     </div>
                   </div>
+                  <p class="lastname-message" *ngIf="isLastnameInvalid">Au moins 4 caractères</p>
                 </div>
+
+                <div class="form-group">
+                  <label class="form-control-label">{{ 'user.gender' | translate }}</label>
+                  <select class="form-control" id="sexe" formControlName="field_Sexe" [ngClass]="{
+                    'is-invalid': f['field_Sexe'].touched && f['field_Sexe'].invalid
+                  }">
+                  <option value="">--{{ 'user.selectGender' | translate }}--</option>
+                    <option value="Mr"> {{ 'man' | translate }}</option>
+                    <option value="Ms"> {{ 'woman' | translate }}</option>
+                  </select>
+                  <!-- <div *ngIf="f['field_sexe'].touched && f['field_sexe'].invalid" class="invalid-feedback">
+                    <div *ngIf="f['field_sexe'].errors && f['field_sexe'].errors['required']">
+                      {{ 'sexen' | translate }}
+                    </div>
+                  </div> -->
+                  <div *ngIf="f['field_Sexe'].touched && f['field_Sexe'].invalid" class="invalid-feedback">
+                    <div *ngIf="f['field_Sexe'].errors && f['field_Sexe'].errors['required']">
+                      {{ 'lastNameRequired' | translate }}
+                    </div>
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label class="form-group-label">{{ 'user.dateofbirth' | translate }} :</label>
-                  <input class="form-control" type="date" name="birthdate" id="" formControlName="field_firstName">
-                </div>
-                <div class="form-group">
-                  <label class="form-control-label">Téléphone</label>
-                  <input class="form-control" type="text" placeholder="6xxxxxxxx" />
+                  <input formControlName="field_date" class="form-control" type="date" name="birthdate" id="field_date">
                 </div>
 
                 <div class="form-group">
@@ -83,18 +109,37 @@
                     </div>
                   </div>
                 </div>
-                <div style="display: flex; justify-content: flex-end;">
-                  <button (click)="suivant()" class="btn btn-lg btn-block btn-primary w-100" style="width: 15vh !important;  ">{{'suivant'| translate}}</button>
+                <div class="form-group">
+                  <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
+                  <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
+                    [(ngModel)]="phoneModel"
+                    [formControl]="phoneControl"
+                    (ngModelChange)="isPhoneModel()"
+                    (ngModelChange)="isPhoneModelUser()"
+
+                    [ngClass]="{ 'valid-phone': isPhoneValid(), 'invalid-phone': !isPhoneValid(), 'initial-border': !phoneControl.touched }"
+                   />
+                   <p class="phone-message" *ngIf="isPhoneModelInvalid">Au moins 6 chiffres</p>
+                   <p class="phone-message" *ngIf="isInvalidFormat">Format de téléphone invalide</p>
                 </div>
-                
+                <br>
+
+                <div class="wrapper" style="display: flex; justify-content: flex-end;">
+                  <a (click)="suivant()" style="
+                  font-size: 15px;
+                  padding-left: 10px;"><b><span>{{'next'| translate}} &raquo;</span></b></a>
+                </div><br><br>
+
               </div>
 
               <div *ngIf="etape === 2">
-                <p class="account-subtitle">{{ 'userinfo' | translate }}.</p>
+                <!-- <p class="account-subtitle">{{ 'userinfo' | translate }}.</p> --> <br>
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.emailAdress' | translate }} :</label>
+                  <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_email"
-                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email" [ngClass]="{
+                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
+                    [formControl]="emailControl"
+                    [ngClass]="{
                       'is-invalid': f['field_email'].touched && f['field_email'].invalid
                     }" />
                   <div class="invalid-feedback" *ngIf="CustomControler?.status === 'field_email'">
@@ -108,6 +153,9 @@
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
+                  <span class="email-message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
+                    {{ isEmailValid() ? 'Email valide' : 'Email invalide' }}
+                  </span>
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }} :</label>
@@ -115,6 +163,8 @@
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
                       [(ngModel)]="input1" formControlName="field_password"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
+                      (input)="checkPassword()"
+                      (input)="verifierCritereMotDePasse()"
                       [ngClass]="{
                         'is-invalid':
                           f['field_password'].touched && f['field_password'].invalid
@@ -123,6 +173,7 @@
                     <br>
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
                       [(ngModel)]="input2" formControlName="field_password"
+                      (input)="checkPassword()"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
                         'is-invalid':
@@ -142,16 +193,36 @@
                       {{ CustomControler.message }}
                     </div>
                   </div>
+                  <p class="password-message" *ngIf="showMessage" [ngClass]="{'valid-password': passwordsMatch, 'invalid-password': !passwordsMatch}">
+                    {{ message }}
+                  </p>
                   <div style="background-color: rgba(248, 180, 71, 0.575);
                   border-radius: 5px;
                   padding: 5px;
                   margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
-                    <ol>
-                      <li>{{ 'upTo8Char' | translate }}</li>
-                      <li>{{ 'upTo1Captal' | translate }}</li>
-                      <li>{{ 'upTo1Number' | translate }}</li>
-                      <li>{{ 'upTo1SpecialCahr' | translate }}</li>
-                    </ol>
+                  <ol>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereLongueur}" ></i>
+                      {{ 'upTo8Char' | translate }}
+                    </li>
+
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;"  [ngClass]="{'condition-true': critereMajuscule}"></i>
+                      {{ 'upTo1Captal' | translate }}
+                    </li>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereChiffre}" ></i>
+                      {{ 'upTo1Number' | translate }}
+                    </li>
+                    <li>
+                      <input type="checkbox" id="checkbox-inside">
+                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereCaractereSpecial}" ></i>
+                      {{ 'upTo1SpecialCahr' | translate }}
+                    </li>
+                  </ol>
                   </div>
                 </div>
                 <div class="form-group">
@@ -159,29 +230,37 @@
                     <div class="col-12">
                       <div class="custom-control custom-checkbox">
                         <input type="checkbox" formControlName="field_agree" class="custom-control-input" id="cb2" />
-                        <label class="custom-control-label ms-1" for="cb2">{{ 'agreeAll' | translate }} <a href="">{{
-                            'terms' | translate }}</a> {{ 'and' | translate }} <a href="">{{ 'policy' | translate }}</a>
+                        <label id="label" class="custom-checkbox" for="cb2">{{ 'agreeAll' | translate }} <a class="inside-line" href="">{{
+                            'terms' | translate }}</a> {{ 'and' | translate }} <a class="inside-line" href="">{{ 'policy' | translate }}</a>
                           {{ 'dataUsage' | translate }}</label>
                       </div>
                     </div>
                   </div>
                 </div>
-  
+                <div class="wrapper" style="display: flex;">
+                  <a (click)="precedent()" style="width: 16vh !important;
+                  font-size: 15px;
+                  padding-left: 10px;"><b><span>&laquo; {{'back'| translate}}</span></b></a>
+                </div><br><br>
+
                 <div class="form-group mb-0">
                   <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()"
-                    class="btn btn-lg btn-block btn-primary w-100" type="submit" style="background-color: rgb(34, 231, 166);">
+                    class="btn btn-lg btn-block btn-primary w-100" type="submit">
                     {{ 'register' | translate }}
                   </button>
                   <div *ngIf="waitingResponse">
                     <app-progress-indeterminate></app-progress-indeterminate>
                   </div>
                 </div>
-                  <br>
-                <button (click)="precedent()" class="btn btn-lg btn-block btn-primary w-100" style="width: 15vh !important;">{{'retour' | translate}}</button>
-                
-              </div>             
-            
-              
+                <br>
+                <!-- <button (click)="precedent()" class="btn btn-lg btn-block btn-primary w-100"
+                  style="width: 15vh !important; font-size: 15px;"><i class="fa fa-arrow-left"
+                    style="font-size: medium;"></i> {{'back' |
+                  translate}}</button> -->
+
+              </div>
+
+
             </form>
             <!-- /Form -->
 
@@ -197,7 +276,7 @@
             </div>
             <!-- /Social Login -->
             <div class="text-center dont-have">
-              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'">Connexion</a>
+              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">Connexion</a>
             </div>
           </div>
         </div>
@@ -231,7 +310,7 @@
             </header>
             <div class="w3-padding">
               <p>Cool huh? Ok, enough teasing around..</p>
-              <p>Go to our <a class="w3-btn" href="/w3css/default.asp">W3.CSS Tutorial</a> to learn more!</p>
+              <p>Go to our <a class="w3-btn" href="https://yaba-in.com">Yaba-In Tutorial</a> to learn more!</p>
             </div>
             <footer class="w3-container w3-theme-l1">
               <p>Modal footer</p>
@@ -241,27 +320,27 @@
 
         <div class="w3-row-padding w3-center w3-margin-top">
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
-              <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #fff;">1</div>
+            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
+              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
+              <div style="font-size:120px; color: #124eae;;">1</div>
               <p>{{ 'openYourMail1' | translate }} </p>
               <p>{{ 'openYourMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
-              <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #fff;">2</div>
+            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
+              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
+              <div style="font-size:120px; color: #124eae;;">2</div>
               <p>{{ 'openConfirmMail1' | translate }} </p>
               <p>{{ 'openConfirmMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; color: #fff;">
-              <h3 style="color: #fff">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #fff;">3</div>
+            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
+              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
+              <div style="font-size:120px; color: #124eae;;">3</div>
               <p>{{ 'clickConfirm1' | translate }} </p>
               <p>{{ 'clickConfirm2' | translate }}</p>
               <p>{{ 'clickConfirm3' | translate }}</p>
@@ -269,7 +348,7 @@
           </div>
         </div>
         <div class="w3-padding-32" style="color: #fff;"> {{ 'and' | translate }}
-          <a [routerLink]="'/login-form'">
+          <a [routerLink]="'/login'">
             <button class="w3-btn w3-xlarge login-nav" onclick="document.getElementById('id01').style.display='block'"
               style="font-weight:900; margin-left: 10px;"> {{ 'connexion' | translate }}</button>
           </a>
@@ -279,9 +358,9 @@
   </div>
 </div>
 <div *ngIf="en" (click)="setFrLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Retourner en haut" />Français</a>
+  <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Français" />Fr</a>
 </div>
 <div *ngIf="fr" (click)="setEnLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Retourner en haut" />English</a>
+  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Anglais" />En</a>
 </div>
 <!-- /Main Wrapper -->

@@ -9,6 +9,7 @@ import { SousCompetitionService } from '../../undercompetition/services/sous-com
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { Observable, tap, catchError, throwError } from 'rxjs';
+// import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,7 @@ export class ArcardeService {
 
   formControlCreateArcarde!: FormGroup;
   newArcarde: Arcarde = new Arcarde();
+  arcardeData: Arcarde = new Arcarde();
   isCreationDone: boolean = false;
 
   deleteDone: boolean = false;
@@ -506,5 +508,73 @@ export class ArcardeService {
         }
       });
     }
+  }
+  toggleActivationArcarde() {
+    this.arcardeData.Active = !this.arcardeData.Active;
+    if (this.arcardeData.Active) {
+      this.activateArcarde(this.arcardeData._id);
+    } else {
+      this.deactivateArcarde(this.arcardeData._id);
+    }
+  }
+
+  // ...
+
+  deactivateArcarde(id: string) {
+    this.waitingResponse = true;
+    return this.api
+      .put(Endpoint.TOGGLE_ACTIVATION_ARCADE + id, this.authorization)
+      .pipe(
+        tap(() => {
+          this.waitingResponse = false;
+          this.toastr.success('Arcade deactivated successfully', 'Success');
+        }),
+        catchError((error: any) => {
+          this.waitingResponse = false;
+          if (error.error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.error.status == 401) {
+            this.toastr.error('Invalid Token', 'Error', { timeOut: 10000 });
+          } else if (error.error.status == 404) {
+            this.toastr.error('Arcade not found', 'Error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+          }
+          return throwError(error);
+        })
+      );
+  }
+
+  activateArcarde(id: string): Observable<any> {
+    this.waitingResponse = true;
+    return this.api
+      .put(Endpoint.TOGGLE_ACTIVATION_ARCADE + id, this.authorization)
+      .pipe(
+        tap(() => {
+          this.waitingResponse = false;
+          this.toastr.success('Arcade activated successfully', 'Success');
+        }),
+        catchError((error: any) => {
+          this.waitingResponse = false;
+          if (error.error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.error.status == 401) {
+            this.toastr.error('Invalid Token', 'Error', { timeOut: 10000 });
+          } else if (error.error.status == 404) {
+            this.toastr.error('Arcade not found', 'Error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.error.message, 'Error', { timeOut: 7000 });
+          }
+          return throwError(error);
+        })
+      );
   }
 }

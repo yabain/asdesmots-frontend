@@ -6,107 +6,115 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
 import { Router } from '@angular/router';
 import { State } from 'src/app/shared/entities/state.enum';
+import { id } from 'src/assets/all-modules-data/id';
 
 @Component({
   selector: 'app-list-arcarde',
   templateUrl: './list-arcarde.component.html',
-  styleUrls: ['./list-arcarde.component.css']
+  styleUrls: ['./list-arcarde.component.css'],
 })
 export class ListArcardeComponent implements OnInit {
-  arcardeData : Arcarde = new Arcarde();
-  userID: string ='';
+  arcardeData: Arcarde = new Arcarde();
+  userID: string = '';
   gameState = State;
-  constructor(public arcadeServ: ArcardeService, 
-              private translate: TranslateService,
-              public userServ:  UserService,
-              private router: Router,
-              private translationService: TranslationService,  
-              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde();
-                  this.translate.use(this.translationService.getLanguage());
-            }
+  waitingResponse = false;
+  constructor(
+    public arcadeServ: ArcardeService,
+    private translate: TranslateService,
+    public userServ: UserService,
+    private router: Router,
+    private translationService: TranslationService
+  ) {
+    this.arcadeServ.initFormControl();
+    this.arcadeServ.initFormCreationArcarde();
+    this.translate.use(this.translationService.getLanguage());
+  }
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
-   // this.loadAllArcarde();
-    setTimeout(()=>{
-        this.loadAllUser();
+    // this.loadAllArcarde();
+    setTimeout(() => {
+      this.loadAllUser();
     }, 2500);
-
   }
 
-  
-
-  loadArcardeCurrentUser(){
-      if(this.arcadeServ.listArcardeUser.length == 0){
-            this.arcadeServ.loadArcade();//user arcarde
-      }
-  }
-
-  loadAllArcarde(){
-      if(this.arcadeServ.listAllArcarde.length == 0){
-          this.arcadeServ.loadAllArcarde();
-      }
-  }
-
-  async loadAllUser(){
-
-    if(this.userServ.listUsers.length == 0){
-        this.userServ.getAllUsers();
-        this.userID = JSON.parse(localStorage.getItem('user-data'))._id;
+  loadArcardeCurrentUser() {
+    if (this.arcadeServ.listArcardeUser.length == 0) {
+      this.arcadeServ.loadArcade(); //user arcarde
     }
-
   }
 
-
-  startArcarde(arcardeID: any){
-      
-      this.arcadeServ.changeState(
-                                    { gameArcardeID: arcardeID,
-                                      state: State.RUNNING
-                                    } 
-                                 )
-  }
-
-  doSuscription(){
-      this.arcadeServ.addUserToAccarde();
-  }
-
-  doUnsuscription(){
-     this.arcadeServ.UnsuscribeUserToAcarde({ userID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData._id});
-   }
-
-   createArcarde(){
-    if(this.arcadeServ.formControlCreateArcarde.valid){
-      this.arcadeServ.createNewArcarde()
-
+  loadAllArcarde() {
+    if (this.arcadeServ.listAllArcarde.length == 0) {
+      this.arcadeServ.loadAllArcarde();
     }
-   }
+  }
 
-   doDelete(){
-      this.arcadeServ.deleteArcarde(this.arcardeData._id);
-   }
+  async loadAllUser() {
+    if (this.userServ.listUsers.length == 0) {
+      this.userServ.getAllUsers();
+      this.userID = JSON.parse(localStorage.getItem('user-data'))._id;
+    }
+  }
 
-   resetFormCreation(){
-      this.arcadeServ.formControlCreateArcarde.reset();
-      this.arcadeServ.isCreationDone = false;
-   }
+  startArcarde(arcardeID: any) {
+    this.arcadeServ.changeState({
+      gameArcardeID: arcardeID,
+      state: State.RUNNING,
+    });
+  }
 
-   resetFormSuscribtion(){
-      this.arcadeServ.formControlSuscription.reset();
-      this.arcadeServ.suscriptionDone = false;
-   }
+  doSuscription() {
+    this.arcadeServ.addUserToAccarde();
+  }
 
-   refresh(){
-      this.arcadeServ.loadArcade();
-   }
+  doUnsuscription() {
+    this.arcadeServ.UnsuscribeUserToAcarde({
+      userID: this.userServ.getLocalStorageUser()._id,
+      gameID: this.arcardeData._id,
+    });
+  }
 
-   goToListUser(id: string){
-      this.arcadeServ.getListUsersOfArcardes(id);
-      this.router.navigateByUrl('/arcarde/list-user/'+id);
-   }
+  createArcarde() {
+    if (this.arcadeServ.formControlCreateArcarde.valid) {
+      this.arcadeServ.createNewArcarde();
+    }
+  }
 
-   goToAcradeSuscription(){
-      this.router.navigateByUrl('/arcarde/suscribe');
-   }
- 
+  doDelete() {
+    this.arcadeServ.deleteArcarde(this.arcardeData._id);
+  }
+
+  resetFormCreation() {
+    this.arcadeServ.formControlCreateArcarde.reset();
+    this.arcadeServ.isCreationDone = false;
+  }
+
+  resetFormSuscribtion() {
+    this.arcadeServ.formControlSuscription.reset();
+    this.arcadeServ.suscriptionDone = false;
+  }
+
+  refresh() {
+    this.arcadeServ.loadArcade();
+  }
+
+  goToListUser(id: string) {
+    this.arcadeServ.getListUsersOfArcardes(id);
+    this.router.navigateByUrl('/arcarde/list-user/' + id);
+  }
+
+  goToAcradeSuscription() {
+    this.router.navigateByUrl('/arcarde/suscribe');
+  }
+
+  //updade arcade
+
+  //   updateArcadeDetails() {
+  //     this.arcadeServ.updateArcade(id);
+  //   }
+
+  toggleActivationArcarde(arcardeID: any) {
+    this.arcadeServ.toggleActivationArcarde();
+  }
 }

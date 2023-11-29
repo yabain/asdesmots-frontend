@@ -11,7 +11,7 @@ export class TranslationService {
     private supportedLanguages = ['fr', 'en'];
 
     constructor(
-        translate: TranslateService,
+        private translate: TranslateService,
     ) {
 
 		translate.addLangs(this.supportedLanguages);
@@ -47,5 +47,9 @@ export class TranslationService {
 
     getAvailableLanguage() {
         return this.supportedLanguages;
+    }
+
+    transformMessageLanguage(message :string) {
+        return this.translate.instant(message);
     }
 }

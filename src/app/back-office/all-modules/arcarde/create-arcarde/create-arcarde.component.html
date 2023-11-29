@@ -7,7 +7,7 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'Dashboard' | translate }}</a></li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }}</a></li>
               <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a></li>
               <li class="breadcrumb-item active">{{ 'Creation' | translate }}</li>
             </ul>
@@ -84,7 +84,7 @@
                           </div>
         
                           <div class="form-group">
-                              <label for="endRegistrationDate"> {{'Registration end date' | translate }} </label>
+                              <label for="endRegistrationDate"> {{'RegistrationEndDate' | translate }} </label>
                               <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
                               [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
                               >
@@ -92,10 +92,10 @@
         
                           <button (click)="backClicked()" class="btn btn-primary me-2"
                           style="color: #035858 !important; background-color: #ffff !important;">
-                          <i class="fas fa-arrow-left"></i> {{ 'Back' | translate }}
+                          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
                           </button>
                           <button type="button" class="btn btn-success " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
-                            <span *ngIf="!arcadeServ.waitingResponse"> {{ 'Create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                            <span *ngIf="!arcadeServ.waitingResponse"> {{ 'create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
                             <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                           </button>
                         </div>

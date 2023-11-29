@@ -117,13 +117,13 @@ export class ArcardeService {
         this.waitingResponse = false;
           
         if (error.status == 500) {
-          this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), this.languageService.transformMessageLanguage("error"), { timeOut: 10000 });
         } else if (error.status == 401) {
           this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
         } else if (error.status == 404) {
-          this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), 'Error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), this.languageService.transformMessageLanguage("error"), { timeOut: 10000 });
         } else {
-          this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+          this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), this.languageService.transformMessageLanguage("error"), { timeOut: 7000 });
         }
       });
   }
@@ -326,13 +326,13 @@ export class ArcardeService {
         }, (error: any) => {
           
           if (error.error.status == 500) {
-            this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+            this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), this.languageService.transformMessageLanguage("error"), { timeOut: 10000 });
           } else if (error.error.status == 401) {
             this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
           } else if (error.error.status == 404) {
-            this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), 'Error', { timeOut: 10000 });
+            this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), this.languageService.transformMessageLanguage("error"), { timeOut: 10000 });
           } else {
-            this.toastr.error(this.languageService.transformMessageLanguage(error.error.message), 'Error', { timeOut: 7000 });
+            this.toastr.error(this.languageService.transformMessageLanguage(error.error.message), this.languageService.transformMessageLanguage("error"), { timeOut: 7000 });
           }
           this.waitingResponse = false;
         });
@@ -383,22 +383,22 @@ export class ArcardeService {
   verificationAndCreateNewArcarde() {
     const newStartDate = new Date(this.newArcarde.startDate);
     if ( newStartDate < this.dateNow ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("Start date must be greater than or equal to today"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("Start date must be greater than or equal to today"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else if( this.newArcarde.endDate < this.newArcarde.startDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("the end date must be greater than the start date"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("the end date must be greater than the start date"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else if( this.newArcarde.startRegistrationDate < this.newArcarde.startDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be greater than or equal to the start date"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be greater than or equal to the start date"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else if( this.newArcarde.startRegistrationDate > this.newArcarde.endDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be less than the end date"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be less than the end date"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else if(this.newArcarde.endRegistrationDate < this.newArcarde.startRegistrationDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be greater than the recording end date"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be greater than the recording end date"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else if( this.newArcarde.endRegistrationDate > this.newArcarde.endDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be less than the end date"), "Error", { timeOut: 5000 });
+      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be less than the end date"), this.languageService.transformMessageLanguage("error"), { timeOut: 5000 });
     }
     else {
       this.createNewArcarde();

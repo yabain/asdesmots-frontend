@@ -30,8 +30,7 @@ export class CreateArcardeComponent implements OnInit {
 
   createArcarde(){
     if(this.arcadeServ.formControlCreateArcarde.valid){
-      this.arcadeServ.createNewArcarde()
-
+      this.arcadeServ.verificationAndCreateNewArcarde();
     }
    }
 

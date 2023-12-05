@@ -7,24 +7,15 @@
  background-size: cover;
  background-color: #3063AD !important;
 }
-.custom-checkbox{
-  padding-top: 1px;
-}
-.text-end{
-  display: inline;
-  width: 172px;
-  margin-left: 20px;
+
+.forgot-link
+{
+background: linear-gradient(to top, #4f84da 0%, #4f84da 1px, transparent 1px) no-repeat;
+background-size: 0 100%;
+transition: background-size .3s;
 }
 
-.forgot-link::after{
-  content:"";
-  display: block;
-  width: 0%;
-  height: 1px;
-  background: #3063AD ;
-  transition: width 0.2s ease-in-out;
+.forgot-link:hover
+{
+background-size: 100% 100%;
 }
-.forgot-link:hover::after{
-  width: 100%;
-}
-

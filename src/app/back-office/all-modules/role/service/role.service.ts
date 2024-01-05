@@ -427,18 +427,20 @@ export class RoleService {
     });
   }
 
-  savePermissions(requestBody: { roleId: string; permissions: Permission[] }) {
-    this.waitingResponse = true;
+  addPermission(requestBody: { roleId: string; permissionId: string }) {
+    this.waitinPermissionResp = true;
+    this.permissionAdded = false;
+    console.log('request adding ', requestBody);
     this.api
       .post(EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation)
       .subscribe(
         (resp) => {
-          this.waitingResponse = false;
-          this.toastr.success('Permissions sauvegardées', 'SUCCES', {
-            timeOut: 7000,
-          });
+          this.getListRole();
+          this.toastr.success('Permission Added', 'SUCCESS', { timeOut: 7000 });
+          this.waitinPermissionResp = false;
+          this.permissionAdded = true;
         },
-        (error) => {
+        (error: any) => {
           if (error.status == 500) {
             this.toastr.error(
               'Internal Server Error. Try again later please.',
@@ -450,8 +452,7 @@ export class RoleService {
           } else {
             this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
-
-          this.waitingResponse = false;
+          this.waitinPermissionResp = false;
         }
       );
   }

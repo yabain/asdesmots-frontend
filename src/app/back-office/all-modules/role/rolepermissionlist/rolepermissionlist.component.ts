@@ -18,6 +18,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 })
 export class RolepermissionlistComponent implements OnInit {
   roleId: string = '';
+  permissionId: string = '';
 
   permissionData: Permission = new Permission();
   listPermission: Permission[] = [];
@@ -82,14 +83,10 @@ export class RolepermissionlistComponent implements OnInit {
     });
   }
 
-  savePermissions() {
-    const selectedpermissions = this.roleService.listPermission.filter(
-      (permission) => permission.isEnable == true
-    );
-
-    this.roleService.savePermissions({
+  doAddPermission() {
+    this.roleService.addPermission({
       roleId: this.roleId,
-      permissions: selectedpermissions,
+      permissionId: this.permissionId,
     });
   }
 }

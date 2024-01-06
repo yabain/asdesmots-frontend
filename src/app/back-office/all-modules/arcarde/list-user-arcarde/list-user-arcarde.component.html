@@ -1,136 +1,136 @@
 
 <!-- Page Wrapper -->
 <div class="page-wrapper">
-    <div class="content container-fluid">
-      <!-- Page Header -->
-      <div class="page-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h3 class="page-title"></h3>
-            <ul class="breadcrumb" style="cursor: pointer;">
-              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
-              <li class="breadcrumb-item active"> <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
-              <li class="breadcrumb-item active">Users</li>
+  <div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title"></h3>
+          <ul class="breadcrumb" style="cursor: pointer;">
+            <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
+            <li class="breadcrumb-item active"> <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
+            <li class="breadcrumb-item active">Users</li>
 
-            </ul>
-          </div>
-          <div class="col-auto">
-            <!-- <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;">
-              <i class="fas fa-plus"></i>
-            </a> -->
-            <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#suscribe_arcarde">
-              <i class="fa fa-user-plus" aria-hidden="true"></i>
-            </a>
-            <a class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="refresh this list "
-              style="color: #035858 !important; background-color: #ffff !important;">
-              <i class="fas fa-refresh"></i>
-            </a>
-            <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcarde">
-              <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-            </a>
-          </div>
+          </ul>
         </div>
-      </div>
-
-<div class="text-center" *ngIf="arcardeServ.waitingResponse" >
-    <img src="../../../../../assets/img/loader.gif" height="45px" alt="">
-</div>
-
-<div id="filter_inputs" class="card filter-card">
-  <div class="card-body pb-0">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Customer:</label>
-          <input type="text" class="form-control">
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Status:</label>
-          <select class="select">
-            <option>Select Status</option>
-            <option value="Draft">Draft</option>
-            <option value="Sent">Sent</option>
-            <option value="Viewed">Viewed</option>
-            <option value="Expired">Expired</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Estimate Number</label>
-          <input type="text" class="form-control">
+        <div class="col-auto">
+          <!-- <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
+            style="color: #035858 !important; background-color: #ffff !important;">
+            <i class="fas fa-plus"></i>
+          </a> -->
+          <a class="btn btn-primary me-2"
+            style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#suscribe_arcarde">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="refresh this list "
+            style="color: #035858 !important; background-color: #ffff !important;">
+            <i class="fas fa-refresh"></i>
+          </a>
+          <a class="btn btn-primary me-2"
+            style="color: #035858 !important; background-color: #ffff !important;" data-bs-toggle="modal" data-bs-target="#createArcarde">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
     </div>
+
+<div class="text-center" *ngIf="arcardeServ.waitingResponse" >
+  <img src="../../../../../assets/img/loader.gif" height="45px" alt="">
+</div>
+
+<div id="filter_inputs" class="card filter-card">
+<div class="card-body pb-0">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Customer:</label>
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Status:</label>
+        <select class="select">
+          <option>Select Status</option>
+          <option value="Draft">Draft</option>
+          <option value="Sent">Sent</option>
+          <option value="Viewed">Viewed</option>
+          <option value="Expired">Expired</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Estimate Number</label>
+        <input type="text" class="form-control">
+      </div>
+    </div>
   </div>
+</div>
 </div>
 <!-- /Search Filter -->
 
 <div class="row" *ngIf="!arcardeServ.waitingResponse">
-  <div class="col-sm-12">
-    <div class="card card-table"> 
-      <div class="card-header">
-        <h4 class="card-title">Arcarde Users</h4>
-        <p class="card-text">
-          list of users who have subscribed to this Arcarde.
-        </p>
-      </div>
-      <div class="card-body">
-        
-        <div class="table-responsive">
-          <table class="table table-stripped table-hover datatable">
-            <thead class="thead-light">
-              <tr>
-                <th>{{'user.user' | translate }}</th>
-                <th>{{'user.email' | translate }}</th>
-                <th>{{'user.phone' | translate }}</th>
-                <th class="text-center">Action</th>
+<div class="col-sm-12">
+  <div class="card card-table"> 
+    <div class="card-header">
+      <h4 class="card-title">Arcarde Users</h4>
+      <p class="card-text">
+        list of users who have subscribed to this Arcarde.
+      </p>
+    </div>
+    <div class="card-body">
+      
+      <div class="table-responsive">
+        <table class="table table-stripped table-hover datatable">
+          <thead class="thead-light">
+            <tr>
+              <th>{{'user.user' | translate }}</th>
+              <th>{{'user.email' | translate }}</th>
+              <th>{{'user.phone' | translate }}</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="arcardeServ.listUser.length != 0">
+              <tr *ngFor="let user of arcardeServ.listUser">
+                  <td>
+                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
+                      src="../../../../../assets/img/user-profile.png" alt="User Image" /></a>
+                  <a>{{ user.firstName }} {{ user.lastName }}</a>
+                  </td>
+
+                  <td>
+                      {{ user.email }}
+                  </td>
+
+                  <td> {{ user.phone }} </td>
+
+                  <td class="text-center">
+                      <button class="btn btn-danger">
+                          remove
+                      </button>
+                  </td>
               </tr>
-            </thead>
-            <tbody *ngIf="arcardeServ.listUser.length != 0">
-                <tr *ngFor="let user of arcardeServ.listUser">
-                    <td>
-                      <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="../../../../../assets/img/user-profile.png" alt="User Image" /></a>
-                    <a>{{ user.firstName }} {{ user.lastName }}</a>
-                    </td>
-
-                    <td>
-                        {{ user.email }}
-                    </td>
-
-                    <td> {{ user.phone }} </td>
-
-                    <td class="text-center">
-                        <button class="btn btn-danger">
-                            remove
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody *ngIf="arcardeServ.listUser.length == 0">
-              <tr>
-                <td></td>
-                <td class="text-center">
-                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                  <br>Aucun Utilisateur !
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-       
+          </tbody>
+          <tbody *ngIf="arcardeServ.listUser.length == 0">
+            <tr>
+              <td></td>
+              <td class="text-center">
+                <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                <br>Aucun Utilisateur !
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+     
     </div>
   </div>
+</div>
 </div>
 </div>
 </div>

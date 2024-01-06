@@ -319,7 +319,7 @@ export class ArcardeService {
       this.waitingResponse = true;
 
       this.api.delete(Endpoint.ADD_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
-            this.toastr.success('Unsuscription Done', 'Success', { timeOut: 10000 });
+            this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), 'Success', { timeOut: 10000 });
             this.unsuscriptionDone = true;
             this.waitingResponse = false;
             console.log('response', resp);

@@ -7,7 +7,7 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'dashboard' | translate}} </a></li>
               <li class="breadcrumb-item active">Arcarde</li>
             </ul>
           </div>
@@ -46,9 +46,9 @@
         <div class="col-sm-12">
           <div class="card card-table">
             <div class="card-header">
-              <h4 class="card-title">List Arcarde</h4>
+              <h4 class="card-title">{{ 'listArcade' | translate }}</h4>
               <p class="card-text">
-                Overview of all existing arcarde.  
+                {{ 'apercuArcarde' | translate }}.  
               </p>
             </div>
             <div class="card-body">
@@ -56,10 +56,10 @@
                 <table datatable class="table table-stripped table-hover">
                   <thead class="thead-light">
                     <tr>
-                      <th>{{'Competition Name' | translate }}s</th>
+                      <th>{{'competitionName' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
                       
-                      <th>{{'Online Game' | translate }}</th>
+                      <th>{{'online' | translate }}</th>
                       <th class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -92,19 +92,19 @@
                                   <a class="dropdown-item" 
                                   style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
                                    <i class="fa fa-users" aria-hidden="true"></i>
-                                   <span style="margin-left: 5px;"> List of subscribers</span> 
+                                   <span style="margin-left: 5px;"> {{ 'listsubscribers' | translate }}</span> 
                                  </a>
    
                                  <a class="dropdown-item" 
                                    style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#details">
                                    <i class="fa fa-eye"></i>
-                                    <span style="margin-left: 5px;"> Show more </span>
+                                    <span style="margin-left: 5px;"> {{ 'showmore' | translate }} </span>
                                  </a>
 
                                  <a class="dropdown-item" 
                                    style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete">
                                    <i class="fa fa-trash" aria-hidden="true" ></i>
-                                  <span style="margin-left: 5px;">  Delete  </span>
+                                  <span style="margin-left: 5px;">  {{'delete' | translate}}  </span>
                                  </a>
 
                                  <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">   
@@ -112,7 +112,7 @@
                                 
                                  <ng-template #process_running_gameStarted>
                                     <span style="color: greenyellow;" class="text-center">
-                                          Startding Arcarde...
+                                          {{'startding' | translate }} Arcarde...
                                     </span>
                                  </ng-template>
 
@@ -123,7 +123,7 @@
                                       style="cursor: pointer;" >
                                       
                                         <i class="fa fa-play" aria-hidden="true"></i>
-                                        <span style="margin-left: 5px;"> Start Arcarde </span>
+                                        <span style="margin-left: 5px;"> {{ 'start' | translate}} Arcarde </span>
                                     </a>
                                  </ng-template>
 
@@ -158,12 +158,12 @@
               <ul class="nav nav-tabs nav-tabs-bottom nav-justified" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-Date" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                       Dates
+                       Date
                     </a>
                   </li>
                   <li class="nav-item" role="presentation">
                     <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                      Max Players 
+                      {{'maxPlayers' | translate}} 
                     </a>
                   </li>
               </ul>
@@ -174,7 +174,7 @@
                        
                       <div class="row form-group">
                               <label for="startDate" class="col-sm-3 col-form-label input-label">
-                                  Start 
+                                  {{'start' | translate}} 
                               </label>
                               <div class="col-sm-9">
                                 <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate" id="startDate" disabled>
@@ -182,7 +182,7 @@
                         </div>
                           <div class="row form-group">
                             <label for="endDate" class="col-sm-3 col-form-label input-label">
-                              End
+                              {{ 'end' | translate }}
                             </label>
 
                             <div class="col-sm-9">
@@ -198,7 +198,7 @@
                             
                         <div class="row form-group" style="position: relative; top: 0px !important;">
                                 <label for="maxPlayersNumber" class="col-sm-3 col-form-label input-label">
-                                    Max Players Number
+                                    {{'maxPlayers' | translate}}
                                 </label>
                                 <div class="col-sm-8">
                                   <input type="text" class="form-control" [value]="arcardeData.maxPlayersNumber" id="maxPlayersNumber" name="maxPlayersNumber" disabled>
@@ -227,7 +227,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"> Supprimer Arcarde </h5>
+          <h5 class="modal-title"> {{ 'delete' | translate }} Arcarde </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

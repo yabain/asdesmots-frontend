@@ -8,7 +8,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [RegiserComponent],
@@ -24,8 +23,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
       }
-    }),
-    NgxIntlTelInputModule
+    })
   ]
 })
 export class RegisterModule { }

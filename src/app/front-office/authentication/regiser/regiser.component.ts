@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LocationService } from 'src/app/shared/services/location/location.service';
 import { Router } from '@angular/router';
-import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-regiser',
@@ -68,10 +67,10 @@ export class RegiserComponent implements OnInit {
   public CustomControler: any;
 
 
-  emailControl: FormControl = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-  ]));
+  // emailControl: FormControl = new FormControl('', Validators.compose([
+  //   Validators.required,
+  //   Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+  // ]));
 
   phoneControl: FormControl = new FormControl('', Validators.compose([
     Validators.required,
@@ -79,10 +78,6 @@ export class RegiserComponent implements OnInit {
     Validators.pattern(/^\d+$/)
   ]));
 
-  SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
-  selectedCity: string = '';
 
   get f() {
     return this.form.controls;

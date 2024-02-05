@@ -256,8 +256,7 @@ async clientChangeState(idCompet: string, statut: string){
           this.api.get(EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS+idCompetition, this.authorization).subscribe((resp)=>{
             this.waitingCriteriasResp = false;
             resole(resp.data);
-        }, (error: any)=> {
-
+        },(error: any)=> {
           reject([]);
           if (error.status == 500) {
             this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
@@ -271,14 +270,17 @@ async clientChangeState(idCompet: string, statut: string){
         });
   }
 
-  addCriteria(gameId: string, criteriaId: string[]){
-    this.waitingCriteriasAdd = true;
-    const requestBody = { gameID: gameId, gammeWinnersID: criteriaId }
-
-    this.api.put(EndpointSousCompetion.ADD_CRITERIAS_GAME, requestBody, this.authorization).subscribe((resp)=>{
-        this.waitingCriteriasAdd = false;
-        this.toastr.success('Criteria Add', 'SUCCESS', {timeOut: 7100});
-    }, (error: any)=>{
+  addCriteria(gameId: string, criteriaId: string[]): Promise<boolean>{
+    return new Promise<boolean>((resolve,reject) => {
+      this.waitingCriteriasAdd = true;
+      const requestBody = { gameID: gameId, gammeWinnersID: criteriaId }
+  
+      this.api.put(EndpointSousCompetion.ADD_CRITERIAS_GAME, requestBody, this.authorization).subscribe((resp)=>{
+          this.waitingCriteriasAdd = false;
+          this.toastr.success('Criteria Add', 'SUCCESS', {timeOut: 7100});
+          resolve(true);
+      
+    },(error: any)=>{
       if (error.status == 500) {
         this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
       } else if (error.status == 401) {
@@ -286,15 +288,18 @@ async clientChangeState(idCompet: string, statut: string){
       } else {
         this.toastr.error(error.message, 'Error', { timeOut: 7000 });
       }
-      this.waitingCriteriasAdd = false;
+      resolve(false);
     })
+    });
+
+ 
   }
 
-  removeWinningCriteria(gameId: string , gammeCriteriasId: string[]){
+  removeWinningCriteria(gameId: string , gameCriteriasId: string[]){
       this.waitingCriteriasResp = true;
-      const requestBody = { gameID: gameId, gammeWinnersID: gammeCriteriasId }
+      const requestBody = { gameID: gameId, gameWinnersID: gameCriteriasId }
       console.log('request', requestBody)
-      this.api.delete(EndpointSousCompetion.REMOVE_GAME_CRITERIAS, this.authorization, requestBody).subscribe((resp:any)=>{
+      this.api.delete(EndpointSousCompetion.REMOVE_GAME_CRITERIAS, this.authorization, requestBody).subscribe(()=>{
             this.waitingCriteriasResp = false;
             this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
       }, (error: any)=>{

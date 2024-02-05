@@ -33,6 +33,7 @@
               "./src/assets/css/bootstrap-datetimepicker.min.css",
               "node_modules/fullcalendar/main.min.css",
               "./src/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css",
+              "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               "./src/assets/css/style.css"
             ],
             "scripts": [

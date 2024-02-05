@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../entities/user';
 import { Subject } from 'rxjs';
+import { TranslationService } from '../translation/language.service';
+import { ErrorsService } from '../errors/errors.service';
 // import { AuthService } from 'src/app/shared/api/api.service';
 
 
@@ -27,6 +29,8 @@ export class UserService {
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
+    private errorsService: ErrorsService,
+    private languageService: TranslationService,
     // private authService: AuthService
   ) { }
 
@@ -98,7 +102,7 @@ getUserInformations() {
   * resetPassword is used to reset your password.
   */
   resetPassword() {
-    this.toastr.success('Email Sent');
+    this.toastr.success(this.languageService.transformMessageLanguage("emailSent"));
     this.router.navigate(['login']);
   }
 
@@ -295,7 +299,7 @@ getUserInformations() {
             if (response.statusCode === 201) {
               // this.registResult = true;
               // this.router.navigate(['login']);
-              this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success', { timeOut: 7000 });
+              this.toastr.success(this.languageService.transformMessageLanguage("winCreateAccount"), this.languageService.transformMessageLanguage("succes"), { timeOut: 7000 });
             }
             console.log("respose: ", response)
             resolve(response);

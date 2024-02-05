@@ -52,7 +52,7 @@ export class ListPartsComponent implements OnInit {
   doDelete(){
       this.gamePartSrv.deleteGamePart({competitionID: this.competitionID, gamePartID: this.partChooseData._id});
   }
-
+  
   getLevel(){
       if(this.level.levelList.length === 0){
           this.level.getAllLevels();

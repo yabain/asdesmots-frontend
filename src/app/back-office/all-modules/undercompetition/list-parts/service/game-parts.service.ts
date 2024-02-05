@@ -38,7 +38,7 @@ export class GamePartsService {
       gameLevel: {
         name: 'Start'
       }
-    }*/
+    } */
   ]
   waitingResponse: boolean = false;
   gamePartForm : FormGroup;
@@ -63,8 +63,8 @@ export class GamePartsService {
         description: ['', Validators.required],
         gameCompetitionID: ['', Validators.required],
         numberOfWord: ['', Validators.required],
-        startDate: [''],
-        endDate: ['']
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required]
     });
     
   }
@@ -119,9 +119,10 @@ export class GamePartsService {
   }
 
   getListGamePart(id: string){
-      this.waitingResponse = true;
-
-      this.api.get(EndpointGamePart.GET_LIST+id, this.authorization).subscribe((data: any)=>{
+    this.waitingResponse = true;
+    
+    this.api.get(EndpointGamePart.GET_LIST+id, this.authorization).subscribe((data: any)=>{
+        console.log(data);
           this.listGameParts = Array.from(data.data);
           this.waitingResponse = false;
       }, (error)=>{

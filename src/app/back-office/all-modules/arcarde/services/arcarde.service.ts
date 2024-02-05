@@ -201,7 +201,7 @@ export class ArcardeService {
           console.log('creation Response', response);
           this.waitingResponse = false;
           this.isCreationDone = true;
-          this.toastr.success('Arcarde Created', 'Success', { timeOut: 10000 });
+          this.toastr.success('Arcarde Created', this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
       }, (error: any)=>{
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
@@ -221,7 +221,7 @@ export class ArcardeService {
         
         console.log('game arcarde id :', data.gameArcardeID);
         this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe((response: any)=>{
-            this.toastr.success('Arcarde Started', 'Success', {timeOut: 10000});
+            this.toastr.success('Arcarde Started', this.languageService.transformMessageLanguage("succes"), {timeOut: 10000});
             this.clientChangeState(data.gameArcardeID, State.WAITING_PLAYER);
 
             this.waitingResponse = false;
@@ -260,7 +260,7 @@ export class ArcardeService {
       this.api.delete(Endpoint.DELETE_ARCARDE+id, this.authorization).subscribe((resp)=>{
             this.waitingResponse = false;
             this.deleteDone = true;
-            this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000});
+            this.toastr.success('Delete Done', this.languageService.transformMessageLanguage("succes"), { timeOut: 7000});
       }, (error)=>{
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
@@ -296,7 +296,7 @@ export class ArcardeService {
        //add user on a competion game
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
            
-            this.toastr.success('Suscription Done and Save', 'Success', {timeOut: 10000});
+            this.toastr.success('Suscription Done and Save', this.languageService.transformMessageLanguage("succes"), {timeOut: 10000});
             this.waitingResponseSuscrib = false;
             this.suscriptionDone = true;
         }, (error: any) => {
@@ -319,7 +319,7 @@ export class ArcardeService {
       this.waitingResponse = true;
 
       this.api.delete(Endpoint.ADD_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
-            this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), 'Success', { timeOut: 10000 });
+            this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
             this.unsuscriptionDone = true;
             this.waitingResponse = false;
             console.log('response', resp);

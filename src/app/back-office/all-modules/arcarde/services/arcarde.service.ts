@@ -319,7 +319,11 @@ export class ArcardeService {
       this.waitingResponse = true;
 
       this.api.delete(Endpoint.ADD_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
+<<<<<<< HEAD
             this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
+=======
+            this.toastr.success('Unsuscription Done', 'Success', { timeOut: 10000 });
+>>>>>>> parent of 3ee26b2 (traduction message erreur module arcarde)
             this.unsuscriptionDone = true;
             this.waitingResponse = false;
             console.log('response', resp);

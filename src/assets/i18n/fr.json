@@ -281,6 +281,7 @@
 
     },
     "words": {
+        "language": "Langue",
         "word": "Mot",
         "wordList": "List des mots",
         "level": "Niveau",
@@ -298,6 +299,8 @@
         "whichLevel": "Dans quel niveau voulez-vous transférer ses mots",
         "noWords": "Aucun mots à afficher",
         "inEnglish": "en englais",
-        "inFrench": "en français"
+        "inFrench": "en français",
+        "transferAndDelete": "transférer et supprimer"
     }
-}
+
+  }

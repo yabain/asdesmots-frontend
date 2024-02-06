@@ -328,6 +328,36 @@ export class RegiserComponent implements OnInit {
     }
   }
 
+  // checkPassword() {
+  //   // Vérification des caractéristiques du mot de passe
+  //   const hasMinLength = this.input1.length >= 8;
+  //   const hasUppercase = /[A-Z]/.test(this.input1);
+  //   const hasNumber = /[0-9]/.test(this.input1);
+  //   const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(this.input1);
+
+  //   if (this.input1 === '' && this.input2 === '') {
+  //     this.showMessage = false;
+  //   } else if (hasMinLength && hasUppercase && hasNumber && hasSpecialChar) {
+  //     if (this.input1 === this.input2) {
+  //       this.showMessage = true;
+  //       this.passwordsMatch = true;
+  //       this.message = 'Mot de passe valide.';
+  //     } else {
+  //       this.showMessage = true;
+  //       this.passwordsMatch = false;
+  //       this.message = 'Les mots de passe ne correspondent pas.';
+  //     }
+  //   } else {
+  //     this.showMessage = true;
+  //     this.passwordsMatch = false;
+  //     if (this.input1 === this.input2) {
+  //       this.message = 'Mot de passe non conforme aux critères.';
+  //     } else {
+  //       this.message = 'Les mots de passe ne correspondent pas ou ne respectent pas les critères.';
+  //     }
+  //   }
+  // }
+
   verifyLengthFirstName() {
     this.isFirstnameInvalid = this.firstname.length < this.minLength;
     this.isInputInvalid = this.isFirstnameInvalid;

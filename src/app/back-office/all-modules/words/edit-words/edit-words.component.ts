@@ -23,7 +23,7 @@ export class EditWordsComponent implements OnInit {
 
   ngOnInit(): void {
     this.scrollToTop();
-    
+
     this.id = parseInt(this.route.snapshot.queryParams["id"]);
     this.getCustomer();
     this.editCustomerForm = this.formBuilder.group({

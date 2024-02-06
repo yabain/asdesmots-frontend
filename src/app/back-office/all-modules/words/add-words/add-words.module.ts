@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [],
@@ -14,6 +15,8 @@ import { HttpClient } from '@angular/common/http';
     AddWordsRoutingModule,
     RouterModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    // TranslateModule,
     FormsModule,
     TranslateModule.forRoot({
       loader: {
@@ -24,4 +27,7 @@ import { HttpClient } from '@angular/common/http';
     })
   ]
 })
-export class AddWordsModule { }
+export class AddWordsModule { 
+
+}
+

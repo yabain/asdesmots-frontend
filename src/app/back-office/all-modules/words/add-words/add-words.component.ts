@@ -98,12 +98,8 @@ export class AddWordsComponent implements OnInit {
   }
 
   addWords() {
-    if (this.wordEnForm.invalid) {
-      this.toastr.error('The english form is invalid. please verify it and submit again', 'English form: Invalid', { timeOut: 10000 });
-      return;
-    }
-    if (this.wordFrForm.invalid) {
-      this.toastr.error('The french form is invalid. please verify it and submit again', 'French form: Invalid', { timeOut: 10000 });
+    if (this.wordEnForm.invalid && this.wordFrForm.invalid) {
+      this.toastr.error('The form is invalid', 'Infalid form', { timeOut: 10000 });
       return;
     }
 
@@ -114,11 +110,12 @@ export class AddWordsComponent implements OnInit {
           this.levelService.getAllLevels(true);
           this.addingWords = false;
           this.toastr.success('English word was added', 'Done', { timeOut: 10000 });
-          this.wordEnForm.reset(); 
+          this.wordEnForm.reset(); // reset form after submit
         setTimeout(() => {location.reload();}, 1000);
         })
         .catch((error) => {
           this.errorsService.errorsInformations(error, 'add english word');
+          // console.log('en form: ', this.wordEnForm.value);
           this.addingWords = false;
         });
     }
@@ -129,7 +126,7 @@ export class AddWordsComponent implements OnInit {
         .then(() => {
           this.addingWords = false;
           this.toastr.success('French word was added', 'Done', { timeOut: 10000 });
-          this.wordFrForm.reset(); // reset form after submit
+          this.wordFrForm.reset();
         })
         .catch((error) => {
           // console.log('fr form: ', this.wordFrForm.value);
@@ -148,7 +145,7 @@ export class AddWordsComponent implements OnInit {
       localStorage.removeItem(this.levelList[i]._id);
     }
   }
-  
+
   get f() {
     return this.wordEnForm.controls;
   }

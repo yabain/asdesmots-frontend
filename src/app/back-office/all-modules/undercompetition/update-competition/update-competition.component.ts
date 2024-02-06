@@ -18,11 +18,13 @@ export class UpdateCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   idCompetition: string = '';
   formUpdate: FormGroup;
+  parentID: string;
 
-  constructor(public sousCompetion: SousCompetitionService, 
+
+  constructor(public sousCompetion: SousCompetitionService,
               private translate: TranslateService,
               private translatiton: TranslationService,
-              private route: ActivatedRoute, 
+              private route: ActivatedRoute,
               public router: Router,
               public level: LevelService,
               private fb: FormBuilder,
@@ -38,12 +40,14 @@ export class UpdateCompetitionComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    // this.getID();
 
   }
 
   getID(){
       this.idCompetition = this.route.snapshot.params['id'];
       this.sousCompetitionSelctedData = this.sousCompetion.getData(this.idCompetition);
+      this.parentID = this.sousCompetitionSelctedData.parentCompetition._id;
       this.initUpdatingForm(this.sousCompetitionSelctedData);
     }
 

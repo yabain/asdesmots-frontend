@@ -8,7 +8,6 @@ import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
-import { TranslationService } from '../translation/language.service';
 
 
 @Injectable({
@@ -31,7 +30,6 @@ export class AuthService {
     private api: ApiService,
     private toastr: ToastrService,
     private webStorage: WebStorage,
-    private languageService: TranslationService,
     private errorsService: ErrorsService
   ) {
 
@@ -82,7 +80,7 @@ export class AuthService {
           if (response) {
             console.log('Success00: ', response);
             // this.router.navigate(['login']);
-            this.toastr.success('A password reset link has been sent to your email.', this.languageService.transformMessageLanguage("succes"));
+            this.toastr.success('A password reset link has been sent to your email.', 'Success');
             resolve(response);
             return 0;
           }
@@ -113,7 +111,7 @@ export class AuthService {
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode == 200) {
-              this.toastr.success('Your password has been updated successfully !', this.languageService.transformMessageLanguage("succes"));
+              this.toastr.success('Your password has been updated successfully !', 'Success');
               this.router.navigate(['/login']);
               resolve(response);
               return 0;
@@ -145,7 +143,7 @@ export class AuthService {
         .subscribe(result => {
           localStorage.clear();
           this.isLoggedIn = false;
-          this.toastr.success('Your session has been disconnected!', this.languageService.transformMessageLanguage("succes"), { timeOut: 5000 });
+          this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
           this.router.navigate(["/login"]);
           resolve(result);
         }, (error: any) => {
@@ -188,25 +186,25 @@ export class AuthService {
             if (response.statusCode === 201) {
               this.registResult = true;
               // this.router.navigate(['login']);
-              this.toastr.success(this.languageService.transformMessageLanguage("winCreateAccount"), this.languageService.transformMessageLanguage("succes"));
+              this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success');
             }
             resolve(response);
             return 0;
           }
         }, (error: any) => {
-          this.toastr.error(error.message, this.languageService.transformMessageLanguage("error"), {timeOut: 5000});
+          this.toastr.error(error.message, 'Error', {timeOut: 5000});
           this.errorsService.errorsInformations(error, 'create account');
           if (error.status == 400) {
             this.registResult = false;
-            this.toastr.error(error, this.languageService.transformMessageLanguage("error"), {timeOut: 5000});
+            this.toastr.error(error, 'Error', {timeOut: 5000});
             reject(error);
           } else if (error.status == 401) {
             this.registResult = false;
-            this.toastr.error("This email address is already used.", this.languageService.transformMessageLanguage("error"));
+            this.toastr.error("This email address is already used.", 'Error');
             reject(error);
           } else if (error.status == 500) {
             this.registResult = false;
-            this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage("error"));
+            this.toastr.error('Internal server error: ' + error.message, 'Error');
             reject(error);
           }
           this.registResult = false;
@@ -263,7 +261,7 @@ export class AuthService {
             this.api.setAccessToken(response.data.access_token);
             // console.log('User infos: ', response.data.user);
             this.router.navigate(['index']);
-            this.toastr.success(this.languageService.transformMessageLanguage("welcome"));
+            this.toastr.success('Welcome !!');
           }
           resolve(response);
         }, error => {
@@ -286,28 +284,28 @@ export class AuthService {
       return new Promise((resolve, reject) => {
         this.api.post('email/confirm', param, header)
           .subscribe(response => {
-            this.toastr.success('Your email has been verified.', this.languageService.transformMessageLanguage("succes"));
+            this.toastr.success('Your email has been verified.', 'Success');
             this.router.navigateByUrl('/login');
             resolve(response);
           }, error => {
             console.log('erreur: ', error)
 
             if (error.status == 401) {
-              this.toastr.error("Your verification email has expired.", this.languageService.transformMessageLanguage("error"));
+              this.toastr.error("Your verification email has expired.", 'Error');
             }
             else if (error.status == 404) {
               this.toastr.error("User not found.");
 
             }
             else if (error.status == 403) {
-              this.toastr.error("The email has been already confirme.", this.languageService.transformMessageLanguage("error"));
+              this.toastr.error("The email has been already confirme.", 'Error');
 
             }
             else if (error.status == 500) {
-              this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage("error"));
+              this.toastr.error("Internal Server Error.", 'Error');
 
             } else {
-              this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage("error"));
+              this.toastr.error(error, 'Error');
             }
             reject(error);
           });

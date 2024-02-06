@@ -201,7 +201,7 @@ export class ArcardeService {
           console.log('creation Response', response);
           this.waitingResponse = false;
           this.isCreationDone = true;
-          this.toastr.success('Arcarde Created', 'Success', { timeOut: 10000 });
+          this.toastr.success('Arcarde Created', this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
       }, (error: any)=>{
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
@@ -319,15 +319,7 @@ export class ArcardeService {
       this.waitingResponse = true;
 
       this.api.delete(Endpoint.ADD_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
-<<<<<<< HEAD
-<<<<<<< HEAD
             this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
-=======
-            this.toastr.success('Unsuscription Done', 'Success', { timeOut: 10000 });
->>>>>>> parent of 3ee26b2 (traduction message erreur module arcarde)
-=======
-            this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), 'Success', { timeOut: 10000 });
->>>>>>> parent of fef7f88 (affichage des parties du jeu et ajout d'une partie)
             this.unsuscriptionDone = true;
             this.waitingResponse = false;
             console.log('response', resp);

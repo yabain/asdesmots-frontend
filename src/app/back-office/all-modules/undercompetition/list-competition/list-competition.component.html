@@ -1,4 +1,4 @@
-<!-- Page Wrapper -->
+Page Wrapper
 <div class="page-wrapper">
   <div class="content container-fluid">
     <!-- Page Header -->
@@ -50,13 +50,13 @@
                     <th>{{'Competition Name' | translate }}</th>
                     <th>{{'Competition Parent Name' | translate }}</th>
                     <th>{{'Description' | translate }}</th>
-                  
+
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  
+
                     <tr *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion"
                          (click)="sousCompetitionSelctedData = sousCompetion" >
                         <td>
@@ -70,7 +70,7 @@
                         </td>
 
                         <td class="text-center">
-                
+
                           <div class="dropdown dropdown-action">
                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
@@ -82,14 +82,14 @@
                                  <span style="margin-left: 5px;">Show more</span>
                               </a>
                               <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
-                                
+
                                 <span style="margin-left: 5px;"> List of parts  </span>
                               </a>
                               <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
                                  <span style="margin-left: 5px;">List of Criterias</span>
                               </a>
 
-                              <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">   
+                              <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                               </div>
                               <ng-template #process_running_gameStarted>
                                 <span style="color: greenyellow;" class="text-center">
@@ -98,11 +98,11 @@
                              </ng-template>
 
                              <ng-template #process_running_down>
-                                <a class="dropdown-item" 
+                                <a class="dropdown-item"
                                   *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
-                                  (click)="startCompetition(sousCompetion._id)"  
+                                  (click)="startCompetition(sousCompetion._id)"
                                   style="cursor: pointer;" >
-                                  
+
                                     <i class="fa fa-play" aria-hidden="true"></i>
                                     <span style="margin-left: 5px;"> Start Competition </span>
                                 </a>
@@ -146,7 +146,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
           {{ 'close' | translate }}
         </button>
-       
+
       </div>
     </div>
   </div>
@@ -169,18 +169,18 @@
             <ul class="nav nav-tabs nav-tabs-bottom nav-justified" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                  Presentation 
+                  Presentation
                 </a>
               </li>
               <li class="nav-item" role="presentation">
                 <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                  Description 
+                  Description
                 </a>
               </li>
-              
+
               <li class="nav-item" role="presentation">
                   <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#listPartis">
-                   Parties 
+                   Parties
                   </a>
               </li>
             </ul>
@@ -264,7 +264,7 @@
                     </div>
                   </form>
               </div>
-              
+
               <div class="tab-pane fade" id="listPartis" role="tabpanel" aria-labelledby="contact-tab">
                   <form>
                     <div class="row form-group">
@@ -302,7 +302,7 @@
           </div>
         </div>
       </div>
-    
+
 
       <div class="modal-footer text-center">
           <button data-bs-dismiss="modal" class="btn btn-secondary">

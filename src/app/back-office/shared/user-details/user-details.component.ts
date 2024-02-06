@@ -150,19 +150,36 @@ export class UserDetailsComponent implements OnInit, OnChanges {
     this.waitingResponse = true;
     console.log("General datas: ", this.generalForm.value);
 
-    this
     this.userService.updateUser(this.userData._id, this.generalForm.value)
       .then((result) => {
         if(this.checkIsCurrent(this.userData._id) == true) {
-          this.userService.setUserInformations(result.data)
+          this.userService.setUserInformations(result.data);
         }
+        
         this.toastr.success('General informations saved!', 'Done', { timeOut: 10000 });
         this.submitted = false;
         this.waitingResponse = false;
         $('#close-user-details').click();
-        if(this.checkIsCurrent(this.userData._id) == true) {
-          this.userService.setUserInformations(result.data);
-        }
+
+        // if(this.checkIsCurrent(this.userData._id) == true) {
+        //   this.userService.setUserInformations(result.data);
+        // }
+
+
+        this.userService.getAllUsers()
+          .then((result) => {
+            // this.customers = JSON.parse(localStorage.getItem('users-list'));
+            // this.waiting = true;
+            //   setTimeout(() => {
+            //     this.waiting = false;
+            //   }, 3000);
+          })
+          .catch((error) => {
+            console.error('Erreur: ', error.message);
+            this.toastr.error(error.message, 'Error', { timeOut: 10000 });
+            // this.waiting = false;
+          });
+
       })
       .catch((error) => {
         this.waitingResponse = false;

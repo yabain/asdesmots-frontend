@@ -19,6 +19,7 @@ export class SousCompetitionService {
   listCompetionParent: any[] = [];
 
   newUnderCompetionParam : SousCompetion = new SousCompetion();
+  underCompetiton: SousCompetion = new SousCompetion();
   listCompetionLocation: string[] = [];
 
   form : FormGroup;//created
@@ -35,7 +36,7 @@ export class SousCompetitionService {
   constructor(private api: ApiService,
                private toastr: ToastrService,
                private arcardeService: ArcardeService,
-               private fb: FormBuilder 
+               private fb: FormBuilder
                ) { this.authorization = {  'Authorization': 'Bearer ' + this.api.getAccessToken() } }
 
   get f(){
@@ -61,7 +62,7 @@ export class SousCompetitionService {
         maxOfWinners: ['', Validators.required],
         lang: ['', Validators.required],
         parentCompetition : ['', Validators.required],
-       
+
     });
 
     this.formUpdate.valueChanges.subscribe((data: any)=>{
@@ -70,7 +71,7 @@ export class SousCompetitionService {
 
   }
 
- 
+
 
   initUpdatingValues(data: SousCompetion){
       /*this.formUpdate.controls['name'].setValue(data.name);
@@ -131,7 +132,7 @@ export class SousCompetitionService {
     this.initBooleanValues();
     this.form.valueChanges.subscribe((data: any)=>{
         Object.assign(this.newUnderCompetionParam, data);
-      
+
     });
 
 
@@ -145,7 +146,7 @@ export class SousCompetitionService {
   changeState(data: {gameArcardeID: string, gameCompetitionID: string, state: string }){
     this.waitingResponse = false;
     this.clientChangeState(data.gameArcardeID, State.RUNNING);
-    
+
     console.log('game competiton id :', data.gameCompetitionID);
     this.api.put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization).subscribe((response: any)=>{
         this.toastr.success('Competition Started', 'Success', {timeOut: 10000});
@@ -153,7 +154,7 @@ export class SousCompetitionService {
 
         this.waitingResponse = false;
 
-    }, (error: any)=>{ 
+    }, (error: any)=>{
       if (error.error.statusCode == 500) {
         this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
       } else if (error.error.statusCode == 401) {
@@ -180,7 +181,7 @@ async clientChangeState(idCompet: string, statut: string){
 }
 
   createCompetition(competionData: SousCompetion, dataArcarde: any){
-     
+
       this.waitingResponse = true;
       this.creationDone = false;
 
@@ -191,7 +192,7 @@ async clientChangeState(idCompet: string, statut: string){
           this.waitingResponse = false;
           this.creationDone = true;
       },(error: any) => {
-          
+
         if (error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -205,7 +206,7 @@ async clientChangeState(idCompet: string, statut: string){
       });
   }
 
- 
+
   update(idCompetition: string){
 
       this.waitingResponse = true;
@@ -215,7 +216,7 @@ async clientChangeState(idCompet: string, statut: string){
           this.waitingResponse = false;
           this.arcardeService.loadArcade();
       },(error: any) => {
-          
+
         if (error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -238,7 +239,7 @@ async clientChangeState(idCompet: string, statut: string){
           this.waitingCriteriasResp = false;
           this.listWinningCriterias = Array.from(resp.data);
       }, (error: any)=> {
-          
+
         if (error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -327,5 +328,11 @@ async clientChangeState(idCompet: string, statut: string){
           return this.listUnderCompetition[index];
       }
       return new SousCompetion();
+  }
+
+  getParentCompetitionID(idCompetition: string): string {
+    let parentID;
+    parentID = this.underCompetiton.parentCompetition._id;
+    return parentID;
   }
 }

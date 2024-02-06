@@ -14,11 +14,11 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let word of words; let i = index" (click)="wordData = word" data-bs-toggle="modal" data-bs-target="#details"> -->
+
             <tr>
-              <td style="text-align: center;">NAN</td>
-              <td style="text-align: center;">NAN</td>
-              <td style="text-align: center;">NAN</td>
+              <td style="text-align: center;">{{totalWords}}</td>
+              <td style="text-align: center;">{{totalEnWords}}</td>
+              <td style="text-align: center;">{{totalFrWords}}</td>
             </tr>
           </tbody>
         </table>
@@ -42,12 +42,6 @@
           </div>
           <div class="table-responsive" *ngIf="!waitingResponse">
             <table datatable class="table table-stripped table-hover">
-              <!-- <thead class="thead-light">
-                                <tr>
-                                    <th>{{'user.user' | translate }}s</th>
-                                    <th class="text-end">Actions</th>
-                                </tr>
-                            </thead> -->
               <tbody>
                 <tr *ngFor="let level of levelList; let i = index" [class.selected]="curentLevel === level._id">
                   <!-- <tr [routerLink]="'/words/words-list'"> -->
@@ -56,7 +50,7 @@
                   <td class="text-end">
                     <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#editLevel"
                       (click)="updateLevelForm(level)"><i class="far fa-edit me-1"></i></a>
-                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="levelData = level"
+                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="levelData = level" (click)="filterLevels()"
                       class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                   </td>
                 </tr>
@@ -70,7 +64,7 @@
 </div>
 
 <!-- Delete level -->
-<div class="modal custom-modal fade" id="deleteLevel" role="dialog">
+<!-- <div class="modal custom-modal fade" id="deleteLevel" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -99,25 +93,84 @@
               <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
                 <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
               </button>
-              <!-- <button *ngIf="userData.isDisabled==false" type="button" class="btn btn-danger"
-                (click)="changeStatus(userData._id, true)">
-                <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'desactive' | translate }}</span>
-                <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-              </button>
-              <button *ngIf="userData.isDisabled==true" type="button" class="btn btn-success"
-                (click)="changeStatus(userData._id, false)">
-                <span *ngIf="!waitingResponse"><i class="fa fa-power-off"></i> {{'active' | translate }}</span>
-                <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-              </button> -->
             </div>
           </form>
-          <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
-            <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  -->
+
+ <!-- modification fenêtre modale de suppression -->
+
+
+
+<!-- nouvelle fenêtre modale -->
+
+<div class="modal custom-modal fade" id="deleteLevel" role="dialog" *ngIf="modalVisible" [hidden]="!modalVisible">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </div>
+        <div class="modal-text text-center">
+          <h2>{{ 'delete' | translate }} <b>{{ levelData?.name }}</b> ?</h2>
+          <br>
+          <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm">
+            <!-- Formulaire pour le transfert des mots -->
+            <form (ngSubmit)="transferWords()" [formGroup]="transferWordsForm">
+              <!-- <p>{{'words.transferMessage' | translate}}</p> -->
+              <p>{{ 'words.whichLevel' | translate }}</p>
+              <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId">
+                <option value="">{{ 'select' | translate }}</option>
+                <option *ngFor="let level of filteredLevelList" [value]="level._id">
+                  {{ level.name }}
+                </option>
+
+              </select>
+              <br>
+              <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                  {{ 'cancel' | translate }}
+                </button>
+                <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
+                  [disabled]="!transferWordsForm.valid">
+                  {{ 'words.transferAndDelete' | translate }}
+                </button>
+                <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                  <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+                </button>
+              </div>
+            </form>
+          </ng-container>
+
+          <ng-template #noWordsForm>
+            <!-- Formulaire pour la suppression directe du niveau sans transfert de mots -->
+            <form (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
+              <!-- <p>{{'noWords.deleteMessage' | translate}}</p> -->
+              <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                  {{ 'cancel' | translate }}
+                </button>
+                <button type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
+                  [hidden]="!modalVisible">
+                  {{ 'delete' | translate }}
+                </button>
+                <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                  <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+                </button>
+              </div>
+            </form>
+          </ng-template>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <!-- Edit level -->
 <div class="modal custom-modal fade" id="editLevel" role="dialog">

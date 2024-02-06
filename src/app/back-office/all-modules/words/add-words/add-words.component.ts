@@ -145,7 +145,7 @@ export class AddWordsComponent implements OnInit {
       localStorage.removeItem(this.levelList[i]._id);
     }
   }
-  
+
   get f() {
     return this.wordEnForm.controls;
   }

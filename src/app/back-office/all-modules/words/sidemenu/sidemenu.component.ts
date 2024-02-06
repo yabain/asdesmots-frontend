@@ -14,6 +14,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Word } from 'src/app/shared/entities/word';
 
 @Component({
   selector: 'app-sidemenu',
@@ -21,11 +22,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sidemenu.component.css'],
 })
 export class SidemenuComponent implements OnInit {
+// wordFrForm: any;
+// addWords() {
+// throw new Error('Method not implemented.');
+// }
+
+  totalWords: number;
+  totalEnWords: number;
+  totalFrWords: number;
   waitingResponse = false;
   submitted = true;
   levels: any;
   levelList?: any = '';
   levelData?: any = '';
+  newLevelId: any;
+  levelOfList: any[] ;
   public levelControler: any
   waiting: boolean = false;
 
@@ -37,7 +48,15 @@ export class SidemenuComponent implements OnInit {
   curentLevel;
   levelForm: FormGroup;
   deleteLevelForm: FormGroup;
+  transferWordsForm: FormGroup;
   wordToSpeak: string = '';
+  modalVisible = true;
+  deletedLevel: any;
+  // selectedLevelId: string;
+  filteredLevelList: Level[];
+  selectedLevelId: string;
+
+
 
   constructor(
     private router: Router,
@@ -49,6 +68,7 @@ export class SidemenuComponent implements OnInit {
     private translationService: TranslationService,
     private levelService: LevelService,
     private formLog: FormBuilder,
+    // private word: Word
   ) {
 
     // router.events.subscribe((event: Event) => {
@@ -76,6 +96,9 @@ export class SidemenuComponent implements OnInit {
     // }
 
     this.getLevelList();
+    this.calculateWordSums();
+    // this.filterLevels();
+
   }
 
   ngOnInit() {
@@ -92,14 +115,90 @@ export class SidemenuComponent implements OnInit {
       ]
     });
 
-    this.deleteLevelForm = this.formLog.group({
+    this.transferWordsForm = this.formLog.group({
       'levelDataId': [''],
       'groupHeriterId': ['', Validators.compose([
         Validators.required,
         Validators.minLength(4)])
       ]
     });
+
+    this.deleteLevelForm = this.formLog.group({
+      'levelDataId': ['']
+    })
   }
+
+
+  calculateWordSums() {
+    this.totalWords = 0;
+    this.totalEnWords = 0;
+    this.totalFrWords = 0;
+
+    for (const level of this.levelList) {
+      if (level.words && level.words.length > 0) {
+        this.totalWords += level.words.length;
+
+        for (const word of level.words) {
+          console.log("list of word: " + level.words);
+          if (word.type === 'en') {
+            this.totalEnWords++;
+          } else if (word.type === 'fr') {
+            this.totalFrWords++;
+          }
+        }
+      }
+    }
+  }
+
+  // deleteLevelOfListOfTransfer(level: any) {
+  //   // Code pour supprimer le niveau de la liste
+  //   this.levelData = level;
+  //   this.deleteLevel = {...level}
+  //   const index = this.levelList.indexOf(level);
+  //   if (index !== -1) {
+  //     this.levelList.splice(index, 1);
+  //   }
+  // }
+
+  // restoreLevel() {
+  //   if (this.deletedLevel) {
+  //     const index = this.levelList.indexOf(this.deletedLevel);
+  //     if (index > -1) {
+  //       this.levelList.splice(index, 0, this.deletedLevel); // Réinsérer le niveau supprimé dans la liste à son emplacement d'origine
+  //       this.deletedLevel = null; // Réinitialiser la variable deletedLevel
+  //     }
+  //   }
+  // }
+
+  // deleteLevelOfListOfTransfer(level: any) {
+
+  //   this.levelData = level;
+  //   this.deletedLevel = { ...level }; // Crée une copie du niveau à supprimer
+
+  //   // Ajouter un écouteur d'événement de clic sur le document
+  //   document.addEventListener('click', this.handleClickOutsideDeleteButton);
+  // }
+
+  // handleClickOutsideDeleteButton = (event: MouseEvent) => {
+  //   const target = event.target as HTMLElement;
+
+  //   // Vérifier si l'élément cliqué n'est pas le bouton "Supprimer"
+  //   if (!target.classList.contains('btn-danger')) {
+  //     this.restoreLevel(); // Restaurer le niveau supprimé
+  //     document.removeEventListener('click', this.handleClickOutsideDeleteButton); // Supprimer l'écouteur d'événement
+  //   }
+  // };
+
+  // getFilteredLevels(): Level[] {
+  //   return this.levelList.filter(level => level._id !== this.selectedLevelId);
+  // }
+
+  filterLevels(): void {
+    console.log("fygugugu");
+    this.filteredLevelList = this.levelList.filter(level => level._id !== this.levelData._id);
+  }
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.levelForm) {
@@ -144,6 +243,8 @@ export class SidemenuComponent implements OnInit {
   }
 
   deleteLevel(){
+
+    this.newLevelId = this.deleteLevelForm.value.groupHeriterId;
     this.deleteLevelForm.value.levelDataId = this.levelData._id;
 
     console.log(this.deleteLevelForm.value)
@@ -166,6 +267,20 @@ export class SidemenuComponent implements OnInit {
       });
   }
 
+  // deleteLevel(): void {
+  //   console.log("bonjour");
+  //   this.deleteLevelForm.value.levelDataId = this.levelData._id;
+  //   console.log(this.deleteLevelForm.value.levelDataId);
+  //   this.levelService.deleteLevelById(this.deleteLevelForm.value.levelDataId);
+  //   this.modalVisible = false;
+  //   this.transferWordsForm.reset();
+  //   this.deleteLevelForm.reset();
+  // }
+
+  transferWords(): void {
+
+  }
+
   navigate(name: any) {
     this.name = name;
     this.commonService.nextmessage(name);
@@ -186,9 +301,11 @@ export class SidemenuComponent implements OnInit {
   }
 
   getLevelList() {
-    // console.log("la liste des level00: ", JSON.parse(localStorage.getItem('levels-list')));
+
+    console.log("roro");
     if (JSON.parse(localStorage.getItem('levels-list'))) {
       this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+      console.log("liste niveau " + this.levelList);
     }
     else {
       this.waitingResponse = true;

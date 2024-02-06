@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LocationService } from 'src/app/shared/services/location/location.service';
 import { Router } from '@angular/router';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-regiser',
@@ -78,6 +79,10 @@ export class RegiserComponent implements OnInit {
     Validators.pattern(/^\d+$/)
   ]));
 
+  SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+  selectedCity: string = '';
 
   get f() {
     return this.form.controls;
@@ -105,9 +110,9 @@ export class RegiserComponent implements OnInit {
       this.textDir = event.lang == 'fr' ? 'rtl' : 'ltr';
     });
 
-    this.emailControl.valueChanges.subscribe(() => {
-      this.emailControl.updateValueAndValidity();
-    });
+    // this.emailControl.valueChanges.subscribe(() => {
+    //   this.emailControl.updateValueAndValidity();
+    // });
 
     this.lang = this.translationService.initLanguage();
 
@@ -272,10 +277,10 @@ export class RegiserComponent implements OnInit {
   }
 
 
-  isEmailValid(): boolean {
-    const email: string = this.emailControl.value.toLowerCase();
-    return this.emailControl.valid && email.endsWith('@gmail.com');
-  }
+  // isEmailValid(): boolean {
+  //   const email: string = this.emailControl.value.toLowerCase();
+  //   return this.emailControl.valid && email.endsWith('@gmail.com');
+  // }
 
   isPhoneValid(): boolean {
     return this.phoneControl.valid && this.phoneControl.touched;
@@ -327,6 +332,36 @@ export class RegiserComponent implements OnInit {
       this.message = ' Mot de passe distinct et/ou pas conforme aux critéres.';
     }
   }
+
+  // checkPassword() {
+  //   // Vérification des caractéristiques du mot de passe
+  //   const hasMinLength = this.input1.length >= 8;
+  //   const hasUppercase = /[A-Z]/.test(this.input1);
+  //   const hasNumber = /[0-9]/.test(this.input1);
+  //   const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(this.input1);
+
+  //   if (this.input1 === '' && this.input2 === '') {
+  //     this.showMessage = false;
+  //   } else if (hasMinLength && hasUppercase && hasNumber && hasSpecialChar) {
+  //     if (this.input1 === this.input2) {
+  //       this.showMessage = true;
+  //       this.passwordsMatch = true;
+  //       this.message = 'Mot de passe valide.';
+  //     } else {
+  //       this.showMessage = true;
+  //       this.passwordsMatch = false;
+  //       this.message = 'Les mots de passe ne correspondent pas.';
+  //     }
+  //   } else {
+  //     this.showMessage = true;
+  //     this.passwordsMatch = false;
+  //     if (this.input1 === this.input2) {
+  //       this.message = 'Mot de passe non conforme aux critères.';
+  //     } else {
+  //       this.message = 'Les mots de passe ne correspondent pas ou ne respectent pas les critères.';
+  //     }
+  //   }
+  // }
 
   verifyLengthFirstName() {
     this.isFirstnameInvalid = this.firstname.length < this.minLength;

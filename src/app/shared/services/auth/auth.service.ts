@@ -192,20 +192,20 @@ export class AuthService {
             return 0;
           }
         }, (error: any) => {
-          this.toastr.error(error.message, 'Error', {timeOut: 5000});
-          this.errorsService.errorsInformations(error, 'create account');
+          // this.toastr.error(error.message, 'Error', {timeOut: 5000});
+          // this.errorsService.errorsInformations(error, 'create account');
           if (error.status == 400) {
             this.registResult = false;
-            this.toastr.error(error, 'Error', {timeOut: 5000});
-            reject(error);
-          } else if (error.status == 401) {
-            this.registResult = false;
-            this.toastr.error("This email address is already used.", 'Error');
-            reject(error);
-          } else if (error.status == 500) {
-            this.registResult = false;
-            this.toastr.error('Internal server error: ' + error.message, 'Error');
-            reject(error);
+            this.toastr.error("This email address is already used", 'Authentification Failed', {timeOut: 5000});
+          //   reject(error);
+          // } else if (error.status == 401) {
+          //   this.registResult = false;
+          //   this.toastr.error("This email address is already used.", 'Error');
+          //   reject(error);
+          // } else if (error.status == 500) {
+          //   this.registResult = false;
+          //   this.toastr.error('Internal server error: ' + error.message, 'Error');
+          //   reject(error);
           }
           this.registResult = false;
           reject(error);

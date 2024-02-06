@@ -12,7 +12,7 @@
               <li class="breadcrumb-item active">Creation</li>
             </ul>
           </div>
-      
+
 <div class="row" *ngIf="!sousCompetion.waitingResponse">
     <div class="card card-table">
         <div class="card-header text-center">
@@ -33,7 +33,7 @@
                       </div>
                     </div>
                   </form>
-                  
+
                 <form [formGroup]="sousCompetion.form">
                     <div class="row">
                         <div class="col">
@@ -43,14 +43,14 @@
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['name'].touched && sousCompetion.f['name'].invalid}"
                                 >
                             </div>
-                           
+
                             <div class="form-group">
                                 <label for="desc"> Description </label>
                                 <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['description'].touched && sousCompetion.f['description'].invalid}"
                                 >
                             </div>
-        
+
                             <div class="form-group">
                                 <label for="level" class="form-control-label"> Niveau </label>
                                 <select name="level" formControlName="gameLevel" id="level" class="form-control">
@@ -60,7 +60,7 @@
                                     </option>
                                 </select>
                              </div>
-            
+
                               <div class="form-check form-switch text-center">
                                   <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch" id="flexSwitchCheckChecked">
                                   <label class="form-check-label" for="flexSwitchCheckChecked">Partie Unique ?</label>
@@ -70,52 +70,52 @@
                                 <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" (click)="sousCompetion.f['canRegisterPlayer'].setValue(sousCompetion.form.get('canRegisterPlayer')?.value ? false:true);" role="switch" id="flexSwitchCheckChecked">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">can Register Player ?</label>
                               </div>
-        
+
                               <div class="form-group">
                                 <label for="localisation"> Localisation </label>
                                 <input type="text" name="localisation" class="form-control" formControlName="localisation" id="localisation"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['localisation'].touched && sousCompetion.f['localisation'].invalid}"
                                 >
                             </div>
-          
+
                             <div class="form-group">
                                 <label for="maxPlayerLife"> Nombre de vie max </label>
-                                <input type="number" name="maxPlayerLife" class="form-control" formControlName="maxPlayerLife" id="maxPlayerLife"
+                                <input type="number" name="maxPlayerLife"  min="0" class="form-control" formControlName="maxPlayerLife" id="maxPlayerLife"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['maxPlayerLife'].touched && sousCompetion.f['maxPlayerLife'].invalid}"
                                 >
-                            </div> 
+                            </div>
                         </div>
 
 
                         <div class="col">
                             <div class="form-group">
                                 <label for="maxTimeToPlay"> Temps de Decompte (s) </label>
-                                <input type="number" name="maxTimeToPlay" class="form-control" formControlName="maxTimeToPlay" id="maxTimeToPlay"
+                                <input type="number" min="0" name="maxTimeToPlay" class="form-control" formControlName="maxTimeToPlay" id="maxTimeToPlay"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['maxTimeToPlay'].touched && sousCompetion.f['maxTimeToPlay'].invalid}"
                                 >
                             </div>
-          
+
                             <div class="form-group">
                                 <label for="startDate"> Date de debut </label>
                                 <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['startDate'].touched && sousCompetion.f['startDate'].invalid}"
                                 >
                             </div>
-          
+
                             <div class="form-group">
                                 <label for="endDate"> Date de fin </label>
                                 <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['endDate'].touched && sousCompetion.f['endDate'].invalid}"
                                 >
                             </div>
-          
+
                             <div class="form-group">
                                 <label for="maxOfWinners">Nombre max de Gagnants </label>
-                                <input type="number" name="maxOfWinners" class="form-control" formControlName="maxOfWinners" id="maxOfWinners"
+                                <input type="number" min="0"   name="maxOfWinners" class="form-control" formControlName="maxOfWinners" id="maxOfWinners"
                                 [ngClass]="{ 'is-invalid': sousCompetion.f['maxOfWinners'].touched && sousCompetion.f['maxOfWinners'].invalid}"
                                 >
                             </div>
-        
+
                             <div class="form-group">
                                 <label for="lang">Lang </label>
                                 <select type="num" name="lang" class="form-control" formControlName="lang" id="lang"
@@ -126,7 +126,7 @@
                                     <option value="en">Anglais</option>
                                 </select>
                             </div>
-          
+
                             <div class="form-group">
                                 <label for="parentCompetition">Parent Competition*</label>
                                 <select type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition"
@@ -143,15 +143,15 @@
                             </button>
                             <button type="button"  style="margin-left: 10px;" class="btn btn-success" [disabled]="!sousCompetion.form.valid" *ngIf="!sousCompetion.creationDone"  (click)="doCreationCompetion()">
                               <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../assets/img/loader.gif" alt="" width="30px"> </span>
-                                  
+
                               <span *ngIf="!sousCompetion.waitingResponse" >Creer  <i class="fa fa-plus" aria-hidden="true"></i></span>
                             </button>
                         </div>
                     </div>
                 </form>
-                    
 
-                   
+
+
               </div>
             </div>
           </div>

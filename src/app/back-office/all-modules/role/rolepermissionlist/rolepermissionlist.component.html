@@ -1,91 +1,130 @@
 <p>
-    
-  <button (click)="backClicked()" class="btn btn-primary me-2"
-  style="color: #035858 !important; background-color: #ffff !important;">
-  <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
+  <button
+    (click)="backClicked()"
+    class="btn btn-primary me-2"
+    style="color: #035858 !important; background-color: #ffff !important"
+  >
+    <i class="fas fa-arrow-left"></i> {{ "back" | translate }}
   </button>
 </p>
-<div class="text-center" *ngIf="roleService.waitinPermissionResp ">
-  <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px">
+<div class="text-center" *ngIf="roleService.waitinPermissionResp">
+  <img src="../../../../../assets/img/loader.gif" alt="loader" width="30px" />
 </div>
-<div *ngIf="!roleService.waitinPermissionResp" >
-    <div class="card card-table">
-      <div class="card-header">
-        <h4 class="card-title">Permission List</h4>
-        <p class="card-text">
-          this table is the global overview of permission with permission already use on this current Role.
-        </p>
-      </div>
-        <div class="card-body">
-          <div class="table-responsive">
-                <table datatable class="table table-stripped table-hover">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Name</th>
-                            <th>Description </th>
-                            <th>Module</th>
-                            <th class="text-center" style="margin-left: 50%;"> Active </th>
-                          </tr>
-                    </thead>
-                    <tbody *ngIf="roleService.listPermission.length !== 0 " >
-                        <tr *ngFor="let permission of roleService.listPermission"
-                            (click)="permissionData = permission"     
-                        >
-                            <td> {{ permission.name }} </td>
-                            <td> {{ permission.description }} </td>
-                            <td> {{ permission.module }} </td>
-                            <td class="text-center">
-                              <div class="form-check text-center" style="margin-left: 50%;">
-                                <input class="form-check-input"  type="checkbox" [checked]="permission.isEnable"  value="" id="flexCheckDefault">
-                              
-                              </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="roleService.listPermission.length == 0 " >
-                      <tr>
-                          <td></td>
-                          <td class="text-center">
-                            <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
-                            <br>Aucune permission !
-                          </td>
-                          <td></td>
-                        </tr>
-                  </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-success" style="float: right;">
-                Sauvegarder  <span style="margin-left: 5px;"> <i class="fa fa-save" aria-hidden="true"></i> </span>
-            </button>
-        </div>
+<div *ngIf="!roleService.waitinPermissionResp">
+  <div class="card card-table">
+    <div class="card-header">
+      <h4 class="card-title">Permission List</h4>
+      <p class="card-text">
+        this table is the global overview of permission with permission already
+        use on this current Role.
+      </p>
     </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table datatable class="table table-stripped table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Module</th>
+              <th class="text-center" style="margin-left: 50%">Active</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="roleService.listPermission.length !== 0">
+            <tr
+              *ngFor="let permission of roleService.listPermission"
+              (click)="permissionData = permission"
+            >
+              <td>{{ permission.name }}</td>
+              <td>{{ permission.description }}</td>
+              <td>{{ permission.module }}</td>
+              <td class="text-center">
+                <div class="form-check text-center" style="margin-left: 50%">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="permission.isEnable"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="roleService.listPermission.length == 0">
+            <tr>
+              <td></td>
+              <td class="text-center">
+                <img
+                  src="../../../../../assets/img/no_result.gif"
+                  alt="No result"
+                  style="max-width: 150px"
+                />
+                <br />Aucune permission !
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button
+        class="btn btn-success"
+        style="float: right"
+        (click)="doAddPermission()"
+      >
+        Sauvegarder
+        <span style="margin-left: 5px">
+          <i class="fa fa-save" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-
-        <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
-            <i class="fa fa-user-times" aria-hidden="true"></i>
-          </div>
-          <div class="modal-text text-center">
-            <h2> Supprimer Permission </h2>
-            <p>{{'wanTo' | translate }} vous supprimer la Permission  << <b>{{ permissionData.name }}>> </b>sur ce Role ? </p>
-          </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+          <i class="fa fa-user-times" aria-hidden="true"></i>
         </div>
-
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            Close
-          </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doRemovePermission()" >
-            <span *ngIf="!roleService.waitingResponse">Retirer <i class="fa fa-trash" aria-hidden="true"></i> </span>
-            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-          </button>
+        <div class="modal-text text-center">
+          <h2>Supprimer Permission</h2>
+          <p>
+            {{ "wanTo" | translate }} vous supprimer la Permission <<
+            <b>{{ permissionData.name }}>> </b>sur ce Role ?
+          </p>
         </div>
+      </div>
+
+      <div class="modal-footer text-center">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="cancel-btn2"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          *ngIf="!roleService.deleteDone"
+          (click)="doRemovePermission()"
+        >
+          <span *ngIf="!roleService.waitingResponse"
+            >Retirer <i class="fa fa-trash" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="roleService.waitingResponse"
+            ><img
+              src="../../../../../assets/img/loader.gif"
+              alt=""
+              width="30px"
+          /></span>
+        </button>
       </div>
     </div>
   </div>
+</div>

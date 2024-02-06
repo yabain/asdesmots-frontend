@@ -10,38 +10,39 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-create-arcarde',
   templateUrl: './create-arcarde.component.html',
-  styleUrls: ['./create-arcarde.component.css']
+  styleUrls: ['./create-arcarde.component.css'],
 })
 export class CreateArcardeComponent implements OnInit {
-  arcardeData : Arcarde = new Arcarde();
-  constructor(public arcadeServ: ArcardeService, 
-              private translate: TranslateService,
-              public userServ:  UserService,
-              private router: Router,
-              private location: Location,
-              private translationService: TranslationService,  
-              ) { 
-                  this.translate.use(this.translationService.getLanguage());
-                  this.arcadeServ.initFormControl(); 
-                  this.arcadeServ.initFormCreationArcarde()}
-
-  ngOnInit(): void {
+  arcardeData: Arcarde = new Arcarde();
+  constructor(
+    public arcadeServ: ArcardeService,
+    private translate: TranslateService,
+    public userServ: UserService,
+    private router: Router,
+    private location: Location,
+    private translationService: TranslationService
+  ) {
+    this.translate.use(this.translationService.getLanguage());
+    this.arcadeServ.initFormControl();
+    this.arcadeServ.initFormCreationArcarde();
   }
 
-  createArcarde(){
-    if(this.arcadeServ.formControlCreateArcarde.valid){
+  ngOnInit(): void {}
+
+  createArcarde() {
+    if (this.arcadeServ.formControlCreateArcarde.valid) {
       this.arcadeServ.verificationAndCreateNewArcarde();
-    }
-   }
-
-    resetFormCreation(){
-      this.arcadeServ.formControlCreateArcarde.reset();
-      this.arcadeServ.isCreationDone = false;
-   }
-   
-   backClicked(){
-      this.resetFormCreation();
       this.location.back();
-   }
+    }
+  }
 
+  resetFormCreation() {
+    this.arcadeServ.formControlCreateArcarde.reset();
+    this.arcadeServ.isCreationDone = false;
+  }
+
+  backClicked() {
+    this.resetFormCreation();
+    this.location.back();
+  }
 }

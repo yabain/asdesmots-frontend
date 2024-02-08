@@ -27,8 +27,10 @@ export class ListUserArcardeComponent implements OnInit {
   initTranslation(){
       this.translate.use(this.translation.getLanguage());
   }
+
   getId(){
       this.idArcard = this.activedRouter.snapshot.params['id'];
+      console.log("id arcarde: " + this.idArcard);
       this.arcardeServ.getListUsersOfArcardes(this.idArcard);
   }
 

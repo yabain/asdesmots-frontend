@@ -39,7 +39,7 @@ export class ArcardeService {
   deleteDone : boolean = false;
   waitingResponseSuscrib : boolean = false;
 
-  constructor(private api: ApiService, 
+  constructor(private api: ApiService,
               private toastr: ToastrService,
               private fb: FormBuilder,
               private languageService: TranslationService
@@ -88,7 +88,7 @@ export class ArcardeService {
          startDate: ['', Validators.required],
          endDate: ['', Validators.required],
          startRegistrationDate: ['', Validators.required],
-         endRegistrationDate: ['', Validators.required] 
+         endRegistrationDate: ['', Validators.required]
       });
       this.initDefaultBooeleanValues();
       this.formControlCreateArcarde.valueChanges.subscribe((data: any)=>{
@@ -115,7 +115,7 @@ export class ArcardeService {
             this.buildListLocation(this.listArcardeUser);
       },(error: any) => {
         this.waitingResponse = false;
-          
+
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -134,8 +134,15 @@ export class ArcardeService {
         this.waitingResponse = true;
 
         this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
-              console.log(resp);
-              this.listUser = Array.from(resp.data[0]);
+              console.log("response of sever: "+resp);
+              if (resp && resp.data && resp.data.length > 0) {
+                console.log("add first objet user: " +resp.data[0]);
+                this.listUser = Array.from(resp.data[0]);
+                 console.log("lsit of users: " +this.listUser);
+              } else {
+                this.toastr.error(this.languageService.transformMessageLanguage("Pas de participants à cet arcarde."), 'Error', { timeOut: 10000 });
+              }
+              // console.log("lsit of users: " +this.listUser);
               this.waitingResponse = false;
         },(error)=>{
           if (error.status == 500) {
@@ -157,12 +164,12 @@ export class ArcardeService {
         this.listAllArcarde = Array.from(response.data);
         this.buildListUnderCompetion(this.listAllArcarde);
         this.waitingResponse = false;
-        
+
        // this.buildListLocation(this.listAllArcarde);
-        
+
     },(error: any) => {
       this.waitingResponse = false;
-        
+
       if (error.status == 500) {
         this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
       } else if (error.status == 401) {
@@ -181,7 +188,7 @@ export class ArcardeService {
         this.listLocationArcarde = Array.from(response.data);
     },(error: any) => {
       this.waitingResponse = false;
-        
+
       if (error.status == 500) {
         this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
       } else if (error.status == 401) {
@@ -214,11 +221,11 @@ export class ArcardeService {
         }
         this.waitingResponse = false;
       });
-  }  
+  }
 
     changeState(data: {gameArcardeID: string, state: any}){
         this.waitingResponse = false;
-        
+
         console.log('game arcarde id :', data.gameArcardeID);
         this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe((response: any)=>{
             this.toastr.success(this.languageService.transformMessageLanguage('Arcarde Started'), 'Success', {timeOut: 10000});
@@ -277,7 +284,7 @@ export class ArcardeService {
       this.api.get(Endpoint.GET_ACARDE_BY_ID+id, this.authorization).subscribe((resp)=>{
           console.log(resp);
       }, (error: any) => {
-          
+
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -295,12 +302,12 @@ export class ArcardeService {
        this.suscriptionDone = false;
        //add user on a competion game
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
-           
+
             this.toastr.success(this.languageService.transformMessageLanguage('Suscription Done and Save'), 'Success', {timeOut: 10000});
             this.waitingResponseSuscrib = false;
             this.suscriptionDone = true;
         }, (error: any) => {
-          
+
           if (error.error.status == 500) {
             this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
           } else if (error.error.status == 401) {
@@ -324,7 +331,7 @@ export class ArcardeService {
             this.waitingResponse = false;
             console.log('response', resp);
         }, (error: any) => {
-          
+
           if (error.error.status == 500) {
             this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
           } else if (error.error.status == 401) {
@@ -343,7 +350,7 @@ export class ArcardeService {
      listArcarde.forEach((arcarde)=>{
             this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames));
       });
-      
+
   }
 
   getCompetitonArcardeID(idCompet: string){
@@ -363,20 +370,20 @@ export class ArcardeService {
   async buildListLocation(listArcarde: Arcarde[]){
     this.listLocationArcarde = [];
      let i_arcarde = 0;
-     
+
     if(listArcarde.length > 0){
         listArcarde.forEach((arcade)=>{
           if(arcade.competitionGames.length > 0){
-              arcade.competitionGames.forEach((compet)=>{ 
+              arcade.competitionGames.forEach((compet)=>{
               if(compet.localisation.toString() !== '' || compet.localisation.toString().length != 0){
-                this.listLocationArcarde[i_arcarde] = compet.localisation; 
+                this.listLocationArcarde[i_arcarde] = compet.localisation;
               }
               i_arcarde++;
-            }); 
-          }  
+            });
+          }
       });
     }
-      
+
   }
 
   // fonction de test pour les champs de type Date

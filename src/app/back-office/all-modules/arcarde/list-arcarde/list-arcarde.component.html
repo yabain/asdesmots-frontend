@@ -24,31 +24,31 @@
             style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="Create new Arcarde" >
             <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
-            
+
             <a class="btn btn-primary me-2"
               style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="refresh the list" (click)="refresh()">
               <i class="fas fa-refresh"></i>
             </a>
-           
+
           </div>
         </div>
       </div>
-  
+
 
       <div class="row" *ngIf="arcadeServ.waitingResponse">
         <div class="col-sm-12">
           <app-progress-indeterminate></app-progress-indeterminate>
         </div>
       </div>
-      
-  
+
+
       <div class="row" *ngIf="!arcadeServ.waitingResponse">
         <div class="col-sm-12">
           <div class="card card-table">
             <div class="card-header">
               <h4 class="card-title">List Arcarde</h4>
               <p class="card-text">
-                Overview of all existing arcarde.  
+                Overview of all existing arcarde.
               </p>
             </div>
             <div class="card-body">
@@ -58,7 +58,7 @@
                     <tr>
                       <th>{{'Competition Name' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-                      
+
                       <th>{{'Online Game' | translate }}</th>
                       <th class="text-center">Action</th>
                     </tr>
@@ -79,37 +79,37 @@
                                 <span> {{ arcarde.description }} </span>
                           </td>
 
-                          
+
                           <td>
-                                <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' "> 
-                                    {{ arcarde.isOnlineGame }}  
+                                <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' ">
+                                    {{ arcarde.isOnlineGame }}
                                 </span>
                           </td>
                           <td class="text-center">
                               <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" 
+                                  <a class="dropdown-item"
                                   style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
                                    <i class="fa fa-users" aria-hidden="true"></i>
-                                   <span style="margin-left: 5px;"> List of subscribers</span> 
+                                   <span style="margin-left: 5px;"> List of subscribers</span>
                                  </a>
-   
-                                 <a class="dropdown-item" 
+
+                                 <a class="dropdown-item"
                                    style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#details">
                                    <i class="fa fa-eye"></i>
                                     <span style="margin-left: 5px;"> Show more </span>
                                  </a>
 
-                                 <a class="dropdown-item" 
+                                 <a class="dropdown-item"
                                    style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete">
                                    <i class="fa fa-trash" aria-hidden="true" ></i>
                                   <span style="margin-left: 5px;">  Delete  </span>
                                  </a>
 
-                                 <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">   
+                                 <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                                  </div>
-                                
+
                                  <ng-template #process_running_gameStarted>
                                     <span style="color: greenyellow;" class="text-center">
                                           Startding Arcarde...
@@ -117,11 +117,11 @@
                                  </ng-template>
 
                                  <ng-template #process_running_down>
-                                    <a class="dropdown-item" 
+                                    <a class="dropdown-item"
                                       *ngIf="(userID === arcarde.owner && arcarde.gameState !== gameState.WAITING_PLAYER)"
-                                      (click)="startArcarde(arcarde._id)"  
+                                      (click)="startArcarde(arcarde._id)"
                                       style="cursor: pointer;" >
-                                      
+
                                         <i class="fa fa-play" aria-hidden="true"></i>
                                         <span style="margin-left: 5px;"> Start Arcarde </span>
                                     </a>
@@ -163,7 +163,7 @@
                   </li>
                   <li class="nav-item" role="presentation">
                     <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                      Max Players 
+                      Max Players
                     </a>
                   </li>
               </ul>
@@ -171,10 +171,10 @@
               <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-Date" role="tabpanel" aria-labelledby="pills-home-tab">
                      <form>
-                       
+
                       <div class="row form-group">
                               <label for="startDate" class="col-sm-3 col-form-label input-label">
-                                  Start 
+                                  Start
                               </label>
                               <div class="col-sm-9">
                                 <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate" id="startDate" disabled>
@@ -195,7 +195,7 @@
 
                     <div class="tab-pane fade" id="pills-PlayersNumber" role="tabpanel" aria-labelledby="pills-profile-tab">
                       <form>
-                            
+
                         <div class="row form-group" style="position: relative; top: 0px !important;">
                                 <label for="maxPlayersNumber" class="col-sm-3 col-form-label input-label">
                                     Max Players Number
@@ -206,7 +206,7 @@
                             </div>
                       </form>
 
-                    </div>            
+                    </div>
                </div>
 
         <div class="modal-footer text-center">
@@ -220,7 +220,7 @@
 </div>
 
 
-  
+
 
   <!-- delete arcarde modal -->
   <div class="modal custom-modal fade" id="delete" role="dialog">
@@ -236,7 +236,7 @@
           <div class="modal-text text-center">
              <p> Fonctionnalité non pris en charge ! </p>
 
-           <!--<p>{{'wanTo' | translate }} vous supprimer l'arcarde :  << <b>{{ arcardeData.name }}</b> >> ? </p>--> 
+           <!--<p>{{'wanTo' | translate }} vous supprimer l'arcarde :  << <b>{{ arcardeData.name }}</b> >> ? </p>-->
           </div>
         </div>
 
@@ -302,12 +302,12 @@
               <form [formGroup]="arcadeServ.formControlSuscription">
                 <div class="form-group">
                   <label for="playerID">Utilisateur</label>
-                  <select class="form-control" formControlName="playerID" 
+                  <select class="form-control" formControlName="playerID"
                     id="playerID" [ngClass]="{
                       'is-invalid': arcadeServ.f['playerID'].touched && arcadeServ.f['playerID'].invalid
                     }">
                     <option value="">--choisir un utilisateur--</option>
-                    <option value="" *ngIf="userServ.listUsers.length == 0"> 
+                    <option value="" *ngIf="userServ.listUsers.length == 0">
                       <span class="text-center"><img src="../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                     </option>
                     <option *ngFor="let user of userServ.listUsers" [value]="user._id"> {{ user.firstName }} {{ user.lastName }} </option>
@@ -352,4 +352,3 @@
     </div>
   </div>
 
- 

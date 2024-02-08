@@ -371,4 +371,8 @@ export class LevelService {
 
     return level;
   }
+
+  getWordById(wordId: string) {
+
+  }
 }

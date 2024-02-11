@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/shared/api/api.service';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { Endpoint } from './endpoint.enum';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/entities/user';
 import { SousCompetitionService } from '../../undercompetition/services/sous-competition.service';
@@ -43,6 +44,7 @@ export class ArcardeService {
     private api: ApiService,
     private toastr: ToastrService,
     private fb: FormBuilder,
+    private location: Location,
     private languageService: TranslationService
   ) {
     this.authorization = {
@@ -720,6 +722,7 @@ export class ArcardeService {
       );
     } else {
       this.createNewArcarde();
+      this.location.back();
     }
   }
 }

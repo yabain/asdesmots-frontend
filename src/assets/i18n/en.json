@@ -39,6 +39,7 @@
     "enterValidPwd": "Enter a valid password.",
     "passwordRequired": "The password is required.",
     "profile": "Profile",
+    "keyDuplicate":"Duplication of the part name, please change it",
     "level": "Level",
     "settings": "Settings",
     "logOut": "Log Out",

@@ -104,11 +104,11 @@ export class GamePartsService {
             this.partAdded = true;
     }, (error: any)=>{
       if (error.status == 500) {
-        this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+        this.toastr.error(this.languageService.transformMessageLanguage('internalError'), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
       } else if (error.status == 401) {
-        this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+        this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
       } else {
-        this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        this.toastr.error(this.languageService.transformMessageLanguage('keyDuplicate'), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
       }
       this.partAdded = false;
       this.waitingResponse = false;
@@ -125,11 +125,11 @@ export class GamePartsService {
               this.partDeletingDone = true;
       }, (error)=>{
         if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage('internalError'), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
         } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
         } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.message, this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
         }
         this.waitingResponse = false;
         this.partDeletingDone = false;
@@ -152,11 +152,11 @@ export class GamePartsService {
           this.waitingResponse = false;
       }, (error)=>{
         if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage('internalError'), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
         } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
         } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          this.toastr.error(error.message, this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
         }
         this.waitingResponse = false;
       

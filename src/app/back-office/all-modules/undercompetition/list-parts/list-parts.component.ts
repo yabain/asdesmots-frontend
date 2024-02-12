@@ -40,7 +40,7 @@ export class ListPartsComponent implements OnInit {
   }
 
   addPart(){
-    this.gamePartSrv.AddGamePart();
+    this.gamePartSrv.checkDateGamePartAndAddGamePart();
   }
 
   reset(){

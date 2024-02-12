@@ -6,6 +6,7 @@
     "refreshPage": "Veillez vous reconnecter",
     "arcardenotFound": "Arcarde introuvable",
     "noInternet": "Pas de connexion Internet",
+    "keyDuplicate":"Duplication du nom de la partie, Veillez le changer",
     "internalError": "Erreur interne du serveur. Réessayez plus tard s'il vous plaît",
     "enterYour": "Entrez votre ",
     "enteragainYour": "Entrez à nouveau votre ",

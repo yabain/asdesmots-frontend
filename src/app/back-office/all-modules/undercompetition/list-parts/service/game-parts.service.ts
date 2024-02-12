@@ -4,11 +4,14 @@ import { ApiService } from 'src/app/shared/api/api.service';
 import { GamePart } from 'src/app/shared/entities/gamePart.model';
 import { EndpointGamePart } from './Endpoint';
 import { ToastrService } from 'ngx-toastr';
+import { TranslationService } from 'src/app/shared/services/translation/language.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GamePartsService {
+
+  dateNow:Date = new Date();
 
   listGameParts: GamePart[] = [
    /* {
@@ -50,7 +53,8 @@ export class GamePartsService {
   constructor( 
         private api: ApiService,
         private fb: FormBuilder,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private languageService: TranslationService
   ) { this.authorization = {  'Authorization': 'Bearer ' + this.api.getAccessToken() } }
   
   get f(){
@@ -63,10 +67,32 @@ export class GamePartsService {
         description: ['', Validators.required],
         gameCompetitionID: ['', Validators.required],
         numberOfWord: ['', Validators.required],
-        startDate: [''],
-        endDate: ['']
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required]
     });
     
+  }
+
+  checkDateGamePartAndAddGamePart() {
+    const newStartDate = new Date(this.gamePartForm.value.startDate);
+    if ( newStartDate < this.dateNow ) {
+      return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatOne"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else if( this.gamePartForm.value.endDate < this.gamePartForm.value.startDate ) {
+      return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatTwo"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else if( this.gamePartForm.value.name < 4 ) {
+      return this.toastr.error(this.languageService.transformMessageLanguage("minLengthDtl"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else if( this.gamePartForm.value.description < 4 ) {
+      return this.toastr.error(this.languageService.transformMessageLanguage("minLengthDtl"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else if(this.gamePartForm.value.numberOfWord < 2 ) {
+      return this.toastr.error(this.languageService.transformMessageLanguage("numberOfWord"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else {
+      this.AddGamePart();
+    }
   }
 
   AddGamePart(){

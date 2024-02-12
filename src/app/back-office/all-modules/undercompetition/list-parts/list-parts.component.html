@@ -39,9 +39,9 @@
                       <table datatable class="table table-stripped table-hover">
                         <thead class="thead-light">
                           <tr>
-                            <th>Nom </th>
+                            <th>{{'name' | translate }} </th>
                             <th>Description</th>
-                            <th> Niveau </th>                            
+                            <th> {{ 'level' | translate }} </th>                            
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
@@ -102,7 +102,7 @@
         
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
-                    Fermer
+                    {{'close' | translate }}
 
                   </button>
                   <button type="button" class="btn btn-danger" *ngIf="!gamePartSrv.partDeletingDone" (click)="doDelete()" >
@@ -136,13 +136,13 @@
 
                             <div class="col">
                                     <div class="form-group">
-                                        <label for="name"> Nom </label>
+                                        <label for="name"> {{ 'name' | translate }} </label>
                                         <input type="text" class="form-control" formControlName="name" name="name" id="name">
                                     </div>
 
                                    
                                     <div class="form-group">
-                                      <label for="startDate"> start Date </label>
+                                      <label for="startDate"> {{'startDate' | translate }} </label>
                                       <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
                                     </div>
 
@@ -158,7 +158,7 @@
 
                                    
                                     <div class="form-group">
-                                        <label for="endDate"> endDate </label>
+                                        <label for="endDate"> {{'endDate' | translate }} </label>
                                         <input type="date" class="form-control" formControlName="endDate" name="endDate" id="endDate">
                                     </div>
 
@@ -176,10 +176,10 @@
         
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
-                    Fermer
+                    {{'close' | translate }}
                   </button>
                   <button type="button" class="btn btn-success" data-bs-dismiss="modal" [disabled]="gamePartSrv.gamePartForm.invalid" *ngIf="!gamePartSrv.partAdded" (click)="addPart()" >
-                    <span *ngIf="!gamePartSrv.waitingResponse">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                    <span *ngIf="!gamePartSrv.waitingResponse">{{'add' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
                     <span *ngIf="gamePartSrv.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>
                 </div>
@@ -214,7 +214,7 @@
 
                               <div class="row form-group">
                                 <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
-                                        Date de Debut
+                                  {{'startDate' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="endDate" placeholder=""
@@ -224,7 +224,7 @@
 
                               <div class="row form-group">
                                 <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
-                                        Fin
+                                        {{'end' | translate }}
                                         :</b></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="endDate" placeholder=""
@@ -237,7 +237,7 @@
         
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
-                    Fermer
+                    {{'close' | translate }}
 
                   </button>
                   

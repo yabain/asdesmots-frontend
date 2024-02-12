@@ -137,7 +137,7 @@
     "offSession": "Session timed out",
     "logiqueDatOne":"Start date must be greater than or equal to today",
     "logiqueDatTwo":"The end date must be greater than the start date",
-    "minLengthDtl":"The character number must be greater than four",
+    "minLengthDtl":"The number of characters in the name and description must be greater than four",
     "numberOfWord":"The number of words must be greater than two",
     "logiqueDatTree":"The recording start date must be greater than or equal to the start date",
     "logiqueDatFour":"The recording start date must be less than the end date",

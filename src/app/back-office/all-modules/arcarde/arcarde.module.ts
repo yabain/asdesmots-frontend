@@ -14,6 +14,7 @@ import { CreateArcardeComponent } from './create-arcarde/create-arcarde.componen
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
+import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HttpLoaderFactory } from 'src/app/app.module';
         ListArcardeComponent,
         ArcadesuscriptionComponent,
         FormatDatePipe,
-        CreateArcardeComponent
+        CreateArcardeComponent,
+        UpdateArcadeComponent
     ],
     imports: [
         CommonModule,

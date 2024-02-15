@@ -20,6 +20,7 @@ import { TranslationService } from './shared/services/translation/language.servi
 import { ProgressIndeterminateModule } from './shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { CommonModule } from '@angular/common';
 import { FormatDatePipe } from './back-office/all-modules/undercompetition/list-competition/pipe/format-date.pipe';
+import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
 // import { FooterModule } from './back-office/shared/footer/footer.module';
 // import {HttpClient, HttpClientModule} from '@angular/common/http';
 
@@ -29,7 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UpdateArcadeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

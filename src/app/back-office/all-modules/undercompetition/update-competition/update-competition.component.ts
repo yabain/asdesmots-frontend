@@ -12,68 +12,70 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-update-competition',
   templateUrl: './update-competition.component.html',
-  styleUrls: ['./update-competition.component.css']
+  styleUrls: ['./update-competition.component.css'],
 })
 export class UpdateCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   idCompetition: string = '';
   formUpdate: FormGroup;
 
-  constructor(public sousCompetion: SousCompetitionService, 
-              private translate: TranslateService,
-              private translatiton: TranslationService,
-              private route: ActivatedRoute, 
-              public router: Router,
-              public level: LevelService,
-              private fb: FormBuilder,
-              private location: Location,
-              public arcardeSrv: ArcardeService
-              ) {
-      this.translate.use(this.translatiton.getLanguage());
-      this.sousCompetion.loadListUnderCompetition(),
+  constructor(
+    public sousCompetion: SousCompetitionService,
+    private translate: TranslateService,
+    private translatiton: TranslationService,
+    private route: ActivatedRoute,
+    public router: Router,
+    public level: LevelService,
+    private fb: FormBuilder,
+    private location: Location,
+    public arcardeSrv: ArcardeService
+  ) {
+    this.translate.use(this.translatiton.getLanguage());
+    this.sousCompetion.loadListUnderCompetition(),
       this.sousCompetion.initFormUpdate();
 
-      this.getID();
-      this.getLevel();
-   }
-
-  ngOnInit(): void {
-
+    this.getID();
+    this.getLevel();
   }
 
-  getID(){
-      this.idCompetition = this.route.snapshot.params['id'];
-      this.sousCompetitionSelctedData = this.sousCompetion.getData(this.idCompetition);
-      this.initUpdatingForm(this.sousCompetitionSelctedData);
+  ngOnInit(): void {}
+
+  getID() {
+    this.idCompetition = this.route.snapshot.params['id'];
+    this.sousCompetitionSelctedData = this.sousCompetion.getData(
+      this.idCompetition
+    );
+    this.initUpdatingForm(this.sousCompetitionSelctedData);
+  }
+
+  async loadListOfArcarde() {
+    if (this.arcardeSrv.listArcardeUser.length == 0) {
+      this.arcardeSrv.loadArcade();
     }
-
- async loadListOfArcarde(){
-      if(this.arcardeSrv.listArcardeUser.length == 0){
-          this.arcardeSrv.loadArcade();
-      }
   }
 
-  initUpdatingForm(data: SousCompetion){
-      this.sousCompetion.initUpdatingValues(this.sousCompetitionSelctedData);
+  initUpdatingForm(data: SousCompetion) {
+    this.sousCompetion.initUpdatingValues(this.sousCompetitionSelctedData);
   }
 
-  resetFormCreation(){
-      this.sousCompetion.formUpdate.reset();
-      this.router.navigateByUrl('/undercompetition/competition/list');
+  resetFormCreation() {
+    this.sousCompetion.formUpdate.reset();
+    this.router.navigateByUrl('/undercompetition/competition/list');
   }
 
-  getLevel(){
-      if(this.level.levelList.length === 0){
-          this.level.getAllLevels();
-      }
+  getLevel() {
+    if (this.level.levelList.length === 0) {
+      this.level.getAllLevels();
+    }
   }
 
-  backClicked(){
-        this.resetFormCreation();
-        this.location.back();
+  backClicked() {
+    this.resetFormCreation();
+    this.location.back();
   }
 
-  doUpdate(){
-      this.sousCompetion.update(this.idCompetition);
+  doUpdate() {
+    this.sousCompetion.update(this.idCompetition);
+    this.location.back();
   }
 }

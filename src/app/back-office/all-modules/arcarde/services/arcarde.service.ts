@@ -10,6 +10,8 @@ import { SousCompetitionService } from '../../undercompetition/services/sous-com
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
+import { data } from 'jquery';
+import { findIndex } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +36,8 @@ export class ArcardeService {
   formControlCreateArcarde!: FormGroup;
   newArcarde: Arcarde = new Arcarde();
   isCreationDone: boolean = false;
+
+  formUpdate: FormGroup;
 
   dateNow: Date = new Date();
 
@@ -103,6 +107,72 @@ export class ArcardeService {
     this.formControlCreateArcarde.valueChanges.subscribe((data: any) => {
       Object.assign(this.newArcarde, data);
     });
+  }
+
+  initFormUpdateArcarde() {
+    this.formUpdate = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      isOnlineGame: ['', Validators.required],
+      canRegisterPlayer: ['', Validators.required],
+      isFreeRegistrationPlayer: ['', Validators.required],
+      maxPlayersNumber: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      startRegistrationDate: ['', Validators.required],
+      endRegistrationDate: ['', Validators.required],
+    });
+    this.formUpdate.valueChanges.subscribe((data: any) => {
+      Object.assign(this.newArcarde, data);
+    });
+  }
+
+  initUpdatingValue(data: Arcarde) {
+    this.formUpdate.patchValue({
+      name: data.name,
+      description: data.description,
+      isOnlineGame: data.isOnlineGame,
+      canRegisterPlayer: data.canRegisterPlayer,
+      isFreeRegistrationPlayer: data.isFreeRegistrationPlayer,
+      maxPlayersNumber: data.maxPlayersNumber,
+      startDate: new Date(data.startDate),
+      endDate: new Date(data.endDate),
+      startRegistrationDate: new Date(data.startRegistrationDate),
+      endRegistrationDate: new Date(data.endRegistrationDate),
+    });
+  }
+
+  update(idArcad: string) {
+    this.waitingResponse = true;
+    this.api
+      .put(
+        Endpoint.UPDATE_ARCADE + idArcad,
+        this.newArcarde,
+        this.authorization
+      )
+      .subscribe(
+        (resp) => {
+          console.log('update response', resp);
+          this.toastr.success('Update Done ', 'SUCCESS', { timeOut: 7000 });
+          this.waitingResponse = false;
+          this.loadArcade();
+        },
+        (error: any) => {
+          if (error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.status == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingResponse = false;
+        }
+      );
+    console.log(this.formUpdate.value);
   }
 
   initDefaultBooeleanValues() {
@@ -495,6 +565,14 @@ export class ArcardeService {
         }
       }
     );
+  }
+
+  getData(id: any) {
+    const index = this.listAllArcarde.findIndex((arcade) => arcade._id === id);
+    if (index != -1) {
+      return this.listAllArcarde[index];
+    }
+    return new Arcarde();
   }
 
   addUserToAccarde() {

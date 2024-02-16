@@ -14,13 +14,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { DataTablesModule } from 'angular-datatables';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from './shared/services/translation/language.service';
 import { ProgressIndeterminateModule } from './shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { CommonModule } from '@angular/common';
 import { FormatDatePipe } from './back-office/all-modules/undercompetition/list-competition/pipe/format-date.pipe';
-import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
 // import { FooterModule } from './back-office/shared/footer/footer.module';
 // import {HttpClient, HttpClientModule} from '@angular/common/http';
 
@@ -30,7 +29,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, UpdateArcadeComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,32 +40,24 @@ export function HttpLoaderFactory(http: HttpClient) {
     // AuthentificationModule,
     ProgressIndeterminateModule,
     // FooterModule,
-    ToastrModule.forRoot(
-      {
-        timeOut: 1500,
-        positionClass: 'toast-bottom-right',
-        preventDuplicates: true,
-      }
-    ),
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     BrowserAnimationsModule,
     FormsModule,
     DataTablesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
-  providers: [
-    AllModulesService,
-    AuthenticationGuard,
-    TranslationService
-  ],
-  bootstrap: [
-    AppComponent,
-  ],
-  exports: [TranslateModule]
+  providers: [AllModulesService, AuthenticationGuard, TranslationService],
+  bootstrap: [AppComponent],
+  exports: [TranslateModule],
 })
 export class AppModule {}

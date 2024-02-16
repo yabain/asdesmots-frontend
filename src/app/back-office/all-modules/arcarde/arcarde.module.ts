@@ -4,45 +4,43 @@ import { CommonModule } from '@angular/common';
 import { ArcardeRoutingModule } from './arcarde-routing.module';
 import { ArcardeComponent } from './arcarde.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ProgressIndeterminateModule } from "../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
+import { ProgressIndeterminateModule } from '../../../shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
+import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
 import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
 import { FormatDatePipe } from './services/format-date.pipe';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
-
 
 @NgModule({
-    declarations: [
-        ArcardeComponent,
-        ListUserArcardeComponent,
-        ListArcardeComponent,
-        ArcadesuscriptionComponent,
-        FormatDatePipe,
-        CreateArcardeComponent,
-        UpdateArcadeComponent
-    ],
-    imports: [
-        CommonModule,
-        ArcardeRoutingModule,
-        TranslateModule,
-        ProgressIndeterminateModule,
-        ReactiveFormsModule,
-        FormsModule,
-        DataTablesModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-
-    ]
+  declarations: [
+    ArcardeComponent,
+    ListUserArcardeComponent,
+    ListArcardeComponent,
+    ArcadesuscriptionComponent,
+    FormatDatePipe,
+    CreateArcardeComponent,
+    UpdateArcadeComponent,
+  ],
+  imports: [
+    CommonModule,
+    ArcardeRoutingModule,
+    TranslateModule,
+    ProgressIndeterminateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DataTablesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+  ],
 })
-export class ArcardeModule { }
+export class ArcardeModule {}

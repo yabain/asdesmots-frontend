@@ -9,7 +9,7 @@ import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { State } from 'src/app/shared/entities/state.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SousCompetitionService {
   waitingResponse: boolean = false;
@@ -18,62 +18,77 @@ export class SousCompetitionService {
 
   listCompetionParent: any[] = [];
 
-  newUnderCompetionParam : SousCompetion = new SousCompetion();
+  newUnderCompetionParam: SousCompetion = new SousCompetion();
   listCompetionLocation: string[] = [];
 
-  form : FormGroup;//created
+  form: FormGroup; //created
   formUpdate: FormGroup;
-  tmpIDLevel: string ='';
+  tmpIDLevel: string = '';
 
-  authorization : any;
+  authorization: any;
 
   listWinningCriterias: WinnigsCriterias[] = [];
   waitingCriteriasResp: boolean = false;
-  waitingCriteriasAdd : boolean = false;
-  creteriaDeletingDone : boolean = false;
+  waitingCriteriasAdd: boolean = false;
+  creteriaDeletingDone: boolean = false;
 
-  constructor(private api: ApiService,
-               private toastr: ToastrService,
-               private arcardeService: ArcardeService,
-               private fb: FormBuilder 
-               ) { this.authorization = {  'Authorization': 'Bearer ' + this.api.getAccessToken() } }
-
-  get f(){
-      return this.form.controls;
+  constructor(
+    private api: ApiService,
+    private toastr: ToastrService,
+    private arcardeService: ArcardeService,
+    private fb: FormBuilder
+  ) {
+    this.authorization = {
+      Authorization: 'Bearer ' + this.api.getAccessToken(),
+    };
   }
 
-  get formUpdt(){
-      return this.formUpdate.controls;
+  get f() {
+    return this.form.controls;
   }
 
-  initFormUpdate(){
+  get formUpdt() {
+    return this.formUpdate.controls;
+  }
+
+  initFormUpdate() {
     this.formUpdate = this.fb.group({
-        name : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(60)])],
-        description : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(65)])],
-        gameLevel : ['', Validators.required],
-        isSinglePart : ['', Validators.required],
-        canRegisterPlayer: [''],
-        localisation: ['', Validators.required],
-        maxPlayerLife: ['', Validators.required],
-        maxTimeToPlay: ['', Validators.required],
-        startDate : ['', Validators.required],
-        endDate: ['', Validators.required],
-        maxOfWinners: ['', Validators.required],
-        lang: ['', Validators.required],
-        parentCompetition : ['', Validators.required],
-       
+      name: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(60),
+        ]),
+      ],
+      description: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(65),
+        ]),
+      ],
+      gameLevel: ['', Validators.required],
+      isSinglePart: ['', Validators.required],
+      canRegisterPlayer: [''],
+      localisation: ['', Validators.required],
+      maxPlayerLife: ['', Validators.required],
+      maxTimeToPlay: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      maxOfWinners: ['', Validators.required],
+      lang: ['', Validators.required],
+      parentCompetition: ['', Validators.required],
     });
 
-    this.formUpdate.valueChanges.subscribe((data: any)=>{
-        Object.assign(this.newUnderCompetionParam, data);
+    this.formUpdate.valueChanges.subscribe((data: any) => {
+      Object.assign(this.newUnderCompetionParam, data);
     });
-
   }
 
- 
-
-  initUpdatingValues(data: SousCompetion){
-      /*this.formUpdate.controls['name'].setValue(data.name);
+  initUpdatingValues(data: SousCompetion) {
+    /*this.formUpdate.controls['name'].setValue(data.name);
       this.formUpdate.controls['description'].setValue(data.description);
       this.formUpdate.controls['level'].setValue(data.level);
       this.formUpdate.controls['isSinglePart'].setValue(data.isSinglePart);
@@ -88,244 +103,348 @@ export class SousCompetitionService {
       this.formUpdate.controls['parentCompetition'].setValue(data.parentCompetition);
      */
 
-      this.formUpdate.patchValue(
-        {
-          name: data.name,
-          description: data.description,
-          gameLevel: data.gameLevel,
-          isSinglePart: data.isSinglePart,
-          canRegisterPlayer: data.canRegisterPlayer,
-          localisation: data.localisation,
-          maxPlayerLife: data.maxPlayerLife,
-          maxTimeToPlay: data.maxTimeToPlay,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          maxOfWinners: data.maxOfWinners,
-          lang: data.lang,
-          parentCompetition: data.parentCompetition
-        }
-      )
-      console.log('datacompetition init ', this.newUnderCompetionParam);
+    this.formUpdate.patchValue({
+      name: data.name,
+      description: data.description,
+      gameLevel: data.gameLevel,
+      isSinglePart: data.isSinglePart,
+      canRegisterPlayer: data.canRegisterPlayer,
+      localisation: data.localisation,
+      maxPlayerLife: data.maxPlayerLife,
+      maxTimeToPlay: data.maxTimeToPlay,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      maxOfWinners: data.maxOfWinners,
+      lang: data.lang,
+      parentCompetition: data.parentCompetition,
+    });
+    console.log('datacompetition init ', this.newUnderCompetionParam);
   }
 
-  initFormControl(){
+  initFormControl() {
     //control creation new under competition
     this.form = this.fb.group({
-        name : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(60)])],
-        description : ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(65)])],
-        gameLevel : ['', Validators.required],
-        isSinglePart : ['', Validators.required],
-        canRegisterPlayer: [''],
-        localisation: ['', Validators.required],
-        maxPlayerLife: ['', Validators.required],
-        maxTimeToPlay: ['', Validators.required],
-        startDate : ['', Validators.required],
-        endDate: ['', Validators.required],
-        maxOfWinners: ['', Validators.required],
-        lang: ['', Validators.required],
-        parentCompetition : [''],
-        //gameWinnerCriterias : ['', Validators.required],
-        //gameJudgesID: ['', Validators.required],
-       // gameParts : ['', Validators.required]
+      name: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(60),
+        ]),
+      ],
+      description: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(65),
+        ]),
+      ],
+      gameLevel: ['', Validators.required],
+      isSinglePart: ['', Validators.required],
+      canRegisterPlayer: [''],
+      localisation: ['', Validators.required],
+      maxPlayerLife: ['', Validators.required],
+      maxTimeToPlay: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      maxOfWinners: ['', Validators.required],
+      lang: ['', Validators.required],
+      parentCompetition: [''],
+      //gameWinnerCriterias : ['', Validators.required],
+      //gameJudgesID: ['', Validators.required],
+      // gameParts : ['', Validators.required]
     });
     this.initBooleanValues();
-    this.form.valueChanges.subscribe((data: any)=>{
-        Object.assign(this.newUnderCompetionParam, data);
-      
+    this.form.valueChanges.subscribe((data: any) => {
+      Object.assign(this.newUnderCompetionParam, data);
     });
-
-
   }
 
-  initBooleanValues(){
+  initBooleanValues() {
     this.form.controls['isSinglePart'].setValue(false);
     this.form.controls['canRegisterPlayer'].setValue(false);
   }
 
-  changeState(data: {gameArcardeID: string, gameCompetitionID: string, state: string }){
+  changeState(data: {
+    gameArcardeID: string;
+    gameCompetitionID: string;
+    state: string;
+  }) {
     this.waitingResponse = false;
     this.clientChangeState(data.gameArcardeID, State.RUNNING);
-    
+
     console.log('game competiton id :', data.gameCompetitionID);
-    this.api.put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization).subscribe((response: any)=>{
-        this.toastr.success('Competition Started', 'Success', {timeOut: 10000});
-        this.clientChangeState(data.gameCompetitionID, State.WAITING_PLAYER);
+    this.api
+      .put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization)
+      .subscribe(
+        (response: any) => {
+          this.toastr.success('Competition Started', 'Success', {
+            timeOut: 10000,
+          });
+          this.clientChangeState(data.gameCompetitionID, State.WAITING_PLAYER);
 
-        this.waitingResponse = false;
+          this.waitingResponse = false;
+        },
+        (error: any) => {
+          if (error.error.statusCode == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.error.statusCode == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else if (error.error.statusCode == 403) {
+            this.toastr.error(error.error.message, 'Error', { timeOut: 10000 });
+          } else if (error.error.statusCode == 404) {
+            this.toastr.error('Game Arcarde not found', 'Error', {
+              timeOut: 10000,
+            });
+          } else {
+            this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
+          }
+          this.waitingResponse = false;
+        }
+      );
+  }
 
-    }, (error: any)=>{ 
-      if (error.error.statusCode == 500) {
-        this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-      } else if (error.error.statusCode == 401) {
-        this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-      } else if(error.error.statusCode == 403) {
-        this.toastr.error(error.error.message, 'Error', { timeOut: 10000 });
-      } else if (error.error.statusCode == 404) {
-        this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
-      } else {
-        this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
-      }
-      this.waitingResponse = false;
-    });
+  async clientChangeState(idCompet: string, statut: string) {
+    //change the compett's state on user client (ui)
 
-}
+    const index = this.arcardeService.listUnderCompetion.findIndex(
+      (compet) => compet._id === idCompet
+    );
+    if (index != -1) {
+      this.arcardeService.listUnderCompetion[index].gameState = statut;
+    }
+  }
 
-async clientChangeState(idCompet: string, statut: string){
-//change the compett's state on user client (ui)
+  createCompetition(competionData: SousCompetion, dataArcarde: any) {
+    this.waitingResponse = true;
+    this.creationDone = false;
 
-      const index = this.arcardeService.listUnderCompetion.findIndex(compet => compet._id === idCompet);
-      if(index != -1){
-        this.arcardeService.listUnderCompetion[index].gameState = statut;
-      }
-}
-
-  createCompetition(competionData: SousCompetion, dataArcarde: any){
-     
-      this.waitingResponse = true;
-      this.creationDone = false;
-
-      this.api.post(EndpointSousCompetion.CREATED_NEW_S_C+dataArcarde.idArcarde, competionData, this.authorization).subscribe((resp)=>{
+    this.api
+      .post(
+        EndpointSousCompetion.CREATED_NEW_S_C + dataArcarde.idArcarde,
+        competionData,
+        this.authorization
+      )
+      .subscribe(
+        (resp) => {
           this.arcardeService.loadArcade();
           this.loadListUnderCompetition();
-          this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
+          this.toastr.success('Competition Created', 'Success', {
+            timeOut: 7000,
+          });
           this.waitingResponse = false;
           this.creationDone = true;
-      },(error: any) => {
-          
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else if (error.status == 404) {
-          this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        },
+        (error: any) => {
+          if (error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.status == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else if (error.status == 404) {
+            this.toastr.error('Game Arcarde not found', 'Error', {
+              timeOut: 10000,
+            });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingResponse = false;
         }
-        this.waitingResponse = false;
-      });
+      );
   }
 
- 
-  update(idCompetition: string){
-
-      this.waitingResponse = true;
-      this.api.put(EndpointSousCompetion.UPDATE_S_C+idCompetition, this.newUnderCompetionParam, this.authorization).subscribe((resp)=>{
+  update(idCompetition: string) {
+    this.waitingResponse = true;
+    this.api
+      .put(
+        EndpointSousCompetion.UPDATE_S_C + idCompetition,
+        this.newUnderCompetionParam,
+        this.authorization
+      )
+      .subscribe(
+        (resp) => {
           console.log('update response', resp);
-          this.toastr.success('Update Done ', 'SUCCESS', {timeOut : 7000});
+          this.toastr.success('Update Done ', 'SUCCESS', { timeOut: 7000 });
           this.waitingResponse = false;
           this.arcardeService.loadArcade();
-      },(error: any) => {
-          
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        },
+        (error: any) => {
+          if (error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.status == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingResponse = false;
         }
-        this.waitingResponse = false;
-      });
-      console.log(this.formUpdate.value);
+      );
+    console.log(this.formUpdate.value);
   }
 
-  loadAllCompetition(){
-      //this.waitingResponse = true;
+  loadAllCompetition() {
+    //this.waitingResponse = true;
   }
 
-  loadGameCriterias(){
+  loadGameCriterias() {
     this.waitingCriteriasResp = true;
-    this.api.get(EndpointSousCompetion.WINNINGS_CRITERIAS, this.authorization).subscribe((resp)=>{
+    this.api
+      .get(EndpointSousCompetion.WINNINGS_CRITERIAS, this.authorization)
+      .subscribe(
+        (resp) => {
           this.waitingCriteriasResp = false;
           this.listWinningCriterias = Array.from(resp.data);
-      }, (error: any)=> {
-          
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-        }
-        this.waitingCriteriasResp = false;
-        });
-  }
-
-  getCompetionWiningsCriteria(idCompetition: string): Promise<WinnigsCriterias[]>{
-    this.waitingCriteriasResp = true;
-    return new Promise((resole, reject)=>{
-          this.api.get(EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS+idCompetition, this.authorization).subscribe((resp)=>{
-            this.waitingCriteriasResp = false;
-            resole(resp.data);
-        }, (error: any)=> {
-
-          reject([]);
+        },
+        (error: any) => {
           if (error.status == 500) {
-            this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
           } else if (error.status == 401) {
-            this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
           } else {
             this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
           this.waitingCriteriasResp = false;
-          })
-        });
-  }
-
-  addCriteria(gameId: string, criteriaId: string[]){
-    this.waitingCriteriasAdd = true;
-    const requestBody = { gameID: gameId, gammeWinnersID: criteriaId }
-
-    this.api.put(EndpointSousCompetion.ADD_CRITERIAS_GAME, requestBody, this.authorization).subscribe((resp)=>{
-        this.waitingCriteriasAdd = false;
-        this.toastr.success('Criteria Add', 'SUCCESS', {timeOut: 7100});
-    }, (error: any)=>{
-      if (error.status == 500) {
-        this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-      } else if (error.status == 401) {
-        this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-      } else {
-        this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-      }
-      this.waitingCriteriasAdd = false;
-    })
-  }
-
-  removeWinningCriteria(gameId: string , gammeCriteriasId: string[]){
-      this.waitingCriteriasResp = true;
-      const requestBody = { gameID: gameId, gammeWinnersID: gammeCriteriasId }
-      console.log('request', requestBody)
-      this.api.delete(EndpointSousCompetion.REMOVE_GAME_CRITERIAS, this.authorization, requestBody).subscribe((resp:any)=>{
-            this.waitingCriteriasResp = false;
-            this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
-      }, (error: any)=>{
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
         }
-        this.waitingCriteriasResp = false;
-      })
+      );
   }
 
-  buildListParentCompetition(id_arcarde: number){
-    const index = this.arcardeService.listArcardeUser.findIndex((arcarde)=> arcarde._id == id_arcarde);
-      if(index != -1){
-        this.listCompetionParent = this.arcardeService.listArcardeUser[index].competitionGames;
-
-      }
+  getCompetionWiningsCriteria(
+    idCompetition: string
+  ): Promise<WinnigsCriterias[]> {
+    this.waitingCriteriasResp = true;
+    return new Promise((resole, reject) => {
+      this.api
+        .get(
+          EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS + idCompetition,
+          this.authorization
+        )
+        .subscribe(
+          (resp) => {
+            this.waitingCriteriasResp = false;
+            resole(resp.data);
+          },
+          (error: any) => {
+            reject([]);
+            if (error.status == 500) {
+              this.toastr.error(
+                'Internal Server Error. Try again later please.',
+                'Error',
+                { timeOut: 10000 }
+              );
+            } else if (error.status == 401) {
+              this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+            } else {
+              this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+            }
+            this.waitingCriteriasResp = false;
+          }
+        );
+    });
   }
 
-  loadListUnderCompetition(){
-      this.listUnderCompetition = Array.from(this.arcardeService.listUnderCompetion);
+  addCriteria(gameId: string, criteriaId: string[]) {
+    this.waitingCriteriasAdd = true;
+    const requestBody = { gameID: gameId, gammeWinnersID: criteriaId };
+
+    this.api
+      .put(
+        EndpointSousCompetion.ADD_CRITERIAS_GAME,
+        requestBody,
+        this.authorization
+      )
+      .subscribe(
+        (resp) => {
+          this.waitingCriteriasAdd = false;
+          this.toastr.success('Criteria Add', 'SUCCESS', { timeOut: 7100 });
+        },
+        (error: any) => {
+          if (error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.status == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingCriteriasAdd = false;
+        }
+      );
   }
 
-  getData(id: any){
-      const index = this.listUnderCompetition.findIndex((compet)=> compet._id === id);
-      if(index != -1){
-          return this.listUnderCompetition[index];
-      }
-      return new SousCompetion();
+  removeWinningCriteria(gameId: string, gammeCriteriasId: string[]) {
+    this.waitingCriteriasResp = true;
+    const requestBody = { gameID: gameId, gammeWinnersID: gammeCriteriasId };
+    console.log('request', requestBody);
+    this.api
+      .delete(
+        EndpointSousCompetion.REMOVE_GAME_CRITERIAS,
+        this.authorization,
+        requestBody
+      )
+      .subscribe(
+        (resp: any) => {
+          this.waitingCriteriasResp = false;
+          this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
+        },
+        (error: any) => {
+          if (error.status == 500) {
+            this.toastr.error(
+              'Internal Server Error. Try again later please.',
+              'Error',
+              { timeOut: 10000 }
+            );
+          } else if (error.status == 401) {
+            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingCriteriasResp = false;
+        }
+      );
+  }
+
+  buildListParentCompetition(id_arcarde: number) {
+    const index = this.arcardeService.listArcardeUser.findIndex(
+      (arcarde) => arcarde._id == id_arcarde
+    );
+    if (index != -1) {
+      this.listCompetionParent =
+        this.arcardeService.listArcardeUser[index].competitionGames;
+    }
+  }
+
+  loadListUnderCompetition() {
+    this.listUnderCompetition = Array.from(
+      this.arcardeService.listUnderCompetion
+    );
+  }
+
+  getData(id: any) {
+    const index = this.listUnderCompetition.findIndex(
+      (compet) => compet._id === id
+    );
+    if (index != -1) {
+      return this.listUnderCompetition[index];
+    }
+    return new SousCompetion();
   }
 }

@@ -4,7 +4,7 @@ import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { State } from 'src/app/shared/entities/state.enum';
 
 @Component({
@@ -16,13 +16,16 @@ export class ListArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
   userID: string ='';
   gameState = State;
-  constructor(public arcadeServ: ArcardeService, 
+
+  constructor(public arcadeServ: ArcardeService,
               private translate: TranslateService,
               public userServ:  UserService,
               private router: Router,
-              private translationService: TranslationService,  
+              private activedRouter: ActivatedRoute,
+              private translationService: TranslationService,
               ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde();
                   this.translate.use(this.translationService.getLanguage());
+                  // this.getId();
             }
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class ListArcardeComponent implements OnInit {
 
   }
 
-  
+
 
   loadArcardeCurrentUser(){
       if(this.arcadeServ.listArcardeUser.length == 0){
@@ -59,11 +62,11 @@ export class ListArcardeComponent implements OnInit {
 
 
   startArcarde(arcardeID: any){
-      
+
       this.arcadeServ.changeState(
                                     { gameArcardeID: arcardeID,
                                       state: State.WAITING_PLAYER
-                                    } 
+                                    }
                                  )
   }
 
@@ -108,5 +111,11 @@ export class ListArcardeComponent implements OnInit {
    goToAcradeSuscription(){
       this.router.navigateByUrl('/arcarde/suscribe');
    }
- 
+
+  //  getId(){
+  //   this.idArcard = this.activedRouter.snapshot.params['id'];
+  //   console.log("id arcarde: " + this.idArcard);
+  //   this.arcadeServ.getListUsersOfArcardes(this.idArcard);
+  // }
+
 }

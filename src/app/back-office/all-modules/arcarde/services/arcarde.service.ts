@@ -18,10 +18,12 @@ export class ArcardeService {
   listAllArcarde: Arcarde[] = [];
   listLocationArcarde: string[] = [];
   listUnderCompetion: SousCompetion[]=[];
+  listParticipant: any[];
+  listUserData: any[] = [];
 
   competitionParent: any[] = [];
 
-  listUser : User[] = [];
+  listUser : User[];
   authorization : any;
   waitingResponse: boolean = false;
   unsuscriptionDone : boolean = false;
@@ -38,8 +40,9 @@ export class ArcardeService {
 
   deleteDone : boolean = false;
   waitingResponseSuscrib : boolean = false;
+  // listPlayer: []any;
 
-  constructor(private api: ApiService, 
+  constructor(private api: ApiService,
               private toastr: ToastrService,
               private fb: FormBuilder,
               private languageService: TranslationService
@@ -88,7 +91,7 @@ export class ArcardeService {
          startDate: ['', Validators.required],
          endDate: ['', Validators.required],
          startRegistrationDate: ['', Validators.required],
-         endRegistrationDate: ['', Validators.required] 
+         endRegistrationDate: ['', Validators.required]
       });
       this.initDefaultBooeleanValues();
       this.formControlCreateArcarde.valueChanges.subscribe((data: any)=>{
@@ -115,7 +118,7 @@ export class ArcardeService {
             this.buildListLocation(this.listArcardeUser);
       },(error: any) => {
         this.waitingResponse = false;
-          
+
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -130,24 +133,104 @@ export class ArcardeService {
 
 
 
-  getListUsersOfArcardes(id: string){
-        this.waitingResponse = true;
+  // getListUsersOfArcardes(id: string){
+  //       this.waitingResponse = true;
 
-        this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
-              console.log(resp);
-              this.listUser = Array.from(resp.data[0]);
-              this.waitingResponse = false;
-        },(error)=>{
-          if (error.status == 500) {
-            this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
-          } else if (error.status == 401) {
-            this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
-          }else{
-            this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
-          }
-           this.waitingResponse = false;
-        });
+  //       this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
+  //             console.log("response server",resp);
+  //             if ( resp.data && Array.isArray(resp.data)) {
+  //               this.listUser = Array.from(resp.data);
+  //               console.log("user list: ",this.listUser);
+
+  //             } else {
+  //               this.toastr.error(this.languageService.transformMessageLanguage("Pas de particaipant à cette arcarde."), 'Error', { timeOut: 10000 });
+  //             }
+  //             this.waitingResponse = false;
+  //       },(error)=>{
+  //         if (error.status == 500) {
+  //           this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+  //         } else if (error.status == 401) {
+  //           this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
+  //         }else{
+  //           this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+  //         }
+  //          this.waitingResponse = false;
+  //       });
+  // }
+
+
+
+  getUserDataById(userId: string): any {
+    const userDataString = localStorage.getItem('users-list');
+    if (userDataString) {
+      const usersDatas = JSON.parse(userDataString);
+      console.log("usersDatas: ", usersDatas);
+      if (usersDatas._id === userId) {
+        console.log("user founded")
+        return usersDatas;
+      }
+    }
+    return null;
   }
+
+  getUserById(userId: string): User | null {
+    // Récupérer la liste des utilisateurs depuis le localStorage
+    const userListString = localStorage.getItem('users-list');
+
+    if (userListString) {
+      // Convertir la chaîne de caractères en tableau d'objets
+      const userList: User[] = JSON.parse(userListString);
+      // Parcourir la liste des utilisateurs
+      for (const user of userList) {
+        // Comparer l'identifiant avec celui en paramètre
+        if (user._id === userId) {
+          // L'identifiant correspond, renvoyer l'utilisateur
+          return user;
+        }
+      }
+    }
+
+    // Aucune correspondance d'identifiant trouvée, renvoyer null
+    return null;
+  }
+
+
+
+  getListUsersOfArcardes(id: string){
+    this.waitingResponse = true;
+
+    this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
+          if ( resp && resp.data && resp.data.length > 0) {
+            console.log("ronice1");
+            this.listUserData = Array.from(resp.data);
+            console.log("Participants arcarde: ", this.listUserData);
+            this.listUserData.forEach(element =>{
+              console.log("test");
+              const userData = this.getUserById(element.player);
+              console.log("datauser: ", userData);
+              console.log("List of user: ", this.listUser);
+              if (userData && this.listUser.length === 0) {
+                console.log("ronice2");
+                this.listUser.push(userData);
+              }
+            });
+          } else {
+            console.log("ronice3");
+            this.listUser = [];
+            this.toastr.error(this.languageService.transformMessageLanguage("Pas de particaipant à cette arcarde."), 'Error', { timeOut: 10000 });
+          }
+          this.waitingResponse = false;
+    },(error)=>{
+      if (error.status == 500) {
+        this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+      } else if (error.status == 401) {
+        this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
+      }else{
+        this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+      }
+       this.waitingResponse = false;
+    });
+}
 
   loadAllArcarde(){
     //call the endpoint to get list of arcades
@@ -157,12 +240,12 @@ export class ArcardeService {
         this.listAllArcarde = Array.from(response.data);
         this.buildListUnderCompetion(this.listAllArcarde);
         this.waitingResponse = false;
-        
+
        // this.buildListLocation(this.listAllArcarde);
-        
+
     },(error: any) => {
       this.waitingResponse = false;
-        
+
       if (error.status == 500) {
         this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
       } else if (error.status == 401) {
@@ -175,23 +258,48 @@ export class ArcardeService {
     });
   }
 
-   loadLocalisationOfCompetition(idArcarde: string){
+  //  loadLocalisationOfCompetition(idArcarde: string){
+  //   this.listLocationArcarde = [];
+  //   this.api.get(`game-arcarde/${idArcarde}/localisation`).subscribe((response)=>{
+  //       this.listLocationArcarde = Array.from(response.data);
+  //   },(error: any) => {
+  //     this.waitingResponse = false;
+
+  //     if (error.status == 500) {
+  //       this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+  //     } else if (error.status == 401) {
+  //       this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
+  //     } else if (error.status == 404) {
+  //       this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), 'Error', { timeOut: 10000 });
+  //     } else {
+  //       this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+  //     }
+  //   });
+  // }
+
+  loadLocalisationOfCompetition(idArcarde: string) {
     this.listLocationArcarde = [];
-    this.api.get(`game-arcarde/${idArcarde}/localisation`).subscribe((response)=>{
-        this.listLocationArcarde = Array.from(response.data);
-    },(error: any) => {
-      this.waitingResponse = false;
-        
-      if (error.status == 500) {
-        this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
-      } else if (error.status == 401) {
-        this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
-      } else if (error.status == 404) {
-        this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), 'Error', { timeOut: 10000 });
-      } else {
-        this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+    this.api.get(`game-arcarde/${idArcarde}/localisation`).subscribe(
+      (response) => {
+        // Convertir le type de données en string[]
+        this.listLocationArcarde = Array.from(response.data) as string[];
+        // Filtrer les chaînes vides de la liste de localisations
+        this.listLocationArcarde = this.listLocationArcarde.filter(location => location !== "");
+      },
+      (error: any) => {
+        // Gestion des erreurs
+        this.waitingResponse = false;
+        if (error.status == 500) {
+          this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
+        } else if (error.status == 401) {
+          this.toastr.error(this.languageService.transformMessageLanguage("Veillez vous reconnecter"), 'Session expirée', { timeOut: 10000 });
+        } else if (error.status == 404) {
+          this.toastr.error(this.languageService.transformMessageLanguage("Game Arcarde not found"), 'Error', { timeOut: 10000 });
+        } else {
+          this.toastr.error(this.languageService.transformMessageLanguage("No internet connection"), 'Error', { timeOut: 7000 });
+        }
       }
-    });
+    );
   }
 
   createNewArcarde(){
@@ -214,11 +322,11 @@ export class ArcardeService {
         }
         this.waitingResponse = false;
       });
-  }  
+  }
 
     changeState(data: {gameArcardeID: string, state: any}){
         this.waitingResponse = false;
-        
+
         console.log('game arcarde id :', data.gameArcardeID);
         this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe((response: any)=>{
             this.toastr.success(this.languageService.transformMessageLanguage('Arcarde Started'), 'Success', {timeOut: 10000});
@@ -277,7 +385,7 @@ export class ArcardeService {
       this.api.get(Endpoint.GET_ACARDE_BY_ID+id, this.authorization).subscribe((resp)=>{
           console.log(resp);
       }, (error: any) => {
-          
+
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
         } else if (error.status == 401) {
@@ -295,12 +403,12 @@ export class ArcardeService {
        this.suscriptionDone = false;
        //add user on a competion game
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
-           
+
             this.toastr.success(this.languageService.transformMessageLanguage('Suscription Done and Save'), 'Success', {timeOut: 10000});
             this.waitingResponseSuscrib = false;
             this.suscriptionDone = true;
         }, (error: any) => {
-          
+
           if (error.error.status == 500) {
             this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
           } else if (error.error.status == 401) {
@@ -324,7 +432,7 @@ export class ArcardeService {
             this.waitingResponse = false;
             console.log('response', resp);
         }, (error: any) => {
-          
+
           if (error.error.status == 500) {
             this.toastr.error(this.languageService.transformMessageLanguage("Internal Server Error. Try again later please."), 'Error', { timeOut: 10000 });
           } else if (error.error.status == 401) {
@@ -343,7 +451,7 @@ export class ArcardeService {
      listArcarde.forEach((arcarde)=>{
             this.listUnderCompetion = Array.from(this.listUnderCompetion.concat(arcarde.competitionGames));
       });
-      
+
   }
 
   getCompetitonArcardeID(idCompet: string){
@@ -363,46 +471,118 @@ export class ArcardeService {
   async buildListLocation(listArcarde: Arcarde[]){
     this.listLocationArcarde = [];
      let i_arcarde = 0;
-     
+
     if(listArcarde.length > 0){
         listArcarde.forEach((arcade)=>{
           if(arcade.competitionGames.length > 0){
-              arcade.competitionGames.forEach((compet)=>{ 
+              arcade.competitionGames.forEach((compet)=>{
               if(compet.localisation.toString() !== '' || compet.localisation.toString().length != 0){
-                this.listLocationArcarde[i_arcarde] = compet.localisation; 
+                this.listLocationArcarde[i_arcarde] = compet.localisation;
               }
               i_arcarde++;
-            }); 
-          }  
+            });
+          }
       });
     }
-      
+
   }
 
   // fonction de test pour les champs de type Date
+  // verificationAndCreateNewArcarde() {
+  //   const newStartDate = new Date(this.newArcarde.startDate);
+  //   if ( newStartDate < this.dateNow ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("Start date must be greater than or equal to today"), "Error", { timeOut: 5000 });
+  //   }
+  //   else if( this.newArcarde.endDate < this.newArcarde.startDate ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("the end date must be greater than the start date"), "Error", { timeOut: 5000 });
+  //   }
+  //   else if( this.newArcarde.startRegistrationDate < this.newArcarde.startDate ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be greater than or equal to the start date"), "Error", { timeOut: 5000 });
+  //   }
+  //   else if( this.newArcarde.startRegistrationDate > this.newArcarde.endDate ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be less than the end date"), "Error", { timeOut: 5000 });
+  //   }
+  //   else if(this.newArcarde.endRegistrationDate < this.newArcarde.startRegistrationDate ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be greater than the recording end date"), "Error", { timeOut: 5000 });
+  //   }
+  //   else if( this.newArcarde.endRegistrationDate > this.newArcarde.endDate ) {
+  //     return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be less than the end date"), "Error", { timeOut: 5000 });
+  //   }
+  //   else {
+  //     this.createNewArcarde();
+  //   }
+  // }
+
   verificationAndCreateNewArcarde() {
     const newStartDate = new Date(this.newArcarde.startDate);
-    if ( newStartDate < this.dateNow ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("Start date must be greater than or equal to today"), "Error", { timeOut: 5000 });
-    }
-    else if( this.newArcarde.endDate < this.newArcarde.startDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("the end date must be greater than the start date"), "Error", { timeOut: 5000 });
-    }
-    else if( this.newArcarde.startRegistrationDate < this.newArcarde.startDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be greater than or equal to the start date"), "Error", { timeOut: 5000 });
-    }
-    else if( this.newArcarde.startRegistrationDate > this.newArcarde.endDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording start date must be less than the end date"), "Error", { timeOut: 5000 });
-    }
-    else if(this.newArcarde.endRegistrationDate < this.newArcarde.startRegistrationDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be greater than the recording end date"), "Error", { timeOut: 5000 });
-    }
-    else if( this.newArcarde.endRegistrationDate > this.newArcarde.endDate ) {
-      return this.toastr.error(this.languageService.transformMessageLanguage("The recording end date must be less than the end date"), "Error", { timeOut: 5000 });
-    }
-    else {
+    if (newStartDate < this.dateNow) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'Start date must be greater than or equal to today'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (this.newArcarde.endDate < this.newArcarde.startDate) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'the end date must be greater than the start date'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (
+      this.newArcarde.startRegistrationDate > this.newArcarde.startDate
+    ) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'The recording start date must be less than or equal to the start date'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (
+      this.newArcarde.startRegistrationDate > this.newArcarde.endDate
+    ) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'The recording start date must be less than the end date'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (
+      this.newArcarde.endRegistrationDate <
+      this.newArcarde.startRegistrationDate
+    ) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'The recording end date must be greater than the recording end date'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (this.newArcarde.endRegistrationDate > this.newArcarde.endDate) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'The recording end date must be less than the end date'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else if (this.newArcarde.maxPlayersNumber < 2) {
+      return this.toastr.error(
+        this.languageService.transformMessageLanguage(
+          'There should be at least 2 players'
+        ),
+        'Error',
+        { timeOut: 5000 }
+      );
+    } else {
       this.createNewArcarde();
+      // this.location.back();
     }
   }
+
 }
 

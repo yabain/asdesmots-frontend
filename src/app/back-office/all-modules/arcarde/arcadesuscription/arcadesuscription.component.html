@@ -17,18 +17,18 @@
               style="color: #035858 !important; background-color: #ffff !important;">
               <i class="fas fa-plus"></i>
             </a> -->
-          
+
             <a class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="refresh this list of All Arcarde"
               style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
               <i class="fas fa-refresh"></i>
             </a>
-           
+
           </div>
         </div>
       </div>
-      
+
       <p>
-    
+
         <button (click)="backClicked()" class="btn btn-primary me-2"
         style="color: #035858 !important; background-color: #ffff !important;">
         <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
@@ -44,8 +44,8 @@
             </div>
         </div>
       </div>
-      
-  
+
+
       <div class="row" *ngIf="!arcadeServ.waitingResponse">
         <div class="col-sm-12">
           <div class="card card-table">
@@ -56,14 +56,14 @@
                     <tr>
                       <th>{{'Competition Name' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-                      
+
                       <th>{{'is Online Game' | translate }}</th>
                       <th class="text-center">Action</th>
                     </tr>
                   </thead>
 
                   <tbody *ngIf="arcadeServ.listAllArcarde.length != 0" >
-                      
+
                       <tr *ngFor="let arcarde of arcadeServ.listAllArcarde" data-bs-toggle="modal"
                          (click)="loadLocation(arcarde)" >
                           <td>
@@ -73,17 +73,17 @@
                                 <span> {{ arcarde.description }} </span>
                           </td>
 
-                          
+
                           <td>
-                                <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' "> 
-                                    {{ arcarde.isOnlineGame }}  
+                                <span [ngClass]="arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' ">
+                                    {{ arcarde.isOnlineGame }}
                                 </span>
                           </td>
                           <td>
                             <div class="col-auto">
-                           
 
-                              <a class="badge badge-pill bg-warning-light" 
+
+                              <a class="badge badge-pill bg-warning-light"
                                 style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#confirm">
                                 <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Suscribe to this arcarde"></i>
                               </a>
@@ -131,7 +131,7 @@
                         <select name="location" id="location" formControlName="location" class="form-control"
                         [ngClass]="{'is-invalid': arcadeServ.f['location'].touched && arcadeServ.f['location'].invalid}"
                       >
-                        <option value="">--choisir une location--</option>
+                      <option value="">--choisir une location--</option>
                         <option *ngFor="let location of arcadeServ.listLocationArcarde"  [value]="location"> {{ location }} </option>
                       </select>
                     </div>
@@ -140,7 +140,7 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (hidden)="reset()" id="cancel-btn2">
             Close
           </button>
           <button type="button" class="btn btn-success" *ngIf="!arcadeServ.suscriptionDone"  (click)="doSuscription()" >

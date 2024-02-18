@@ -111,7 +111,7 @@
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
-                  <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
+                  <!-- <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
                     [(ngModel)]="phoneModel"
                     [formControl]="phoneControl"
                     (ngModelChange)="isPhoneModel()"
@@ -120,7 +120,23 @@
                     [ngClass]="{ 'valid-phone': isPhoneValid(), 'invalid-phone': !isPhoneValid(), 'initial-border': !phoneControl.touched }"
                    />
                    <p class="phone-message" *ngIf="isPhoneModelInvalid">Au moins 6 chiffres</p>
-                   <p class="phone-message" *ngIf="isInvalidFormat">Format de téléphone invalide</p>
+                   <p class="phone-message" *ngIf="isInvalidFormat">Format de téléphone invalide</p> -->
+                   <br>
+                   <ngx-intl-tel-input
+                     [(ngModel)]="phoneModel"
+                     [cssClass]="'form-control'"
+                     [enableAutoCountrySelect]="true"
+                     [enablePlaceholder]="true"
+                     [searchCountryFlag]="true"
+                     [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                     [selectFirstCountry]="false"
+                     [selectedCountryISO]="CountryISO.Cameroon"
+                     [separateDialCode]="true"
+                     [maxLength]="15"
+                     [phoneValidation]="true"
+                     name="phone"
+                     formControlName="field_phone"
+                   ></ngx-intl-tel-input>
                 </div>
                 <br>
 
@@ -138,7 +154,7 @@
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
                   <input class="form-control" type="text" formControlName="field_email"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
-                    [formControl]="emailControl"
+                    formControlName="field_email"
                     [ngClass]="{
                       'is-invalid': f['field_email'].touched && f['field_email'].invalid
                     }" />
@@ -153,9 +169,9 @@
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
-                  <span class="email-message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
+                  <!-- <span class="email-message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
                     {{ isEmailValid() ? 'Email valide' : 'Email invalide' }}
-                  </span>
+                  </span> -->
                 </div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }} :</label>

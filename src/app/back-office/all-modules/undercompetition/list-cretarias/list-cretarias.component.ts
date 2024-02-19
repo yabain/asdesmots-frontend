@@ -16,6 +16,7 @@ export class ListCretariasComponent implements OnInit {
   listCriterias : WinnigsCriterias[] = [];
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
   formAddCriteria: FormGroup;
+  selectedCriteriaId: string = '';
   
   constructor(
       public competitionSrv: SousCompetitionService,
@@ -60,14 +61,13 @@ export class ListCretariasComponent implements OnInit {
   async addCriteria(){
 
       const modalDiv =  document.getElementById('addCriteria');
-      const result = await this.competitionSrv.addCriteria(this.idCompetition, [this.formAddCriteria.get('idCriteria').value]);
+      console.log(this.formAddCriteria.get('idCriteria').value)
+      const result = await this.competitionSrv.addCriteria(this.idCompetition, this.formAddCriteria.get('idCriteria').value);
     
       if (result === true) {
         modalDiv.classList.remove('show');
         modalDiv.setAttribute('aria-modal', 'false');
         modalDiv.style.display = 'none';
-      }else if (result === false) {
-        this.toastr.error("Une erreur est survenue lors de l'ajout de ce critère", 'Error', { timeOut: 7000 });
       }
     
       await this.getCompetitionCriteria();
@@ -75,9 +75,16 @@ export class ListCretariasComponent implements OnInit {
     
   }
 
-  doDelete(){
-    this.competitionSrv.removeWinningCriteria(this.idCompetition, [this.formAddCriteria.get('idCriteria').value]);
+  selectedCriteria(criteriaId: string){
+    this.selectedCriteriaId = criteriaId;
   }
+
+  async doDelete(){
+    const result = await this.competitionSrv.removeWinningCriteria(this.idCompetition, this.selectedCriteriaId);
+    if(result == true) await this.getCompetitionCriteria();
+    this.changeDetectorRef.detectChanges();
+    
+    }
 
   reset(){
 

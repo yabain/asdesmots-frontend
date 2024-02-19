@@ -801,6 +801,7 @@ export class ArcardeService {
     } else {
       this.createNewArcarde();
       this.location.back();
+      this.loadAllArcarde();
     }
   }
 }

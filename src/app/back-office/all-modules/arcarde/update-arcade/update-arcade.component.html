@@ -13,6 +13,19 @@
             <li class="breadcrumb-item">Mise à jour</li>
           </ul>
         </div>
+        <div class="row">
+          <div class="card card-table">
+            <div class="card card-header">
+              <h5>
+                Mise à jour Arcade
+                <strong>{{ arcadSelectedData.name }}</strong>
+              </h5>
+            </div>
+            <div class="card card-body">
+              <form [formGroup]="arcadeServ.formUpdate"></form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

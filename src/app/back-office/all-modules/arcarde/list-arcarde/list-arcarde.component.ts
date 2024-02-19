@@ -16,6 +16,7 @@ export class ListArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
   userID: string ='';
   gameState = State;
+  // idArcard: string = '';
 
   constructor(public arcadeServ: ArcardeService,
               private translate: TranslateService,

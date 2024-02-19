@@ -23,7 +23,7 @@ export class ArcardeService {
 
   competitionParent: any[] = [];
 
-  listUser : User[];
+  listUser : User[] = [];
   authorization : any;
   waitingResponse: boolean = false;
   unsuscriptionDone : boolean = false;

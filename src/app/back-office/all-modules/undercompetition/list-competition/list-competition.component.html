@@ -74,6 +74,11 @@ Page Wrapper
                           <div class="dropdown dropdown-action">
                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
+                              <a class="dropdown-item"
+                                  style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="listSuscriberCompetition(sousCompetion._id)">
+                                   <i class="fa fa-users" aria-hidden="true"></i>
+                                   <span style="margin-left: 5px;"> List of subscribers</span>
+                              </a>
                               <a class="dropdown-item"  (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a>
                               <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete" ><i class="far fa-trash-alt me-2"></i>
                                  <span style="margin-left: 5px;">Delete</span>

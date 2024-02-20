@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -307,13 +307,26 @@ export class ApiService {
   // }
 
   // HTTP delete
-  delete(endpoint: string, options?: any, body?: any): Observable<any> {
-    const headers = options;
+  delete(endpoint: string ,options?: any, body?: any): Observable<any>{
+    
     console.log('delete url request', this.url + '/' + endpoint)
+
     return this.http.delete(this.url + '/' + endpoint, {
-      headers,
-      body: body
-    },);
+      headers: options,
+      body
+    });
+  }
+
+  deleteListWinnerCriterias(endpoint: string , options?: any): Observable<any>{
+    
+    console.log('delete url request', this.url + '/' + endpoint);
+    // const params = new HttpParams()
+    // .set('gameId', gameId)
+    // .set('gameWinnerCriteriasId', gameWinnerCriteriasId);
+
+    return this.http.delete(this.url + '/' + endpoint, {
+      headers: options,
+    });
   }
 
   // HTTP pact
@@ -366,7 +379,7 @@ export class ApiService {
   deleteNode(nid: string): Observable<any> {
 
     const header = this.setHeaders(false, false, false, false, true);
-    return this.delete(`node/${nid}?_format=hal_json`, header);
+    return this.delete(`node/${nid}?_format=hal_json`,header);
 
   }
 

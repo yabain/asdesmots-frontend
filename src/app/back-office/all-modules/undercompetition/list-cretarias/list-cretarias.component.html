@@ -55,9 +55,11 @@
                             
                             <td class="text-end">
                               <a data-bs-toggle="modal" data-bs-target="#delete"
-                                class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"
-                                data-toggle="tooltip" data-placement="top" title="delete this criteria for this competition"
-                                ></i></a>
+                                class="btn btn-sm btn-white text-danger me-2" (click)="selectedCriteria(criteria._id)">
+                                <i class="far fa-trash-alt me-1"
+                                data-toggle="tooltip" data-placement="top" title="delete this criteria for this competition">
+                                </i>
+                              </a>
                             </td>
                           </tr>
                         </tbody>
@@ -115,9 +117,9 @@
                   <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     Close
                   </button>
-                  <button type="button" class="btn btn-success" [disabled]="formAddCriteria.invalid" *ngIf="!competitionSrv.waitingCriteriasAdd" (click)="addCriteria()" >
-                    <span *ngIf="!competitionSrv.waitingCriteriasResp">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
-                    <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                  <button type="button" class="btn btn-success" [disabled]="formAddCriteria.invalid" (click)="addCriteria()" data-bs-dismiss="modal">
+                    <span *ngIf="competitionSrv.waitingCriteriasAdd == false">Ajouter <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                    <span *ngIf="competitionSrv.waitingCriteriasAdd == true"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>
                 </div>
               </div>
@@ -146,9 +148,9 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
                     Close
                   </button>
-                  <button type="button" class="btn btn-danger" *ngIf="!competitionSrv.creteriaDeletingDone" (click)="doDelete()" >
-                    <span *ngIf="!competitionSrv.waitingCriteriasResp">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
-                    <span *ngIf="competitionSrv.waitingCriteriasResp"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                  <button type="button" class="btn btn-danger" (click)="doDelete()" data-bs-dismiss="modal">
+                    <span *ngIf="competitionSrv.waitingCreteriaDeletingDone == false" >Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+                    <span *ngIf="competitionSrv.waitingCreteriaDeletingDone == true" ><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
                   </button>
                 </div>
               </div>

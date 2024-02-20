@@ -51,7 +51,7 @@ export class UpdateArcadeComponent implements OnInit {
   }
 
   initUpdatingForm(data: Arcarde) {
-    this.arcadeServ.initUpdatingValue(this.arcadSelectedData);
+    this.arcadeServ.initUpdatingValues(this.arcadSelectedData);
   }
 
   resetFormCreation() {

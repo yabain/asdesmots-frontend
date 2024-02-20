@@ -107,6 +107,6 @@ export class ListArcardeComponent implements OnInit {
   }
 
   initUpdatingForm(Arcarde: Arcarde) {
-    this.router.navigateByUrl('/arcade/update' + Arcarde._id);
+    this.router.navigateByUrl('/arcarde/update' + Arcarde._id);
   }
 }

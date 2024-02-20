@@ -5,22 +5,27 @@ import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
+import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
 
 const routes: Routes = [
-  { path: '', component: ArcardeComponent},
+  { path: '', component: ArcardeComponent },
   { path: 'list-user/:idArcarde', component: ListUserArcardeComponent },
   { path: 'list-arcarde', component: ListArcardeComponent },
-  { path:  'suscribe', component: ArcadesuscriptionComponent },
-  { path: 'create', component:CreateArcardeComponent },
+  { path: 'suscribe', component: ArcadesuscriptionComponent },
+  { path: 'create', component: CreateArcardeComponent },
+  {
+    path: 'update/:id',
+    component: UpdateArcadeComponent,
+  },
   {
     path: '**',
     redirectTo: "'list-arcarde'",
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ArcardeRoutingModule { }
+export class ArcardeRoutingModule {}

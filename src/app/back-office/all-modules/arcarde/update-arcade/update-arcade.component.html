@@ -22,7 +22,194 @@
               </h5>
             </div>
             <div class="card card-body">
-              <form [formGroup]="arcadeServ.formUpdate"></form>
+              <form [formGroup]="arcadeServ.formUpdate">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name"> Name </label>
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        formControlName="name"
+                        id="name"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['name'].touched &&
+                            arcadeServ.formUpdate['name'].invalid
+                        }"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="desc">Description</label>
+                      <input
+                        type="text"
+                        name="description"
+                        class="form-control"
+                        [value]="arcadeServ.formUpdate.get('description').value"
+                        formControlName="description"
+                        id="desc"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate.get('description').invalid &&
+                            arcadeServ.formUpdate.get('description').touched
+                        }"
+                      />
+                    </div>
+
+                    <div class="form-check form-switch text-center">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        formControlName="canRegisterPlayer"
+                        (click)="
+                          arcadeServ.f['canRegisterPlayer'].setValue(
+                            arcadeServ.formUpdate.get('canRegisterPlayer')
+                              ?.value
+                              ? false
+                              : true
+                          )
+                        "
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                      >
+                        Register players ?
+                      </label>
+                    </div>
+
+                    <div class="form-check form-switch text-center">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        formControlName="isOnlineGame"
+                        (click)="
+                          arcadeServ.f['isOnlineGame'].setValue(
+                            arcadeServ.formUpdate.get('isOnlineGame')?.value
+                              ? false
+                              : true
+                          )
+                        "
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                      >
+                        Partie En ligne
+                      </label>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="maxPlayersNumber">
+                        Nombre de joueurs maximum
+                      </label>
+                      <input
+                        type="number"
+                        name="maxPlayersNumber"
+                        class="form-control"
+                        formControlName="maxPlayersNumber"
+                        id="maxPlayersNumber"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['maxPlayersNumber'].invalid &&
+                            arcadeServ.formUpdate.get('maxPlayersNumber')
+                              .touched
+                        }"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="startRegistrationDate"
+                        >Registration start date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="startRegistrationDate"
+                        class="form-control"
+                        formControlName="startRegistrationDate"
+                        id="startRegistrationDate"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['startRegistrationDate']
+                              .touched &&
+                            arcadeServ.formUpdate['startRegistrationDate']
+                              .invalid
+                        }"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="endRegistrationDate">
+                        Registration end date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="endRegistrationDate"
+                        class="form-control"
+                        formControlName="endRegistrationDate"
+                        id="endRegistrationDate"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['endRegistrationDate']
+                              .touched &&
+                            arcadeServ.formUpdate['endRegistrationDate'].invalid
+                        }"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="startTournamentDate">
+                        Tournament start date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="startTournamentDate"
+                        class="form-control"
+                        formControlName="startTournamentDate"
+                        id="startTournamentDate"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['startTournamentDate']
+                              .touched &&
+                            arcadeServ.formUpdate['startTournamentDate'].invalid
+                        }"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="endTournamentDate">Tournament end date</label>
+                      <input
+                        type="datetime-local"
+                        name="endTournamentDate"
+                        class="form-control"
+                        formControlName="endTournamentDate"
+                        id="endTournamentDate"
+                        [ngClass]="{
+                          'is-invalid':
+                            arcadeServ.formUpdate['endTournamentDate']
+                              .touched &&
+                            arcadeServ.formUpdate['endTournamentDate'].invalid
+                        }"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  [disabled]="arcadeServ.formUpdate.invalid"
+                  class="btn btn-primary"
+                >
+                  Mise à jour
+                </button>
+              </form>
             </div>
           </div>
         </div>

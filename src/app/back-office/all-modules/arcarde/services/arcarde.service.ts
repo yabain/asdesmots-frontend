@@ -127,7 +127,7 @@ export class ArcardeService {
     });
   }
 
-  initUpdatingValue(data: Arcarde) {
+  initUpdatingValues(data: Arcarde) {
     this.formUpdate.patchValue({
       name: data.name,
       description: data.description,

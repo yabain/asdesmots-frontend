@@ -11,7 +11,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 })
 export class GamePartsService {
 
-  dateNow:Date = new Date();
+  dateNow:Date;
 
   listGameParts: GamePart[] = [
    /* {
@@ -75,16 +75,16 @@ export class GamePartsService {
 
   checkDateGamePartAndAddGamePart() {
     const newStartDate = new Date(this.gamePartForm.value.startDate);
-    if ( newStartDate < this.dateNow ) {
+    if ( this.dateNow > newStartDate ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatOne"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
     else if( this.gamePartForm.value.endDate < this.gamePartForm.value.startDate ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatTwo"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
-    else if( this.gamePartForm.value.name < 4 ) {
+    else if( this.gamePartForm.value.name.length < 4 ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("minLengthDtl"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
-    else if( this.gamePartForm.value.description < 4 ) {
+    else if( this.gamePartForm.value.description.length < 4 ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("minLengthDtl"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
     else if(this.gamePartForm.value.numberOfWord < 2 ) {

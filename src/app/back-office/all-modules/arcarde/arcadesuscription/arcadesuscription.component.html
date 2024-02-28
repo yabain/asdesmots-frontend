@@ -65,7 +65,7 @@
                   <tbody *ngIf="arcadeServ.listAllArcarde.length != 0" >
                       
                       <tr *ngFor="let arcarde of arcadeServ.listAllArcarde" data-bs-toggle="modal"
-                         (click)="loadLocation(arcarde)" >
+                          >
                           <td>
                                 <span> {{ arcarde.name }} </span>
                           </td>
@@ -83,7 +83,7 @@
                             <div class="col-auto">
                            
 
-                              <a class="badge badge-pill bg-warning-light" 
+                              <a class="badge badge-pill bg-warning-light" (click)="loadLocation(arcarde)"
                                 style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#confirm">
                                 <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Suscribe to this arcarde"></i>
                               </a>

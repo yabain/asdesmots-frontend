@@ -143,7 +143,7 @@
     "ifQuery": "Si vous avez des questions à propos de la loterie ou de quoi que ce soit d'autre!",
     "logiqueDatOne":"La date de début doit être supérieure ou égale à aujourd'hui",
     "logiqueDatTwo":"La date de fin doit être supérieure à la date de début",
-    "minLengthDtl":"Le nombre de caractères doit être supérieur à quatre",
+    "minLengthDtl":"Le nombre de caractères du nom et de la description doit être supérieur à quatre",
     "numberOfWord":"Le nombre de mot doit être supérieure à deux",
     "logiqueDatTree":"La date de début d'enregistrement doit être supérieure ou égale à la date de début",
     "logiqueDatFour":"La date de début d'enregistrement doit être inférieure à la date de fin",

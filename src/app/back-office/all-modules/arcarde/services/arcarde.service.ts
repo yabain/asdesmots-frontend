@@ -75,6 +75,7 @@ export class ArcardeService {
                this.loadLocalisationOfCompetition(idGame);
             }
       });
+
   }
 
   initFormCreationArcarde(){
@@ -135,7 +136,8 @@ export class ArcardeService {
 
         this.api.get(Endpoint.GET_USERS_ARCARDE+id+'/subscription', this.authorization).subscribe((resp)=>{
               console.log(resp);
-              this.listUser = Array.from(resp.data[0]);
+              this.listUser = Array.from(resp.data);
+              console.log(this.listUser);
               this.waitingResponse = false;
         },(error)=>{
           if (error.status == 500) {
@@ -294,6 +296,7 @@ export class ArcardeService {
        this.waitingResponseSuscrib = true;
        this.suscriptionDone = false;
        //add user on a competion game
+       console.log(this.authorization,this.souscriptionParam);
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
            
             this.toastr.success('Suscription Done and Save', 'Success', {timeOut: 10000});

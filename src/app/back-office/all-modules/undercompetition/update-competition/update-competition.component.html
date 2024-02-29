@@ -182,6 +182,7 @@
                         name="startDate"
                         class="form-control"
                         formControlName="startDate"
+                        [value]="sousCompetitionSelctedData.startDate.value"
                         id="startDate"
                         [ngClass]="{
                           'is-invalid':
@@ -198,6 +199,7 @@
                         name="endDate"
                         class="form-control"
                         formControlName="endDate"
+                        [value]="sousCompetitionSelctedData.endDate.value"
                         id="endDate"
                         [ngClass]="{
                           'is-invalid':
@@ -244,6 +246,35 @@
                       </select>
                     </div>
 
+                    <div class="form-group">
+                      <label for="parentCompetition">Parent Competition</label>
+                      <select
+                        type="text"
+                        name="parentCompetition"
+                        class="form-control"
+                        formControlName="parentCompetition"
+                        id="parentCompetition"
+                        [ngClass]="{
+                          'is-invalid':
+                            sousCompetion.formUpdt['parentCompetition']
+                              .touched &&
+                            sousCompetion.formUpdt['parentCompetition'].invalid
+                        }"
+                      >
+                        <option value="">
+                          --choisir une competition parent--
+                        </option>
+                        <option
+                          *ngFor="
+                            let location of sousCompetion.listCompetionParent
+                          "
+                          [value]="location._id"
+                        >
+                          {{ location.name }}
+                        </option>
+                      </select>
+                    </div>
+
                     <button
                       (click)="backClicked()"
                       class="btn btn-primary me-2"
@@ -284,3 +315,5 @@
     </div>
   </div>
 </div>
+
+!arcadeServ.isCreationDone

@@ -5,7 +5,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArcardeService } from '../services/arcarde.service';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
-import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { LevelService } from 'src/app/shared/services/level/level.service';
@@ -16,7 +15,7 @@ import { LevelService } from 'src/app/shared/services/level/level.service';
   styleUrls: ['./update-arcade.component.css'],
 })
 export class UpdateArcadeComponent implements OnInit {
-  arcadSelectedData: Arcarde = new Arcarde();
+  arcardeData: Arcarde = new Arcarde();
   idArcad: string = '';
   formUpadate: FormGroup;
 
@@ -46,12 +45,12 @@ export class UpdateArcadeComponent implements OnInit {
 
   getID() {
     this.idArcad = this.route.snapshot.params['id'];
-    this.arcadSelectedData = this.arcadeServ.getData(this.idArcad);
-    this.initUpdatingForm(this.arcadSelectedData);
+    this.arcardeData = this.arcadeServ.getData(this.idArcad);
+    this.initUpdatingForm(this.arcardeData);
   }
 
   initUpdatingForm(data: Arcarde) {
-    this.arcadeServ.initUpdatingValues(this.arcadSelectedData);
+    this.arcadeServ.initUpdatingValues(this.arcardeData);
   }
 
   resetFormCreation() {

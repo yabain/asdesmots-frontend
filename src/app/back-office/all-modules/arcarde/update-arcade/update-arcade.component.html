@@ -1,35 +1,39 @@
 <div class="page-wrapper">
-  <div class="container-fluid">
-    <!-- container header -->
+  <div class="content container-fluid">
+    <!-- Page Header -->
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
           <h3 class="page-title"></h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor: pointer">
-              <a [routerLink]="'/index'">Accueil</a>
+              <a [routerLink]="'/index'">{{ "Dashboard" | translate }}</a>
             </li>
-            <li class="breadcrumb-item active">Arcarde</li>
-            <li class="breadcrumb-item">Mise à jour</li>
+            <li class="breadcrumb-item" style="cursor: pointer">
+              <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a>
+            </li>
+            <li class="breadcrumb-item active">{{ "Update" | translate }}</li>
           </ul>
         </div>
+
         <div class="row">
           <div class="card card-table">
-            <div class="card card-header">
+            <div class="card-header text-center">
               <h5>
-                Mise à jour Arcade
-                <strong>{{ arcadSelectedData.name }}</strong>
+                {{ "Update Arcarde :" | translate }}
+                <strong> {{ arcardeData.name }} </strong>
               </h5>
             </div>
-            <div class="card card-body">
+            <div class="card-body">
               <form [formGroup]="arcadeServ.formUpdate">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col">
                     <div class="form-group">
-                      <label for="name"> Name </label>
+                      <label for="name"> {{ "Name" | translate }} </label>
                       <input
                         type="text"
                         name="name"
+                        [value]="arcardeData.name"
                         class="form-control"
                         formControlName="name"
                         id="name"
@@ -42,18 +46,18 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="desc">Description</label>
+                      <label for="desc"> Description </label>
                       <input
                         type="text"
-                        name="description"
+                        name="desc"
                         class="form-control"
-                        [value]="arcadeServ.formUpdate.get('description').value"
+                        [value]="arcardeData.description"
                         formControlName="description"
                         id="desc"
                         [ngClass]="{
                           'is-invalid':
-                            arcadeServ.formUpdate.get('description').invalid &&
-                            arcadeServ.formUpdate.get('description').touched
+                            arcadeServ.formUpdate['description'].touched &&
+                            arcadeServ.formUpdate['description'].invalid
                         }"
                       />
                     </div>
@@ -63,13 +67,8 @@
                         class="form-check-input"
                         type="checkbox"
                         formControlName="canRegisterPlayer"
-                        (click)="
-                          arcadeServ.f['canRegisterPlayer'].setValue(
-                            arcadeServ.formUpdate.get('canRegisterPlayer')
-                              ?.value
-                              ? false
-                              : true
-                          )
+                        [value]="
+                          arcadeServ.formUpdate.get('canRegisterPlayer').value
                         "
                         role="switch"
                         id="flexSwitchCheckChecked"
@@ -86,14 +85,11 @@
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        formControlName="isOnlineGame"
-                        (click)="
-                          arcadeServ.f['isOnlineGame'].setValue(
-                            arcadeServ.formUpdate.get('isOnlineGame')?.value
-                              ? false
-                              : true
-                          )
+                        [value]="
+                          arcadeServ.formUpdate.get('isFreeRegistrationPlayer')
+                            .value
                         "
+                        formControlName="isFreeRegistrationPlayer"
                         role="switch"
                         id="flexSwitchCheckChecked"
                       />
@@ -101,25 +97,26 @@
                         class="form-check-label"
                         for="flexSwitchCheckChecked"
                       >
-                        Partie En ligne
-                      </label>
+                        Free player registration ?</label
+                      >
                     </div>
 
                     <div class="form-group">
                       <label for="maxPlayersNumber">
-                        Nombre de joueurs maximum
+                        Maximum number of players
                       </label>
                       <input
                         type="number"
+                        min="0"
                         name="maxPlayersNumber"
                         class="form-control"
                         formControlName="maxPlayersNumber"
+                        [value]="arcardeData.maxPlayersNumber"
                         id="maxPlayersNumber"
                         [ngClass]="{
                           'is-invalid':
-                            arcadeServ.formUpdate['maxPlayersNumber'].invalid &&
-                            arcadeServ.formUpdate.get('maxPlayersNumber')
-                              .touched
+                            arcadeServ.formUpdate['maxPlayersNumber'].touched &&
+                            arcadeServ.formUpdate['maxPlayersNumber'].invalid
                         }"
                       />
                     </div>
@@ -128,13 +125,14 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="startRegistrationDate"
-                        >Registration start date
+                        >Recording start date
                       </label>
                       <input
                         type="datetime-local"
                         name="startRegistrationDate"
                         class="form-control"
                         formControlName="startRegistrationDate"
+                        [value]="arcardeData.startRegistrationDate"
                         id="startRegistrationDate"
                         [ngClass]="{
                           'is-invalid':
@@ -155,6 +153,7 @@
                         name="endRegistrationDate"
                         class="form-control"
                         formControlName="endRegistrationDate"
+                        [value]="arcardeData.endRegistrationDate"
                         id="endRegistrationDate"
                         [ngClass]="{
                           'is-invalid':
@@ -166,49 +165,72 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="startTournamentDate">
-                        Tournament start date
-                      </label>
+                      <label for="startDate"> Start date </label>
                       <input
                         type="datetime-local"
-                        name="startTournamentDate"
+                        name="startDate"
                         class="form-control"
-                        formControlName="startTournamentDate"
-                        id="startTournamentDate"
+                        formControlName="startDate"
+                        value="arcardeData.startDate"
+                        id="startDate"
                         [ngClass]="{
                           'is-invalid':
-                            arcadeServ.formUpdate['startTournamentDate']
-                              .touched &&
-                            arcadeServ.formUpdate['startTournamentDate'].invalid
+                            arcadeServ.formUpdate['lang'].touched &&
+                            arcadeServ.formUpdate['lang'].invalid
                         }"
                       />
                     </div>
 
                     <div class="form-group">
-                      <label for="endTournamentDate">Tournament end date</label>
+                      <label for="endDate"> End Date </label>
                       <input
                         type="datetime-local"
-                        name="endTournamentDate"
+                        name="endDate"
                         class="form-control"
-                        formControlName="endTournamentDate"
-                        id="endTournamentDate"
+                        formControlName="endDate"
+                        value="arcardeData.endDate"
+                        id="endDate"
                         [ngClass]="{
                           'is-invalid':
-                            arcadeServ.formUpdate['endTournamentDate']
-                              .touched &&
-                            arcadeServ.formUpdate['endTournamentDate'].invalid
+                            arcadeServ.formUpdate['endDate'].touched &&
+                            arcadeServ.formUpdate['endDate'].invalid
                         }"
                       />
                     </div>
+
+                    <button
+                      type="button"
+                      style="margin-left: 15px"
+                      class="btn btn-success"
+                      *ngIf="!arcadeServ.isCreationDone"
+                      (click)="doUpdate()"
+                    >
+                      <span *ngIf="arcadeServ.waitingResponse">
+                        <img
+                          src="../../../../assets/img/loader.gif"
+                          alt=""
+                          width="30px"
+                        />
+                      </span>
+
+                      <span *ngIf="!arcadeServ.waitingResponse"
+                        >Sauvegarder
+                        <i class="fa fa-plus" aria-hidden="true"></i
+                      ></span>
+                    </button>
+
+                    <button
+                      (click)="backClicked()"
+                      class="btn btn-primary me-2"
+                      style="
+                        color: #035858 !important;
+                        background-color: #ffff !important;
+                      "
+                    >
+                      <i class="fas fa-arrow-left"></i> Back
+                    </button>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  [disabled]="arcadeServ.formUpdate.invalid"
-                  class="btn btn-primary"
-                >
-                  Mise à jour
-                </button>
               </form>
             </div>
           </div>

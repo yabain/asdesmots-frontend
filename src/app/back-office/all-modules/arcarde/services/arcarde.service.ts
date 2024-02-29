@@ -382,13 +382,14 @@ export class ArcardeService {
   // fonction de test pour les champs de type Date
   verificationAndCreateNewArcarde() {
     const newStartDate = new Date(this.newArcarde.startDate);
+
     if ( newStartDate < this.dateNow ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatOne"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
     else if( this.newArcarde.endDate < this.newArcarde.startDate ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatTwo"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
-    else if( this.newArcarde.startRegistrationDate < this.newArcarde.startDate ) {
+    else if( this.newArcarde.startRegistrationDate >= this.newArcarde.startDate ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatTree"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
     else if( this.newArcarde.startRegistrationDate > this.newArcarde.endDate ) {
@@ -399,6 +400,9 @@ export class ArcardeService {
     }
     else if( this.newArcarde.endRegistrationDate > this.newArcarde.endDate ) {
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatSix"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
+    else if( this.newArcarde.endRegistrationDate <= new Date()){
+      return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatSeven"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
     else {
       this.createNewArcarde();

@@ -15,6 +15,7 @@ import { State } from 'src/app/shared/entities/state.enum';
   styleUrls: ['./list-competition.component.css']
 })
 export class ListCompetitionComponent implements OnInit {
+
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
   id_Arcarde : string = ''; //id arcade of the new register competion;
   formIdArcarde!: FormGroup;
@@ -23,7 +24,7 @@ export class ListCompetitionComponent implements OnInit {
 
   constructor(public sousCompetion: SousCompetitionService,
               private translate: TranslateService,
-              private translataion: TranslationService, 
+              private translataion: TranslationService,
               private fb: FormBuilder,
               private route: Router,
               public level: LevelService,
@@ -51,7 +52,7 @@ export class ListCompetitionComponent implements OnInit {
 
   refresh(){
     /*
-        --refresh the list of arcarde for the current user include event the 
+        --refresh the list of arcarde for the current user include event the
           refresh the undercompetition list
     */
     this.arcardeSrv.loadArcade();
@@ -62,7 +63,7 @@ export class ListCompetitionComponent implements OnInit {
   }
 
   doDelete(){
-    
+
   }
 
   goToPartsList(id: string){
@@ -75,12 +76,16 @@ export class ListCompetitionComponent implements OnInit {
 
   startCompetition(idCompetition: string){
         const id = this.arcardeSrv.getCompetitonArcardeID(idCompetition);
-        
+
         this.sousCompetion.changeState({
           gameArcardeID : id,
           gameCompetitionID: idCompetition,
           state: State.WAITING_PLAYER
         });
+
+  }
+
+  listSuscriberCompetition(sousCompetion: any) {
 
   }
 }

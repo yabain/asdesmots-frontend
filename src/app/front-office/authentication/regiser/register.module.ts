@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RegiserComponent } from './regiser.component';
 import { RegisterRoutingModule } from './register-routing.module';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';;
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';;
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     RegisterRoutingModule,
     RouterModule,
     ReactiveFormsModule,
+    FormsModule,
     ProgressIndeterminateModule,
     TranslateModule.forRoot({
       loader: {

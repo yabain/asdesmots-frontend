@@ -8,7 +8,7 @@ import { CreateArcardeComponent } from './create-arcarde/create-arcarde.componen
 
 const routes: Routes = [
   { path: '', component: ArcardeComponent},
-  { path: 'list-user/:id', component: ListUserArcardeComponent },
+  { path: 'list-user/:idArcarde', component: ListUserArcardeComponent },
   { path: 'list-arcarde', component: ListArcardeComponent },
   { path:  'suscribe', component: ArcadesuscriptionComponent },
   { path: 'create', component:CreateArcardeComponent },

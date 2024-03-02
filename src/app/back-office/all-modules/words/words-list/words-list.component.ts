@@ -37,6 +37,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   levelList = JSON.parse(localStorage.getItem('levels-list'));
   url;
 
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.translate.use(this.translationService.getLanguage());
     // this.getLevelIdToUrl();
     // this.findLevelById(this.levelId);

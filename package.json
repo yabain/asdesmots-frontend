@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start:local": "ng serve --host 0.0.0.0 --disable-host-check --configuration development",
-    "start:prod": "ng serve --host 0.0.0.0 --disable-host-check --configuration production",
+    "start:local": "ng serve --host 0.0.0.0 --configuration local",
+    "start:prod": "ng serve --host 0.0.0.0 --configuration local_prod",
     "build": "ng build",
     "build-prod": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration local_prod",
     "test": "ng test"
   },
   "private": true,

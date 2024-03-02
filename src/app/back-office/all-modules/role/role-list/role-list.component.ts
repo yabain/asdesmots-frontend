@@ -9,7 +9,7 @@ import { Permission } from 'src/app/shared/entities/permission';
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
-  styleUrls: ['./role-list.component.css']
+  styleUrls: ['./role-list.component.css'],
 })
 export class RoleListComponent implements OnInit {
   roleChoose: Role = new Role();
@@ -17,67 +17,71 @@ export class RoleListComponent implements OnInit {
   permissionData: Permission = new Permission();
   openAccordion: boolean[] = [];
 
-  constructor(public roleService: RoleService, 
-              private translate: TranslateService,
-              private translation: TranslationService,
-              private router: Router  
-              ) {
-      this.translate.use(this.translation.getLanguage());
-      this.loadListRole();
-      this.roleService.initFormUpdate();
-      this.roleService.initAddingForm();
-   }
-
-  ngOnInit(): void {
+  constructor(
+    public roleService: RoleService,
+    private translate: TranslateService,
+    private translation: TranslationService,
+    private router: Router
+  ) {
+    this.translate.use(this.translation.getLanguage());
+    this.loadListRole();
+    this.roleService.initFormUpdate();
+    this.roleService.initAddingForm();
   }
 
-  loadListRole(){
-      if(this.roleService.listRole.length == 0){
-          this.roleService.getListRole();
-      }
+  ngOnInit(): void {}
+
+  loadListRole() {
+    if (this.roleService.listRole.length == 0) {
+      this.roleService.getListRole();
+    }
   }
 
-  setValue(role: Role){
-      this.roleService.initUpdateForm(role);
+  setValue(role: Role) {
+    this.roleService.initUpdateForm(role);
 
-      if(this.roleService.listPermission.length == 0){
-          this.roleService.getListPermission();
-      }
+    if (this.roleService.listPermission.length == 0) {
+      this.roleService.getListPermission();
+    }
   }
 
-  navigate(id: string){
-        this.router.navigateByUrl('role/users/' +id);
-  }
-  
-  navigateToPermissionList(id: string){
-    if(this.roleService.listPermission.length == 0){
-          this.roleService.getListPermission();
-      }
-        this.router.navigateByUrl('role/list/permission/'+id);
+  navigate(id: string) {
+    this.router.navigateByUrl('role/users/' + id);
   }
 
-  goToListUser(){
-
+  navigateToPermissionList(id: string) {
+    if (this.roleService.listPermission.length == 0) {
+      this.roleService.getListPermission();
+    }
+    this.router.navigateByUrl('role/list/permission/' + id);
   }
 
-  addPermission(){
-        this.roleService.addPermissionOnRole({roleId: this.roleChoose._id, permissionId: this.roleService.formAddPermission.get('idPermission')?.value });
+  goToListUser() {}
+
+  addPermission() {
+    this.roleService.addPermissionOnRole({
+      roleId: this.roleChoose._id,
+      permissionId: this.permissionData._id,
+    });
   }
 
-  doDelete(){
-      this.roleService.deleteRole(this.roleChoose);
+  doDelete() {
+    this.roleService.deleteRole(this.roleChoose);
   }
 
- doRemovePermission(){
-    this.roleService.removePermission({roleId : this.roleChoose._id, permissionId: this.permissionData._id});
+  doRemovePermission() {
+    this.roleService.removePermission({
+      roleId: this.roleChoose._id,
+      permissionId: this.permissionData._id,
+    });
   }
 
-  reset(){
+  reset() {
     this.roleService.permissionAdded = false;
   }
 
-  check(permission: Permission){
-      const include = this.roleChoose.permissions.includes(permission);
-      console.log('is exited', include);
+  check(permission: Permission) {
+    const include = this.roleChoose.permissions.includes(permission);
+    console.log('is exited', include);
   }
 }

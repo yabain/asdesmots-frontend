@@ -104,8 +104,9 @@ export class ListArcardeComponent implements OnInit {
       this.arcadeServ.loadArcade();
    }
 
-   goToListUser(id: string){
-      this.arcadeServ.getListUsersOfArcardes(id);
+    goToListUser(id: string ){
+    console.log("test id :", id)
+      // await this.arcadeServ.getListUsersOfArcardes(id);
       this.router.navigateByUrl('/arcarde/list-user/'+id);
    }
 

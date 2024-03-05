@@ -98,8 +98,8 @@ export class SousCompetitionService {
           localisation: data.localisation,
           maxPlayerLife: data.maxPlayerLife,
           maxTimeToPlay: data.maxTimeToPlay,
-          startDate: data.startDate,
-          endDate: data.endDate,
+          startDate: (data.startDate).slice(0,-8),
+          endDate: (data.endDate).slice(0,-8),
           maxOfWinners: data.maxOfWinners,
           lang: data.lang,
           parentCompetition: data.parentCompetition

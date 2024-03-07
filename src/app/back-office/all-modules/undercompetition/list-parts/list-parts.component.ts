@@ -23,7 +23,8 @@ export class ListPartsComponent implements OnInit {
               private route: ActivatedRoute,
               private SousCompetSrv: SousCompetitionService,
               public level: LevelService
-             ) { 
+             ) {
+                this.gamePartSrv.dateNow = new Date();
                 this.gamePartSrv.initForm();
                 this.getListParts();
                 this.getLevel();
@@ -40,7 +41,7 @@ export class ListPartsComponent implements OnInit {
   }
 
   addPart(){
-    this.gamePartSrv.AddGamePart();
+    this.gamePartSrv.checkDateGamePartAndAddGamePart();
   }
 
   reset(){

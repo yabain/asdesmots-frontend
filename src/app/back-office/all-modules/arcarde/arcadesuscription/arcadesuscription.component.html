@@ -6,7 +6,7 @@
           <div class="col">
             <h3 class="page-title"></h3>
             <ul class="breadcrumb">
-              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
+              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }} </a></li>
               <li class="breadcrumb-item " style="cursor: pointer;" > <a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a> </li>
               <li class="breadcrumb-item active">Souscrire </li>
 
@@ -54,10 +54,10 @@
                 <table datatable class="table table-stripped table-hover">
                   <thead class="thead-light">
                     <tr>
-                      <th>{{'Competition Name' | translate }}s</th>
+                      <th>{{'competitionName' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-
-                      <th>{{'is Online Game' | translate }}</th>
+                      
+                      <th>{{'online' | translate }}</th>
                       <th class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -65,7 +65,7 @@
                   <tbody *ngIf="arcadeServ.listAllArcarde.length != 0" >
 
                       <tr *ngFor="let arcarde of arcadeServ.listAllArcarde" data-bs-toggle="modal"
-                         (click)="loadLocation(arcarde)" >
+                          >
                           <td>
                                 <span> {{ arcarde.name }} </span>
                           </td>
@@ -82,8 +82,7 @@
                           <td>
                             <div class="col-auto">
 
-
-                              <a class="badge badge-pill bg-warning-light"
+                              <a class="badge badge-pill bg-warning-light" (click)="loadLocation(arcarde)"
                                 style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#confirm">
                                 <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Suscribe to this arcarde"></i>
                               </a>
@@ -140,8 +139,8 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (hidden)="reset()" id="cancel-btn2">
-            Close
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
+            {{ 'close' | translate }}
           </button>
           <button type="button" class="btn btn-success" *ngIf="!arcadeServ.suscriptionDone"  (click)="doSuscription()" >
             <span *ngIf="!arcadeServ.waitingResponseSuscrib">Souscrire <i class="fa fa-plus" aria-hidden="true"></i> </span>

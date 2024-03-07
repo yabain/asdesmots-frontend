@@ -47,7 +47,7 @@ export class UpdateCompetitionComponent implements OnInit {
   getID(){
       this.idCompetition = this.route.snapshot.params['id'];
       this.sousCompetitionSelctedData = this.sousCompetion.getData(this.idCompetition);
-      this.parentID = this.sousCompetitionSelctedData.parentCompetition._id;
+      this.parentID = this.sousCompetitionSelctedData.parentCompetition?._id;
       this.initUpdatingForm(this.sousCompetitionSelctedData);
     }
 

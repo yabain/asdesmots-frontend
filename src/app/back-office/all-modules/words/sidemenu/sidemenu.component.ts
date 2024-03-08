@@ -55,6 +55,7 @@ export class SidemenuComponent implements OnInit {
   // selectedLevelId: string;
   filteredLevelList: Level[];
   selectedLevelId: string;
+  oldLevelId: any;
 
 
 
@@ -278,8 +279,49 @@ export class SidemenuComponent implements OnInit {
   // }
 
   transferWords(): void {
+    //recupérer id du niveau vers lequel transférer les mots
+   this.newLevelId = this.transferWordsForm.value.groupHeriterId;
+   console.log("id du niveau transférer mots: ", this.newLevelId);
+   //recupérer id du niveau à supprimer ie ancien niveau
+   this.oldLevelId = this.levelData._id;
+   console.log("id du niveau à supprimer: ", this.oldLevelId);
+   //appel méthode transfertWords() de level.service
 
-  }
+   // this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
+   //   (response) => {
+   //     console.log('Mots transférés avec succès');
+   //     // Effectuer d'autres actions après le transfert des mots
+   //   },
+   //   (error) => {
+   //     console.error('Erreur lors du transfert des mots', error);
+   //     // Gérer l'erreur si nécessaire
+   //   }
+   // );
+
+   this.levelService.transferWords(this.oldLevelId, this.newLevelId)
+   .then(() => {
+     this.submitted = false;
+     this.waitingResponse = false;
+     this.refreshList();
+     $('#cancel-btn').click();
+   })
+   .catch((error) => {
+     this.submitted = false;
+     this.waitingResponse = false;
+   });
+
+   // this.levelService.deleteLevelId(this.oldLevelId).then(() => {
+   //   this.submitted = false;
+   //   this.waitingResponse = false;
+   //   this.refreshList();
+   //   $('#cancel-btn').click();
+   // })
+   // .catch((error) => {
+   //   this.submitted = false;
+   //   this.waitingResponse = false;
+   // });
+
+ }
 
   navigate(name: any) {
     this.name = name;

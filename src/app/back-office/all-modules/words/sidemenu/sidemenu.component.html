@@ -117,7 +117,7 @@
         <div class="modal-text text-center">
           <h2>{{ 'delete' | translate }} <b>{{ levelData?.name }}</b> ?</h2>
           <br>
-          <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm">
+          <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm" >
             <!-- Formulaire pour le transfert des mots -->
             <form (ngSubmit)="transferWords()" [formGroup]="transferWordsForm">
               <!-- <p>{{'words.transferMessage' | translate}}</p> -->

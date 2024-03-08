@@ -47,12 +47,13 @@ export class SidemenuComponent implements OnInit {
   deleteLevelForm: FormGroup;
   transferWordsForm: FormGroup;
   wordToSpeak: string = '';
-  modalVisible = true;
+  modalVisible: boolean = true;
   deletedLevel: any;
   // selectedLevelId: string;
   filteredLevelList: Level[];
   selectedLevelId: string;
   oldLevelId: string;
+  // showModal: boolean = true;
 
 
 
@@ -250,10 +251,12 @@ export class SidemenuComponent implements OnInit {
       return;
     }
 
-    this.waitingResponse = true
+    this.waitingResponse = true;
+    // this.modalVisible = false;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
     this.levelService.deleteLevel(this.deleteLevelForm.value)
       .then(() => {
+        this.modalVisible = false;
         this.submitted = false;
         this.waitingResponse = false;
         this.refreshList();
@@ -263,6 +266,7 @@ export class SidemenuComponent implements OnInit {
         this.submitted = false;
         this.waitingResponse = false;
       });
+      // this.modalVisible = false;
   }
 
   // deleteLevel(): void {
@@ -284,8 +288,10 @@ export class SidemenuComponent implements OnInit {
    console.log("id du niveau à supprimer: ", this.oldLevelId);
    //appel méthode transfertWords() de level.service
    this.waitingResponse = true;
+  //  this.modalVisible = false;
    this.levelService.transferWords(this.oldLevelId, this.newLevelId)
    .then(() => {
+    // this.modalVisible = false;
      this.submitted = false;
      this.waitingResponse = false;
      this.refreshList();
@@ -295,6 +301,8 @@ export class SidemenuComponent implements OnInit {
      this.submitted = false;
      this.waitingResponse = false;
    });
+  //  this.modalVisible = false;
+
 
    // this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
    //   (response) => {

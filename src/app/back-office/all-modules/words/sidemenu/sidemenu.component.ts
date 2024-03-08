@@ -22,10 +22,7 @@ import { Word } from 'src/app/shared/entities/word';
   styleUrls: ['./sidemenu.component.css'],
 })
 export class SidemenuComponent implements OnInit {
-// wordFrForm: any;
-// addWords() {
-// throw new Error('Method not implemented.');
-// }
+
 
   totalWords: number;
   totalEnWords: number;
@@ -35,7 +32,7 @@ export class SidemenuComponent implements OnInit {
   levels: any;
   levelList?: any = '';
   levelData?: any = '';
-  newLevelId: any;
+  newLevelId: string;
   levelOfList: any[] ;
   public levelControler: any
   waiting: boolean = false;
@@ -55,7 +52,7 @@ export class SidemenuComponent implements OnInit {
   // selectedLevelId: string;
   filteredLevelList: Level[];
   selectedLevelId: string;
-  oldLevelId: any;
+  oldLevelId: string;
 
 
 
@@ -286,18 +283,6 @@ export class SidemenuComponent implements OnInit {
    this.oldLevelId = this.levelData._id;
    console.log("id du niveau à supprimer: ", this.oldLevelId);
    //appel méthode transfertWords() de level.service
-
-   // this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
-   //   (response) => {
-   //     console.log('Mots transférés avec succès');
-   //     // Effectuer d'autres actions après le transfert des mots
-   //   },
-   //   (error) => {
-   //     console.error('Erreur lors du transfert des mots', error);
-   //     // Gérer l'erreur si nécessaire
-   //   }
-   // );
-
    this.levelService.transferWords(this.oldLevelId, this.newLevelId)
    .then(() => {
      this.submitted = false;
@@ -310,16 +295,27 @@ export class SidemenuComponent implements OnInit {
      this.waitingResponse = false;
    });
 
-   // this.levelService.deleteLevelId(this.oldLevelId).then(() => {
-   //   this.submitted = false;
-   //   this.waitingResponse = false;
-   //   this.refreshList();
-   //   $('#cancel-btn').click();
-   // })
-   // .catch((error) => {
-   //   this.submitted = false;
-   //   this.waitingResponse = false;
-   // });
+   // this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
+   //   (response) => {
+   //     console.log('Mots transférés avec succès');
+   //     // Effectuer d'autres actions après le transfert des mots
+   //   },
+   //   (error) => {
+   //     console.error('Erreur lors du transfert des mots', error);
+   //     // Gérer l'erreur si nécessaire
+   //   }
+   // );
+
+  //  this.levelService.deleteLevelId(this.oldLevelId).then(() => {
+  //    this.submitted = false;
+  //    this.waitingResponse = false;
+  //    this.refreshList();
+  //    $('#cancel-btn').click();
+  //  })
+  //  .catch((error) => {
+  //    this.submitted = false;
+  //    this.waitingResponse = false;
+  //  });
 
  }
 

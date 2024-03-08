@@ -135,7 +135,7 @@
                   {{ 'cancel' | translate }}
                 </button>
                 <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
-                  [disabled]="!transferWordsForm.valid">
+                  [disabled]="!transferWordsForm.valid" (ngSubmit)="transferWords()">
                   {{ 'words.transferAndDelete' | translate }}
                 </button>
                 <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>

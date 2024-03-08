@@ -283,6 +283,7 @@ export class SidemenuComponent implements OnInit {
    this.oldLevelId = this.levelData._id;
    console.log("id du niveau à supprimer: ", this.oldLevelId);
    //appel méthode transfertWords() de level.service
+   this.waitingResponse = true;
    this.levelService.transferWords(this.oldLevelId, this.newLevelId)
    .then(() => {
      this.submitted = false;

@@ -156,27 +156,7 @@ export class LevelService {
   //     );
   // }
 
-  //Supprimer un niveau et transférer ses mots dans un autre niveau
 
-  // transferWords(oldLevelId: string, newLevelId: string): void {
-  //   // Récupérer les mots associés à l'ancien niveau
-  //   this.http.get<any[]>(`https://asdesmots-api.yaba-in.com/gamelevel/${oldLevelId}/words`, this.httpOptions).subscribe(data => {
-  //     this.allWords = data;
-  //   });
-
-  //   console.log(this.allWords);
-
-  //   this.http.get<any[]>('https://asdesmots-api.yaba-in.com/gamelevel', this.httpOptions).subscribe(response => {
-  //     this.allLevels = response;
-  // });
-
-  // console.log(this.allLevels);
-
-  // // const levelFilter = this.allLevels.find(level => level._id === newLevelId );
-  // // console.log("niveau spécifique"+ levelFilter.name);
-  // // levelFilter.words.push(...this.allWords);
-
-  // }
 
   // findLevelById(levelListItem: Level[], levelId: string): Level | undefined {
   //   let compteur: number;
@@ -187,67 +167,97 @@ export class LevelService {
   //   }
   // }
 
-  // transferWords(oldLevelId: string, newLevelId: string): void {
-  //   this.http.get<any[]>(`https://asdesmots-api.yaba-in.com/gamelevel/${oldLevelId}/words`, this.httpOptions).subscribe(data => {
-  //     this.allWords = data;
-  //     console.log(this.allWords);
+  transferWords(oldLevelId: string, newLevelId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // Récupérer les mots associés à l'ancien niveau
+      this.api.get(`gamelevel/${oldLevelId}/words`, this.headers)
+        .subscribe(data => {
+          console.log("réponse serveur à la récupération des mots du niveau à supprimer: ", data);
+          this.allWords = Array.from(data.data);
+          console.log("mots récupérés: ", this.allWords);
 
-  //     this.http.get<any[]>('https://asdesmots-api.yaba-in.com/gamelevel', this.httpOptions).subscribe(response => {
-  //       this.allLevels = response;
-  //       console.log(this.allLevels);
+          // Récupérer tous les niveaux
+          this.api.get('gamelevel', this.headers)
+            .subscribe(response => {
+              console.log("réponse serveur à la récupération de tous les niveaux: ", response);
+               this.allLevels = Array.from(response.data);
+              console.log("niveaux récupérés: ", this.allLevels);
 
-  //       Rechercher le niveau spécifique en fonction de son identifiant
-  //       const specificLevel = this.allLevels.find((level) => level._id === newLevelId);
-  //       const specificLevel = this.findLevelById(this.allLevels, newLevelId);
-  //       console.log("niveau spécifique: " + specificLevel);
-  //       specificLevel.words.push(...this.allWords);
-  //       if (specificLevel) {
-  //         console.log("Niveau spécifique:", specificLevel);
-  //       } else {
-  //         console.log("Niveau spécifique non trouvé.");
-  //       }
+              // Rechercher le niveau spécifique en fonction de son identifiant
+              const specificLevel = this.allLevels.find((level) => level._id === newLevelId);
+              console.log("niveau spécifique trouvé avec ses informations de base: ", specificLevel);
+              console.log("taille de specificLevel avant ajout des mots du niveau à supprimer: ", specificLevel.words.length);
 
-  //       const specificLevel = this.allLevels.find((level) => level._id === newLevelId);
-  //         if (specificLevel) {
-  //           console.log("Niveau spécifique:", specificLevel);
-  //           specificLevel.words.push(...this.allWords);
-  //         } else {
-  //           console.log("Niveau spécifique non trouvé.");
-  //         }
+              // Ajouter les mots du niveau à supprimer au niveau spécifique
+              this.allWords.forEach(word => {
+                specificLevel.words.push(word._id);
+              });
 
-  //       let specificLevel: Level;
-  //       for(const level of this.allLevels) {
-  //         if(level._id === newLevelId) {
-  //           specificLevel = level;
-  //           console.log("niveau précis: " + specificLevel);
-  //         }
-  //       }
+              console.log("les nouvelles informations sur specificLevel: ", specificLevel);
+              console.log("taille de specificLevel après ajout des mots du niveau à supprimer: ", specificLevel.words.length);
 
-  //     });
-  //   });
+              this.api.delete(`gamelevel/${oldLevelId}`, this.headers)
+                .subscribe(
+                  (response) => {
+                    console.log('Level deleted mamelem', response);
+                    if (response.statusCode === 200) {
+                      this.toastr.success(
+                        'Level has been deleted successfully',
+                        'Success',
+                        { timeOut: 5000 }
+                      );
+                    }
+                    resolve(response);
+                  },
+                  (error) => {
+                    this.errorsService.errorsInformations(error, 'delete level');
+                    reject(error);
+                  }
+                );
+            });
+        });
+    });
+  }
+
+  // transferWords(oldLevelId: string, newLevelId: string): Observable<any> {
+  //   // Récupérer les mots associés à l'ancien niveau
+  //   const words$ = this.http.get<any>(`https://asdesmots-api.yaba-in.com/gamelevel/${oldLevelId}/words`, this.httpOptions)
+  //     .pipe(
+  //       tap(data => console.log("Mots récupérés :", data)),
+  //       map(data => Array.from(data.data))
+  //     );
+
+  //   // Récupérer tous les niveaux
+  //   const levels$ = this.http.get<any>('https://asdesmots-api.yaba-in.com/gamelevel', this.httpOptions)
+  //     .pipe(
+  //       tap(response => console.log("Niveaux récupérés :", response)),
+  //       map(response => Array.from(response.data))
+  //     );
+
+  //   return forkJoin([words$, levels$]).pipe(
+  //     tap(([words, levels]) => {
+  //       // Rechercher le niveau spécifique en fonction de son identifiant
+  //       const specificLevel = levels.find(level => level._id === newLevelId);
+
+  //       console.log("Taille de specificLevel avant ajout des mots :", specificLevel.words.length);
+  //       console.log("Informations avant ajout de specificLevel :", specificLevel);
+
+  //       // Ajouter les mots du niveau à supprimer au niveau spécifique
+  //       words.forEach(word => {
+  //         specificLevel.words.push(word._id);
+  //       });
+
+  //       console.log("Taille de specificLevel après ajout des mots :", specificLevel.words.length);
+  //       console.log("Informations de specificLevel après ajout :", specificLevel);
+
+  //       // Supprimer l'ancien niveau
+  //       return this.http.delete<any>(`https://asdesmots-api.yaba-in.com/gamelevel/${oldLevelId}`, this.httpOptions).pipe(
+  //         map(() => specificLevel)
+  //       );
+  //     })
+  //   );
   // }
 
-  // transferWords(oldLevelId: string, newLevelId: string): void {
-  //   this.http.get<any[]>(`https://asdesmots-api.yaba-in.com/gamelevel/${oldLevelId}/words`, this.httpOptions).subscribe(data => {
-  //     this.allWords = data;
-
-  //     this.http.get<any[]>('https://asdesmots-api.yaba-in.com/gamelevel', this.httpOptions).subscribe(response => {
-  //       this.allLevels = response;
-
-  //       const levelFilter = this.allLevels.find(level => level._id === newLevelId);
-
-  //       if (levelFilter) {
-  //         console.log("Niveau spécifique : " + levelFilter.name);
-  //         // levelFilter.words.push(...this.allWords);
-  //       } else {
-  //         console.log("Niveau non trouvé.");
-  //       }
-
-  //       console.log(this.allWords);
-  //       console.log(this.allLevels);
-  //     });
-  //   });
-  // }
 
   // permet d'update les infos d'un niveau
   updateLevel(levelId: any, levelData?: any): Promise<any> {

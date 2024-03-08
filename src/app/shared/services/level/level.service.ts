@@ -128,6 +128,28 @@ export class LevelService {
     });
   }
 
+   // deleteLevelId(levelDataId) {
+  //   return new Promise((resolve, reject) => {
+  //     this.api.delete(`gamelevel/${levelDataId}`, this.headers).subscribe(
+  //       (response) => {
+  //         console.log('Level deleted', response);
+  //         if (response.statusCode === 200) {
+  //           this.toastr.success(
+  //             'Level has been deleted successfully',
+  //             'Success',
+  //             { timeOut: 5000 }
+  //           );
+  //         }
+  //         resolve(response);
+  //       },
+  //       (error) => {
+  //         this.errorsService.errorsInformations(error, 'delete level');
+  //         reject(error);
+  //       }
+  //     );
+  //   });
+  // }
+
   // deleteLevelById(gamelevelID: string): void {
   //   this.http
   //     .delete<any>(

@@ -41,10 +41,9 @@
             </div>
           </div>
           <div class="table-responsive" *ngIf="!waitingResponse">
-            <table datatable class="table table-stripped table-hover">
+            <table class="table table-stripped table-hover">
               <tbody>
                 <tr *ngFor="let level of levelList; let i = index" [class.selected]="curentLevel === level._id">
-                  <!-- <tr [routerLink]="'/words/words-list'"> -->
                   <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
                   <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">

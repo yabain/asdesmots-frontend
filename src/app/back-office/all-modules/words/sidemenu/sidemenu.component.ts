@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnInit, SimpleChanges } from '@angular/core';
 import {
   Event,
   NavigationStart,
@@ -21,7 +21,7 @@ import { Word } from 'src/app/shared/entities/word';
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.css'],
 })
-export class SidemenuComponent implements OnInit {
+export class SidemenuComponent implements OnInit{
 
 
   totalWords: number;
@@ -252,9 +252,8 @@ export class SidemenuComponent implements OnInit {
     }
 
     this.waitingResponse = true;
-    // this.modalVisible = false;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
-    this.levelService.deleteLevel(this.deleteLevelForm.value)
+    this.levelService.deleteLevelId(this.levelData._id)
       .then(() => {
         this.modalVisible = false;
         this.submitted = false;
@@ -266,18 +265,7 @@ export class SidemenuComponent implements OnInit {
         this.submitted = false;
         this.waitingResponse = false;
       });
-      // this.modalVisible = false;
   }
-
-  // deleteLevel(): void {
-  //   console.log("bonjour");
-  //   this.deleteLevelForm.value.levelDataId = this.levelData._id;
-  //   console.log(this.deleteLevelForm.value.levelDataId);
-  //   this.levelService.deleteLevelById(this.deleteLevelForm.value.levelDataId);
-  //   this.modalVisible = false;
-  //   this.transferWordsForm.reset();
-  //   this.deleteLevelForm.reset();
-  // }
 
   transferWords(): void {
     //recupérer id du niveau vers lequel transférer les mots
@@ -288,10 +276,13 @@ export class SidemenuComponent implements OnInit {
    console.log("id du niveau à supprimer: ", this.oldLevelId);
    //appel méthode transfertWords() de level.service
    this.waitingResponse = true;
-  //  this.modalVisible = false;
    this.levelService.transferWords(this.oldLevelId, this.newLevelId)
    .then(() => {
-    // this.modalVisible = false;
+     console.log("heyyy ronice");
+     return this.levelService.deleteLevelId(this.oldLevelId);
+   })
+   .then(() => {
+     this.modalVisible = false;
      this.submitted = false;
      this.waitingResponse = false;
      this.refreshList();
@@ -300,22 +291,23 @@ export class SidemenuComponent implements OnInit {
    .catch((error) => {
      this.submitted = false;
      this.waitingResponse = false;
+     console.error(error);
    });
-  //  this.modalVisible = false;
 
-
-   // this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
-   //   (response) => {
-   //     console.log('Mots transférés avec succès');
-   //     // Effectuer d'autres actions après le transfert des mots
-   //   },
-   //   (error) => {
-   //     console.error('Erreur lors du transfert des mots', error);
-   //     // Gérer l'erreur si nécessaire
-   //   }
-   // );
+  //  this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
+  //    (response) => {
+  //       this.modalVisible = false;
+  //      console.log('Mots transférés avec succès');
+  //      // Effectuer d'autres actions après le transfert des mots
+  //    },
+  //    (error) => {
+  //      console.error('Erreur lors du transfert des mots', error);
+  //      // Gérer l'erreur si nécessaire
+  //    }
+  //  );
 
   //  this.levelService.deleteLevelId(this.oldLevelId).then(() => {
+  //    this.modalVisible = false;
   //    this.submitted = false;
   //    this.waitingResponse = false;
   //    this.refreshList();
@@ -397,3 +389,7 @@ export class SidemenuComponent implements OnInit {
       });
   }
 }
+function ngAfterViewInit() {
+  throw new Error('Function not implemented.');
+}
+

@@ -10,20 +10,20 @@
                     </ul>
                 </div>
                  <div class="col-auto">
-                    <a  class="btn btn-primary me-2" 
+                    <a  class="btn btn-primary me-2"
                         data-bs-target="#addParts"
                         data-bs-toggle="modal"
                         style="color: #035858 !important; background-color: #ffff !important;">
                         <i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Create new Parts for this competition"></i>
                     </a>
-                </div> 
+                </div>
             </div>
         </div>
 
         <div class="text-center">
           <span *ngIf="gamePartSrv.waitingResponse">
             <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-          </span> 
+          </span>
         </div>
 
         <div class="row" *ngIf="!gamePartSrv.waitingResponse">
@@ -41,7 +41,7 @@
                           <tr>
                             <th>{{'name' | translate }} </th>
                             <th>Description</th>
-                            <th> {{ 'level' | translate }} </th>                            
+                            <th> {{ 'level' | translate }} </th>
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
@@ -59,7 +59,7 @@
                                 class="btn btn-sm btn-white text-warning me-2">
                                     <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details"></i>
                                 </a>
-                              
+
                                 <a data-bs-toggle="modal" data-bs-target="#deletePart"
                                   class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1" data-toggle="tooltip" data-placement="top" title="delete this part of this competition"></i></a>
                             </td>
@@ -73,6 +73,7 @@
                                   <br>Aucune Partie !
                                 </td>
                                 <td></td>
+                                <td></td>
                               </tr>
                         </tbody>
                       </table>
@@ -81,7 +82,7 @@
                 </div>
               </div>
             </div>
-          </div>  
+          </div>
 
 
           <div class="modal custom-modal fade" id="deletePart" role="dialog">
@@ -99,7 +100,7 @@
                     <p>Voulez vous vraiment supprimer la partie: << <b>{{ partChooseData.name }}>> </b> à cette competition ? </p>
                   </div>
                 </div>
-        
+
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
                     {{ 'close' | translate }}
@@ -124,10 +125,10 @@
                 </div>
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
-                    
+
                   </div>
                   <div class="modal-text text-center">
-                    
+
                     <p class="text-center" *ngIf="gamePartSrv.waitingResponse">
                         <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
                     </p>
@@ -140,7 +141,7 @@
                                         <input type="text" class="form-control" formControlName="name" name="name" id="name">
                                     </div>
 
-                                   
+
                                     <div class="form-group">
                                       <label for="startDate"> {{'startDate' | translate }} </label>
                                       <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
@@ -149,20 +150,20 @@
                             </div>
 
                             <div class="col">
-                                    
+
 
                                     <div class="form-group">
                                         <label for="numberOfWords"> Nombre de Mots (Par Joueur) </label>
                                         <input type="number" class="form-control" formControlName="numberOfWord" name="numberOfWords" id="numberOfWords">
                                     </div>
 
-                                   
+
                                     <div class="form-group">
                                         <label for="endDate"> {{'endDate' | translate }} </label>
                                         <input type="date" class="form-control" formControlName="endDate" name="endDate" id="endDate">
                                     </div>
 
-                                    
+
                             </div>
                             <div class="form-group">
                               <label for="description"> Description </label>
@@ -173,7 +174,7 @@
                     </form>
                   </div>
                 </div>
-        
+
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
                     {{ 'close' | translate }}
@@ -210,7 +211,7 @@
                                         [value]="partChooseData.numberOfWord" disabled>
                                 </div>
                               </div>
-                             
+
 
                               <div class="row form-group">
                                 <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
@@ -234,13 +235,13 @@
                         </form>
                   </div>
                 </div>
-        
+
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
                     {{'close' | translate }}
 
                   </button>
-                  
+
                 </div>
               </div>
             </div>

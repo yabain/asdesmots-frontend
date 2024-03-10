@@ -9,6 +9,7 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -263,6 +264,8 @@ this.listUser = [];
           console.log('creation Response', response);
           this.waitingResponse = false;
           this.isCreationDone = true;
+          // this.waitingResponse = true;
+          // this.isCreationDone = false;
           this.toastr.success('Arcarde Created', this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
       }, (error: any)=>{
         if (error.status == 500) {
@@ -276,6 +279,7 @@ this.listUser = [];
         }
         this.waitingResponse = false;
       });
+      //  this.waitingResponse = false;
   }
 
     changeState(data: {gameArcardeID: string, state: any}){
@@ -508,6 +512,7 @@ this.listUser = [];
     } else {
       this.createNewArcarde();
       this.location.back();
+      this.loadArcade();
     }
   }
 

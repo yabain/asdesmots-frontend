@@ -31,7 +31,7 @@ export class ListArcardeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
-   // this.loadAllArcarde();
+  //  this.loadAllArcarde();
     setTimeout(()=>{
         this.loadAllUser();
     }, 2500);

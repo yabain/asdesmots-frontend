@@ -24,7 +24,7 @@
               <i class="fa fa-user-plus" aria-hidden="true"></i>
             </a>
             <a class="btn btn-primary me-2" data-toggle="tooltip" data-placement="top" title="refresh this list "
-              style="color: #035858 !important; background-color: #ffff !important;">
+              style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
               <i class="fas fa-refresh"></i>
             </a>
             <a class="btn btn-primary me-2"
@@ -109,7 +109,7 @@
                     <td> {{ user.phoneNumber }} </td>
 
                     <td class="text-center">
-                        <button class="btn btn-danger">
+                        <button class="btn btn-danger" (click)="removeUser(user._id)">
                             remove
                         </button>
                     </td>

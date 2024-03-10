@@ -42,4 +42,16 @@ export class ListUserArcardeComponent implements OnInit {
   //     this.arcardeServ.getListUsersOfArcardes(this.idArcard);
   // }
 
+  refresh() {
+    this.arcardeServ.getListUsersOfArcardes(this.idArcard);
+  }
+
+  removeUser(userId: string) {
+    this.arcardeServ.UnsuscribeUserToAcarde({
+      gameID: this.idArcard,
+      playerID: userId
+    });
+    this.refresh()
+  }
+
 }

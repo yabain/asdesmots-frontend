@@ -50,7 +50,7 @@ export class ArcardeComponent implements OnInit {
   }
 
   doUnsuscription(){
-     this.arcadeServ.UnsuscribeUserToAcarde({ userID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData._id});
+     this.arcadeServ.UnsuscribeUserToAcarde({ playerID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData._id});
    }
 
    createArcarde(){

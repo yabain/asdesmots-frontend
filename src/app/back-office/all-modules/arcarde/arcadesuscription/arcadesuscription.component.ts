@@ -5,7 +5,6 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-arcadesuscription',

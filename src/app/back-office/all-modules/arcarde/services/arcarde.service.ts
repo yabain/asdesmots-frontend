@@ -378,10 +378,10 @@ this.listUser = [];
         });
   }
 
-  UnsuscribeUserToAcarde(requestBody: {userID: string, gameID: string }){
+  UnsuscribeUserToAcarde(requestBody: { gameID: string, playerID: string,}){
       this.waitingResponse = true;
 
-      this.api.delete(Endpoint.ADD_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
+      this.api.post(Endpoint.DELETE_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{
             this.toastr.success(this.languageService.transformMessageLanguage('Unsuscription Done'), this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
             this.unsuscriptionDone = true;
             this.waitingResponse = false;

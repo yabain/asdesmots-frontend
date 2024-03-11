@@ -404,6 +404,9 @@ export class ArcardeService {
     else if( this.newArcarde.endRegistrationDate <= new Date()){
       return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatSeven"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
     }
+    else if( this.newArcarde.endRegistrationDate >= this.newArcarde.startDate){
+      return this.toastr.error(this.languageService.transformMessageLanguage("logiqueDatEight"), this.languageService.transformMessageLanguage('error'), { timeOut: 5000 });
+    }
     else {
       this.createNewArcarde();
     }

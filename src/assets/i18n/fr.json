@@ -146,6 +146,7 @@
     "logiqueDatFive":"La date de fin d'enregistrement doit être supérieure à la date de fin d'enregistrement",
     "logiqueDatSix":"La date de fin d'enregistrement doit être inférieure à la date de fin",
     "logiqueDatSeven": "La date de fin d'enregistrement doit être strictement supérieure à la date ou à l'heure du jour",
+    "logiqueDatEight": "La date de fin d'enregistrement doit être strictement inférieure à la date de début d'arcarde",
     "home": "Acceuil",
     "french": "Français",
     "back": "Retour",

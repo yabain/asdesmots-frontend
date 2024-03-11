@@ -140,6 +140,7 @@
     "logiqueDatFive":"The recording end date must be greater than the recording end date",
     "logiqueDatSix":"The recording end date must be less than the end date",
     "logiqueDatSeven": "The recording end date must be strictly greater than the today's date or time",
+    "logiqueDatEight": "The registration end date must be strictly less than the arcarde start date",
     "back": "Back",
     "next": "Next",
     "french": "French",

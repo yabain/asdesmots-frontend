@@ -1,0 +1,89 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <ul class="breadcrumb">
+                      <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">Accueil</a></li>
+                        <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">Competitions</a></li>
+                        <li class="breadcrumb-item active"> Participants</li>
+                    </ul>
+                </div>
+                <!-- <div class="col-auto">
+                    <a  class="btn btn-primary me-2" 
+                        data-bs-target="#addCriteria"
+                        data-bs-toggle="modal"
+                        style="color: #035858 !important; background-color: #ffff !important;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>  -->
+            </div>
+        </div>
+
+        <div class="text-center">
+          <span *ngIf="competitionSrv.waitingParticipantsResp == true">
+            <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+          </span> 
+        </div>
+
+        <div class="row" *ngIf="!this.competitionSrv.waitingParticipantsResp">
+                <div class="card card-table">
+                  <div class="card-header">
+                    <h4 class="card-title">Participants list</h4>
+                    <p class="card-text">
+                        la liste des participants de cette competition.
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table datatable class="table table-stripped table-hover">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>{{'User' | translate }}</th>
+                            <th>{{'Email' | translate }}</th>
+                            
+                            <th class="text-end">{{'Phone' | translate }}</th>
+                          </tr>
+                        </thead>
+
+                        <tbody *ngIf="this.listParticipants.length !== 0">
+                          <tr *ngFor="let participant of listParticipants "
+                              (click)="participantChooseData = participant">
+                            <td>
+                              <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
+                                  src="../../../../../assets/img/user-profile.png" alt="User Image" /></a>
+                              <a>{{ participant.firstName }} {{ participant.lastName }}</a>
+                            </td>
+                            <td>
+                                {{ participant.email }}
+                            </td>
+                            <td class="text-end">
+                                {{ participant.phoneNumber }}
+                            </td>
+                          </tr>
+                        </tbody>
+
+                        <tbody *ngIf="listParticipants.length == 0" >
+                            <tr>
+                                <td></td>
+                                <td class="text-center">
+                                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                                  <br>Aucun Participant !
+                                </td>
+                                <td></td>
+                              </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+
+
+
+
+
+        
+        

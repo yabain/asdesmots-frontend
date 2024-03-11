@@ -6,4 +6,6 @@ export enum EndpointSousCompetion{
         REMOVE_GAME_CRITERIAS = 'game-competition/remove-criteria',
         ADD_CRITERIAS_GAME = 'game-competition/apply-criteria',
         COMPETITION_STATE = 'game-competition/state',
+        PARTICIPANTS_LIST = 'game-competition/participants/',
+        REMOVE_GAME_PARTICIPANT = 'game-competition/remove-participant'
 }

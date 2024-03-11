@@ -16,6 +16,7 @@ import { ListPartsComponent } from './list-parts/list-parts.component';
 import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 import { DataTablesModule } from 'angular-datatables';
+import { ListParticipantsComponent } from './list-participants/list-participants.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { DataTablesModule } from 'angular-datatables';
     GetParentNamePipe,
     FormatDatePipe,
     ListPartsComponent,
-    CreateCompetitionComponent
+    CreateCompetitionComponent,
+    ListParticipantsComponent
   ],
   imports: [
     CommonModule,

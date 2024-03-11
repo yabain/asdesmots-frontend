@@ -93,6 +93,9 @@ Page Wrapper
                               <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
                                  <span style="margin-left: 5px;">List of Criterias</span>
                               </a>
+                              <a class="dropdown-item" (click)="goToParticipantsList(sousCompetion._id)"><i class="fa fa-users"></i>
+                                <span style="margin-left: 5px;">List of participants </span>
+                             </a>
 
                               <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                               </div>

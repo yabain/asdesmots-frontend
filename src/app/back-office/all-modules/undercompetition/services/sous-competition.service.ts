@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { State } from 'src/app/shared/entities/state.enum';
+import { User } from 'src/app/shared/entities/user';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,9 @@ export class SousCompetitionService {
   waitingCriteriasResp: boolean;
   waitingCriteriasAdd : boolean = false ;
   waitingCreteriaDeletingDone : boolean = false ;
+
+  waitingParticipantsResp: boolean;
+  waitingParticipantDeletingDone : boolean = false;
 
   constructor(private api: ApiService,
                private toastr: ToastrService,
@@ -357,6 +362,34 @@ async clientChangeState(idCompet: string, statut: string){
       }
       return new SousCompetion();
   }
+
+  getListParticipants(idCompetition: string): Promise<User[]>{
+    this.waitingParticipantsResp = true;
+    return new Promise((resolve, reject) => {
+
+      this.api.get(EndpointSousCompetion.PARTICIPANTS_LIST+idCompetition, this.authorization).subscribe((resp) => {
+        this.waitingParticipantsResp = false;
+        resolve(resp.data);
+      }, (error)=> {
+        this.waitingParticipantsResp = false;
+        reject([]);
+        if (error.status == 500) {
+          this.toastr.error("Indisponible , veuillez reessayer ultérieurement.", 'Serveur en reparation', { timeOut: 10000 });
+        } else if (error.status == 503) {
+          this.toastr.error("Le serveur est temporairement indisponible", 'Serveur en reparation', { timeOut: 10000 });
+        } else if (error.status == 401) {
+          this.toastr.error("Veuillez vous reconnecter", 'Session expirée', { timeOut: 10000 });
+        } else if (error.status == 404) {
+          console.log("Aucun participants pour cette competition");
+        }
+        else {
+          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+        }
+      })
+
+    })
+  }
+
 
   getParentCompetitionID(idCompetition: string): string {
     let parentID;

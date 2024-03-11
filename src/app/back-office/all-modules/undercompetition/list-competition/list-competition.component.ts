@@ -74,6 +74,10 @@ export class ListCompetitionComponent implements OnInit {
       this.route.navigateByUrl('/undercompetition/competition/criterias/'+id);
   }
 
+  goToParticipantsList(id: string){
+    this.route.navigateByUrl('/undercompetition/competition/participants/'+id);
+  }
+
   startCompetition(idCompetition: string){
         const id = this.arcardeSrv.getCompetitonArcardeID(idCompetition);
 

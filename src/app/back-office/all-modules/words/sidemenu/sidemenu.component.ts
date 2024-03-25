@@ -23,7 +23,6 @@ import { Word } from 'src/app/shared/entities/word';
 })
 export class SidemenuComponent implements OnInit{
 
-
   totalWords: number;
   totalEnWords: number;
   totalFrWords: number;
@@ -49,13 +48,9 @@ export class SidemenuComponent implements OnInit{
   wordToSpeak: string = '';
   modalVisible: boolean = true;
   deletedLevel: any;
-  // selectedLevelId: string;
   filteredLevelList: Level[];
   selectedLevelId: string;
   oldLevelId: string;
-  // showModal: boolean = true;
-
-
 
   constructor(
     private router: Router,
@@ -67,42 +62,11 @@ export class SidemenuComponent implements OnInit{
     private translationService: TranslationService,
     private levelService: LevelService,
     private formLog: FormBuilder,
-    // private word: Word
-  ) {
-
-    // router.events.subscribe((event: Event) => {
-    //   if (event instanceof NavigationStart) {
-    //     if (event instanceof NavigationStart) {
-    //       this.splitVal = event.url.split('/');
-    //       this.base = this.splitVal[1];
-    //       this.page = this.splitVal[2];
-    //       this.curentLevel = this.splitVal[3];
-    //       console.log("splitVal: ", this.splitVal)
-    //     }
-    //   }
-    // });
-    // this.url = location.path();
-    // if (this.url) {
-    //   this.splitVal = this.url.split('/');
-    //   this.base = this.splitVal[1];
-    //   this.page = this.splitVal[2];
-    //   if (this.splitVal[3] !== undefined) {
-    //     this.curentLevel = this.splitVal[3];
-    //     console.log("splitUrl1: ", this.url)
-    //   } else {
-    //     this.curentLevel = 'sdfsdfsd';
-    //   }
-    // }
-
-    this.getLevelList();
-    this.calculateWordSums();
-    // this.filterLevels();
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.translate.use(this.translationService.getLanguage());
     this.getLevelList();
+    this.translate.use(this.translationService.getLanguage());
     this.levelForm = this.formLog.group({
       '_id': [this.levelData._id
       ],
@@ -127,7 +91,6 @@ export class SidemenuComponent implements OnInit{
     })
   }
 
-
   calculateWordSums() {
     this.totalWords = 0;
     this.totalEnWords = 0;
@@ -149,55 +112,9 @@ export class SidemenuComponent implements OnInit{
     }
   }
 
-  // deleteLevelOfListOfTransfer(level: any) {
-  //   // Code pour supprimer le niveau de la liste
-  //   this.levelData = level;
-  //   this.deleteLevel = {...level}
-  //   const index = this.levelList.indexOf(level);
-  //   if (index !== -1) {
-  //     this.levelList.splice(index, 1);
-  //   }
-  // }
-
-  // restoreLevel() {
-  //   if (this.deletedLevel) {
-  //     const index = this.levelList.indexOf(this.deletedLevel);
-  //     if (index > -1) {
-  //       this.levelList.splice(index, 0, this.deletedLevel); // Réinsérer le niveau supprimé dans la liste à son emplacement d'origine
-  //       this.deletedLevel = null; // Réinitialiser la variable deletedLevel
-  //     }
-  //   }
-  // }
-
-  // deleteLevelOfListOfTransfer(level: any) {
-
-  //   this.levelData = level;
-  //   this.deletedLevel = { ...level }; // Crée une copie du niveau à supprimer
-
-  //   // Ajouter un écouteur d'événement de clic sur le document
-  //   document.addEventListener('click', this.handleClickOutsideDeleteButton);
-  // }
-
-  // handleClickOutsideDeleteButton = (event: MouseEvent) => {
-  //   const target = event.target as HTMLElement;
-
-  //   // Vérifier si l'élément cliqué n'est pas le bouton "Supprimer"
-  //   if (!target.classList.contains('btn-danger')) {
-  //     this.restoreLevel(); // Restaurer le niveau supprimé
-  //     document.removeEventListener('click', this.handleClickOutsideDeleteButton); // Supprimer l'écouteur d'événement
-  //   }
-  // };
-
-  // getFilteredLevels(): Level[] {
-  //   return this.levelList.filter(level => level._id !== this.selectedLevelId);
-  // }
-
   filterLevels(): void {
-    console.log("fygugugu");
     this.filteredLevelList = this.levelList.filter(level => level._id !== this.levelData._id);
   }
-
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.levelForm) {
@@ -242,15 +159,12 @@ export class SidemenuComponent implements OnInit{
   }
 
   deleteLevel(){
-
     this.newLevelId = this.deleteLevelForm.value.groupHeriterId;
     this.deleteLevelForm.value.levelDataId = this.levelData._id;
-
     console.log(this.deleteLevelForm.value)
     if (this.deleteLevelForm.invalid) {
       return;
     }
-
     this.waitingResponse = true;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
     this.levelService.deleteLevelId(this.levelData._id)
@@ -340,10 +254,10 @@ export class SidemenuComponent implements OnInit{
   }
 
   getLevelList() {
-
     console.log("roro");
     if (JSON.parse(localStorage.getItem('levels-list'))) {
       this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+      this.calculateWordSums();
       console.log("liste niveau " + this.levelList);
     }
     else {
@@ -352,6 +266,7 @@ export class SidemenuComponent implements OnInit{
         .then((result) => {
           this.waitingResponse = false;
           this.levelList = result;
+          this.calculateWordSums();
         })
         .catch((error) => {
           console.error('Erreur: ', error.message);
@@ -359,7 +274,6 @@ export class SidemenuComponent implements OnInit{
           this.waitingResponse = false;
         });;
     }
-
   }
 
   get f() {
@@ -389,7 +303,5 @@ export class SidemenuComponent implements OnInit{
       });
   }
 }
-function ngAfterViewInit() {
-  throw new Error('Function not implemented.');
-}
+
 

@@ -316,6 +316,7 @@
         "sendMsg": "Send us your message"
     },
     "words": {
+        "level": "level",
         "word": "Word",
         "wordList": "Words list",
         "wordsCount": "Word count",

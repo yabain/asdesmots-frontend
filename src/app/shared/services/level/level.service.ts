@@ -357,9 +357,9 @@ export class LevelService {
         .subscribe(
           (response: any) => {
             this.getAllLevels();
-            if (response.statusCode === 201) {
+            if (response.statusCode === 200) {
               this.toastr.success(
-                'Your account has been created. You will receive a confirmation email.',
+                'level has been udapted successfully.',
                 'Success',
                 { timeOut: 7000 }
               );

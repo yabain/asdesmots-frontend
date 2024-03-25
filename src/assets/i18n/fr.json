@@ -316,6 +316,7 @@
 
     },
     "words": {
+        "level": "Niveau",
         "language": "Langue",
         "word": "Mot",
         "wordList": "List des mots",

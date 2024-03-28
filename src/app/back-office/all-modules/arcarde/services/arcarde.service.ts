@@ -378,7 +378,7 @@ this.listUser = [];
         });
   }
 
-  UnsuscribeUserToAcarde(requestBody: { gameID: string, playerID: string,}){
+  UnsuscribeUserToAcarde(requestBody: { gameID: string, playerID: string,}) {
       this.waitingResponse = true;
 
       this.api.post(Endpoint.DELETE_USER_TO_ARCARDE, requestBody).subscribe((resp)=>{

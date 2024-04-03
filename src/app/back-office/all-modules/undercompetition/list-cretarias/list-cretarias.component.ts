@@ -62,7 +62,7 @@ export class ListCretariasComponent implements OnInit {
 
       const modalDiv =  document.getElementById('addCriteria');
       console.log(this.formAddCriteria.get('idCriteria').value)
-      const result = await this.competitionSrv.addCriteria(this.idCompetition, this.formAddCriteria.get('idCriteria').value);
+      const result = await this.competitionSrv.addCriteria(this.idCompetition, [this.formAddCriteria.get('idCriteria').value]);
     
       if (result === true) {
         modalDiv.classList.remove('show');
@@ -71,7 +71,6 @@ export class ListCretariasComponent implements OnInit {
       }
     
       await this.getCompetitionCriteria();
-      this.changeDetectorRef.detectChanges();
     
   }
 
@@ -82,7 +81,6 @@ export class ListCretariasComponent implements OnInit {
   async doDelete(){
     const result = await this.competitionSrv.removeWinningCriteria(this.idCompetition, this.selectedCriteriaId);
     if(result == true) await this.getCompetitionCriteria();
-    this.changeDetectorRef.detectChanges();
     
     }
 

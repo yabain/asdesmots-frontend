@@ -276,7 +276,7 @@ async clientChangeState(idCompet: string, statut: string){
         });
   }
 
-  addCriteria(gameId: string, gameWinnerCriteriasId: string): Promise<boolean>{
+  addCriteria(gameId: string, gameWinnerCriteriasId: string[]): Promise<boolean>{
     return new Promise<boolean>((resolve,reject) => {
       
       this.waitingCriteriasAdd = true;

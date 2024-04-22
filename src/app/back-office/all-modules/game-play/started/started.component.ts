@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { State } from 'src/app/shared/entities/state.enum';
+import { GamePartsService } from '../../undercompetition/list-parts/service/game-parts.service';
 
 @Component({
   selector: 'app-started',
@@ -32,7 +33,8 @@ export class StartedComponent implements OnInit {
                private speakService: SpeakService,
                private fb: FormBuilder,
                private userService: UserService,
-               public gameManager: GameManagerService
+               public gameManager: GameManagerService,
+               public partService: GamePartsService
        ) { 
         this.initForm();
        }
@@ -140,4 +142,5 @@ export class StartedComponent implements OnInit {
         playerID: this.userService.getLocalStorageUser()._id
     });
   }
+
 }

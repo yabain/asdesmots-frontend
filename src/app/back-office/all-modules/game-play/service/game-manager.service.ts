@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
-import { io } from "socket.io-client";
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { User } from 'src/app/shared/entities/user';
 import { UserService } from 'src/app/shared/services/user/user.service';
@@ -25,12 +25,11 @@ export class GameManagerService {
   constructor(
       private toastr: ToastrService,
       private userData: UserService,
+      private socket:Socket
 
   ) { 
       this.loadUserData();
   }
-  
-  socket = io('http://127.0.0.1:3000');
 
   setGamerLife(){
     this.playerLife.length = this.competitionLaunched.maxPlayerLife;
@@ -45,6 +44,13 @@ export class GameManagerService {
     this.socket.emit('join-game', requestBody);
     this.initSocketListener();
     this.setGamerLife();
+  }
+  
+  startGame(requestBody:{competitionID: string,gamePartID: string}) {
+    this.socket.emit("start-game-part", requestBody);
+    this.socket.on("start-game-part", (data)=>{
+      console.log("message reçu du serveur ", data)
+    })
   }
   
   initSocketListener(){

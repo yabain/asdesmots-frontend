@@ -144,12 +144,14 @@ export class GamePartsService {
       }
   }
 
-  getListGamePart(id: string){
+  getListGamePart(id: string):Promise<any>{
+    return new Promise((resolve,reject)=>{
       this.waitingResponse = true;
 
       this.api.get(EndpointGamePart.GET_LIST+id, this.authorization).subscribe((data: any)=>{
           this.listGameParts = Array.from(data.data);
           this.waitingResponse = false;
+          resolve(true)
       }, (error)=>{
         if (error.status == 500) {
           this.toastr.error(this.languageService.transformMessageLanguage('internalError'), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
@@ -159,7 +161,10 @@ export class GamePartsService {
           this.toastr.error(error.message, this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
         }
         this.waitingResponse = false;
+        reject(false)
       
       });
+    })
+      
   }
 }

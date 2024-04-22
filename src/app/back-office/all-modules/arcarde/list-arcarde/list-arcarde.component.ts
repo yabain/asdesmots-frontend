@@ -66,7 +66,7 @@ export class ListArcardeComponent implements OnInit {
 
       this.arcadeServ.changeState(
                                     { gameArcardeID: arcardeID,
-                                      state: State.WAITING_PLAYER
+                                      state: State.RUNNING
                                     }
                                  )
   }

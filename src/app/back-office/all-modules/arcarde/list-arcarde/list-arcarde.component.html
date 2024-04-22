@@ -107,6 +107,12 @@
                                   <span style="margin-left: 5px;">  {{'delete' | translate}}  </span>
                                  </a>
 
+                                 <!-- <a class="dropdown-item"
+                                   style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsuscribe_arcarde">
+                                   <i class="fa fa-eraser" aria-hidden="true" ></i>
+                                  <span style="margin-left: 5px;">  {{'Se désinscrire' | translate}}  </span>
+                                 </a> -->
+
                                  <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                                  </div>
 
@@ -118,7 +124,7 @@
 
                                  <ng-template #process_running_down>
                                     <a class="dropdown-item"
-                                      *ngIf="(userID === arcarde.owner && arcarde.gameState !== gameState.WAITING_PLAYER)"
+                                      *ngIf="(userID === arcarde.owner)"
                                       (click)="startArcarde(arcarde._id)"
                                       style="cursor: pointer;" >
 
@@ -265,7 +271,7 @@
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <p>{{'wanTo' | translate }} vous desinscrire de la <b>{{ arcardeData.name }} </b>? </p>
+            <p>{{'wanTo' | translate }} <b>{{ arcardeData.name }} </b>? </p>
           </div>
         </div>
 

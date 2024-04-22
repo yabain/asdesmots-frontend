@@ -45,6 +45,7 @@
     "ngx-bootstrap": "^5.6.1",
     "ngx-dropzone": "^2.2.2",
     "ngx-intl-tel-input": "^3.2.0",
+    "ngx-socket-io": "^4.6.1",
     "ngx-toastr": "^12.1.0",
     "npm-force-resolutions": "0.0.10",
     "raphael": "^2.3.0",

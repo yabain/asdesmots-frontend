@@ -8,6 +8,9 @@ import { LevelService } from 'src/app/shared/services/level/level.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { State } from 'src/app/shared/entities/state.enum';
+import { GameplayService } from '../../game-play/service/gameplay.service';
+import { GameManagerService } from '../../game-play/service/game-manager.service';
+import { GamePartsService } from '../list-parts/service/game-parts.service';
 
 @Component({
   selector: 'app-list-competition',
@@ -28,7 +31,10 @@ export class ListCompetitionComponent implements OnInit {
               private fb: FormBuilder,
               private route: Router,
               public level: LevelService,
-              public arcardeSrv: ArcardeService
+              public arcardeSrv: ArcardeService,
+              public gamePlay: GameplayService,
+              public gameManager: GameManagerService,
+              public partService: GamePartsService
               ) {
       this.translate.use(this.translataion.getLanguage());
       this.loadListOfArcarde();
@@ -80,9 +86,20 @@ export class ListCompetitionComponent implements OnInit {
         this.sousCompetion.changeState({
           gameArcardeID : id,
           gameCompetitionID: idCompetition,
-          state: State.WAITING_PLAYER
+          state: State.RUNNING
         });
 
+  }
+
+  async sartGame(competitionID: any) { 
+    await this.partService.getListGamePart(competitionID._id);
+    competitionID.gamePart = this.partService.listGameParts;
+    console.log(competitionID.gamePart)
+    let partState = this.gamePlay.getPart(competitionID);
+    console.log(partState._id)
+    this.gameManager.startGame({
+      competitionID: competitionID._id,
+      gamePartID:partState._id});
   }
 
   listSuscriberCompetition(sousCompetion: any) {

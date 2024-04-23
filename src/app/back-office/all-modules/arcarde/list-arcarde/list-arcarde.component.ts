@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
@@ -16,6 +16,10 @@ export class ListArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
   userID: string ='';
   gameState = State;
+
+  // @ViewChild('process_running_gameStarted') process_running_gameStarted: TemplateRef<any>;
+
+  // @ViewChild('process_running_gameStarted') process_running_down: TemplateRef<any>;
   // idArcard: string = '';
 
   constructor(public arcadeServ: ArcardeService,

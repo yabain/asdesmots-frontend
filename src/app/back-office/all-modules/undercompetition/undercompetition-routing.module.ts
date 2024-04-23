@@ -6,9 +6,10 @@ import { UpdateCompetitionComponent } from './update-competition/update-competit
 import { ListCretariasComponent } from './list-cretarias/list-cretarias.component';
 import { ListPartsComponent } from './list-parts/list-parts.component';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
+import { CompetitionResolver } from './update-competition/parentCompetetion.resolver';
 
 const routes: Routes = [
-  { path: '', component: UndercompetitionComponent, 
+  { path: '', component: UndercompetitionComponent,
     children: [
       {
         path: 'competition/list',
@@ -16,7 +17,10 @@ const routes: Routes = [
       },
      {
         path: 'competition/update/:id',
-        component: UpdateCompetitionComponent
+        component: UpdateCompetitionComponent,
+        resolve: {
+          currentCompetition: CompetitionResolver,
+        },
       },
      {
         path: 'competition/parts/:id',
@@ -42,6 +46,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CompetitionResolver]
 })
 export class UndercompetitionRoutingModule { }

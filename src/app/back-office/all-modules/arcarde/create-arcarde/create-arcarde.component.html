@@ -43,8 +43,8 @@
                         </div>-->
 
                         <div class="form-check form-switch text-center">
-                            <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked"> {{ 'registerPlayers' | translate }} ?</label>
+                            <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecke">
+                            <label class="form-check-label" for="flexSwitchCheckChecke"> {{ 'registerPlayers' | translate }} ?</label>
                         </div>
 
                         <div class="form-check form-switch text-center">
@@ -54,7 +54,7 @@
 
                         <div class="form-group">
                             <label for="maxPlayersNumber"> {{'maxPlayers' | translate }} </label>
-                            <input type="number" min="0" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                            <input type="number" min="2" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
                             [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
                             >
                         </div>

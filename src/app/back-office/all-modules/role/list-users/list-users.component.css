@@ -1,0 +1,90 @@
+ /* .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog {
+  width: 80%;
+  max-width: 1200px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.modal-content {
+  padding: 14px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.modal-header {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 10px 0;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.modal-footer {
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+} */

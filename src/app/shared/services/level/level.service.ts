@@ -100,14 +100,14 @@ export class LevelService {
     });
   }
 
-  deleteLevel(level): Promise<any> {
+  deleteLevel(oldLevelId: string, newLevelId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const params = {
-        gamelevelID: level.gamelevelID,
-        groupHeriterId: level.groupHeriterId,
-      };
+      // const params = {
+      //   gamelevelID: level.gamelevelID,
+      //   groupHeriterId: level.groupHeriterId,
+      // };
 
-      this.api.delete(`gamelevel/${level.levelDataId}`, this.headers).subscribe(
+      this.api.delete(`gamelevel/${oldLevelId}/${newLevelId}`, this.headers).subscribe(
         (response: any) => {
           console.log('Level deleted', response);
           this.getAllLevels();

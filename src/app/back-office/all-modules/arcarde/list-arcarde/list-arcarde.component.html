@@ -48,7 +48,7 @@
             <div class="card-header">
               <h4 class="card-title">{{ 'listArcade' | translate }}</h4>
               <p class="card-text">
-                {{ 'apercuArcarde' | translate }}.  
+                {{ 'apercuArcarde' | translate }}.
               </p>
             </div>
             <div class="card-body">
@@ -58,7 +58,7 @@
                     <tr>
                       <th>{{'competitionName' | translate }}s</th>
                       <th>{{'Description' | translate }}</th>
-                      
+
                       <th>{{'online' | translate }}</th>
                       <th class="text-center">Action</th>
                     </tr>
@@ -92,7 +92,7 @@
                                   <a class="dropdown-item"
                                   style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
                                    <i class="fa fa-users" aria-hidden="true"></i>
-                                   <span style="margin-left: 5px;"> {{ 'listsubscribers' | translate }}</span> 
+                                   <span style="margin-left: 5px;"> {{ 'listsubscribers' | translate }}</span>
                                  </a>
 
                                  <a class="dropdown-item"
@@ -106,6 +106,26 @@
                                    <i class="fa fa-trash" aria-hidden="true" ></i>
                                   <span style="margin-left: 5px;">  {{'delete' | translate}}  </span>
                                  </a>
+
+                                 <!-- <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
+
+                                     <ng-template #process_running_gameStarted>
+                                      <span style="color: greenyellow;" class="text-center">
+                                            {{'startding' | translate }} Arcarde...
+                                      </span>
+                                    </ng-template>
+
+                                   <ng-template #process_running_down>
+                                      <a class="dropdown-item"
+                                        *ngIf="(userID === arcarde.owner && arcarde.gameState !== gameState.WAITING_PLAYER)"
+                                        (click)="startArcarde(arcarde._id)"
+                                        style="cursor: pointer;" >
+
+                                          <i class="fa fa-play" aria-hidden="true"></i>
+                                          <span style="margin-left: 5px;"> {{ 'start' | translate}} Arcarde </span>
+                                      </a>
+                                   </ng-template>
+                                 </div> -->
 
                                  <div *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                                  </div>
@@ -163,7 +183,7 @@
                   </li>
                   <li class="nav-item" role="presentation">
                     <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-PlayersNumber" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                      {{'maxPlayers' | translate}} 
+                      {{'maxPlayers' | translate}}
                     </a>
                   </li>
               </ul>
@@ -174,7 +194,7 @@
 
                       <div class="row form-group">
                               <label for="startDate" class="col-sm-3 col-form-label input-label">
-                                  {{'start' | translate}} 
+                                  {{'start' | translate}}
                               </label>
                               <div class="col-sm-9">
                                 <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate" id="startDate" disabled>
@@ -187,6 +207,28 @@
 
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="{{arcardeData.endDate | formatDate}}" name="endDate" id="endDate" disabled>
+                            </div>
+
+                          </div>
+
+                          <div class="row form-group">
+                            <label for="endDate" class="col-sm-3 col-form-label input-label">
+                              {{ 'start Registration Date' | translate }}
+                            </label>
+
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="{{arcardeData.startRegistrationDate| formatDate}}" name="endDate" id="endDate" disabled>
+                            </div>
+
+                          </div>
+
+                          <div class="row form-group">
+                            <label for="endDate" class="col-sm-3 col-form-label input-label">
+                              {{ 'end Registration Date' | translate }}
+                            </label>
+
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="{{arcardeData.endRegistrationDate| formatDate}}" name="endDate" id="endDate" disabled>
                             </div>
 
                           </div>

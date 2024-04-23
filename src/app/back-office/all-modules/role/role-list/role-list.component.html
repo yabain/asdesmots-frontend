@@ -35,20 +35,20 @@
                           </a>
 
                           <a  class="dropdown-item" data-toggle="tooltip" data-placement="top" title="get list of permission of this role" (click)="navigateToPermissionList(role._id)">
-                            <i class="fa fa-list" aria-hidden="true"></i> 
+                            <i class="fa fa-list" aria-hidden="true"></i>
                             <span style="margin-left: 5px;">Permissions list </span>
                           </a>
-      
+
                           <a class="dropdown-item"  (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#addPermission">
                             <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
                              <span style="margin-left: 5px;">Add permission</span>
                           </a>
-      
+
                           <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <span style="margin-left: 5px;">Lists users </span>
                           </a>
-      
+
                           <a class="dropdown-item"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
                               <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
                                <span style="margin-left: 5px;">Delete</span>
@@ -56,9 +56,9 @@
                       </div>
                     </div>
                   </td>
-            
-                    
-                    
+
+
+
                 </tr>
               </tbody>
             </table>
@@ -68,7 +68,7 @@
      <div class="accordion custom-accordion" id="custom-accordion-one">
       <div *ngFor="let role of roleService.listRole; let index = index">
       <div class="card mb-1" style="display: flex;">
-      
+
           <div class="card-header" id="/" (click)="roleChoose = role">
             <div class="row">
               <div class="col-auto me-auto" style="width: 78%;">
@@ -86,25 +86,25 @@
                                          <a class="btn btn-sm btn-white text-success me-2" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="update this role" (click)="setValue(role)" data-bs-toggle="modal" data-bs-target="#editRole"><i
                                                 class="far fa-edit me-1"></i>
                                             </a>
-                        
+
                                             <a class="bg-danger-light btn btn-sm btn-white"  style="margin-right: 10px;" (click)="navigateToPermissionList(role._id)" >
                                               <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add permission on this role" ></i>
                                             </a>
-                        
+
                                             <a class="btn btn-white text-end" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="get list of users assigned on this role" (click)="navigate(role._id)">
                                               <i class="fa fa-users" aria-hidden="true"></i>
                                             </a>
-                        
+
                                             <a class="btn btn-sm btn-white text-danger me-2"  (click)="roleChoose == role" data-bs-toggle="modal" data-bs-target="#deleteRole">
                                                 <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete this role"></i>
                                             </a>
                 </div>
-                     
+
               </div>
             </div>
-             
-              
-              
+
+
+
           </div>
           <div [id]="'accordion' + index" class="collapse"
               aria-labelledby="headingSeven"
@@ -129,7 +129,7 @@
                               </thead>
                               <tbody *ngIf="role.permissions.length !== 0 " >
                                   <tr *ngFor="let permission of role.permissions"
-                                      (click)="permissionData = permission"     
+                                      (click)="permissionData = permission"
                                   >
                                       <td> {{ permission.name }} </td>
                                       <td> {{ permission.description }} </td>
@@ -186,7 +186,7 @@
                                 [ngClass]="{ 'is-invalid':  roleService.formUpdating['name'].touched &&  roleService.formUpdating['name'].invalid}"
                                 >
                             </div>
-                            
+
                                 <div class="form-group">
                                     <label for="description">Role Description</label>
                                     <input type="text" name="description" class="form-control" formControlName="description" id="description"
@@ -205,52 +205,53 @@
                 <button class="btn btn-secondary" data-bs-dismiss="modal">
                     {{'close' | translate }}
                 </button>
-                
-                <button class="btn btn-success" data-bs-dismiss="modal" *ngIf="!roleService.updateDone"  [disabled]="roleService.updateForm.invalid" >
+
+                <button class="btn btn-success" data-bs-dismiss="modal" *ngIf="!roleService.updateDone"  [disabled]="roleService.updateForm.invalid" (click)="updateRole()">
                     <span *ngIf="roleService.waitingResponse" ><img src="../../../../../assets/img/loader.gif" alt=""
                         width="30px"> </span>
                     <span *ngIf="!roleService.waitingResponse" >Sauvegarder <i class="fa fa-plus" aria-hidden="true"></i> </span>
                 </button>
-               
+
         </div>
       </div>
     </div>
   </div>
 
 
-  <div class="modal custom-modal fade" id="deleteRole" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">
-            Supprimer Role
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
+    <div class="modal custom-modal fade" id="deleteRole" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Supprimer Role
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-text text-center">
-            <h2>  </h2>
-            <p>{{'wanTo' | translate }} supprimer le role << <b>{{ roleChoose.name }}>> </b>? </p>
+          <div class="modal-body">
+            <div class="modal-icon text-center mb-3">
+            </div>
+            <div class="modal-text text-center">
+              <h2>  </h2>
+              <p>{{'wanTo' | translate }} supprimer le role << <b>{{ roleChoose.name }}>> </b>? </p>
+            </div>
           </div>
-        </div>
 
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-            {{'close'| translate}}
-            
-          </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()" >
-            <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
-            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-          </button>
+          <div class="modal-footer text-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+              {{'close'| translate}}
+
+            </button>
+             <button type="button" class="btn btn-danger" *ngIf="!roleService.deleteDone" (click)="doDelete()">
+              <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+              <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  
+
+
 
   <div class="modal custom-modal fade" id="addPermission" role="dialog">
     <div class="modal-dialog modal-xl">
@@ -271,7 +272,7 @@
                 <div class="card-header">
 									<h4 class="card-title">Permissions list</h4>
 									<p class="card-text">
-										this table is the global overview of existing permissions 
+										this table is the global overview of existing permissions
 									</p>
 								</div>
                   <div class="table-responsive">
@@ -286,7 +287,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let permission of roleService.listPermission"
-                                    (click)="permissionData = permission"     
+                                    (click)="permissionData = permission"
                                 >
                                     <td> {{ permission.name }} </td>
                                     <td> {{ permission.description }} </td>
@@ -294,12 +295,12 @@
                                     <td class="text-center">
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" [checked]=""  value="" id="flexCheckDefault">
-                                      
+
                                       </div>
                                     </td>
                                 </tr>
                             </tbody>
-                            
+
                         </table>
                 </div>
             </div>

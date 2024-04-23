@@ -114,12 +114,29 @@
                               </select>
                           </div>
 
-                          <div class="form-group">
+                           <div class="form-group" *ngIf="inputHidden">
+                            <label for="parentCompetition">Compétition parente </label>
+                              <select id="parentCompetition"  class="form-control" (change)="onCompetitionChange($event)">
+                                <option value="">-- {{ parentCompetitionName}} --</option>
+                                <option *ngFor="let competition of arcardeSrv.listUnderCompetion" value="{{competition._id}}">{{ competition.name }}</option>
+                              </select>
+                          </div>
+
+
+
+
+                          <!-- <div class="form-group" *ngIf="inputHidden">
                               <label for="parentCompetition">Parent de la Competition*</label>
-                              <input type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition" [(ngModel)]="parentID"
+                              <input type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition" [(ngModel)]="parentCompetitionName"
                               [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['parentCompetition'].touched && sousCompetion.formUpdt['parentCompetition'].invalid}"
                               >
-                          </div>
+                          </div> -->
+                          <!-- <div class="form-group">
+                            <label for="parentCompetition">Parent de la Competition*</label>
+                            <input type="text" name="parentCompetition" class="form-control" formControlName="parentCompetition" id="parentCompetition"
+                            [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['parentCompetition'].touched && sousCompetion.formUpdt['parentCompetition'].invalid}"
+                            >
+                        </div> -->
                           <button (click)="backClicked()" class="btn btn-primary me-2"
                           style="color: #035858 !important; background-color: #ffff !important;">
                           <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}

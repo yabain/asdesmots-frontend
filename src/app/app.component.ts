@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, Inject, AfterViewInit, } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, AfterViewInit, HostListener  } from '@angular/core';
 import { Event, NavigationStart, Router, ActivatedRoute, Params } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { CommonServiceService } from 'src/app/shared/services/common-service.service';
 import * as Feather from 'feather-icons';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service'
+
 
 @Component({
 	selector: 'app-root',
@@ -17,6 +18,15 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 export class AppComponent implements OnInit, AfterViewInit {
 	adminShow: boolean = false;
 	supportedLanguages = ['en', 'fr'];
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload(event: Event) {
+    // Vider le stockage local pour les permissions cochées
+    localStorage.removeItem('checkedPermissions');
+     // Vider le stockage local pour les roles cochés
+     localStorage.removeItem('checkedRoles');
+
+  }
 
 	constructor(
 		@Inject(DOCUMENT) private document: any,

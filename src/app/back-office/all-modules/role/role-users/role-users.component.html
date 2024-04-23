@@ -29,7 +29,7 @@
                             <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
     </button>
   </p>
-  
+
   <div class="text-center" *ngIf="roleService.waitingResponseUser">
     <img src="../../../../../assets/img/loader.gif" height="30px"/>
 </div>
@@ -48,7 +48,7 @@
                   <th>{{'Location' | translate }}</th>
                   <th>{{'Phone' | translate }}</th>
                   <th class="text-center">{{'Action' | translate }}</th>
-                
+
                 </tr>
               </thead>
               <tbody *ngIf="roleService.listUsers.length != 0 ">
@@ -64,10 +64,12 @@
                   <td>{{ user.location }}</td>
                   <td>{{ user.phoneNumber}}</td>
                   <td class="text-center">
-                      <button class="btn btn-danger"
-                              data-bs-target="#removeRole" 
-                              data-bs-toggle="modal"
+                       <button class="btn btn-danger"
+                      data-bs-target="#removeRole"
+                      data-bs-toggle="modal"
                               (click)="getRoleName()"
+
+
                       >
                           Retirer le role  <i class="fa fa-user-times" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="remove role on this user"></i>
                       </button>
@@ -85,8 +87,8 @@
                         <td></td>
                       </tr>
                 </tbody>
-            
-                            
+
+
             </table>
           </div>
         </div>
@@ -105,7 +107,7 @@
           <div class="modal-icon text-center mb-3">
           </div>
           <div class="modal-text text-center">
-            <p>Voulez vous vraiment retirer le role:  << <b>{{ roleChooseName }}>> à l'utilisateur ' {{ userData.firstName }} ' </b>? </p>
+            <p>Voulez vous vraiment retirer le role:   <b>{{ roleChooseName }} à l'utilisateur ' {{ userData.firstName }} ' </b>? </p>
           </div>
         </div>
 
@@ -113,11 +115,12 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
             Close
           </button>
-          <button type="button" class="btn btn-danger" *ngIf="!roleService.removeDone" (click)="doRemove()" >
-            <span *ngIf="!roleService.waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
-            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          <button type="button" class="btn btn-danger"  *ngIf="!removeDone" (click)="doRemove()">
+            <span *ngIf="!waitingResponse">Supprimer <i class="fa fa-trash" aria-hidden="true"></i> </span>
+            <span *ngIf="waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
           </button>
         </div>
       </div>
     </div>
   </div>
+

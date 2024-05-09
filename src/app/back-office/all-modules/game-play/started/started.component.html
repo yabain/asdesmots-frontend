@@ -17,17 +17,18 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="gamePlay.listCompetitionStart.length != 0" >
-                    <tr *ngFor="let competition of gamePlay.listCompetitionStart" 
-                    (click)="gameManager.competitionLaunched = competition" 
+                    <tr *ngFor="let competition of gamePlay.listCompetitionStart"
+                    (click)="gameManager.competitionLaunched = competition"
+                    (click)="competitionIsRunnig = competition"
                     >
                         <td> {{ competition.name }} </td>
                         <td> {{ competition.description }} </td>
                         <td class="text-center">
-                             <button class="btn btn-success" 
+                             <button class="btn btn-success"
                              data-bs-toggle="modal" data-bs-target="#gameInterface"
                              (click)="joinGame(competition._id, competition.localisation)"
-                             > 
-                             Rejoindre 
+                             >
+                             Rejoindre
                             </button> </td>
                     </tr>
                 </tbody>
@@ -70,14 +71,14 @@
                         <div class="card-header">
                             <h5 class="card-title mb-0">Word information</h5>
                         </div>
-                        <div class="card-body text-center">  
+                        <div class="card-body text-center">
                             <span style="font-size: 25px;cursor: pointer;" (click)="speak('mais')">
                                 <i class="fas fa-volume-up"></i>
                             </span>
                              <br>
                             <span style="font-size: 17px; margin-top: 12px;">
                             {{ 'word desscription' }}
-                                
+
                             </span>
                         </div>
                     </div>
@@ -89,21 +90,23 @@
                             <h5 class="card-title mb-0">Informations</h5>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Difficulte: {{gameManager.competitionLaunched.gameLevel.name }}</li>
-                            <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li>
-                            <li class="list-group-item">Joueurs restants: 5 joueur(s)</li>
+                            <li class="list-group-item">Difficulte: {{gameManager.competitionLaunched.gameLevel.name}}</li>
+                            <!-- <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li> -->
+                            <li class="list-group-item">Joueurs inscrits: {{gameManager.competitionLaunched.playerGameRegistrations.length}}</li>
+                            <!-- <li class="list-group-item">Joueurs restants: 5 joueur(s)</li> -->
+                            <li class="list-group-item">Joueurs restants: {{competitionIsRunnig.playerGameRegistrations.length}}</li>
                             <li class="list-group-item">Joueurs connectes: 6 joueur(s)</li>
 							<li class="list-group-item">
                                 <div class="text-center">
-                                    Vie Restantes : 
+                                    Vie Restantes :
                                     <span *ngFor="let i of Life" style="color: red;">
                                      <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </span> 
+                                    </span>
                                 </div>
                             </li>
 
                         </ul>
-                    </div><br>  
+                    </div><br>
                 </div>
             </div>
 
@@ -121,7 +124,7 @@
                         </div>
                     </div>
                 <form [formGroup]="formword">
-                    
+
                     <div class="input-group mb-3">
                         <span class="input-group-text">Entrer le mot</span>
                         <input type="text" class="form-control" placeholder="" [disabled]="(!gameManager.itsToThisUserToPlay)" formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2">

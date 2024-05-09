@@ -1,3 +1,4 @@
+// import { PlayerGameRegistration } from "./playergameregistration.model";
 import { SousCompetion } from "./scompetion.model";
 
 export class Arcarde{
@@ -16,6 +17,7 @@ export class Arcarde{
             public gameState?: any,
             public owner?: any,
             public competitionGames?:SousCompetion[],
+            // public playerGameRegistrations?:PlayerGameRegistration[]
         ){
 
         }

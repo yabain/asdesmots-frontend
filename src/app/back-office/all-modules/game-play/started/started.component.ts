@@ -26,6 +26,9 @@ export class StartedComponent implements OnInit {
   showGoodMsg: boolean = false;
   formword: FormGroup;
   state = State;
+  competition: any;
+  competitionIsRunnig: SousCompetion = new SousCompetion();
+  totalPlayers: any[];
 
   constructor( public gamePlay: GameplayService,
                private translate: TranslateService,
@@ -35,11 +38,12 @@ export class StartedComponent implements OnInit {
                private userService: UserService,
                public gameManager: GameManagerService,
                public partService: GamePartsService
-       ) { 
+       ) {
         this.initForm();
        }
 
   ngOnInit(): void {
+    // this.gameManager.loadArcardeRunnig();
   }
 
   speak(word: string){
@@ -59,6 +63,7 @@ export class StartedComponent implements OnInit {
     });
 
   }
+
   buildLifeList(maxPlayerLife: number, maxTimeToPlay: number){
     let init = 0;
     this.Life.length = maxPlayerLife;
@@ -67,7 +72,7 @@ export class StartedComponent implements OnInit {
       this.restTime = maxTimeToPlay;
       this.startTimer();
   }
-  
+
   startTimer() {
     this.interval = setInterval(() => {
       if(this.restTime > 0) {
@@ -102,8 +107,16 @@ export class StartedComponent implements OnInit {
       }
   }
 
-  onBadWord(){
-      this.Life.pop();
+  onBadWord() {
+    this.totalPlayers = this.competitionIsRunnig.playerGameRegistrations;
+    this.Life.pop();
+    if (this.Life.length === 0) {
+      const index = this.totalPlayers.indexOf(this);
+      if (index !== -1) {
+        this.totalPlayers.splice(index, 1);
+      }
+    }
+    this.competitionIsRunnig.playerGameRegistrations = this.totalPlayers;
   }
 
   showMessage(msg: string, bad?: boolean){
@@ -141,6 +154,10 @@ export class StartedComponent implements OnInit {
         word: this.wordEntry,
         playerID: this.userService.getLocalStorageUser()._id
     });
+  }
+
+  joinGameResponseListener() {
+    this.gameManager.joinGameResponseListener();
   }
 
 }

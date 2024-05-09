@@ -71,31 +71,11 @@ export class ListPartsComponent implements OnInit {
       }
   }
 
-  async sartGame(competitionID: any) {
-    await this.partService.getListGamePart(competitionID);
-    // this.gamePartSrv.getListGamePart(this.competitionID);
-    competitionID.gamePart = this.partService.listGameParts;
-    console.log(competitionID.gamePart)
-    let partState = this.gamePlay.getPart(competitionID);
-    console.log(partState._id)
+  sartGame(partID: any) {
+    console.log(partID)
     this.gameManager.startGame({
-      competitionID: competitionID._id,
-      gamePartID:partState._id});
+      competitionID: this.competitionID,
+      gamePartID:partID});
   }
-
-
-
-
-
-  startCompetition(idCompetition: string){
-    const id = this.arcardeSrv.getCompetitonArcardeID(idCompetition);
-
-    this.SousCompetSrv.changeState({
-      gameArcardeID : id,
-      gameCompetitionID: idCompetition,
-      state: State.RUNNING
-    });
-
-}
 
 }

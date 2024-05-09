@@ -46,7 +46,7 @@
                           </tr>
                         </thead>
                         <tbody *ngIf="gamePartSrv.listGameParts.length !== 0" >
-                          <tr *ngFor="let part of gamePartSrv.listGameParts; let i = index"
+                          <tr *ngFor="let part of gamePartSrv.listGameParts"
                             (click)="partChooseData = part" >
                             <td>
                               {{ part.name }}
@@ -55,64 +55,24 @@
                             <!-- <td>{{ customer.country }}</td> -->
                             <td>{{ part.gameLevel?.name }}</td>
                             <td class="text-end">
-                                <!-- <a data-bs-toggle="modal" data-bs-target="#details"
-                                class="btn btn-sm btn-white text-warning me-2">
-                                    <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="show more details"></i>
-                                </a>
-
-                                <a data-bs-toggle="modal" data-bs-target="#deletePart"
-                                  class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1" data-toggle="tooltip" data-placement="top" title="delete this part of this competition"></i></a>
-                            </td> -->
                             <div class="dropdown dropdown-action">
                               <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                               <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
-                                <!-- <a class="dropdown-item"
-                                    style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="listSuscriberCompetition(sousCompetion._id)">
-                                     <i class="fa fa-users" aria-hidden="true"></i>
-                                     <span style="margin-left: 5px;"> List of subscribers</span>
-                                </a> -->
-                                <!-- <a class="dropdown-item"  (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a> -->
                                 <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePart"><i class="far fa-trash-alt me-2"></i>
                                    <span style="margin-left: 5px;">Delete</span>
                                 </a>
                                 <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i class="far fa-eye me-2"></i>
                                    <span style="margin-left: 5px;">Show more</span>
                                 </a>
-                                <!-- <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
-
-                                  <span style="margin-left: 5px;"> List of parts  </span>
-                                </a> -->
-
-                                <!-- <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
-                                   <span style="margin-left: 5px;">List of Criterias</span>
-                                </a> -->
                                 <div *ngIf="part.gameState === gameState.NO_START">
 
                                       <span style="color: green;" class="text-center dropdown-item"
 
-                                      (click)="sartGame(competitionID)">
+                                      (click)="sartGame(part._id)">
                                       <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
                                       </span>
 
                                 </div>
-                                <!-- <ng-template #process_running_gameStarted>
-                                  <span style="color: green;" class="text-center dropdown-item"
-                                  *ngIf="sousCompetion.gameParts.length != 0"
-                                  (click)="sartGame(sousCompetion)">
-                                  <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
-                                  </span>
-                               </ng-template> -->
-
-                                <!-- <ng-template #process_running_down>
-                                  <a class="dropdown-item"
-                                    *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
-                                    (click)="startCompetition(sousCompetion._id)"
-                                    style="cursor: pointer;" >
-
-                                      <i class="fa fa-play" aria-hidden="true"></i>
-                                      <span style="margin-left: 5px;"> Start Competition </span>
-                                  </a>
-                               </ng-template> -->
                               </div>
                             </div>
 

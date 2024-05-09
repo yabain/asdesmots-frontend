@@ -91,17 +91,6 @@ export class ListCompetitionComponent implements OnInit {
 
   }
 
-  async sartGame(competitionID: any) { 
-    await this.partService.getListGamePart(competitionID._id);
-    competitionID.gamePart = this.partService.listGameParts;
-    console.log(competitionID.gamePart)
-    let partState = this.gamePlay.getPart(competitionID);
-    console.log(partState._id)
-    this.gameManager.startGame({
-      competitionID: competitionID._id,
-      gamePartID:partState._id});
-  }
-
   listSuscriberCompetition(sousCompetion: any) {
 
   }

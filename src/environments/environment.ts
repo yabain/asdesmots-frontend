@@ -4,10 +4,8 @@
 
 export const environment = {
   production: false,
-    // url:  'http://localhost:3000',
-    // urlProd:  'http://localhost:3000'
-    url:  'http://192.168.1.32:3000',
-    urlProd:  'http://192.168.1.32:3000'
+    url:  'http://localhost:3000',
+    urlProd:  'http://localhost:3000'
 
   //   url:  'https://asdesmots-api.yaba-in.com',
   // urlProd:  'https://asdesmots-api.yaba-in.com'

@@ -117,16 +117,4 @@ export class GameplayService {
       resolve(result);
     });
   }
-
-  getPart(competitionID:any) {
-    console.log(this.listCompetitionStart,this.listCompetitionOnComming)
-    let gamePart:any;
-    competitionID.gamePart.forEach((index) =>{
-      if (index.gameState === State.NO_START) {
-        gamePart = index;
-        console.log(gamePart)
-      }
-    });
-    return gamePart;
-  }
 }

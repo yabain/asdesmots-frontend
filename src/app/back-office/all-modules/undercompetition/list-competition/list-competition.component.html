@@ -97,10 +97,8 @@ Page Wrapper
                               <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
                               </div>
                               <ng-template #process_running_gameStarted>
-                                <span style="color: green;" class="text-center dropdown-item"
-                                *ngIf="sousCompetion.gameParts.length != 0"
-                                (click)="sartGame(sousCompetion)">
-                                <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
+                                <span style="color: green;" class="text-center dropdown-item">
+                                  Starting Competition...
                                 </span>
                              </ng-template>
 

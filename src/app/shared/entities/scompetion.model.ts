@@ -17,6 +17,7 @@ export class SousCompetion{
             public lang?: any,
             public parentCompetition?: any,
             public gameWinnerCriterias?: WinnigsCriterias[],
+            public playerGameRegistrations?: any[],
             public gameJudgesID?: any[],
             public gameParts?: any[],
             public gameState?: any,

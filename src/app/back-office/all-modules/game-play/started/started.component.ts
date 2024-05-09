@@ -26,6 +26,7 @@ export class StartedComponent implements OnInit {
   showGoodMsg: boolean = false;
   formword: FormGroup;
   state = State;
+  isWaitingPlayer: boolean ;
 
   constructor( public gamePlay: GameplayService,
                private translate: TranslateService,
@@ -37,7 +38,10 @@ export class StartedComponent implements OnInit {
                public partService: GamePartsService
        ) { 
         this.initForm();
-       }
+        this.gamePlay.isWaitingPlayer$.subscribe((value) => {
+          this.isWaitingPlayer = value;
+        });
+      }
 
   ngOnInit(): void {
   }

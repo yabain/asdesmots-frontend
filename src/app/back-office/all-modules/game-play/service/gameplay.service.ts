@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { EndpointGame } from './endpoint.enum';
 import { ToastrService } from 'ngx-toastr';
 import { State } from 'src/app/shared/entities/state.enum';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -50,14 +51,26 @@ export class GameplayService {
   ) { 
     this.authorization = { 'Authorization': 'Bearer ' + this.apiService.getAccessToken() }
   }
-  
+  private _isWaitingPlayerSubject = new BehaviorSubject<boolean>(false);
+
+
+  get isWaitingPlayer$(): Observable<boolean> {
+    return this._isWaitingPlayerSubject.asObservable();
+  }
+
+  set isWaitingPlayer(value: boolean) {
+    this._isWaitingPlayerSubject.next(value);
+  }
   loadUserCompetition(){
     const userID = this.userService.getLocalStorageUser()._id;
     this.waitingGameList = true;
     
     this.apiService.get(EndpointGame.LOAD_USER__COMPETITION+userID, this.authorization)
-    .subscribe((data: any)=>{
-      this.filterCompetition(data.data);
+    .subscribe( (data: any)=>{
+      this.filterCompetition(data.data).then(() => {
+        this.filterPartIsWaitingPlayer();
+      })
+      console.log("isWaitingPlayer :", this.filterPartIsWaitingPlayer())
       this.waitingGameList = false;
     }, (error)=>{
       if(error.error.status == 401){
@@ -72,7 +85,7 @@ export class GameplayService {
     })
   }
 
-  filterCompetition(listCompetition: any[]){
+  async filterCompetition(listCompetition: any[]){
     //separeted oncoming competition with started competition
     this.listCompetitionOnComming = [];
     this.listCompetitionStart = [];
@@ -80,12 +93,29 @@ export class GameplayService {
          listCompetition.forEach((compet)=>{
             if(compet.gameState === State.RUNNING) {
                 this.listCompetitionStart.push(compet);
+                console.log("liste des compétitions en cours :", this.listCompetitionStart)
             }else {
                 this.listCompetitionOnComming.push(compet);
             }
          });
     }
-   
+    this.filterPartIsWaitingPlayer().then((result) => {
+      this.isWaitingPlayer = result;
+    });
+  }
+
+  filterPartIsWaitingPlayer(): Promise<boolean> {
+    return new Promise((resolve) => {
+      let result = false;
+      this.listCompetitionStart.forEach((competition) => {
+        competition.gameParts.forEach((part) => {
+          if (part.gameState === 'waiting_player') {
+            result = true;
+          }
+        });
+      });
+      resolve(result);
+    });
   }
 
   getPart(competitionID:any) {

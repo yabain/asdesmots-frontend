@@ -26,9 +26,12 @@
                              <button class="btn btn-success" 
                              data-bs-toggle="modal" data-bs-target="#gameInterface"
                              (click)="joinGame(competition._id, competition.localisation)"
+                             *ngIf="isWaitingPlayer == true"
                              > 
                              Rejoindre 
-                            </button> </td>
+                            </button> 
+                            <p *ngIf="isWaitingPlayer == false"><i class="fas fa-clock"></i>...En attente d'une partie</p>
+                        </td>
                     </tr>
                 </tbody>
                 <tbody *ngIf="gamePlay.listCompetitionStart.length == 0" >

@@ -32,14 +32,14 @@ export class GameplayService {
   ];
 
   listCompetitionStart: any[] = [
-    // {
-    //   name: 'Competition Centre linguistique',
-    //   description: 'Passionants ...',
-    //   maxPlayerLife: 5,
-    //   maxTimeToPlay: 20,
-    //   maxOfWinners: 1,
-    //   gameLevel: 'Beginner'
-    // }
+    {
+      name: 'Competition Centre linguistique',
+      description: 'Passionants ...',
+      maxPlayerLife: 5,
+      maxTimeToPlay: 20,
+      maxOfWinners: 1,
+      gameLevel: 'Beginner'
+    }
   ]
 
   authorization: any;
@@ -48,7 +48,7 @@ export class GameplayService {
       private userService: UserService,
       private apiService: ApiService,
       private toastr: ToastrService
-  ) { 
+  ) {
     this.authorization = { 'Authorization': 'Bearer ' + this.apiService.getAccessToken() }
   }
   private _isWaitingPlayerSubject = new BehaviorSubject<boolean>(false);
@@ -64,7 +64,7 @@ export class GameplayService {
   loadUserCompetition(){
     const userID = this.userService.getLocalStorageUser()._id;
     this.waitingGameList = true;
-    
+
     this.apiService.get(EndpointGame.LOAD_USER__COMPETITION+userID, this.authorization)
     .subscribe( (data: any)=>{
       this.filterCompetition(data.data).then(() => {
@@ -81,7 +81,7 @@ export class GameplayService {
         this.toastr.error(error.error.message, 'Error', {timeOut : 10000})
       }
       this.waitingGameList = false;
-      
+
     })
   }
 

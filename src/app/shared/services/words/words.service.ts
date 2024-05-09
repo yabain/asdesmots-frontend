@@ -52,18 +52,18 @@ export class WordsService {
     private errorsService: ErrorsService
   ) { }
 
-  createWord(word: Word, gameLevelId: string): Promise<any> {
+  createWord([wordEnForm, wordFrForm]: any): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
-      const params = {
-        'name': word.name,
-        'description': word.description,
-        'type': word.type,
-        'gameLevelId': gameLevelId,
-      };
+      // const params = {
+      //   'name': word.name,
+      //   'description': word.description,
+      //   'type': word.type,
+      //   'gameLevelId': word.
+      // };
 
-      this.api.post('gamelevel/word', params, this.headers)
+      this.api.post('gamelevel/word', [wordEnForm, wordFrForm], this.headers)
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode === 201) {

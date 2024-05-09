@@ -36,7 +36,7 @@ export class StartedComponent implements OnInit {
                private userService: UserService,
                public gameManager: GameManagerService,
                public partService: GamePartsService
-       ) { 
+       ) {
         this.initForm();
         this.gamePlay.isWaitingPlayer$.subscribe((value) => {
           this.isWaitingPlayer = value;
@@ -44,6 +44,7 @@ export class StartedComponent implements OnInit {
       }
 
   ngOnInit(): void {
+    // this.gameManager.loadArcardeRunnig();
   }
 
   speak(word: string){
@@ -63,6 +64,7 @@ export class StartedComponent implements OnInit {
     });
 
   }
+
   buildLifeList(maxPlayerLife: number, maxTimeToPlay: number){
     let init = 0;
     this.Life.length = maxPlayerLife;
@@ -71,7 +73,7 @@ export class StartedComponent implements OnInit {
       this.restTime = maxTimeToPlay;
       this.startTimer();
   }
-  
+
   startTimer() {
     this.interval = setInterval(() => {
       if(this.restTime > 0) {
@@ -106,8 +108,8 @@ export class StartedComponent implements OnInit {
       }
   }
 
-  onBadWord(){
-      this.Life.pop();
+  onBadWord() {
+    this.Life.pop();
   }
 
   showMessage(msg: string, bad?: boolean){
@@ -145,6 +147,10 @@ export class StartedComponent implements OnInit {
         word: this.wordEntry,
         playerID: this.userService.getLocalStorageUser()._id
     });
+  }
+
+  joinGameResponseListener() {
+    this.gameManager.joinGameResponseListener();
   }
 
 }

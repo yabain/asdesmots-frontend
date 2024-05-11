@@ -355,8 +355,6 @@ this.listUser = [];
   addUserToAccarde(){
        this.waitingResponseSuscrib = true;
        this.suscriptionDone = false;
-       //add user on a competion game
-       console.log(this.authorization,this.souscriptionParam);
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
 
             this.toastr.success(this.languageService.transformMessageLanguage('Suscription Done and Save'), 'Success', {timeOut: 10000});

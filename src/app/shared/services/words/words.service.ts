@@ -65,6 +65,7 @@ export class WordsService {
 
       this.api.post('gamelevel/word', [wordEnForm, wordFrForm], this.headers)
         .subscribe((response: any) => {
+          console.log("mes paramétres: ", params);
           if (response) {
             if (response.statusCode === 201) {
               // this.router.navigate(['login']);

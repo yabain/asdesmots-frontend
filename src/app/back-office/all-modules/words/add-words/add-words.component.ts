@@ -17,6 +17,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./add-words.component.css']
 })
 export class AddWordsComponent implements OnInit {
+
+
   public pipe = new DatePipe("en-US");
   public wordEnForm!: FormGroup;
   public wordFrForm!: FormGroup;
@@ -96,6 +98,7 @@ export class AddWordsComponent implements OnInit {
       }
     });
   }
+
 
   addWords() {
     if (this.wordEnForm.invalid && this.wordFrForm.invalid) {

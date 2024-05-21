@@ -1,6 +1,6 @@
 
       <!-- /Page Header -->
-  
+
       <!-- Search Filter -->
       <div id="filter_inputs" class="card filter-card">
         <div class="card-body pb-0">
@@ -27,7 +27,7 @@
         </div>
       </div>
       <!-- /Search Filter -->
-  
+
         <p class=" text-center" *ngIf="wating">
           <img src="../../../../../assets/img/loader.gif" height="30px" alt="">
         </p>
@@ -39,8 +39,8 @@
      </button>
   </p>
 
-      <div class="row" *ngIf="!wating"> 
-         
+      <div class="row" *ngIf="!wating">
+
           <div class="card card-table">
             <div class="card-header">
               <h4 class="card-title">List of Users</h4>
@@ -74,9 +74,9 @@
                       <!-- <td>{{ customer.country }}</td> -->
                       <!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
                       <td>{{ customer.phoneNumber}}</td>
-                      
+
                       <td class="text-center">
-                        
+
                         <a  data-bs-toggle="modal" data-bs-target="#AddRole"
                           class="btn btn-sm btn-white text-danger me-2" >
                           <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"  data-placement="top" title="add role on this user"></i>
@@ -98,25 +98,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- <div class="modal-icon text-center mb-3">
-          </div>
-          <div class="modal-text text-center">
-            <h2>{{ userData.firstName }} </h2>
-            <p class="text-center" *ngIf="roleService.waitinPermissionResp">
-                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
-            </p>
-            <form [formGroup]="formAddRole">
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" formControlName="idRole" class="form-control">
-                       <option value="">--choisir un role--</option>
-                       <option *ngFor="let role of roleService.listRole"  [value]="role._id">
-                            {{ role.description }}
-                       </option>
-                    </select>
-                </div>
-            </form>
-          </div>-->
            <p class="text-center" *ngIf="roleService.waitingResponse">
                 <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
             </p>
@@ -139,13 +120,14 @@
                             <span> {{ role.name }} </span>
                         </h2>
                       </td>
-    
+
                       <td>{{ role.description }}</td>
-    
+
                       <td class="text-center">
                         <div class="form-check text-center" style="margin-left: 50%;">
-                          <input class="form-check-input" type="checkbox" [checked]="role.isEnable"  value="" id="flexCheckDefault">
-                        
+                          <input class="form-check-input"  [(ngModel)]="role.checked" type="checkbox" [checked]="role.isEnable"  value="" id="flexCheckDefault" (change)="updateCheckboxState(role)">
+
+
                         </div>
                       </td>
                     </tr>
@@ -169,16 +151,15 @@
 
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
-            {{'close' | translate}}
+            {{ 'close' | translate }}
           </button>
-          <button type="button" class="btn btn-primary" [disabled]="formAddRole.invalid" *ngIf="!roleService.roleAdded" data-bs-dismiss="modal"  >
-            <span *ngIf="!roleService.waitingResponse">Sauvegarder  <i class="fa fa-save" aria-hidden="true"></i> </span>
-            <span *ngIf="roleService.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+          <button type="button" class="btn btn-primary" [disabled]="roleService.isSaveButtonIsDisabled" *ngIf="!roleService.roleAdded" (click)="addRoleOnUser()">
+            <span  *ngIf="!loader">Sauvegarder <i class="fa fa-save" aria-hidden="true"></i></span>
+            <span *ngIf="loader"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
           </button>
-        </div>
+
       </div>
     </div>
   </div>
 
-  
-  
+

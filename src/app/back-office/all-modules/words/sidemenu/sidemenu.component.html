@@ -41,10 +41,9 @@
             </div>
           </div>
           <div class="table-responsive" *ngIf="!waitingResponse">
-            <table datatable class="table table-stripped table-hover">
+            <table class="table table-stripped table-hover">
               <tbody>
                 <tr *ngFor="let level of levelList; let i = index" [class.selected]="curentLevel === level._id">
-                  <!-- <tr [routerLink]="'/words/words-list'"> -->
                   <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
                   <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
@@ -107,7 +106,7 @@
 
 <!-- nouvelle fenêtre modale -->
 
-<div class="modal custom-modal fade" id="deleteLevel" role="dialog" *ngIf="modalVisible" [hidden]="!modalVisible">
+<div class="modal custom-modal fade" id="deleteLevel" role="dialog"  [hidden]="!modalVisible">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -117,15 +116,15 @@
         <div class="modal-text text-center">
           <h2>{{ 'delete' | translate }} <b>{{ levelData?.name }}</b> ?</h2>
           <br>
-          <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm">
+          <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm" >
             <!-- Formulaire pour le transfert des mots -->
-            <form (ngSubmit)="transferWords()" [formGroup]="transferWordsForm">
+            <form (ngSubmit)="TransfertWords()" [formGroup]="transferWordsForm">
               <!-- <p>{{'words.transferMessage' | translate}}</p> -->
               <p>{{ 'words.whichLevel' | translate }}</p>
-              <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId">
+              <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId" (change)="onLevelChange($event)">
                 <option value="">{{ 'select' | translate }}</option>
-                <option *ngFor="let level of filteredLevelList" [value]="level._id">
-                  {{ level.name }}
+                <option *ngFor="let levelItem of filteredLevelList" [value]="levelItem._id">
+                  {{ levelItem.name }}
                 </option>
 
               </select>
@@ -135,7 +134,7 @@
                   {{ 'cancel' | translate }}
                 </button>
                 <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
-                  [disabled]="!transferWordsForm.valid">
+                  [disabled]="!transferWordsForm.valid" (ngSubmit)="TransfertWords()">
                   {{ 'words.transferAndDelete' | translate }}
                 </button>
                 <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>

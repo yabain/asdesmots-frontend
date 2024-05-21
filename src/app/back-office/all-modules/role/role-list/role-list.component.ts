@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RoleService } from '../service/role.service';
 import { Role } from '../service/role.model';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Permission } from 'src/app/shared/entities/permission';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-role-list',
@@ -17,10 +18,14 @@ export class RoleListComponent implements OnInit {
   permissionData: Permission = new Permission();
   openAccordion: boolean[] = [];
 
-  constructor(public roleService: RoleService, 
+
+
+
+
+  constructor(public roleService: RoleService,
               private translate: TranslateService,
               private translation: TranslationService,
-              private router: Router  
+              private router: Router
               ) {
       this.translate.use(this.translation.getLanguage());
       this.loadListRole();
@@ -48,12 +53,15 @@ export class RoleListComponent implements OnInit {
   navigate(id: string){
         this.router.navigateByUrl('role/users/' +id);
   }
-  
+
   navigateToPermissionList(id: string){
     if(this.roleService.listPermission.length == 0){
           this.roleService.getListPermission();
+          this.roleService.resetPermission();
       }
         this.router.navigateByUrl('role/list/permission/'+id);
+
+
   }
 
   goToListUser(){
@@ -61,12 +69,23 @@ export class RoleListComponent implements OnInit {
   }
 
   addPermission(){
-        this.roleService.addPermissionOnRole({roleId: this.roleChoose._id, permissionId: this.roleService.formAddPermission.get('idPermission')?.value });
+        // this.roleService.addPermissionOnRole({roleId: this.roleChoose._id, permissionId: this.roleService.formAddPermission.get('idPermission')?.value });
   }
 
   doDelete(){
-      this.roleService.deleteRole(this.roleChoose);
-  }
+    this.roleService.deleteRole(this.roleChoose).subscribe(
+      (response) => {
+        // Traitement de la réponse réussie
+        const closeButton = document.getElementById('cancel-btn2');
+        if (closeButton) {
+        closeButton.click();
+      }
+      },
+      (error) => {
+        // Gestion des erreurs
+      }
+    );
+}
 
  doRemovePermission(){
     this.roleService.removePermission({roleId : this.roleChoose._id, permissionId: this.permissionData._id});
@@ -79,5 +98,37 @@ export class RoleListComponent implements OnInit {
   check(permission: Permission){
       const include = this.roleChoose.permissions.includes(permission);
       console.log('is exited', include);
+  }
+
+  updateRole(){
+
+    if (this.roleService.updateForm.invalid) {
+      return;
+    }
+
+    let updateData = {
+      "name": this.roleService.updateForm.value.name,
+      "description": this.roleService.updateForm.value.description,
+      "_id": this.roleChoose._id
+    }
+    console.log("updateData: ", updateData);
+
+    let udaptedState = {
+      "name": this.roleService.updateForm.value.name,
+      "description": this.roleService.updateForm.value.description,
+    }
+    console.log("updatedState: ", udaptedState);
+    console.log("General datas: ", this.roleService.updateForm.value);
+    this.roleService.updateDone = false;
+    this.roleService.waitingResponse = true;
+    this.roleService.updateRole(this.roleService.updateForm.value.id, udaptedState)
+      .then((result) => {
+        this.roleService.waitingResponse = false;
+        this.roleService.getListRole();
+        $('#close-modal').click();
+      })
+      .catch((error) => {
+        this.roleService.waitingResponse = false;
+      });
   }
 }

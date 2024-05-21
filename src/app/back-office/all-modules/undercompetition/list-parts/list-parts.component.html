@@ -11,11 +11,13 @@
                 </div>
                  <div class="col-auto">
                     <a  class="btn btn-primary me-2"
+                    <a  class="btn btn-primary me-2"
                         data-bs-target="#addParts"
                         data-bs-toggle="modal"
                         style="color: #035858 !important; background-color: #ffff !important;">
                         <i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Create new Parts for this competition"></i>
                     </a>
+                </div>
                 </div>
             </div>
         </div>
@@ -23,6 +25,7 @@
         <div class="text-center">
           <span *ngIf="gamePartSrv.waitingResponse">
             <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+          </span>
           </span>
         </div>
 
@@ -41,6 +44,7 @@
                           <tr>
                             <th>{{'name' | translate }} </th>
                             <th>Description</th>
+                            <th> {{ 'level' | translate }} </th>
                             <th> {{ 'level' | translate }} </th>
                             <th class="text-end">Actions</th>
                           </tr>
@@ -86,6 +90,7 @@
                                   <br>Aucune Partie !
                                 </td>
                                 <td></td>
+                                <td></td>
                               </tr>
                         </tbody>
                       </table>
@@ -94,6 +99,7 @@
                 </div>
               </div>
             </div>
+          </div>
           </div>
 
 
@@ -112,6 +118,7 @@
                     <p>Voulez vous vraiment supprimer la partie: << <b>{{ partChooseData.name }}>> </b> à cette competition ? </p>
                   </div>
                 </div>
+
 
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
@@ -138,8 +145,10 @@
                 <div class="modal-body">
                   <div class="modal-icon text-center mb-3">
 
+
                   </div>
                   <div class="modal-text text-center">
+
 
                     <p class="text-center" *ngIf="gamePartSrv.waitingResponse">
                         <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
@@ -154,6 +163,7 @@
                                     </div>
 
 
+
                                     <div class="form-group">
                                       <label for="startDate"> {{'startDate' | translate }} </label>
                                       <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
@@ -164,16 +174,19 @@
                             <div class="col">
 
 
+
                                     <div class="form-group">
                                         <label for="numberOfWords"> Nombre de Mots (Par Joueur) </label>
                                         <input type="number" class="form-control" formControlName="numberOfWord" name="numberOfWords" id="numberOfWords">
                                     </div>
 
 
+
                                     <div class="form-group">
                                         <label for="endDate"> {{'endDate' | translate }} </label>
                                         <input type="date" class="form-control" formControlName="endDate" name="endDate" id="endDate">
                                     </div>
+
 
 
                             </div>
@@ -186,6 +199,7 @@
                     </form>
                   </div>
                 </div>
+
 
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
@@ -225,6 +239,7 @@
                               </div>
 
 
+
                               <div class="row form-group">
                                 <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
                                   {{'startDate' | translate }}
@@ -248,13 +263,16 @@
                   </div>
                 </div>
 
+
                 <div class="modal-footer text-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
                     {{'close' | translate }}
 
                   </button>
 
+
                 </div>
               </div>
             </div>
           </div>
+

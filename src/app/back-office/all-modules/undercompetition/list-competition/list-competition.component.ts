@@ -42,6 +42,7 @@ export class ListCompetitionComponent implements OnInit {
 
   ngOnInit(): void {
       this.loadUserID();
+      // this.sousCompetion.loadListCompetition();
   }
 
 

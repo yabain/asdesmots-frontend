@@ -10,5 +10,6 @@ export enum EndpointRole{
         REMOVE_ROLE = 'roles/remove-user',
         REMOVE_ROLE_PERMISSION = 'roles/remove-perm',
         ADD_ROLE_ON_USER = 'roles/add-user', 
+        UPDATE_ROLE = 'roles/update-role/'
 
 }

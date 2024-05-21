@@ -9,6 +9,8 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+// import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +42,7 @@ export class ArcardeService {
 
   deleteDone : boolean = false;
   waitingResponseSuscrib : boolean = false;
+  formUpdate: any;
   // listPlayer: []any;
 
   constructor(private api: ApiService,
@@ -117,6 +120,7 @@ export class ArcardeService {
             this.waitingResponse = false;
             this.listArcardeUser = Array.from(resp.data);
             this.buildListUnderCompetion(this.listArcardeUser);
+            console.log("liste des competitions: ", this.listUnderCompetion);
             this.buildListLocation(this.listArcardeUser);
       },(error: any) => {
         this.waitingResponse = false;
@@ -217,6 +221,7 @@ this.listUser = [];
     this.api.get(Endpoint.GET_LIST_ARCARDE+-1+'/'+-1, this.authorization).subscribe((response)=>{
         this.listAllArcarde = Array.from(response.data);
         this.buildListUnderCompetion(this.listAllArcarde);
+        console.log("liste competitions: ", this.listUnderCompetion);
         this.waitingResponse = false;
 
        // this.buildListLocation(this.listAllArcarde);
@@ -262,7 +267,9 @@ this.listUser = [];
       this.api.post(Endpoint.CREATE_ARCARDE, this.newArcarde, this.authorization).subscribe((response)=>{
           console.log('creation Response', response);
           this.waitingResponse = false;
-          this.isCreationDone = true;
+          this.isCreationDone = false;
+          // this.waitingResponse = true;
+          // this.isCreationDone = false;
           this.toastr.success('Arcarde Created', this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
       }, (error: any)=>{
         if (error.status == 500) {
@@ -276,6 +283,7 @@ this.listUser = [];
         }
         this.waitingResponse = false;
       });
+      //  this.waitingResponse = false;
   }
 
     changeState(data: {gameArcardeID: string, state: any}){
@@ -357,23 +365,29 @@ this.listUser = [];
        this.suscriptionDone = false;
         this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe((resp)=>{
 
-            this.toastr.success(this.languageService.transformMessageLanguage('Suscription Done and Save'), 'Success', {timeOut: 10000});
-            this.waitingResponseSuscrib = false;
-            this.suscriptionDone = true;
-        }, (error: any) => {
+    this.api.post(Endpoint.ADD_USER_TO_ARCARDE, this.souscriptionParam, this.authorization).subscribe(
+      (resp) => {
+        this.toastr.success(this.languageService.transformMessageLanguage('Suscription Done and Save'), 'Success', { timeOut: 10000 });
+        this.waitingResponseSuscrib = false;
+        this.suscriptionDone = true;
+      },
+      (error: any) => {
+        if (error.error.statusCode == 500) {
+          this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
+        } else if (error.error.statusCode == 401) {
+          this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
+        } else if (error.error.statusCode == 404) {
+          this.toastr.error(this.languageService.transformMessageLanguage("arcardenotFound"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
+        } else if (error.error.statusCode == 400) {
+          this.toastr.error(this.languageService.transformMessageLanguage("Player already subscribed to the game"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
+        } else {
+          this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
+        }
 
-          if (error.error.status == 500) {
-            this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-          } else if (error.error.status == 401) {
-            this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
-          } else if (error.error.status == 404) {
-            this.toastr.error(this.languageService.transformMessageLanguage("arcardenotFound"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-          } else {
-            this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
-          }
-          this.waitingResponseSuscrib = false;
-          this.suscriptionDone = false;
-        });
+        this.waitingResponseSuscrib = false;
+        this.suscriptionDone = false;
+      }
+    );
   }
 
   UnsuscribeUserToAcarde(requestBody: { gameID: string, playerID: string,}) {
@@ -506,6 +520,7 @@ this.listUser = [];
     } else {
       this.createNewArcarde();
       this.location.back();
+      this.loadArcade();
     }
   }
 

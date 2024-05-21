@@ -1,6 +1,5 @@
 <p>
-    
-  <button (click)="backClicked()" class="btn btn-primary me-2"
+  <button (click)="backClicked()"  class="btn btn-primary me-2"
   style="color: #035858 !important; background-color: #ffff !important;">
   <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
   </button>
@@ -29,15 +28,15 @@
                     </thead>
                     <tbody *ngIf="roleService.listPermission.length !== 0 " >
                         <tr *ngFor="let permission of roleService.listPermission"
-                            (click)="permissionData = permission"     
+                            (click)="permissionData = permission"
                         >
                             <td> {{ permission.name }} </td>
                             <td> {{ permission.description }} </td>
                             <td> {{ permission.module }} </td>
                             <td class="text-center">
                               <div class="form-check text-center" style="margin-left: 50%;">
-                                <input class="form-check-input"  type="checkbox" [checked]="permission.isEnable"  value="" id="flexCheckDefault">
-                              
+                                <input class="form-check-input"  [(ngModel)]="permission.checked" type="checkbox" [checked]="permission.isEnable" value="" id="flexCheckDefault" (change)="onPermissionChange(permission)">
+
                               </div>
                             </td>
                         </tr>
@@ -56,14 +55,17 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-success" style="float: right;">
-                Sauvegarder  <span style="margin-left: 5px;"> <i class="fa fa-save" aria-hidden="true"></i> </span>
+            <button class="btn btn-success" style="float: right;" (click)="addPermissionsOnRole()"  [disabled]="roleService.isSaveButtonDisabled" *ngIf="!roleService.checkboxChecked">
+                 <span *ngIf="!roleService.loader" style="margin-left: 5px;">Sauvegarder <i class="fa fa-save" aria-hidden="true"></i> </span>
+                <span *ngIf="roleService.loader">
+                  <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                </span>
             </button>
         </div>
     </div>
 </div>
 
-<div class="modal custom-modal fade" id="confirmRemove" role="dialog">
+<!-- <div class="modal custom-modal fade" id="confirmRemove" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
 
@@ -88,4 +90,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnInit, SimpleChanges } from '@angular/core';
 import {
   Event,
   NavigationStart,
@@ -21,11 +21,8 @@ import { Word } from 'src/app/shared/entities/word';
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.css'],
 })
-export class SidemenuComponent implements OnInit {
-// wordFrForm: any;
-// addWords() {
-// throw new Error('Method not implemented.');
-// }
+export class SidemenuComponent implements OnInit{
+
 
   totalWords: number;
   totalEnWords: number;
@@ -35,8 +32,9 @@ export class SidemenuComponent implements OnInit {
   levels: any;
   levelList?: any = '';
   levelData?: any = '';
-  newLevelId: any;
+  newLevelId: string;
   levelOfList: any[] ;
+  item: any;
   public levelControler: any
   waiting: boolean = false;
 
@@ -50,13 +48,12 @@ export class SidemenuComponent implements OnInit {
   deleteLevelForm: FormGroup;
   transferWordsForm: FormGroup;
   wordToSpeak: string = '';
-  modalVisible = true;
+  modalVisible: boolean = true;
   deletedLevel: any;
-  // selectedLevelId: string;
   filteredLevelList: Level[];
   selectedLevelId: string;
-
-
+  oldLevelId: string;
+  selectedLevel: Level;
 
   constructor(
     private router: Router,
@@ -68,42 +65,11 @@ export class SidemenuComponent implements OnInit {
     private translationService: TranslationService,
     private levelService: LevelService,
     private formLog: FormBuilder,
-    // private word: Word
-  ) {
-
-    // router.events.subscribe((event: Event) => {
-    //   if (event instanceof NavigationStart) {
-    //     if (event instanceof NavigationStart) {
-    //       this.splitVal = event.url.split('/');
-    //       this.base = this.splitVal[1];
-    //       this.page = this.splitVal[2];
-    //       this.curentLevel = this.splitVal[3];
-    //       console.log("splitVal: ", this.splitVal)
-    //     }
-    //   }
-    // });
-    // this.url = location.path();
-    // if (this.url) {
-    //   this.splitVal = this.url.split('/');
-    //   this.base = this.splitVal[1];
-    //   this.page = this.splitVal[2];
-    //   if (this.splitVal[3] !== undefined) {
-    //     this.curentLevel = this.splitVal[3];
-    //     console.log("splitUrl1: ", this.url)
-    //   } else {
-    //     this.curentLevel = 'sdfsdfsd';
-    //   }
-    // }
-
-    this.getLevelList();
-    this.calculateWordSums();
-    // this.filterLevels();
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.translate.use(this.translationService.getLanguage());
     this.getLevelList();
+    this.translate.use(this.translationService.getLanguage());
     this.levelForm = this.formLog.group({
       '_id': [this.levelData._id
       ],
@@ -128,18 +94,18 @@ export class SidemenuComponent implements OnInit {
     })
   }
 
-
   calculateWordSums() {
     this.totalWords = 0;
     this.totalEnWords = 0;
     this.totalFrWords = 0;
 
     for (const level of this.levelList) {
+      console.log("mots du nv courant :", level.words)
       if (level.words && level.words.length > 0) {
         this.totalWords += level.words.length;
 
         for (const word of level.words) {
-          console.log("list of word: " + level.words);
+          console.log("type du mot :", word.type)
           if (word.type === 'en') {
             this.totalEnWords++;
           } else if (word.type === 'fr') {
@@ -147,58 +113,13 @@ export class SidemenuComponent implements OnInit {
           }
         }
       }
+
     }
   }
 
-  // deleteLevelOfListOfTransfer(level: any) {
-  //   // Code pour supprimer le niveau de la liste
-  //   this.levelData = level;
-  //   this.deleteLevel = {...level}
-  //   const index = this.levelList.indexOf(level);
-  //   if (index !== -1) {
-  //     this.levelList.splice(index, 1);
-  //   }
-  // }
-
-  // restoreLevel() {
-  //   if (this.deletedLevel) {
-  //     const index = this.levelList.indexOf(this.deletedLevel);
-  //     if (index > -1) {
-  //       this.levelList.splice(index, 0, this.deletedLevel); // Réinsérer le niveau supprimé dans la liste à son emplacement d'origine
-  //       this.deletedLevel = null; // Réinitialiser la variable deletedLevel
-  //     }
-  //   }
-  // }
-
-  // deleteLevelOfListOfTransfer(level: any) {
-
-  //   this.levelData = level;
-  //   this.deletedLevel = { ...level }; // Crée une copie du niveau à supprimer
-
-  //   // Ajouter un écouteur d'événement de clic sur le document
-  //   document.addEventListener('click', this.handleClickOutsideDeleteButton);
-  // }
-
-  // handleClickOutsideDeleteButton = (event: MouseEvent) => {
-  //   const target = event.target as HTMLElement;
-
-  //   // Vérifier si l'élément cliqué n'est pas le bouton "Supprimer"
-  //   if (!target.classList.contains('btn-danger')) {
-  //     this.restoreLevel(); // Restaurer le niveau supprimé
-  //     document.removeEventListener('click', this.handleClickOutsideDeleteButton); // Supprimer l'écouteur d'événement
-  //   }
-  // };
-
-  // getFilteredLevels(): Level[] {
-  //   return this.levelList.filter(level => level._id !== this.selectedLevelId);
-  // }
-
   filterLevels(): void {
-    console.log("fygugugu");
     this.filteredLevelList = this.levelList.filter(level => level._id !== this.levelData._id);
   }
-
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.levelForm) {
@@ -242,22 +163,33 @@ export class SidemenuComponent implements OnInit {
       });
   }
 
-  deleteLevel(){
+  onLevelChange(event: any) {
+    const selectedLevelId = event.target.value;
+     this.selectedLevel = this.filteredLevelList.find(level => level._id === selectedLevelId);
+    if (this.selectedLevel) {
+      console.log('Objet du niveau sélectionné :', this.selectedLevel);
+    } else {
+      console.log('Aucun niveau sélectionné');
+    }
+  }
 
-    this.newLevelId = this.deleteLevelForm.value.groupHeriterId;
+  TransfertWords(){
+    // this.newLevelId = this.deleteLevelForm.value.groupHeriterId;
+    this.newLevelId = this.selectedLevel._id;
+    console.log("level ou iront les mots:", this.newLevelId);
     this.deleteLevelForm.value.levelDataId = this.levelData._id;
-
+    console.log('oldId level: ', this.deleteLevelForm.value.levelDataId);
     console.log(this.deleteLevelForm.value)
     if (this.deleteLevelForm.invalid) {
       return;
     }
-
-    this.waitingResponse = true
+    this.waitingResponse = true;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
-    this.levelService.deleteLevel(this.deleteLevelForm.value)
+    this.levelService.deleteLevel(this.deleteLevelForm.value.levelDataId, this.newLevelId)
       .then(() => {
-        this.submitted = false;
-        this.waitingResponse = false;
+        // this.waitingResponse = false;
+        this.modalVisible = true;
+        // this.submitted = false;
         this.refreshList();
         $('#cancel-btn').click();
       })
@@ -267,19 +199,81 @@ export class SidemenuComponent implements OnInit {
       });
   }
 
-  // deleteLevel(): void {
-  //   console.log("bonjour");
-  //   this.deleteLevelForm.value.levelDataId = this.levelData._id;
-  //   console.log(this.deleteLevelForm.value.levelDataId);
-  //   this.levelService.deleteLevelById(this.deleteLevelForm.value.levelDataId);
-  //   this.modalVisible = false;
-  //   this.transferWordsForm.reset();
-  //   this.deleteLevelForm.reset();
-  // }
-
-  transferWords(): void {
-
+  deleteLevel(){
+    this.deleteLevelForm.value.levelDataId = this.levelData._id;
+    console.log('oldId level: ', this.deleteLevelForm.value.levelDataId);
+    // console.log(this.deleteLevelForm.value)
+    if (this.deleteLevelForm.invalid) {
+      return;
+    }
+    this.waitingResponse = true;
+    console.log('deleteLevelForm: ', this.deleteLevelForm.value);
+    this.levelService.deleteLevelId(this.deleteLevelForm.value.levelDataId)
+      .then(() => {
+        // this.waitingResponse = false;
+        this.modalVisible = true;
+        // this.submitted = false;
+        this.refreshList();
+        $('#cancel-btn').click();
+      })
+      .catch((error) => {
+        this.submitted = false;
+        this.waitingResponse = false;
+      });
   }
+
+//   transferWords(): void {
+//     //recupérer id du niveau vers lequel transférer les mots
+//    this.newLevelId = this.transferWordsForm.value.groupHeriterId;
+//    console.log("id du niveau transférer mots: ", this.newLevelId);
+//    //recupérer id du niveau à supprimer ie ancien niveau
+//    this.oldLevelId = this.levelData._id;
+//    console.log("id du niveau à supprimer: ", this.oldLevelId);
+//    //appel méthode transfertWords() de level.service
+//    this.waitingResponse = true;
+//    this.levelService.transferWords(this.oldLevelId, this.newLevelId)
+//    .then(() => {
+//      console.log("heyyy ronice");
+//      return this.levelService.deleteLevelId(this.oldLevelId);
+//    })
+//    .then(() => {
+//      this.modalVisible = false;
+//      this.submitted = false;
+//      this.waitingResponse = false;
+//      this.refreshList();
+//      $('#cancel-btn').click();
+//    })
+//    .catch((error) => {
+//      this.submitted = false;
+//      this.waitingResponse = false;
+//      console.error(error);
+//    });
+
+//    this.levelService.transferWords(this.oldLevelId, this.newLevelId).subscribe(
+//      (response) => {
+//         this.modalVisible = false;
+//        console.log('Mots transférés avec succès');
+//        // Effectuer d'autres actions après le transfert des mots
+//      },
+//      (error) => {
+//        console.error('Erreur lors du transfert des mots', error);
+//        // Gérer l'erreur si nécessaire
+//      }
+//    );
+
+//    this.levelService.deleteLevelId(this.oldLevelId).then(() => {
+//      this.modalVisible = false;
+//      this.submitted = false;
+//      this.waitingResponse = false;
+//      this.refreshList();
+//      $('#cancel-btn').click();
+//    })
+//    .catch((error) => {
+//      this.submitted = false;
+//      this.waitingResponse = false;
+//    });
+
+//  }
 
   navigate(name: any) {
     this.name = name;
@@ -301,18 +295,23 @@ export class SidemenuComponent implements OnInit {
   }
 
   getLevelList() {
-
     console.log("roro");
     if (JSON.parse(localStorage.getItem('levels-list'))) {
       this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+      this.calculateWordSums();
       console.log("liste niveau " + this.levelList);
+      console.log("reponse server: ", this.levelService.getAllLevels())
     }
     else {
       this.waitingResponse = true;
       this.levelService.getAllLevels()
+
         .then((result) => {
+          console.log("le resultat : ", result)
           this.waitingResponse = false;
           this.levelList = result;
+          console.log('levellist :', this.levelList)
+          this.calculateWordSums();
         })
         .catch((error) => {
           console.error('Erreur: ', error.message);
@@ -320,7 +319,6 @@ export class SidemenuComponent implements OnInit {
           this.waitingResponse = false;
         });;
     }
-
   }
 
   get f() {
@@ -350,3 +348,5 @@ export class SidemenuComponent implements OnInit {
       });
   }
 }
+
+

@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { State } from 'src/app/shared/entities/state.enum';
+import { Observable, map } from 'rxjs';
+import { Level } from 'src/app/shared/entities/level';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class SousCompetitionService {
   waitingResponse: boolean = false;
   creationDone: boolean = false;
   listUnderCompetition: SousCompetion[] = [];
+  listUnderCompetitions: SousCompetion[] = [];
 
   listCompetionParent: any[] = [];
 
@@ -62,6 +65,7 @@ export class SousCompetitionService {
         maxOfWinners: ['', Validators.required],
         lang: ['', Validators.required],
         parentCompetition : ['', Validators.required],
+        parentCompetionId: ['']
 
     });
 
@@ -74,20 +78,6 @@ export class SousCompetitionService {
 
 
   initUpdatingValues(data: SousCompetion){
-      /*this.formUpdate.controls['name'].setValue(data.name);
-      this.formUpdate.controls['description'].setValue(data.description);
-      this.formUpdate.controls['level'].setValue(data.level);
-      this.formUpdate.controls['isSinglePart'].setValue(data.isSinglePart);
-      this.formUpdate.controls['canRegisterPlayer'].setValue(data.canRegisterPlayer);
-      this.formUpdate.controls['localisation'].setValue(data.localisation);
-      this.formUpdate.controls['maxPlayerLife'].setValue(data.maxPlayerLife);
-      this.formUpdate.controls['maxTimeToPlay'].setValue(data.maxTimeToPlay);
-      this.formUpdate.controls['startDate'].setValue(data.startDate);
-      this.formUpdate.controls['endDate'].setValue(data.endDate);
-      this.formUpdate.controls['maxOfWinners'].setValue(data.maxOfWinners);
-      this.formUpdate.controls['lang'].setValue(data.lang);
-      this.formUpdate.controls['parentCompetition'].setValue(data.parentCompetition);
-     */
 
       this.formUpdate.patchValue(
         {
@@ -103,11 +93,34 @@ export class SousCompetitionService {
           endDate: (data.endDate).slice(0,-8),
           maxOfWinners: data.maxOfWinners,
           lang: data.lang,
-          parentCompetition: data.parentCompetition
+          parentCompetition: data.parentCompetition.name
         }
       )
       console.log('datacompetition init ', this.newUnderCompetionParam);
   }
+
+
+  // initUpdatingValues(data: SousCompetion){
+
+  //   this.formUpdate.patchValue(
+  //     {
+  //       name: data.name,
+  //       description: data.description,
+  //       gameLevel: data.gameLevel,
+  //       isSinglePart: data.isSinglePart,
+  //       canRegisterPlayer: data.canRegisterPlayer,
+  //       localisation: data.localisation,
+  //       maxPlayerLife: data.maxPlayerLife,
+  //       maxTimeToPlay: data.maxTimeToPlay,
+  //       startDate: (data.startDate).slice(0,-8),
+  //       endDate: (data.endDate).slice(0,-8),
+  //       maxOfWinners: data.maxOfWinners,
+  //       lang: data.lang,
+  //       parentCompetition: data.parentCompetition ? data.parentCompetition._id.toString() : ''
+  //     }
+  //   )
+  //   console.log('datacompetition init ', this.newUnderCompetionParam);
+  // }
 
   initFormControl(){
     //control creation new under competition
@@ -171,6 +184,15 @@ export class SousCompetitionService {
 
 }
 
+loadListCompetition(idCompetition: string) {
+  this.api.get(EndpointSousCompetion.GET_ALL_COMPETITION + idCompetition, this.authorization).subscribe((response) => {
+    console.log("reponse serveur: ", response);
+    if(response && response.data > 0) {
+      this.listUnderCompetitions = Array.from(response.data);
+    }
+  })
+}
+
 async clientChangeState(idCompet: string, statut: string){
 //change the compett's state on user client (ui)
 
@@ -180,38 +202,52 @@ async clientChangeState(idCompet: string, statut: string){
       }
 }
 
-  createCompetition(competionData: SousCompetion, dataArcarde: any){
+  // createCompetition(competionData: SousCompetion, dataArcarde: any){
 
-      this.waitingResponse = true;
-      this.creationDone = false;
+  //     this.waitingResponse = true;
+  //     this.creationDone = false;
 
-      this.api.post(EndpointSousCompetion.CREATED_NEW_S_C+dataArcarde.idArcarde, competionData, this.authorization).subscribe((resp)=>{
-          this.arcardeService.loadArcade();
-          this.loadListUnderCompetition();
-          this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
-          this.waitingResponse = false;
-          this.creationDone = true;
-      },(error: any) => {
+  //     this.api.post(EndpointSousCompetion.CREATED_NEW_S_C+dataArcarde.idArcarde, competionData, this.authorization).subscribe((resp)=>{
+  //         // this.arcardeService.loadArcade();
+  //         // this.loadListUnderCompetition();
+  //         this.waitingResponse = false;
+  //         this.creationDone = false;
+  //         this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
+  //         // this.waitingResponse = false;
+  //         // this.creationDone = true;
+  //     },(error: any) => {
 
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else if (error.status == 404) {
-          this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-        }
-        this.waitingResponse = false;
-      });
-  }
+  //       if (error.status == 500) {
+  //         this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+  //       } else if (error.status == 401) {
+  //         this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+  //       } else if (error.status == 404) {
+  //         this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
+  //       } else {
+  //         this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+  //       }
+  //       this.waitingResponse = false;
+  //     });
+  //     // this.waitingResponse = false;
+  //     // this.creationDone = false;
+  // }
+
+createCompetition(competionData: SousCompetion, dataArcarde: any): Observable<any> {
+  const url = EndpointSousCompetion.CREATED_NEW_S_C + dataArcarde.idArcarde;
+  return this.api.post(url, competionData, this.authorization).pipe(
+    map((resp: any) => {
+      // Traitez les données de réponse si nécessaire
+      return resp;
+    })
+  );
+}
 
 
   update(idCompetition: string){
-
       this.waitingResponse = true;
       this.api.put(EndpointSousCompetion.UPDATE_S_C+idCompetition, this.newUnderCompetionParam, this.authorization).subscribe((resp)=>{
           console.log('update response', resp);
+          console.log('new under competition data', this.newUnderCompetionParam);
           this.toastr.success('Update Done ', 'SUCCESS', {timeOut : 7000});
           this.waitingResponse = false;
           this.arcardeService.loadArcade();
@@ -227,6 +263,58 @@ async clientChangeState(idCompet: string, statut: string){
         this.waitingResponse = false;
       });
       console.log(this.formUpdate.value);
+  }
+
+  updateCompetition(idCompetition: string, underCompetition: SousCompetion) {
+    const params: {
+      name?: any,
+      description?: any,
+      gameLevel?: any,
+      isSinglePart?: any,
+      canRegisterPlayer?: any,
+      localisation?: any,
+      maxPlayerLife?: any,
+      maxTimeToPlay?: any,
+      startDate?: any,
+      endDate?: any,
+      maxOfWinners?: any,
+      lang?: any,
+      parentCompetition?: any
+    } = {
+      name: underCompetition.name,
+      description: underCompetition.description,
+      gameLevel: underCompetition.gameLevel,
+      isSinglePart: underCompetition.isSinglePart,
+      canRegisterPlayer: underCompetition.canRegisterPlayer,
+      localisation: underCompetition.localisation,
+      maxPlayerLife: underCompetition.maxPlayerLife,
+      maxTimeToPlay: underCompetition.maxTimeToPlay,
+      startDate: underCompetition.startDate,
+      endDate: underCompetition.endDate,
+      maxOfWinners: underCompetition.maxOfWinners,
+      lang: underCompetition.lang,
+      parentCompetition: underCompetition.parentCompetition
+    };
+    this.waitingResponse = true;
+    this.api.put(EndpointSousCompetion.UPDATE_S_C+idCompetition, params, this.authorization).subscribe((resp)=>{
+      console.log('update response', resp);
+      console.log('new under competition data', this.newUnderCompetionParam);
+      this.toastr.success('Update Done ', 'SUCCESS', {timeOut : 7000});
+      this.waitingResponse = false;
+      this.arcardeService.loadArcade();
+  },(error: any) => {
+
+    if (error.status == 500) {
+      this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+    } else if (error.status == 401) {
+      this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+    } else {
+      this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+    }
+    this.waitingResponse = false;
+  });
+  console.log(this.formUpdate.value);
+
   }
 
   loadAllCompetition(){
@@ -273,16 +361,16 @@ async clientChangeState(idCompet: string, statut: string){
 
   addCriteria(gameId: string, gameWinnerCriteriasId: string): Promise<boolean>{
     return new Promise<boolean>((resolve,reject) => {
-      
+
       this.waitingCriteriasAdd = true;
       const requestBody = { gameID: gameId, gammeWinnersID: gameWinnerCriteriasId }
       console.log('request', requestBody);
       this.api.put(EndpointSousCompetion.ADD_CRITERIAS_GAME, requestBody, this.authorization).subscribe((resp)=>{
           this.waitingCriteriasAdd = false;
-          
+
           this.toastr.success('Criteria Add', 'SUCCESS', {timeOut: 7100});
           resolve(true);
-      
+
     },(error: any)=>{
 
       this.waitingCriteriasAdd = false;
@@ -304,7 +392,7 @@ async clientChangeState(idCompet: string, statut: string){
     })
     });
 
- 
+
   }
 
   removeWinningCriteria(gameId: string , gameWinnerCriteriasId: string){
@@ -313,17 +401,17 @@ async clientChangeState(idCompet: string, statut: string){
 
       this.waitingCreteriaDeletingDone = true;
       const url = EndpointSousCompetion.REMOVE_GAME_CRITERIAS +`/${gameId}/${gameWinnerCriteriasId}`
-  
+
       console.log("GCI : " + gameWinnerCriteriasId)
-  
+
       this.api.deleteListWinnerCriterias( url , this.authorization).subscribe(()=>{
-  
+
           this.waitingCreteriaDeletingDone = false;
           this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
           resolve(true);
 
       }, (error: any)=>{
-  
+
         this.waitingCreteriaDeletingDone = false;
         if (error.status == 500) {
           this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });

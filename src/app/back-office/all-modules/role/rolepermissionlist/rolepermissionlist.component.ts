@@ -5,7 +5,6 @@ import { Permission } from 'src/app/shared/entities/permission';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { request } from 'http';
 
 @Component({
   selector: 'app-rolepermissionlist',

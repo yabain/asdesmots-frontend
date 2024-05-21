@@ -8,11 +8,7 @@ import { User } from 'src/app/shared/entities/user';
 import { Permission } from 'src/app/shared/entities/permission';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { error } from 'console';
-import { Endpoint } from '../../arcarde/services/endpoint.enum';
-import { resolve } from 'path';
-import { rejects } from 'assert';
+import { HttpClient } from '@angular/common/http';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 
 @Injectable({

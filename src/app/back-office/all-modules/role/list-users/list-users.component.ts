@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
 import { Role } from '../service/role.model';
-import { request } from 'http';
 
 @Component({
   selector: 'app-list-users',

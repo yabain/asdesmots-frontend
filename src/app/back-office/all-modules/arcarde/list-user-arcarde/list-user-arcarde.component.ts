@@ -37,9 +37,9 @@ export class ListUserArcardeComponent implements OnInit {
     this.router.navigateByUrl('/arcarde/suscribe');
  }
 
- refresh(){
-  this.arcardeServ.loadArcade();
-}
+//  refresh(){
+//   this.arcardeServ.loadArcade();
+// }
 
 
   // getId(){

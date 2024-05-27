@@ -7854,11 +7854,11 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	}
 	.login-wrapper .loginbox .login-left {
 		padding: 80px 50px;
-		width: 50%;
+		width: 100%;
 	}
 	.login-wrapper .loginbox .login-right {
 		padding: 50px;
-		width: 50%;
+		width: 100%;
 	}
 	.sidebar {
 		margin-left: -225px;

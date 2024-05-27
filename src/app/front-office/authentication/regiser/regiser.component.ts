@@ -10,6 +10,7 @@ import { LocationService } from 'src/app/shared/services/location/location.servi
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
+
 @Component({
   selector: 'app-regiser',
   templateUrl: './regiser.component.html',
@@ -57,15 +58,21 @@ export class RegiserComponent implements OnInit {
   lang: string;
   en: boolean = false;
   fr: boolean = false;
-  form: FormGroup;
+  form1: FormGroup;
+  form2: FormGroup;
   textDir: String = 'ltr';
-  country: any = [];
-  city: any = [];
+  countries: any = [];
+  cities: any = [];
+  onlyCountry: string[];
+  
+  f1Submitted: boolean = false;
+  f2Submitted: boolean = false;
   public Toggledata = true;
 
   public isvalidconfirmpassword: boolean = false;
   public subscription: Subscription;
   public CustomControler: any;
+  phoneNumberMaxeLength: number = 10;
 
 
   emailControl: FormControl = new FormControl('', Validators.compose([
@@ -83,18 +90,7 @@ export class RegiserComponent implements OnInit {
 	CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   selectedCity: string = '';
-
-  get f() {
-    return this.form.controls;
-  }
-
-  comparer() {
-    if (this.input1 === this.input2) {
-      console.log('Les deux champs sont identiques');
-    } else {
-      console.log('Les deux champs sont différents');
-    }
-  }
+  currentCountry: any;
 
   constructor(
     private storage: WebStorage,
@@ -142,21 +138,24 @@ export class RegiserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.country = this.location.country();
+    this.countries = this.location.countries();
     this.mailSended = false;
     this.storage.Checkuser();
     this.translate.use(this.translationService.getLanguage());
-    this.form = this.formLog.group({
-      'field_firstName': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)])],
+    this.form1 = this.formLog.group({
+      'field_firstName': ['', [Validators.required, Validators.minLength(4)]],
       'field_lastName': ['', Validators.compose([
         Validators.required,
         Validators.minLength(4)])],
-      'field_phone': ['', Validators.compose([
-        Validators.minLength(6)])],
+      'field_phone': ['',],
       'field_date': ['', Validators.required],
       'field_Sexe': ['', Validators.required],
+      'field_profilPicture': ['https://asdesmots.yaba-in.com/assets/img/ynkap-user-profile.png'],
+      'field_country': ['', Validators.required],
+      'field_location': ['', Validators.required],
+      'field_agree': ['', Validators.required],
+    });
+    this.form2 = this.formLog.group({
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
@@ -165,16 +164,39 @@ export class RegiserComponent implements OnInit {
       'field_email': ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])],
-      'field_profilPicture': ['https://asdesmots.yaba-in.com/assets/img/ynkap-user-profile.png'],
-      'field_country': ['', Validators.required],
-      'field_location': ['', Validators.required],
-      'field_agree': ['', Validators.required],
     });
+    this.onlyCountry = this.location.countries().map((country: any) => { return country.ISO} );
+    this.currentCountry = CountryISO.Cameroon;
+    // this.setOnlyCountry(this.currentCountry);
+  }
+  
+  setOnlyCountry(country) {
+    this.onlyCountry = [country];
+  }
+  
+  get f1() {
+    return this.form1.controls;
+  }
+  
+  get f2() {
+    return this.form2.controls;
+  }
+
+  comparer() {
+    if (this.input1 === this.input2) {
+      console.log('Les deux champs sont identiques');
+    } else {
+      console.log('Les deux champs sont différents');
+    }
   }
   etape = 1;
 
   suivant() {
-    this.etape++;
+    if (this.form1.valid)
+      this.etape++;
+      
+    this.f1Submitted = true;
+    console.log(this.form1.get('field_firstName').errors)
   }
   precedent() {
     this.etape--;
@@ -182,30 +204,30 @@ export class RegiserComponent implements OnInit {
 
   submit() {
     // stop here if form is invalid
-    if (this.form.invalid) {
+    if (this.form1.invalid && this.form2.invalid) {
       return;
     }
     this.submitted = true;
     this.waitingResponse = true;
 
-    if (this.form.value.field_country == '1') {
-      this.form.value.field_country = 'Cameroon';
-      this.form.value.field_phone = '+237' + this.form.value.field_phone;
-    } else if (this.form.value.field_country == '2') {
-      this.form.value.field_country = 'Congo';
-      this.form.value.field_phone = '+242' + this.form.value.field_phone;
-    } else if (this.form.value.field_country == '3') {
-      this.form.value.field_country = 'Gabon';
-      this.form.value.field_phone = '+241' + this.form.value.field_phone;
-    } else if (this.form.value.field_country == '4') {
-      this.form.value.field_country == 'Guinee-Eq';
-      this.form.value.field_phone = '+240' + this.form.value.field_phone;
+    if (this.form1.value.field_country == '1') {
+      this.form1.value.field_country = 'Cameroon';
+      this.form1.value.field_phone = '+237' + this.form1.value.field_phone;
+    } else if (this.form1.value.field_country == '2') {
+      this.form1.value.field_country = 'Congo';
+      this.form1.value.field_phone = '+242' + this.form1.value.field_phone;
+    } else if (this.form1.value.field_country == '3') {
+      this.form1.value.field_country = 'Gabon';
+      this.form1.value.field_phone = '+241' + this.form1.value.field_phone;
+    } else if (this.form1.value.field_country == '4') {
+      this.form1.value.field_country == 'Guinee-Eq';
+      this.form1.value.field_phone = '+240' + this.form1.value.field_phone;
     }
 
-    console.log("User Datas from reg: ", this.form.value)
+    console.log("User Datas from reg: ", this.form1.value)
 
-    this.authService.createAccount(this.form.value)
-      .then((result) => {
+    this.authService.createAccount({...this.form1.value, ...this.form2.value})
+      .then(() => {
         this.submitted = false;
         this.waitingResponse = false;
         this.mailSended = true;
@@ -224,10 +246,16 @@ export class RegiserComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  onSelect(country) {
-    this.city = this.location.city()
-      .filter(e =>
-        e.id == country.target.value);
+  onCountryChanged(e) {
+    this.cities = this.location.cities().filter(city =>
+      city.id == e.target.value
+    );
+    let country = this.location.countries().find(
+      country => country.id == e.target.value
+    ).ISO;
+    // this.setOnlyCountry(country);
+    this.currentCountry = country;
+    this.f1['field_location'].setValue('');
   }
 
   navigateToHome() {
@@ -362,18 +390,5 @@ export class RegiserComponent implements OnInit {
   //     }
   //   }
   // }
-
-  verifyLengthFirstName() {
-    this.isFirstnameInvalid = this.firstname.length < this.minLength;
-    this.isInputInvalid = this.isFirstnameInvalid;
-    this.isInputInitial = this.firstname.length === 0;
-  }
-
-  verifyLengthLastName() {
-    this.isLastnameInvalid = this.lastname.length < this.minLength;
-    this.isInputInval = this.isLastnameInvalid;
-    this.isInputInit = this.lastname.length === 0;
-  }
-
 
 }

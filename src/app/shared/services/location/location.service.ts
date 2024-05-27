@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CountryISO } from 'ngx-intl-tel-input';
 
 
 @Injectable({
@@ -6,28 +7,32 @@ import { Injectable } from '@angular/core';
 })
 export class LocationService {
   constructor() { }
-  country() {
+  countries() {
     return [
       {
         id: 1,
-        name: 'Cameroon'
+        name: 'Cameroon',
+        ISO: CountryISO.Cameroon,
       },
       {
         id: 2,
-        name: 'Congo'
+        name: 'Congo',
+        ISO: CountryISO.CongoRepublicCongoBrazzaville,
       },
       {
         id: 3,
-        name: 'Gabon'
+        name: 'Gabon',
+        ISO: CountryISO.Gabon,
       },
       {
         id: 4,
-        name: 'Guinée équatoriale'
+        name: 'Guinée équatoriale',
+        ISO: CountryISO.EquatorialGuinea,
       },
     ];
   }
 
-  city() {
+  cities() {
     return [
       //Cameroun
       {

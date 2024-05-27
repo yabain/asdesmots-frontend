@@ -80,14 +80,17 @@ export class LoginComponent implements OnInit {
     this.translate.use(this.translationService.getLanguage());
     // console.log('111 Venant du service: ', this.translationService.getLanguage());    
     this.form = this.formLog.group({
-        'field_password': ['', Validators.compose([
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)])
+        'field_password': ['', 
+          Validators.compose([
+            Validators.required
+          ])
         ],
-        'field_email': ['', Validators.compose([
-          Validators.required,
-          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
+        'field_email': ['', 
+          Validators.compose([
+            Validators.required,
+            Validators.email
+          ])
+        ]
     });
   }
 

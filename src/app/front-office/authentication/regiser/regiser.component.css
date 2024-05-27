@@ -191,5 +191,11 @@ p {
     
     ol {
         list-style: none;
-      }
+    }
+      
+    
+
+:host ::ng-deep .iti {
+    width: 100%;
+}
     

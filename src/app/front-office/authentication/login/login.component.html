@@ -25,7 +25,7 @@
                   <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
                     {{ 'emailRequired' | translate }}
                   </div>
-                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['email']">
+                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
                     {{ 'enterValidEmail' | translate }}
                   </div>
                 </div>

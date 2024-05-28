@@ -9,6 +9,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { LocationService } from 'src/app/shared/services/location/location.service';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { passwordMatch } from '../../shared/password-match';
 
 
 @Component({
@@ -156,15 +157,17 @@ export class RegiserComponent implements OnInit {
       'field_agree': ['', Validators.required],
     });
     this.form2 = this.formLog.group({
+      'field_email': ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+      ],
       'field_password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)])
       ],
-      'field_email': ['', Validators.compose([
-        Validators.required,
-        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])],
-    });
+      'field_password_confirm': ['', Validators.required],
+    }, { validator: passwordMatch.MatchingPasswords('field_password', 'field_password_confirm') });
     this.onlyCountry = this.location.countries().map((country: any) => { return country.ISO} );
     this.currentCountry = CountryISO.Cameroon;
     // this.setOnlyCountry(this.currentCountry);
@@ -204,6 +207,8 @@ export class RegiserComponent implements OnInit {
 
   submit() {
     // stop here if form is invalid
+    this.f2Submitted = true;
+    return;
     if (this.form1.invalid && this.form2.invalid) {
       return;
     }

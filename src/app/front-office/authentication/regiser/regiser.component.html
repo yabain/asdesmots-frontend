@@ -190,7 +190,7 @@
                   <label class="form-control-label">{{ 'user.password' | translate }} :</label>
                   <div class="pass-group">
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input1" formControlName="field_password"
+                      formControlName="field_password"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       (input)="checkPassword()"
                       (input)="verifierCritereMotDePasse()"
@@ -214,25 +214,24 @@
                     <label class="form-control-label">{{ 'user.confpassword' | translate }} :</label>
                     <br>
                     <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input2" formControlName="field_password"
+                      formControlName="field_password_confirm"
                       (input)="checkPassword()"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
                         'is-invalid':
-                          f2['field_password'].touched && f2['field_password'].invalid
+                          f2['field_password_confirm'].touched && f2['field_password_confirm'].invalid
                       }" />
-                    <span
-                      [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
-                      (click)="iconLogle()"></span>
-                    <div *ngIf="f2['field_password'].touched && f2['field_password'].invalid" class="invalid-feedback">
+                    <div *ngIf="f2['field_password_confirm'].touched && f2['field_password_confirm'].invalid" class="invalid-feedback">
                       <div *ngIf="
-                          f2['field_password'].errors && f2['field_password'].errors?.required
+                          f2['field_password_confirm'].errors && f2['field_password_confirm'].errors?.required
                         ">
-                        {{ 'passwordRequired' | translate }}
+                        {{ 'passwordConfirmRequired' | translate }}
                       </div>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'password'">
-                      {{ CustomControler.message }}
+                      <div *ngIf="
+                          f2['field_password_confirm'].errors && f2['field_password_confirm'].errors['notEquivalent']
+                        ">
+                        {{ 'passwordConfirmNotMatch' | translate }}
+                      </div>
                     </div>
                   </div>
                   <p class="password-message" *ngIf="showMessage" [ngClass]="{'valid-password': passwordsMatch, 'invalid-password': !passwordsMatch}">

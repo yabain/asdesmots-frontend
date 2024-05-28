@@ -8465,3 +8465,35 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 		margin-bottom: 20px;
 	}
 }
+
+.iti__selected-flag {
+    pointer-events: none;
+}
+
+.iti {
+    width: 100%;
+}
+
+.form-control:focus, .form-control.is-invalid:focus {
+	box-shadow: none;
+}
+
+/* Optional: Ensure the input group has no border */
+.input-group .form-control {
+	border-right: none;
+}
+
+/* Custom CSS to remove the background color */
+.input-group .input-group-text {
+    background-color: transparent;
+    border-left: none;
+}
+
+ol, ul {
+    padding-left: 0rem;
+}
+
+.custom-select {
+	width: 20px;
+	height: 20px;
+}

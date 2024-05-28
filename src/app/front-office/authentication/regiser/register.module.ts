@@ -9,6 +9,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [RegiserComponent],
@@ -18,6 +19,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
     ProgressIndeterminateModule,
     TranslateModule.forRoot({
       loader: {

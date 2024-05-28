@@ -8,19 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { SidemenuComponent } from '../shared/sidemenu/sidemenu.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { FooterModule } from '../shared/footer/footer.module';
 import { GamePlayComponent } from './game-play/game-play.component';
 
-
 @NgModule({
   declarations: [
     AllModulesComponent,
     SidemenuComponent,
-    GamePlayComponent,
+    GamePlayComponent
   ],
   imports: [
     CommonModule,

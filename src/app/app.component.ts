@@ -10,7 +10,6 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	//changeDetection: ChangeDetectionStrategy.OnPush,
 	styleUrls: ['./app.component.css'],
 	encapsulation: ViewEncapsulation.None,
 })

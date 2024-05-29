@@ -7854,11 +7854,11 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	}
 	.login-wrapper .loginbox .login-left {
 		padding: 80px 50px;
-		width: 50%;
+		width: 100%;
 	}
 	.login-wrapper .loginbox .login-right {
 		padding: 50px;
-		width: 50%;
+		width: 100%;
 	}
 	.sidebar {
 		margin-left: -225px;
@@ -8464,4 +8464,36 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	.invoice-item-one .invoice-info {
 		margin-bottom: 20px;
 	}
+}
+
+.iti__selected-flag {
+    pointer-events: none;
+}
+
+.iti {
+    width: 100%;
+}
+
+.form-control:focus, .form-control.is-invalid:focus {
+	box-shadow: none;
+}
+
+/* Optional: Ensure the input group has no border */
+.input-group .form-control {
+	border-right: none;
+}
+
+/* Custom CSS to remove the background color */
+.input-group .input-group-text {
+    background-color: transparent;
+    border-left: none;
+}
+
+ol, ul {
+    padding-left: 0rem;
+}
+
+.custom-select {
+	width: 20px;
+	height: 20px;
 }

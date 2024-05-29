@@ -5,263 +5,277 @@
       <div class="loginbox" *ngIf="!mailSended">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo" (click)="navigateToHome()"
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo" [routerLink]="['welcome']" routerLinkActive="router-link-active"
               style="height: 10vw; width: 20vw !important;" />
             <!-- <br> -->
             <h1>{{ 'register' | translate }}</h1>
             <!-- <p class="account-subtitle">{{ 'needAccound' | translate }}.</p> -->
 
             <!-- Form -->
-            <form [formGroup]="form" (ngSubmit)="submit()">
-              <div *ngIf="etape === 1 ">
+            <div *ngIf="step === 1 ">
+              <form [formGroup]="form1">
                 <!-- <p class="account-subtitle">{{ 'persinfo' | translate }}.</p> --> <br>
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.firstName' | translate }} :</label>
+                  <label class="form-control-label">{{ 'user.firstName' | translate }}<span class="text-danger"> *</span></label>
                   <input class="form-control" type="text" formControlName="field_firstName"
-                    [(ngModel)]="firstname"
-                    (ngModelChange)="verifyLengthFirstName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.firstName' | translate }}" id="field_firstName"
                     [ngClass]="{
-                      'is-invalid': f['field_firstName'].touched && f['field_firstName'].invalid, 'invalid-input': isInputInvalid, 'valid-input': !isInputInvalid,
-                      'initial-input': isInputInitial
+                      'is-invalid': form1.get('field_firstName').invalid && (f1Submitted || form1.get('field_firstName').touched), 'invalid-input': form1.get('field_firstName').invalid && (f1Submitted || form1.get('field_firstName').touched), 'valid-input': form1.get('field_firstName').valid,
+                      'initial-input': form1.get('field_firstName').errors?.required
                     }" />
-                  <div *ngIf="f['field_firstName'].touched && f['field_firstName'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_firstName'].errors && f['field_firstName'].errors['required']">
+                  <div *ngIf="form1.get('field_firstName').invalid && (f1Submitted || form1.get('field_firstName').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_firstName').errors?.required">
                       {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="firstname-message" *ngIf="isFirstnameInvalid">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_firstName').touched && form1.get('field_firstName').errors?.minlength">Au moins 4 caractères</p>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.lastName' | translate }} :</label>
+                  <label class="form-control-label">{{ 'user.lastName' | translate }}<span class="text-danger"> *</span></label>
                   <input class="form-control" type="text" formControlName="field_lastName"
-                   [(ngModel)]="lastname"
-                   (ngModelChange)="verifyLengthLastName()"
                     placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_lastName"
                     [ngClass]="{
-                      'is-invalid': f['field_lastName'].touched && f['field_lastName'].invalid,  'invalid-input': isInputInval, 'valid-input': !isInputInval,
-                      'initial-input': isInputInit
+                      'is-invalid': form1.get('field_lastName').invalid && (f1Submitted || form1.get('field_lastName').touched), 'invalid-input': form1.get('field_lastName').invalid && (f1Submitted || form1.get('field_lastName').touched), 'valid-input': form1.get('field_lastName').valid,
+                      'initial-input': form1.get('field_lastName').errors?.required
                     }" />
-                  <div *ngIf="f['field_lastName'].touched && f['field_lastName'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_lastName'].errors && f['field_lastName'].errors['required']">
-                      {{ 'lastNameRequired' | translate }}
+                  <div *ngIf="form1.get('field_lastName').invalid && (f1Submitted || form1.get('field_lastName').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_lastName').errors?.required">
+                      {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="lastname-message" *ngIf="isLastnameInvalid">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_lastName').touched && form1.get('field_lastName').errors?.minlength">Au moins 4 caractères</p>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.gender' | translate }}</label>
-                  <select class="form-control" id="sexe" formControlName="field_Sexe" [ngClass]="{
-                    'is-invalid': f['field_Sexe'].touched && f['field_Sexe'].invalid
+                  <label class="form-control-label">{{ 'user.gender' | translate }}<span class="text-danger"> *</span></label>
+                  <select class="form-control" id="sexe" formControlName="field_Sexe" 
+                  [ngClass]="{
+                    'is-invalid': form1.get('field_Sexe').invalid && (f1Submitted || form1.get('field_Sexe').touched), 'invalid-input': form1.get('field_Sexe').invalid && (f1Submitted || form1.get('field_Sexe').touched), 'valid-input': form1.get('field_Sexe').valid,
+                    'initial-input': form1.get('field_Sexe').errors?.required
                   }">
                   <option value="">--{{ 'user.selectGender' | translate }}--</option>
                     <option value="Mr"> {{ 'man' | translate }}</option>
                     <option value="Ms"> {{ 'woman' | translate }}</option>
                   </select>
-                  <!-- <div *ngIf="f['field_sexe'].touched && f['field_sexe'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_sexe'].errors && f['field_sexe'].errors['required']">
-                      {{ 'sexen' | translate }}
-                    </div>
-                  </div> -->
-                  <div *ngIf="f['field_Sexe'].touched && f['field_Sexe'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_Sexe'].errors && f['field_Sexe'].errors['required']">
-                      {{ 'lastNameRequired' | translate }}
+                  <div *ngIf="form1.get('field_Sexe').invalid && (f1Submitted || form1.get('field_Sexe').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_Sexe').errors?.required">
+                      {{ 'sexeRequired' | translate }}
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-group-label">{{ 'user.dateofbirth' | translate }} :</label>
-                  <input formControlName="field_date" class="form-control" type="date" name="birthdate" id="field_date">
+                  <label class="form-group-label">{{ 'user.dateofbirth' | translate }}<span class="text-danger"> *</span></label>
+                  <input class="form-control" type="date" formControlName="field_date" id="field_date"
+                    [ngClass]="{
+                      'is-invalid': form1.get('field_date').invalid && (f1Submitted || form1.get('field_date').touched), 'invalid-input': form1.get('field_date').invalid && (f1Submitted || form1.get('field_date').touched), 'valid-input': form1.get('field_date').valid,
+                      'initial-input': form1.get('field_date').errors?.required
+                    }" />
+                  <div *ngIf="form1.get('field_date').invalid && (f1Submitted || form1.get('field_date').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_date').errors?.required">
+                      {{ 'dateRequired' | translate }}
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.country' | translate }} :</label>
-                  <select (change)="onSelect($event)" name="country" id="country-select" class="form-control"
-                    formControlName="field_country" [ngClass]="{
-                    'is-invalid': f['field_country'].touched && f['field_country'].invalid
-                  }">
+                  <label class="form-control-label">{{ 'user.country' | translate }}<span class="text-danger"> *</span></label>
+                  <select (change)="onCountryChanged($event)" name="country" id="country-select" class="form-control"
+                    formControlName="field_country" 
+                    [ngClass]="{
+                      'is-invalid': form1.get('field_country').invalid && (f1Submitted || form1.get('field_country').touched), 'invalid-input': form1.get('field_country').invalid && (f1Submitted || form1.get('field_country').touched), 'valid-input': form1.get('field_country').valid,
+                      'initial-input': form1.get('field_country').errors?.required
+                    }">
                     <option value="">--{{ 'selectCountry' | translate }}--</option>
-                    <option *ngFor="let countries of country" value="{{countries.id}}">
-                      {{countries.name}}
+                    <option *ngFor="let country of countries" value="{{country.id}}" id="{{country.ISO}}">
+                      {{country.name}}
                     </option>
                   </select>
-                  <div *ngIf="f['field_country'].touched && f['field_country'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_country'].errors && f['field_country'].errors['required']">
+                  <div *ngIf="form1.get('field_country').invalid && (f1Submitted || form1.get('field_country').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_country').errors?.required">
                       {{ 'countryRequired' | translate }}
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.location' | translate }} :</label>
-                  <select name="city" id="city-select" class="form-control" formControlName="field_location" [ngClass]="{
-                    'is-invalid': f['field_location'].touched && f['field_location'].invalid
+                  <label class="form-control-label">{{ 'user.location' | translate }}<span class="text-danger"> *</span></label>
+                  <select name="city" id="city-select" class="form-control" formControlName="field_location" 
+                  [ngClass]="{
+                    'is-invalid': form1.get('field_location').invalid && (f1Submitted || form1.get('field_location').touched), 'invalid-input': form1.get('field_location').invalid && (f1Submitted || form1.get('field_location').touched), 'valid-input': form1.get('field_location').valid,
+                    'initial-input': form1.get('field_location').errors?.required
                   }">
                     <option value="">--{{ 'selectCity' | translate }}--</option>
-                    <option *ngFor="let cities of city" value="{{cities.name}}">{{cities.name}}</option>
+                    <option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</option>
                   </select>
-                  <div *ngIf="f['field_location'].touched && f['field_location'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_location'].errors && f['field_location'].errors['required']">
+                  <div *ngIf="form1.get('field_location').invalid && (f1Submitted || form1.get('field_location').touched)" class="invalid-feedback">
+                    <div *ngIf="form1.get('field_location').errors?.required">
                       {{ 'cityRequired' | translate }}
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.phone' | translate }}:</label>
-                  <!-- <input class="form-control" type="tel" placeholder="xxx xxx xxx xxx" formControlName="field_phone"
-                    [(ngModel)]="phoneModel"
-                    [formControl]="phoneControl"
-                    (ngModelChange)="isPhoneModel()"
-                    (ngModelChange)="isPhoneModelUser()"
-
-                    [ngClass]="{ 'valid-phone': isPhoneValid(), 'invalid-phone': !isPhoneValid(), 'initial-border': !phoneControl.touched }"
-                   />
-                   <p class="phone-message" *ngIf="isPhoneModelInvalid">Au moins 6 chiffres</p>
-                   <p class="phone-message" *ngIf="isInvalidFormat">Format de téléphone invalide</p> -->
+                  <label class="form-control-label">{{ 'user.phone' | translate }}</label>
                    <br>
                    <ngx-intl-tel-input
-                     [(ngModel)]="phoneModel"
                      [cssClass]="'form-control'"
-                     [enableAutoCountrySelect]="true"
+                     [enableAutoCountrySelect]="false"
                      [enablePlaceholder]="true"
-                     [searchCountryFlag]="true"
+                     [searchCountryFlag]="false"
                      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                      [selectFirstCountry]="false"
-                     [selectedCountryISO]="CountryISO.Cameroon"
+                     [selectedCountryISO]="currentCountry.ISO"
                      [separateDialCode]="true"
-                     [maxLength]="15"
                      [phoneValidation]="true"
                      name="phone"
                      formControlName="field_phone"
-                   ></ngx-intl-tel-input>
-                </div>
+                     [onlyCountries]="onlyCountry"
+                    >
+                   </ngx-intl-tel-input>
+                   <div *ngIf="form1.get('field_phone').invalid && (f1Submitted || form1.get('field_phone').touched)" class="invalid-feedback">
+                      {{ 'phoneInvalid' | translate }}
+                   </div>
+                 </div>
                 <br>
 
                 <div class="wrapper" style="display: flex; justify-content: flex-end;">
-                  <a (click)="suivant()" style="
+                  <a (click)="next()" style="
                   font-size: 15px;
                   padding-left: 10px;"><b><span>{{'next'| translate}} &raquo;</span></b></a>
                 </div><br><br>
 
-              </div>
+              </form>
+            </div>
 
-              <div *ngIf="etape === 2">
+            <div *ngIf="step === 2">
+              <form [formGroup]="form2">
                 <!-- <p class="account-subtitle">{{ 'userinfo' | translate }}.</p> --> <br>
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.emailAddress' | translate }} :</label>
-                  <input class="form-control" type="text" formControlName="field_email"
-                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
-                    formControlName="field_email"
+                  <label class="form-control-label">{{ 'user.emailAddress' | translate }}<span class="text-danger">*</span></label>
+                  <input class="form-control" type="email" formControlName="field_email"
+                    placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_email"
                     [ngClass]="{
-                      'is-invalid': f['field_email'].touched && f['field_email'].invalid
+                      'is-invalid': form2.get('field_email').invalid && (f2Submitted || form2.get('field_email').touched), 'invalid-input': form2.get('field_email').invalid && (f2Submitted || form2.get('field_email').touched), 'valid-input': form2.get('field_email').valid,
+                      'initial-input': form2.get('field_email').errors?.required
                     }" />
-                  <div class="invalid-feedback" *ngIf="CustomControler?.status === 'field_email'">
-                    {{ CustomControler.message }}
-                  </div>
-                  <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
+                  <div *ngIf="form2.get('field_email').invalid && (f2Submitted || form2.get('field_email').touched)" class="invalid-feedback">
+                    <div *ngIf="form2.get('field_email').errors?.required">
                       {{ 'emailRequired' | translate }}
                     </div>
-                    <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
+                    <div *ngIf="form2.get('field_email')?.errors['email']">
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
-                  <!-- <span class="email-message" [ngClass]="{ 'valid-email': isEmailValid(), 'invalid-email': !isEmailValid() }" *ngIf="emailControl.value !== ''">
-                    {{ isEmailValid() ? 'Email valide' : 'Email invalide' }}
-                  </span> -->
                 </div>
                 <div class="form-group">
-                  <label class="form-control-label">{{ 'user.password' | translate }} :</label>
+                  <label class="form-control-label">{{ 'user.password' | translate }}<span class="text-danger">*</span></label>
                   <div class="pass-group">
-                    <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input1" formControlName="field_password"
+                    <input class="form-control" [type]="hashedPassword ? 'password' : 'text'" type="password"
+                      formControlName="field_password" autocomplete="false"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
-                      (input)="checkPassword()"
-                      (input)="verifierCritereMotDePasse()"
                       [ngClass]="{
-                        'is-invalid':
-                          f['field_password'].touched && f['field_password'].invalid
-                      }" /> <br>
-                    <label class="form-control-label">{{ 'user.confpassword' | translate }} :</label>
+                        'is-invalid': form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched), 'invalid-input': form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched), 'valid-input': form2.get('field_password').valid,
+                        'initial-input': form2.get('field_password').errors?.required
+                      }" 
+                    />
+                    <div *ngIf="form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched)" class="invalid-feedback">
+                        <div *ngIf="form2.get('field_password')?.errors.required">
+                          {{ 'passwordRequired' | translate }}
+                        </div>
+                        <div *ngIf="form2.get('field_password')?.errors['pattern']">
+                          {{ 'passwordFormat' | translate }}
+                        </div>
+                        <div *ngIf="!form2.get('field_password')?.errors['pattern'] && form2.get('field_password')?.errors?.minlength">
+                          {{ 'passwordLength' | translate }}
+                        </div>
+                    </div>
                     <br>
-                    <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                      [(ngModel)]="input2" formControlName="field_password"
-                      (input)="checkPassword()"
-                      placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
-                      [ngClass]="{
-                        'is-invalid':
-                          f['field_password'].touched && f['field_password'].invalid
-                      }" />
-                    <span
-                      [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
-                      (click)="iconLogle()"></span>
-                    <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
-                      <div *ngIf="
-                          f['field_password'].errors && f['field_password'].errors['required']
-                        ">
+                    <label class="form-control-label">{{ 'user.confpassword' | translate }}<span class="text-danger">*</span></label>
+                    <br>
+                    <div class="input-group mb-3">
+                      <input class="form-control" [type]="hashedPassword ? 'password' : 'text'"
+                        formControlName="field_password_confirm" autocomplete="false"
+                        placeholder="{{ 'confirmYour' | translate }}{{ 'user.password' | translate }}" id="field_password_confirm"
+                        [ngClass]="{
+                          'is-invalid':
+                            (f2Submitted || form2.get('field_password_confirm').touched) && form2.get('field_password_confirm').invalid
+                        }" />
+                        <span class="input-group-text" id="togglePassword" (click)="togglePasswordVisibility()">
+                          <i class="fas toggle-field_password" [ngClass]="hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </span>
+                    </div>
+                    <div *ngIf="(f2Submitted || form2.get('field_password_confirm').touched) && form2.get('field_password_confirm').invalid">
+                      <div *ngIf="form2.get('field_password_confirm').errors['required']" class="custom-invalid-feedback">
                         {{ 'passwordRequired' | translate }}
                       </div>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'password'">
-                      {{ CustomControler.message }}
+                      <div *ngIf="!form2.get('field_password_confirm').errors['required'] && form2.get('field_password_confirm').errors['notEquivalent']" class="custom-invalid-feedback">
+                        {{ 'passwordsNotMatch' | translate }}
+                      </div>
                     </div>
                   </div>
-                  <p class="password-message" *ngIf="showMessage" [ngClass]="{'valid-password': passwordsMatch, 'invalid-password': !passwordsMatch}">
-                    {{ message }}
-                  </p>
-                  <div style="background-color: rgba(248, 180, 71, 0.575);
-                  border-radius: 5px;
-                  padding: 5px;
-                  margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
-                  <ol>
-                    <li>
-                      <input type="checkbox" id="checkbox-inside">
-                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereLongueur}" ></i>
-                      {{ 'upTo8Char' | translate }}
-                    </li>
-
-                    <li>
-                      <input type="checkbox" id="checkbox-inside">
-                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;"  [ngClass]="{'condition-true': critereMajuscule}"></i>
-                      {{ 'upTo1Captal' | translate }}
-                    </li>
-                    <li>
-                      <input type="checkbox" id="checkbox-inside">
-                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereChiffre}" ></i>
-                      {{ 'upTo1Number' | translate }}
-                    </li>
-                    <li>
-                      <input type="checkbox" id="checkbox-inside">
-                      <i class="fa-solid fa-check fa-beat fa-xl" id="check" style="color: #3dcb15;" [ngClass]="{'condition-true': critereCaractereSpecial}" ></i>
-                      {{ 'upTo1SpecialCahr' | translate }}
-                    </li>
-                  </ol>
+                  <div class="mt-2" style="background-color: rgba(248, 180, 71, 0.575);
+                    border-radius: 5px;
+                    padding: 15px;
+                    margin-top: 5px">
+                    <b style="color: #000"> {{ 'pwdShouldBe' | translate }} </b> <br>
+                    <ol class="pt-2">
+                      <li>
+                        <input type="checkbox" class="checkbox-inside">
+                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': !form2.get('field_password')?.errors?.minlength}" ></i>
+                        {{ 'upTo8Char' | translate }}
+                      </li>
+  
+                      <li>
+                        <input type="checkbox" class="checkbox-inside">
+                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;"  [ngClass]="{'condition-true': passwordFunction.uppercaseChar(form2.get('field_password').value)}"></i>
+                        {{ 'upTo1Captal' | translate }}
+                      </li>
+                      <li>
+                        <input type="checkbox" class="checkbox-inside">
+                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': passwordFunction.numberChar(form2.get('field_password').value)}" ></i>
+                        {{ 'upTo1Number' | translate }}
+                      </li>
+                      <li>
+                        <input type="checkbox" class="checkbox-inside">
+                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': passwordFunction.specialChar(form2.get('field_password').value)}" ></i>
+                        {{ 'upTo1SpecialCahr' | translate }}
+                      </li>
+                      <li>
+                        <input type="checkbox" class="checkbox-inside">
+                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': !form2.get('field_password').errors?.required && passwordsMatch()}" ></i>
+                        {{ 'passwordMatch' | translate }}
+                      </li>
+                    </ol>
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" formControlName="field_agree" class="custom-control-input" id="cb2" />
-                        <label id="label" class="custom-checkbox" for="cb2">{{ 'agreeAll' | translate }} <a class="inside-line" href="">{{
-                            'terms' | translate }}</a> {{ 'and' | translate }} <a class="inside-line" href="">{{ 'policy' | translate }}</a>
-                          {{ 'dataUsage' | translate }}</label>
+                  <div class="custom-control d-flex">
+                    <input type="checkbox" formControlName="field_agree" id="field_agree"  class="custom-select"
+                    [ngClass]="{
+                      'is-invalid':
+                        f2Submitted && form2.get('field_agree').invalid
+                    }" />
+                    <label id="label" class="custom-checkbox" for="field_agree">{{ 'agreeAll' | translate }} <a class="inside-line" href="">{{
+                        'terms' | translate }}</a> {{ 'and' | translate }} <a class="inside-line" href="">{{ 'policy' | translate }}</a>
+                      {{ 'dataUsage' | translate }}
+                    </label>
+                  </div>
+                  <div *ngIf="form2.get('field_agree').invalid && f2Submitted">
+                      <div *ngIf="form2.get('field_agree').errors['required']" class="custom-invalid-feedback">
+                        {{ 'agreeRequired' | translate }}
                       </div>
-                    </div>
                   </div>
                 </div>
                 <div class="wrapper" style="display: flex;">
-                  <a (click)="precedent()" style="width: 16vh !important;
+                  <a (click)="previous()" style="width: 16vh !important;
                   font-size: 15px;
                   padding-left: 10px;"><b><span>&laquo; {{'back'| translate}}</span></b></a>
                 </div><br><br>
 
                 <div class="form-group mb-0">
-                  <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()"
-                    class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                  <button *ngIf="!waitingResponse" [disabled]="step < 2"  (click)="submit()"
+                    class="btn btn-lg btn-block btn-primary w-100" type="button">
                     {{ 'register' | translate }}
                   </button>
                   <div *ngIf="waitingResponse">
@@ -269,15 +283,8 @@
                   </div>
                 </div>
                 <br>
-                <!-- <button (click)="precedent()" class="btn btn-lg btn-block btn-primary w-100"
-                  style="width: 15vh !important; font-size: 15px;"><i class="fa fa-arrow-left"
-                    style="font-size: medium;"></i> {{'back' |
-                  translate}}</button> -->
-
-              </div>
-
-
-            </form>
+              </form>
+            </div>
             <!-- /Form -->
 
             <div class="login-or">
@@ -373,10 +380,5 @@
     </div>
   </div>
 </div>
-<div *ngIf="en" (click)="setFrLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Français" />Fr</a>
-</div>
-<div *ngIf="fr" (click)="setEnLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Anglais" />En</a>
-</div>
+<app-language-template></app-language-template>
 <!-- /Main Wrapper -->

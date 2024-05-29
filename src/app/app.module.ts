@@ -19,10 +19,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { TranslationService } from './shared/services/translation/language.service';
 import { ProgressIndeterminateModule } from './shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { CommonModule } from '@angular/common';
-import { FormatDatePipe } from './back-office/all-modules/undercompetition/list-competition/pipe/format-date.pipe';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-// import { FooterModule } from './back-office/shared/footer/footer.module';
-// import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

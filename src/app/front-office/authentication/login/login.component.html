@@ -45,7 +45,7 @@
                     <div *ngIf="
                         f['field_password'].errors && f['field_password'].errors['required']
                       ">
-                    {{ 'passwordRequired' | translate }}
+                      {{ 'passwordRequired' | translate }}
                     </div>
                   </div>
                   <div class="invalid-feedback" *ngIf="CustomControler?.status === 'password'">

@@ -38,13 +38,12 @@ export class ProfileComponent implements OnInit {
     {
       this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
     });
-    this.lang = this.translationService.initLanguage();
   }
 
   ngOnInit(): void {
     this.scrollToTop();
     
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     this.userService.getUserActivities(this.userData.id)
     .then((result) => {
       console.log("activities 000: ", result);

@@ -25,7 +25,7 @@ export class RoleCreateComponent implements OnInit {
   }
 
   initTranslation(){
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
   }
 
   resetFormCreation(){

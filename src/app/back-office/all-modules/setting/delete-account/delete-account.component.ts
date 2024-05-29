@@ -14,6 +14,6 @@ export class DeleteAccountComponent implements OnInit {
     private translationService: TranslationService,) { }
 
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
   }
 }

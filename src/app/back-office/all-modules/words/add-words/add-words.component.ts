@@ -56,7 +56,7 @@ export class AddWordsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     this.scrollToTop();
 
     this.wordEnForm = this.formLog.group({

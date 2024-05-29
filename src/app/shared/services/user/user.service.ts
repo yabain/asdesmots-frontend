@@ -208,7 +208,7 @@ export class UserService {
   //     "_id": user.field_id,
   //     "firstname": user.field_firstName,
   //     "lastname": user.field_lastName,
-  //     "password": user.field_password,
+  //     "password": user.password,
   //     "adresse": {
   //       "email": user.field_email,
   //       "mobilePhone": user.field_contact,

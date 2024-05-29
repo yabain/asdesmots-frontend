@@ -139,7 +139,7 @@ getUserInformations() {
       const params = {
         'user.field_email': data.user.field_email,
         'user_code': data.user_code,
-        'user.field_password': data.user.field_password
+        'user.password': data.user.password
       };
       this.api.post(`api/v01/recover-user/by-email/change-password`, JSON.stringify(params)).subscribe(success => {
         resolve(success);
@@ -198,7 +198,7 @@ getUserInformations() {
     user.field_email= userApiData.adresse.email;
     user.field_city= userApiData.localtions;
     user.field_country= userApiData.adresse.coutry;
-    user.field_password= userApiData.password;
+    user.password= userApiData.password;
     user.field_contact= userApiData.adresse.mobilePhone;
     user.field_whatsappContact= userApiData.adresse.whatsAppNumber;
     // user.field_image=[];
@@ -214,7 +214,7 @@ getUserInformations() {
       "_id": user.field_id,
       "firstname": user.field_firstName,
       "lastname": user.field_lastName,
-      "password": user.field_password,
+      "password": user.password,
       "adresse": {
         "email": user.field_email,
         "mobilePhone": user.field_contact,

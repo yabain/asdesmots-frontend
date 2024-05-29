@@ -6,15 +6,13 @@ import { WebStorage } from 'src/app/shared/storage/web.storage';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocationService } from 'src/app/shared/services/location/location.service';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
-import { PasswordFunction } from '../../shared/helpers/password/functions';
-import { passwordMatch } from '../../shared/helpers/password/password-match';
+import { PasswordMatch } from '../../shared/helpers/password/password-match';
 
 
 @Component({
   selector: 'app-regiser',
   templateUrl: './regiser.component.html',
   styleUrls: ['./regiser.component.css'],
-  providers: [PasswordFunction]
 })
 
 export class RegiserComponent implements OnInit {
@@ -51,7 +49,6 @@ export class RegiserComponent implements OnInit {
     private formLog: FormBuilder,
     private authService: AuthService,
     private location: LocationService,
-    public passwordFunction : PasswordFunction
   ) {
 
     this.subscription = this.storage.Createaccountvalue.subscribe((data) => {
@@ -79,31 +76,16 @@ export class RegiserComponent implements OnInit {
     this.form2 = this.formLog.group({
       field_email: ['', Validators.compose([
         Validators.required,
-        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+        Validators.email])
       ],
-      field_password: ['', [Validators.required,Validators.minLength(8),
+      password: ['', [Validators.required,Validators.minLength(8),
         Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)
       ]],
-      field_password_confirm: ['', [Validators.required]],
+      password_confirm: ['', [Validators.required]],
       field_agree: ['', [Validators.required]],
-    }, { validator: passwordMatch.MatchingPasswords('field_password', 'field_password_confirm') });
+    }, { validator: PasswordMatch.MatchingPasswords('password', 'password_confirm') });
     this.onlyCountry = this.location.countries().map((country: any) => { return country.ISO} );
     this.currentCountry = this.location.countries().find((country: any) => country.ISO == CountryISO.Cameroon);
-  }
-
-  getFormValidationErrors(form: FormGroup) {
-    Object.keys(form.controls).forEach(key => {
-      const controlErrors: ValidationErrors = form.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-         console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-        });
-      }
-    });
-  }
-  
-  passwordsMatch(): boolean {
-    return this.form2.get('field_password').value === this.form2.get('field_password_confirm').value;
   }
   
   next() {

@@ -56,7 +56,7 @@ export class SidemenuComponent implements OnInit {
   }
   ngOnInit() {
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
   }
 
   logout() {

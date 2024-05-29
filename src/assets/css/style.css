@@ -8497,3 +8497,16 @@ ol, ul {
 	width: 20px;
 	height: 20px;
 }
+
+.custom-invalid-feedback {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+
+.custom-alert {
+	border-radius: 5px;
+	padding: 15px;
+	margin-top: 5px;
+}

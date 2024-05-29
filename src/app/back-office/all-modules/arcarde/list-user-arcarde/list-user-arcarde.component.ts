@@ -30,7 +30,7 @@ export class ListUserArcardeComponent implements OnInit {
   }
 
   initTranslation(){
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
   }
 
   goToAcradeSuscription(){

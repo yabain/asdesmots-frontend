@@ -65,7 +65,7 @@ export class LinkReceiveComponent implements OnInit {
 
   ngOnInit() {
     this.storage.Checkuser();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
   }
 
   submit() {

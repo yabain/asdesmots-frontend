@@ -172,7 +172,7 @@ export class AuthService {
       const params = {
         'firstName': user.field_firstName,
         'lastName': user.field_lastName,
-        'password': user.field_password,
+        'password': user.password,
         'email': user.field_email,
         'profilePicture': '' + user.field_profilPicture,
         'country': user.field_country,
@@ -230,7 +230,7 @@ export class AuthService {
   // Login into your account
   authLogin(user): Promise<any> {
     let email = user.field_email;
-    let password = user.field_password;
+    let password = user.password;
 
     const param = {
       'email': email,

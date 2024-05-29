@@ -27,7 +27,7 @@ export class RolepermissionlistComponent implements OnInit {
       private Location: Location,
       public roleService: RoleService,
   ) {
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
 
   }
 

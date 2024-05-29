@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   fr: boolean = false;
 
   textDir: String = 'ltr';
-  public Toggledata=true;
+  public hashedPassword=true;
   public CustomControler:any
   public subscription: Subscription;
   // form = new FormGroup({
@@ -45,21 +45,6 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     ) {
-
-      this.lang = this.translationService.initLanguage();
-      
-      if (this.lang == 'en'){
-        this.en = true;
-        this.fr = false;
-      } else if (this.lang == 'fr'){
-        this.en = false;
-        this.fr = true;
-      } else {
-        this.lang = 'en';
-        this.en = true;
-        this.fr = false;
-      }
-
       //this is to determine the text direction depending on the selected language
       translate.onLangChange.subscribe((event: LangChangeEvent) =>
       {
@@ -77,10 +62,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.storage.Checkuser();
-    this.translate.use(this.translationService.getLanguage());
-    // console.log('111 Venant du service: ', this.translationService.getLanguage());    
+    this.translate.use(this.translationService.getCurrentLanguage());
+    // console.log('111 Venant du service: ', this.translationService.getCurrentLanguage());    
     this.form = this.formLog.group({
-        'field_password': ['', 
+        'password': ['', 
           Validators.compose([
             Validators.required
           ])
@@ -123,19 +108,7 @@ export class LoginComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  navigateToHome() {
-    this.router.navigate(['welcome']);
-  }
-
-  iconLogle(){
-    this.Toggledata = !this.Toggledata
-  }
-
-  setEnLang(){
-    this.translationService.setLanguage('en');
-  }
-
-  setFrLang(){
-    this.translationService.setLanguage('fr');
+  togglePasswordVisibility() {
+    this.hashedPassword = !this.hashedPassword
   }
 }

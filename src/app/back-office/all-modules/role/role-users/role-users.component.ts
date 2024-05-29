@@ -56,7 +56,7 @@ export class RoleUsersComponent implements OnInit, AfterViewInit {
   }
 
   initTranslation(){
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
   }
   getRoleName(){
    this.roleChooseName = this.roleService.getNameOfRole(this.id);

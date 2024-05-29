@@ -34,7 +34,7 @@ export class CustomerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     this.customers = localStorage.getItem('users-list');
     if (this.customers) {
       this.customers = JSON.parse(localStorage.getItem('users-list'));

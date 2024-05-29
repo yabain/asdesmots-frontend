@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { WebStorage } from 'src/app/shared/storage/web.storage';
 
 @Component({
@@ -33,16 +31,8 @@ export class ForgotPwdComponent implements OnInit {
     private storage: WebStorage,
     private formLog: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
-    public translationService: TranslationService,
     private router: Router
     ) {
-      //this is to determine the text direction depending on the selected language
-      translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
-      });
-
     this.subscription = this.storage.Loginvalue.subscribe((data) => {
       if(data != 0){
         this.CustomControler = data;
@@ -54,24 +44,34 @@ export class ForgotPwdComponent implements OnInit {
     this.waitingResponse = false;
     this.error = false;
 
-    this.storage.Checkuser();
-    this.translate.use(this.translationService.getLanguage());
-    // console.log('111 Venant du service: ', this.translationService.getLanguage());    
+    this.storage.Checkuser(); 
     this.form = this.formLog.group({
         'field_email': ['', Validators.compose([
           Validators.required,
-          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
+          Validators.email
+        ])
+      ]
     });
   }
 
+  getFormValidationErrors(form: FormGroup) {
+    Object.keys(form.controls).forEach(key => {
+      const controlErrors: ValidationErrors = form.get(key).errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach(keyError => {
+         console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+        });
+      }
+    });
+  }
+  
   submit() {
-    this.sended = false;
-
+    this.submitted = true;
+    console.log(this.getFormValidationErrors(this.form));
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
-    this.submitted = true;
     this.waitingResponse = true;
 
     // console.log('user mail: ', this.form.value.field_email);
@@ -92,15 +92,8 @@ export class ForgotPwdComponent implements OnInit {
     });
   }
 
-  navigateToHome() {
-    this.router.navigate(['welcome']);
-  }
-
   ngOnDestroy() {
     this.sended == false;
     this.subscription.unsubscribe();
-  }
-  iconLogle(){
-    this.Toggledata = !this.Toggledata
   }
 }

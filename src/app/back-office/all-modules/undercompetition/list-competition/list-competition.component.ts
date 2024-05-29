@@ -36,7 +36,7 @@ export class ListCompetitionComponent implements OnInit {
               public gameManager: GameManagerService,
               public partService: GamePartsService
               ) {
-      this.translate.use(this.translataion.getLanguage());
+      this.translate.use(this.translataion.getCurrentLanguage());
       this.loadListOfArcarde();
    }
 

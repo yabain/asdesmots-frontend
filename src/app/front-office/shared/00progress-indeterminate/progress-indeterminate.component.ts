@@ -13,7 +13,7 @@ export class ProgressIndeterminateComponent implements OnInit {
     langService: TranslationService,
     translate: TranslateService,
    ) {
-     translate.use(langService.getLanguage()); }
+     translate.use(langService.getCurrentLanguage()); }
 
   ngOnInit(): void {
   }

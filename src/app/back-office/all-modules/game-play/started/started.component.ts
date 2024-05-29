@@ -53,7 +53,7 @@ export class StartedComponent implements OnInit {
 
   initForm(){
 
-    this.translate.use(this.translation.getLanguage());
+    this.translate.use(this.translation.getCurrentLanguage());
 
     this.formword = this.fb.group({
       word: ['', Validators.required],

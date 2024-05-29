@@ -5,7 +5,7 @@
       <div class="loginbox">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo" (click)="navigateToHome()"
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-small.png" alt="Logo" routerLink="['/']"
             style="height: 10vw; width: 20vw !important;"/>
               <br>
             <h1>{{ 'connexion' | translate }}</h1>
@@ -13,7 +13,7 @@
 
             <form [formGroup]="form" (ngSubmit)="submit()">
               <div class="form-group">
-                <label class="form-control-label">{{ 'user.emailAddress' | translate }}</label>
+                <label class="form-control-label">{{ 'user.emailAddress' | translate }}<span class="text-danger">*</span></label>
                 <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.emailAddress' | translate }}"
                   id="field_email" [ngClass]="{
                     'is-invalid': f['field_email'].touched && f['field_email'].invalid
@@ -33,17 +33,22 @@
               <div class="form-group">
                 <label class="form-control-label">{{ 'user.password' | translate }}</label>
                 <div class="pass-group">
-                  <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password"
-                    formControlName="field_password" placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password" [ngClass]="{
-                      'is-invalid':
-                        f['field_password'].touched && f['field_password'].invalid
-                    }" />
-                  <span
-                    [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
-                    (click)="iconLogle()"></span>
-                  <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
+                  <div class="input-group mb-3">
+                    <input class="form-control" [type]="hashedPassword ? 'password' : 'text'"
+                      formControlName="password" autocomplete="false"
+                      placeholder="{{ 'EnterYour' | translate }}{{ 'user.password' | translate }}" id="password"
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted || f['password'].touched) && f['password'].invalid
+                      }" 
+                    />
+                    <span class="input-group-text" id="togglePassword" (click)="togglePasswordVisibility()">
+                      <i class="fas toggle-password" [ngClass]="hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                    </span>
+                  </div>
+                  <div *ngIf="f['password'].touched && f['password'].invalid" class="custom-invalid-feedback">
                     <div *ngIf="
-                        f['field_password'].errors && f['field_password'].errors['required']
+                        f['password'].errors && f['password'].errors['required']
                       ">
                       {{ 'passwordRequired' | translate }}
                     </div>
@@ -52,32 +57,21 @@
                     {{ CustomControler.message }}
                   </div>
                 </div>
-                <!-- <div style="background-color: rgba(248, 180, 71, 0.575);
-                border-radius: 5px;
-                padding: 5px;
-                margin-top: 5px"><b style="color: #000"> {{ 'pwdShouldBe' | translate }}: </b><br>
-                  <ol>
-                    <li>{{ 'upTo8Char' | translate }}</li>
-                    <li>{{ 'upTo1Captal' | translate }}</li>
-                    <li>{{ 'upTo1Number' | translate }}</li>
-                    <li>{{ 'upTo1SpecialCahr' | translate }}</li>
-                  </ol>
-                </div> -->
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-6">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="cb1" />
-                      <label class="custom-control-label ms-1" for="cb1">{{ 'stayCoonect' | translate }}</label>
-                    </div>
+                  <div class="custom-control d-flex">
+                    <input type="checkbox" class="custom-control-input custom-select" id="cb1" />
+                    <label class="custom-control-label ms-1 custom-checkbox" for="cb1">{{ 'stayCoonect' | translate }}</label>
+                  </div> 
                   </div>
                   <div class="col-6 text-end">
-                    <a class="forgot-link" [routerLink]="'/forgot-pass'">{{ 'forgotPwd' | translate }} ?</a>
+                    <a class="forgot-link" [routerLink]="'/forgot-pass'">{{ 'forgotPwd' | translate }}</a>
                   </div>
                 </div>
               </div>
-              <button [disabled]="form.invalid" *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+              <button *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
                 {{ 'connexion' | translate }}
               </button>
               <div *ngIf="waitingResponse">
@@ -95,7 +89,7 @@
               </div>
               <!-- /Social Login -->
               <div class="text-center dont-have">
-                {{ 'dontHaveAccount' | translate }} ?
+                {{ 'dontHaveAccount' | translate }}
                 <a [routerLink]="'/register'" style="color: #1749a5;">{{ 'createAccount' | translate }}</a>
               </div>
             </form>
@@ -106,10 +100,5 @@
   </div>
 </div>
 
-<div *ngIf="en" (click)="setFrLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/fr.png"  alt="Français" />Fr</a>
-</div>
-<div *ngIf="fr" (click)="setEnLang()" id="change-lang">
-  <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="Anglais" />En</a>
-</div>
+<app-language-template></app-language-template>
 <!-- /Main Wrapper -->

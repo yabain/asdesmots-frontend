@@ -1,5 +1,7 @@
-export class PasswordFunction {
+export class PasswordFunctions {
 
+    hashedPassword:boolean = true;
+    
     uppercaseChar(value: string): boolean {
         return /[A-Z]/.test(value);
     }
@@ -10,5 +12,9 @@ export class PasswordFunction {
     
     specialChar(value: string): boolean {
         return /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    }
+    
+    togglePasswordVisibility() {
+        this.hashedPassword = !this.hashedPassword;
     }
 }

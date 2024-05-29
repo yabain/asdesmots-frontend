@@ -27,7 +27,7 @@ export class RoleListComponent implements OnInit {
               private translation: TranslationService,
               private router: Router
               ) {
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
       this.loadListRole();
       this.roleService.initFormUpdate();
       this.roleService.initAddingForm();

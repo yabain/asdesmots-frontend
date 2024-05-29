@@ -16,19 +16,16 @@ export class LanguageTemplateComponent implements OnInit {
     private translate: TranslateService,
     public translationService: TranslationService,
   ) {
-    //this is to determine the text direction depending on the selected language
-    translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.textDir = event.lang == 'fr' ? 'rtl' : 'ltr';
-    }); 
-    this.lang = this.translationService.initLanguage();
+    this.lang = this.translationService.getCurrentLanguage();
   }
 
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
   }
   
   setLang(lang: string) {
-    console.log(lang);
     this.translationService.setLanguage(lang);
+    this.lang = this.translationService.getCurrentLanguage();
+    this.translate.use(this.lang);
   }
 }

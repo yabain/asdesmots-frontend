@@ -97,7 +97,7 @@ export class UserDetailsComponent implements OnInit, OnChanges {
     //   this.splitTime(this.userData.createdAt);
     // }
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     console.log("user details: ", this.userData);
 
     this.generalForm = this.formLog.group({

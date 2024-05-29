@@ -1,0 +1,32 @@
+.custom-check {
+    color: #3dcb15;
+    position: relative;
+    visibility: hidden;
+    bottom: -1px;
+    right: 19px;
+    z-index: 4;
+}
+
+.checkbox-inside{
+    appearance: none;
+}
+    
+.checkbox-inside::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: white;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    right: 2px;
+}
+
+.condition-true {
+    visibility: visible;
+}
+
+ol {
+    list-style: none;
+}

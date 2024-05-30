@@ -3648,6 +3648,12 @@ table.table-inbox tbody tr.checked {
     vertical-align: middle;
     padding-top: 1.875rem;
 }
+
+.w3-card {
+	border-radius: 20px;
+	padding: 80px;
+}
+
 .login-wrapper .loginbox {
 	background-color: #fff;
 	border-radius: 20px;

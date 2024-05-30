@@ -24,7 +24,7 @@ export class RegiserComponent implements OnInit {
   waitingResponse = false;
   error = false;
   errorMsg = '';
-  mailSended = false;
+  mailSended = !false;
   step = 1;
   form1: FormGroup;
   form2: FormGroup;
@@ -61,8 +61,7 @@ export class RegiserComponent implements OnInit {
 
   ngOnInit() {
     this.countries = this.location.countries();
-    this.mailSended = false;
-    this.storage.Checkuser();
+    // this.storage.Checkuser();
     this.form1 = this.formLog.group({
       'field_firstName': ['', [Validators.required, Validators.minLength(4)]],
       'field_lastName': ['', Validators.compose([

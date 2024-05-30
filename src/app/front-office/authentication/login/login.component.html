@@ -21,7 +21,7 @@
                 <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
                   {{ CustomControler.message }}
                 </div>
-                <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="invalid-feedback">
+                <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="custom-invalid-feedback">
                   <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
                     {{ 'emailRequired' | translate }}
                   </div>
@@ -34,7 +34,7 @@
                 <label class="form-control-label">{{ 'user.password' | translate }}</label>
                 <div class="pass-group">
                   <div class="input-group mb-3">
-                    <input class="form-control" [type]="hashedPassword ? 'password' : 'text'"
+                    <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'"
                       formControlName="password" autocomplete="false"
                       placeholder="{{ 'EnterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
@@ -42,11 +42,11 @@
                           (submitted || f['password'].touched) && f['password'].invalid
                       }" 
                     />
-                    <span class="input-group-text" id="togglePassword" (click)="togglePasswordVisibility()">
-                      <i class="fas toggle-password" [ngClass]="hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                    <span class="input-group-text" id="togglePassword" (click)="passwordFunctions.togglePasswordVisibility()">
+                      <i class="fas toggle-password" [ngClass]="passwordFunctions.hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                     </span>
                   </div>
-                  <div *ngIf="f['password'].touched && f['password'].invalid" class="custom-invalid-feedback">
+                  <div *ngIf="(submitted || f['password'].touched) && f['password'].invalid" class="custom-invalid-feedback">
                     <div *ngIf="
                         f['password'].errors && f['password'].errors['required']
                       ">

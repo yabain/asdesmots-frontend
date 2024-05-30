@@ -40,6 +40,13 @@ const routes: Routes = [
       // canActivate: [AuthenticationGuard],
   },
   {
+    path: 'email-verification',
+    loadChildren: () =>
+      import(
+        './front-office/authentication/email-verification/email-verification.module'
+      ).then((m) => m.EmailVerificationModule),
+  },
+  {
     path: 'new-pwd',
     loadChildren: () =>
       import(

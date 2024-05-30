@@ -19,7 +19,7 @@ export class TranslationService {
 
     getCurrentLanguage() {
         const lang = localStorage.getItem(this.keyLanguage);
-        return lang ? lang : this.translateService.currentLang;
+        return lang ? lang : this.translateService.getDefaultLang();
     }
 
     initLanguage(): void {

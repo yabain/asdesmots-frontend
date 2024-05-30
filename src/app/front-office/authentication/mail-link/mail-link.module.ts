@@ -9,24 +9,27 @@ import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-in
 import { MailLinkRoutingModule } from './mail-link-routing.module';
 import { LinkReceiveComponent } from './link-receive/link-receive.component';
 import { MailLinkComponent } from './mail-link/mail-link.component';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
-  declarations: [
-    LinkReceiveComponent,
-    MailLinkComponent],
-  imports: [
-    CommonModule,
-    MailLinkRoutingModule,
-    RouterModule,
-    ReactiveFormsModule,
-    ProgressIndeterminateModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
+    declarations: [
+        LinkReceiveComponent,
+        MailLinkComponent
+    ],
+    imports: [
+        CommonModule,
+        MailLinkRoutingModule,
+        RouterModule,
+        ReactiveFormsModule,
+        ProgressIndeterminateModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        SharedModule
+    ]
 })
 export class MailLinkModule { }

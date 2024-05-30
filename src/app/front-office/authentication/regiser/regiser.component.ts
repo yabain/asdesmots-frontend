@@ -7,17 +7,18 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocationService } from 'src/app/shared/services/location/location.service';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { PasswordMatch } from '../../shared/helpers/password/password-match';
+import { PasswordFunctions } from '../../shared/helpers/password/functions';
 
 
 @Component({
   selector: 'app-regiser',
   templateUrl: './regiser.component.html',
   styleUrls: ['./regiser.component.css'],
+  providers: [PasswordFunctions]
 })
 
 export class RegiserComponent implements OnInit {
 
-  showMessage!: boolean;
   message!: string;
 
   waitingResponse = false;
@@ -49,6 +50,7 @@ export class RegiserComponent implements OnInit {
     private formLog: FormBuilder,
     private authService: AuthService,
     private location: LocationService,
+    public passwordFunctions: PasswordFunctions
   ) {
 
     this.subscription = this.storage.Createaccountvalue.subscribe((data) => {
@@ -82,7 +84,7 @@ export class RegiserComponent implements OnInit {
         Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)
       ]],
       password_confirm: ['', [Validators.required]],
-      field_agree: ['', [Validators.required]],
+      field_agree: [false, [Validators.requiredTrue]],
     }, { validator: PasswordMatch.MatchingPasswords('password', 'password_confirm') });
     this.onlyCountry = this.location.countries().map((country: any) => { return country.ISO} );
     this.currentCountry = this.location.countries().find((country: any) => country.ISO == CountryISO.Cameroon);
@@ -107,10 +109,6 @@ export class RegiserComponent implements OnInit {
     );
     this.currentCountry = country;
     this.form1.get('field_location').setValue('');
-  }
-
-  togglePasswordVisibility() {
-    this.hashedPassword = !this.hashedPassword
   }
   
   submit() {

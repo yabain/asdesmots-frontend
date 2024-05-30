@@ -7,11 +7,13 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { WebStorage } from 'src/app/shared/storage/web.storage';
+import { PasswordFunctions } from '../../shared/helpers/password/functions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers: [PasswordFunctions]
 })
 export class LoginComponent implements OnInit {
   waitingResponse = false;
@@ -23,7 +25,6 @@ export class LoginComponent implements OnInit {
   fr: boolean = false;
 
   textDir: String = 'ltr';
-  public hashedPassword=true;
   public CustomControler:any
   public subscription: Subscription;
   // form = new FormGroup({
@@ -40,17 +41,9 @@ export class LoginComponent implements OnInit {
     private storage: WebStorage,
     private formLog: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
-    public translationService: TranslationService,
     private userService: UserService,
-    private router: Router,
+    public passwordFunctions: PasswordFunctions
     ) {
-      //this is to determine the text direction depending on the selected language
-      translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
-      });
-
     this.subscription = this.storage.Loginvalue.subscribe((data) => {
       if(data != 0){
         this.CustomControler = data;
@@ -61,9 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.Checkuser();
-    this.translate.use(this.translationService.getCurrentLanguage());
-    // console.log('111 Venant du service: ', this.translationService.getCurrentLanguage());    
+    this.storage.Checkuser();   
     this.form = this.formLog.group({
         'password': ['', 
           Validators.compose([
@@ -80,11 +71,12 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.submitted = true;
+    
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
-    this.submitted = true;
     this.waitingResponse = true;
 
     // console.log('user datas: ', this.form.value);
@@ -106,9 +98,5 @@ export class LoginComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  togglePasswordVisibility() {
-    this.hashedPassword = !this.hashedPassword
   }
 }

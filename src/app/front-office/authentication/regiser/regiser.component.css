@@ -137,3 +137,21 @@ border: 1px solid red;
 .initial-input {
     border: 1px solid #dee2e6;
 }
+
+.navigate-button {
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.navigate-button a {
+    font-size: 15px;
+    /* padding-left: 10px; */
+}
+
+.navigate-right {
+    align-items: end;
+}
+
+.navigate-left {
+    align-items: start; 
+}

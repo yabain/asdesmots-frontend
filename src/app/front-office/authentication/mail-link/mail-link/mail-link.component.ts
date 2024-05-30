@@ -14,8 +14,8 @@ import { WebStorage } from 'src/app/shared/storage/web.storage';
 export class MailLinkComponent implements OnInit {
   token = '';
   
-  submitted = true;
-  waitingResponse = true;
+  submitted = false;
+  waitingResponse = false;
   error = false;
   msg = '';
 
@@ -31,17 +31,10 @@ export class MailLinkComponent implements OnInit {
 
   constructor(
     private storage: WebStorage,
-    private formLog: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
-    public translationService: TranslationService
     ) {
       this.token = localStorage.getItem('email_datas');
       //this is to determine the text direction depending on the selected language
-      translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
-      });
 
     this.subscription = this.storage.Loginvalue.subscribe((data) => {
       if(data != 0){
@@ -52,8 +45,7 @@ export class MailLinkComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('token: ', this.token);
-    
+  
     this.waitingResponse = true;
     this.error = false;
 

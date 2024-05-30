@@ -139,10 +139,9 @@
                  </div>
                 <br>
 
-                <div class="wrapper" style="display: flex; justify-content: flex-end;">
-                  <a (click)="next()" style="
-                  font-size: 15px;
-                  padding-left: 10px;"><b><span>{{'next'| translate}} &raquo;</span></b></a>
+                <div class="wrapper navigate-button navigate-right">
+                  <a (click)="next()">
+                  <b><span>{{'next'| translate}} &raquo;</span></b></a>
                 </div><br><br>
 
               </form>
@@ -171,7 +170,7 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }}<span class="text-danger">*</span></label>
                   <div class="pass-group">
-                    <input class="form-control" [type]="hashedPassword ? 'password' : 'text'" type="password"
+                    <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'" type="password"
                       formControlName="password" autocomplete="false"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
@@ -194,15 +193,15 @@
                     <label class="form-control-label">{{ 'user.confpassword' | translate }}<span class="text-danger">*</span></label>
                     <br>
                     <div class="input-group mb-3">
-                      <input class="form-control" [type]="hashedPassword ? 'password' : 'text'"
+                      <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'"
                         formControlName="password_confirm" autocomplete="false"
                         placeholder="{{ 'confirmYour' | translate }}{{ 'user.password' | translate }}" id="password_confirm"
                         [ngClass]="{
                           'is-invalid':
                             (f2Submitted || form2.get('password_confirm').touched) && form2.get('password_confirm').invalid
                         }" />
-                        <span class="input-group-text" id="togglePassword" (click)="togglePasswordVisibility()">
-                          <i class="fas toggle-password" [ngClass]="hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        <span class="input-group-text" id="togglePassword" (click)="passwordFunctions.togglePasswordVisibility()">
+                          <i class="fas toggle-password" [ngClass]="passwordFunctions.hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                         </span>
                     </div>
                     <div *ngIf="(f2Submitted || form2.get('password_confirm').touched) && form2.get('password_confirm').invalid">
@@ -234,11 +233,10 @@
                       </div>
                   </div>
                 </div>
-                <div class="wrapper" style="display: flex;">
-                  <a (click)="previous()" style="width: 16vh !important;
-                  font-size: 15px;
-                  padding-left: 10px;"><b><span>&laquo; {{'back'| translate}}</span></b></a>
-                </div><br><br>
+                <div class="wrapper navigation-button navigate-left">
+                  <a (click)="previous()">
+                  <b><span>&laquo; {{'back'| translate}}</span></b></a>
+                </div>
                 <password-validator-template [form]="form2"></password-validator-template>
                 <div class="form-group mb-0">
                   <button *ngIf="!waitingResponse" [disabled]="step < 2"  (click)="submit()"

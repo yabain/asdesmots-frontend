@@ -4,7 +4,7 @@
     "register": "Sign Up",
     "connexion": "Sign In",
     "enterYour": "Enter your ",
-    "enteragainYour": "Enter againe your ",
+    "enteragainYour": "Enter again your ",
     "pwdShouldBe": "Ensure that these requirements are met: ",
     "upTo8Char": "Minimum 8 characters long",
     "upTo1Captal": "At least one capital letter",
@@ -12,8 +12,15 @@
     "upTo1SpecialCahr": "At least one special feature",
     "stayCoonect": "Keep my session",
     "forgotPwd": "Forgot your password ?",
+    "passwordMatch": "Passwords no match",
+    "passwordsNotMatch": "Must be confirmed",
+    "passwordFormat":"Invalid password format",
     "agreeAll": "I agree ",
     "terms": "Terms ",
+    "dateRequired":"Date of birth is required",
+    "sexeRequired":"Gender is required",
+    "agreeRequired": "You must agree to the terms",
+    "emailVerification": "Email Verification",
     "and": "et ",
     "or": "or",
     "add": "Add",
@@ -32,7 +39,7 @@
     "noInternet": "No internet connection",
     "createAccount": " Create account",
     "dontHaveAccount": "You do not have an account yet ?",
-    "emailRequired": "Your email is required.",
+    "emailRequired": "The email is required.",
     "firstNameRequired": "The first name is required.",
     "lastNameRequired": "The last name is required.",
     "enterValidEmail": "Enter a valid email.",
@@ -115,7 +122,7 @@
     "step": "Step",
     "openConfirmMail1": "Open the ''no-reply'' email from AsDesMots",
     "openConfirmMail2": "asking you to confirm your email.",
-    "congrate": "Congraculation",
+    "congrate": "Congratulation",
     "create": "Create",
     "anonceLastStep": "Your account has been created. Finalize your registration by following the confirmation steps in your e-mail.",
     "clickConfirm1": "Click on the email verification button and",
@@ -199,7 +206,7 @@
         "contact": "Contact",
         "phone": "Phone",
         "password": "Password",
-        "emailAddress": "Email adresse",
+        "emailAddress": "Email adress",
         "zip": "ZIP code",
         "location": "City",
         "country": "Country",
@@ -334,5 +341,19 @@
         "noWords": "No words to show",
         "inEnglish": "in english",
         "inFrench": "in french"
+    },
+    
+    "http": {
+        "response": {
+            "verifiedEmail": "Your email has been verified.",
+            "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
+            "emailNotVerified2": "this link ",
+            "emailNotVerified3": "to request a new one.",
+            "expiredEmailValidationLink": "Your verification email has expired.",
+            "userNotFound": "The given information didn't match our records.",
+            "emailAlreadyConfirmed": "The email has already been confirmed.",
+            "internalServerError": "Internal Server Error.",
+            "emailVerifyLinkSent": "Your verification link has been sent, check your inbox."
+        }
     }
 }

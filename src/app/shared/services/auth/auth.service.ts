@@ -8,6 +8,7 @@ import { async } from '@angular/core/testing';
 import { WebStorage } from '../../storage/web.storage';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable({
@@ -30,7 +31,8 @@ export class AuthService {
     private api: ApiService,
     private toastr: ToastrService,
     private webStorage: WebStorage,
-    private errorsService: ErrorsService
+    private errorsService: ErrorsService,
+    private translate: TranslateService, 
   ) {
 
     // this.registResult = false;
@@ -284,29 +286,31 @@ export class AuthService {
       return new Promise((resolve, reject) => {
         this.api.post('email/confirm', param, header)
           .subscribe(response => {
-            this.toastr.success('Your email has been verified.', 'Success');
+            this.toastr.success('http.response.verifiedEmail', 'Success');
             this.router.navigateByUrl('/login');
             resolve(response);
           }, error => {
-            console.log('erreur: ', error)
-
-            if (error.status == 401) {
-              this.toastr.error("Your verification email has expired.", 'Error');
+            switch(error.status) {
+              case(401) :
+                this.translate.get('http.response.expiredEmailValidationLink').subscribe((res: string) => {
+                  this.toastr.success(res, 'Error');
+                });
+              case(404) :
+                this.translate.get('http.response.userNotFound').subscribe((res: string) => {
+                  this.toastr.error(res, 'error');
+                });
+              case(403) :
+                this.translate.get('http.response.emailAlreadyConfirmed').subscribe((res: string) => {
+                  this.toastr.error(res, 'error');
+                });
+              case(500) :
+                this.translate.get('http.response.internalServerError').subscribe((res: string) => {
+                  this.toastr.error(res, 'error');
+                });
+              default:
+            this.toastr.error(error.message, 'Error');
             }
-            else if (error.status == 404) {
-              this.toastr.error("User not found.");
-
-            }
-            else if (error.status == 403) {
-              this.toastr.error("The email has been already confirme.", 'Error');
-
-            }
-            else if (error.status == 500) {
-              this.toastr.error("Internal Server Error.", 'Error');
-
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+            
             reject(error);
           });
       })
@@ -320,21 +324,24 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.api.post(`email/send-confirmation`, data,  header)
         .subscribe(response => {
-          this.toastr.success('Your verification link has been sent, verify your inbox.', 'Success');
           resolve(response);
         }, error => {
           console.log('erreur: ', error)
           if (error.status == 406) {
-            this.toastr.error('No user was found with this email.', 'error');
-
+            this.translate.get('http.response.userNotFound').subscribe((res: string) => {
+              this.toastr.error(res, 'error');
+            });
           }
           else if (error.status == 403) {
-            this.toastr.error("The email has been already confirmed.", 'Error');
+            this.translate.get('http.response.emailAlreadyConfirmed').subscribe((res: string) => {
+              this.toastr.error(res, 'error');
+            });
           }
           
           else if (error.status == 500) {
-            this.toastr.error("Internal Server Error.", 'Error');
-
+            this.translate.get('http.response.internalServerError').subscribe((res: string) => {
+              this.toastr.error(res, 'error');
+            });
           } else {
             this.toastr.error(error.message, 'Error');
           }

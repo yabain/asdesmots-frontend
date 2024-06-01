@@ -24,14 +24,16 @@ export class RegiserComponent implements OnInit {
   waitingResponse = false;
   error = false;
   errorMsg = '';
-  mailSended = !false;
-  step = 1;
+  mailSended = false;
+  step = 2;
   form1: FormGroup;
   form2: FormGroup;
   countries: any = [];
   cities: any = [];
   onlyCountry: string[];
   
+  firstNameMinLength = 3;
+  lastNameMinLength = 3;
   f1Submitted: boolean = false;
   f2Submitted: boolean = false;
   public hashedPassword = true;
@@ -63,10 +65,10 @@ export class RegiserComponent implements OnInit {
     this.countries = this.location.countries();
     // this.storage.Checkuser();
     this.form1 = this.formLog.group({
-      'field_firstName': ['', [Validators.required, Validators.minLength(4)]],
+      'field_firstName': ['', [Validators.required, Validators.minLength(this.firstNameMinLength)]],
       'field_lastName': ['', Validators.compose([
         Validators.required,
-        Validators.minLength(4)])],
+        Validators.minLength(this.lastNameMinLength)])],
       'field_phone': ['',],
       'field_date': ['', Validators.required],
       'field_Sexe': ['', Validators.required],

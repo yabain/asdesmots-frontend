@@ -68,7 +68,7 @@ export class ErrorsService {
 
   error401(action) {
     console.log("error401: ", action);
-    if (action === 'login') { this.toastr.error("Incorrect email or password! Please verify your information.", 'Error', { timeOut: 10000 });}
+    if (action === 'login') { this.toastr.error("Invalid email or password.", 'Error', { timeOut: 10000 });}
     else if (action === 'create account') { this.toastr.error("This email address is already used.", 'Error', { timeOut: 10000 })}
     else if (action === 'logout') {
       this.toastr.warning('Your session has been disconnected!', 'Success', { timeOut: 10000 });

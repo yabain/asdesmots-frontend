@@ -17,9 +17,7 @@ export class ValidatorTemplateComponent implements OnInit {
   
   }
   
-  
   passwordsMatch(): boolean {
-  console.log(this.form.value)
     return this.form.get('password').value === this.form.get('password_confirm').value;
   }
 

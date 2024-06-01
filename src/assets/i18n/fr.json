@@ -10,15 +10,22 @@
     "internalError": "Erreur interne du serveur. Réessayez plus tard s'il vous plaît",
     "enterYour": "Entrez votre ",
     "enteragainYour": "Entrez à nouveau votre ",
-    "pwdShouldBe": "Votre mot de passe doit contenir ",
+    "pwdShouldBe": "Votre mot de passe doit contenir: ",
     "upTo8Char": "Au moins 8 charactères",
     "upTo1Captal": "Au moins 1 majuscule",
     "upTo1Number": "Au moins 1 chiffre",
     "upTo1SpecialCahr": "Au moins 1 charactère spécial",
     "stayCoonect": "Garder ma session",
     "forgotPwd": "Mot de passe oublié ?",
+    "passwordMatch": "Doit être confirmé",
+    "passwordsNotMatch": "Doit correspondre au mot de passe",
+    "passwordFormat":"Format de mot de passe invalide",
     "agreeAll": "J'accepte les ",
     "terms": "Termes ",
+    "dateRequired":"La date de naissance est requise",
+    "sexeRequired":"Le sexe est requis",
+    "agreeRequired": "Vous devez accepter les termes",
+    "emailVerification": "Verification d'email",
     "offSession": "Session expirée",
     "and": "et ",
     "or": "ou",
@@ -35,9 +42,9 @@
     "createAccount": " Créer un compte",
     "create": "créer",
     "dontHaveAccount": "Vous n'avez pas encore de compte ?",
-    "emailRequired": "Votre email est requis.",
-    "firstNameRequired": "Votre nom est requis.",
-    "lastNameRequired": "Votre prénom est requis.",
+    "emailRequired": "L'email est requis.",
+    "firstNameRequired": "Le nom est requis.",
+    "lastNameRequired": "Le prénom est requis.",
     "enterValidEmail": "Entrez un email valid.",
     "enterValidPwd": "Entrez un mot de passe valid.",
     "passwordRequired": "Le mot de passe est requis.",
@@ -337,6 +344,20 @@
         "inEnglish": "en englais",
         "inFrench": "en français",
         "transferAndDelete": "transférer et supprimer"
+    },
+    
+    "http": {
+        "response": {
+          "verifiedEmail": "Votre email a été vérifié.",
+          "emailNotVerified1": "Votre email n'a pas été vérifié. Accédez à votre boîte mail et cliquez sur le lien de verification qui vous a été envoyé lors de la creation de votre compte. si vous ne l'avez pas reçu, vous pouvez utiliser ",
+          "emailNotVerified2": "ce lien ",
+          "emailNotVerified3": "pour en demander un nouveau.",
+          "expiredEmailValidationLink": "Votre email de vérification a expiré.",
+          "userNotFound": "Les informations fournies ne correspondent pas à nos enregistrements.",
+          "emailAlreadyConfirmed": "L'email a déjà été confirmé.",
+          "internalServerError": "Erreur Interne du Serveur.",
+          "emailVerifyLinkSent": "Votre lien de vérification a été envoyé, vérifiez votre boîte de réception."
+        }
     }
-
+    
   }

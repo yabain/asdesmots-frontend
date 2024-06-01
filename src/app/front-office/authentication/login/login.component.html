@@ -25,7 +25,7 @@
                   <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
                     {{ 'emailRequired' | translate }}
                   </div>
-                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
+                  <div *ngIf="form.get('field_email')?.errors?.email">
                     {{ 'enterValidEmail' | translate }}
                   </div>
                 </div>
@@ -71,9 +71,16 @@
                   </div>
                 </div>
               </div>
-              <button *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+              <button *ngIf="!waitingResponse && !userNotVerified" class="btn btn-lg btn-block btn-primary w-100" type="submit">
                 {{ 'connexion' | translate }}
               </button>
+              <div *ngIf="userNotVerified">
+                <div class="custom-alert bg-warning">
+                  {{ 'http.response.emailNotVerified1' | translate }}
+                  <a class="blinking-link" [routerLink]="['/email-verification']">{{ 'http.response.emailNotVerified2' | translate }}</a>
+                  {{ 'http.response.emailNotVerified3' | translate }}
+                </div>
+              </div>
               <div *ngIf="waitingResponse">
                 <app-progress-indeterminate></app-progress-indeterminate>
               </div>

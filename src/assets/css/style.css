@@ -3627,6 +3627,14 @@ table.table-inbox tbody tr.checked {
 	transition: all 0.4s ease;
 }
 
+
+.bg-img {
+	background-image: url("../../assets/img/elements.svg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: #3063AD !important;
+}
+
 /*-----------------
 	18. Login
 -----------------------*/
@@ -3649,9 +3657,29 @@ table.table-inbox tbody tr.checked {
     padding-top: 1.875rem;
 }
 
+.w3-padding {
+    margin: 15px;
+	border-radius: 20px;
+}
+
 .w3-card {
 	border-radius: 20px;
 	padding: 80px;
+	min-height:460px; 
+	background-color: #fff; 
+	color: #124eae;
+	margin: 20px 0;
+}
+
+.w3-card h3 {
+	margin-top: 60px;
+	font-size: 2rem; 
+	color: #124eae;
+}
+
+.w3-card .counter {
+	font-size:120px; 
+	color: #124eae;
 }
 
 .login-wrapper .loginbox {
@@ -8487,11 +8515,13 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 /* Optional: Ensure the input group has no border */
 .input-group .form-control {
 	border-right: none;
+    width: calc(100% - 50px);
 }
 
 /* Custom CSS to remove the background color */
 .input-group .input-group-text {
     background-color: transparent;
+    width: 50px;
     border-left: none;
 }
 

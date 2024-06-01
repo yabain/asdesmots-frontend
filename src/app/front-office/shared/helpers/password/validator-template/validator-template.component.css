@@ -8,7 +8,7 @@
 }
 
 .checkbox-inside{
-    appearance: none;
+    appearance: none; 
 }
     
 .checkbox-inside::before {

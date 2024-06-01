@@ -20,17 +20,10 @@ export class LoginComponent implements OnInit {
   submitted = false;
   error = false;
   errorMsg = '';
-  lang: string;
-  en: boolean = false;
-  fr: boolean = false;
+  userNotVerified: boolean = false;
 
-  textDir: String = 'ltr';
   public CustomControler:any
   public subscription: Subscription;
-  // form = new FormGroup({
-  //   email: new FormControl("admin@dreamguys.in", [Validators.required]),
-  //   password: new FormControl('123456', [Validators.required]),
-  // });
   form: FormGroup;
 
   get f() {
@@ -79,7 +72,6 @@ export class LoginComponent implements OnInit {
     }
     this.waitingResponse = true;
 
-    // console.log('user datas: ', this.form.value);
     this.authService.authLogin(this.form.value)
     .then((result) => {
       console.log("UserDatas login", result.data.user);
@@ -92,6 +84,7 @@ export class LoginComponent implements OnInit {
       this.errorMsg = error.message;
       this.error = true;
       this.submitted = false;
+      this.userNotVerified = error?.status == 403 ? true : false;
     });
     // this.storage.Login(this.form.value);
   }

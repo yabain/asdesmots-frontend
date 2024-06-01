@@ -9,8 +9,6 @@
               style="height: 10vw; width: 20vw !important;"/>
                 <br>
               <h1>{{ 'emailVerification' | translate }}</h1>
-              <!-- <p class="account-subtitle"> Accédez à votre tableau de bord</p> -->
-  
               <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }}<span class="text-danger">*</span></label>
@@ -30,9 +28,14 @@
                     </div>
                   </div>
                 </div>
-                <button *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                <button *ngIf="!waitingResponse && !linkSent" class="btn btn-lg btn-block btn-primary w-100" type="submit">
                   {{ 'send' | translate }}
                 </button>
+                <div *ngIf="linkSent">
+                  <div class="custom-alert bg-success text-light">
+                    {{ 'http.response.emailVerifyLinkSent' | translate }}
+                  </div>
+                </div>
                 <div *ngIf="waitingResponse">
                   <app-progress-indeterminate></app-progress-indeterminate>
                 </div>
@@ -48,7 +51,7 @@
                 </div>
                 <!-- /Social Login -->
               <div class="text-center dont-have">
-                {{ 'backToLogin' | translate }} <a [routerLink]="'/login'" style="color: #1749a5;">{{ 'connexion' | translate}} </a>
+                <a [routerLink]="'/login'" style="color: #1749a5;">{{ 'connexion' | translate}} </a>
               </div>
               </form>
             </div>

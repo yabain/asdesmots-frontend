@@ -15,6 +15,7 @@ export class EmailVerificationComponent implements OnInit {
   submitted = false;
   error = false;
   errorMsg = '';
+  linkSent: boolean = false;
   lang: string;
   en: boolean = false;
   fr: boolean = false;
@@ -51,6 +52,7 @@ export class EmailVerificationComponent implements OnInit {
     .then((result) => {
       this.submitted = false;
       this.waitingResponse = false;
+      this.linkSent = true;
     })
     .catch((error) => {
       this.waitingResponse = false;

@@ -28,7 +28,7 @@
                       {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="firstname-message" *ngIf="form1.get('field_firstName').touched && form1.get('field_firstName').errors?.minlength">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_firstName').touched && form1.get('field_firstName').errors?.minlength">Au moins  {{ firstNameMinLength }} caractères</p>
                 </div>
 
                 <div class="form-group">
@@ -41,10 +41,10 @@
                     }" />
                   <div *ngIf="form1.get('field_lastName').invalid && (f1Submitted || form1.get('field_lastName').touched)" class="invalid-feedback">
                     <div *ngIf="form1.get('field_lastName').errors?.required">
-                      {{ 'firstNameRequired' | translate }}
+                      {{ 'lastNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="firstname-message" *ngIf="form1.get('field_lastName').touched && form1.get('field_lastName').errors?.minlength">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_lastName').touched && form1.get('field_lastName').errors?.minlength">Au moins {{ lastNameMinLength}} caractères</p>
                 </div>
 
                 <div class="form-group">
@@ -264,7 +264,7 @@
             </div>
             <!-- /Social Login -->
             <div class="text-center dont-have">
-              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">Connexion</a>
+              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">{{ 'connexion' | translate }}</a>
             </div>
           </div>
         </div>
@@ -308,27 +308,27 @@
 
         <div class="w3-row-padding w3-center w3-margin-top">
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;">1</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">1</div>
               <p>{{ 'openYourMail1' | translate }} </p>
               <p>{{ 'openYourMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;">2</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">2</div>
               <p>{{ 'openConfirmMail1' | translate }} </p>
               <p>{{ 'openConfirmMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;">3</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">3</div>
               <p>{{ 'clickConfirm1' | translate }} </p>
               <p>{{ 'clickConfirm2' | translate }}</p>
               <p>{{ 'clickConfirm3' | translate }}</p>

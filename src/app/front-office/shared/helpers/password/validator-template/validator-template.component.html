@@ -1,0 +1,31 @@
+<div class="my-3 custom-alert bg-warning">
+    <b style="color: #000"> {{ 'pwdShouldBe' | translate }} </b> <br>
+    <ol class="pt-2">
+      <li>
+        <input type="checkbox" class="checkbox-inside">
+        <i class="fa-solid fa-check fa-beat fa-xl custom-check" [ngClass]="{'condition-true': !form.get('password').errors?.required && !form.get('password').errors?.minlength}" ></i>
+        {{ 'upTo8Char' | translate }}
+      </li>
+
+      <li>
+        <input type="checkbox" class="checkbox-inside">
+        <i class="fa-solid fa-check fa-beat fa-xl custom-check"  [ngClass]="{'condition-true': passwordFunctions.uppercaseChar(form.get('password').value)}"></i>
+        {{ 'upTo1Captal' | translate }}
+      </li>
+      <li>
+        <input type="checkbox" class="checkbox-inside">
+        <i class="fa-solid fa-check fa-beat fa-xl custom-check" [ngClass]="{'condition-true': passwordFunctions.numberChar(form.get('password').value)}" ></i>
+        {{ 'upTo1Number' | translate }}
+      </li>
+      <li>
+        <input type="checkbox" class="checkbox-inside">
+        <i class="fa-solid fa-check fa-beat fa-xl custom-check" [ngClass]="{'condition-true': passwordFunctions.specialChar(form.get('password').value)}" ></i>
+        {{ 'upTo1SpecialCahr' | translate }}
+      </li>
+      <li>
+        <input type="checkbox" class="checkbox-inside">
+        <i class="fa-solid fa-check fa-beat fa-xl custom-check" [ngClass]="{'condition-true': !form.get('password').errors?.required && passwordsMatch()}" ></i>
+        {{ 'passwordMatch' | translate }}
+      </li>
+    </ol>
+  </div>

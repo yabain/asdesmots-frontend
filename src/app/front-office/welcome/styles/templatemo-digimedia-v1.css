@@ -97,6 +97,10 @@ header, nav, section, article, aside, footer, hgroup {
   display: block;
 }
 
+header, nav {
+  display: flex;
+}
+
 * {
   box-sizing: border-box;
 }

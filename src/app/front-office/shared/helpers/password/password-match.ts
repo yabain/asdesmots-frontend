@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 
-export class passwordMatch {
+export class PasswordMatch {
 
     static MatchingPasswords(password: string,confirmPassword: string) {
         return (group: FormGroup) => {

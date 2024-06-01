@@ -69,7 +69,7 @@ export class SidemenuComponent implements OnInit{
 
   ngOnInit() {
     this.getLevelList();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     this.levelForm = this.formLog.group({
       '_id': [this.levelData._id
       ],

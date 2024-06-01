@@ -44,7 +44,7 @@ export class UpdateCompetitionComponent implements OnInit {
               private location: Location,
               public arcardeSrv: ArcardeService
               ) {
-      this.translate.use(this.translatiton.getLanguage());
+      this.translate.use(this.translatiton.getCurrentLanguage());
       this.sousCompetion.loadListUnderCompetition(),
       // this.sousCompetion.initFormUpdate();
 

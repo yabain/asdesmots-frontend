@@ -36,7 +36,7 @@ export class ListUsersComponent implements OnInit {
         private location: Location
 
   ) {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     this.initForm();
     this.loadUsers();
     this.initTranslation();
@@ -55,7 +55,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   initTranslation(){
-      this.translate.use(this.translationService.getLanguage());
+      this.translate.use(this.translationService.getCurrentLanguage());
   }
 
   initForm(){

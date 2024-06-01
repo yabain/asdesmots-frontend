@@ -5,7 +5,7 @@
       <div class="loginbox">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo" (click)="navigateToHome()"
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo" routerLink="['/']"
             style="height: 10vw; width: 20vw !important;" />
               <br>
             <h1>{{ 'newPwd' | translate }}</h1>
@@ -13,47 +13,61 @@
 
             <form [formGroup]="form" (ngSubmit)="submit()">
               <p class="account-subtitle">
-                  {{ 'writeNewPwd' | translate }}</p>
-                  <div class="form-group">
-                    <label class="form-control-label">{{ 'newPwd' | translate }}</label>
-                    <input class="form-control" [type]="Toggledata ? 'password' : 'text'" type="password" [(ngModel)]="input1" formControlName="field_password" placeholder="{{ 'enterYour' | translate }}{{ 'user.password'| translate }}"
-                      id="field_password" [ngClass]="{
-                        'is-invalid': f['field_password'].touched && f['field_password'].invalid
-                      }" />
-                      <span
-                        [ngClass]="Toggledata == true ? 'fas toggle-field_password fa-eye-slash' : 'fas toggle-field_password fa-eye'"
-                        (click)="iconLogle()"></span>
-                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
-                      {{ CustomControler.message }}
-                    </div>
-                    <div *ngIf="f['field_password'].touched && f['field_password'].invalid" class="invalid-feedback">
-                      <div *ngIf="f['field_password'].errors && f['field_password'].errors['required']">
-                        {{ 'passwordRequired' | translate }}
-                      </div>
-                      <div *ngIf="f['field_password'].errors && f['field_password'].errors['field_password']">
-                        {{ 'enterValidPwd' | translate }}
-                      </div>
-                    </div>
+              {{ 'writeNewPwd' | translate }}</p>
+              <div class="form-group">
+                <label class="form-control-label">{{ 'newPwd' | translate }}</label>
+                <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'" type="password" formControlName="password" placeholder="{{ 'enterYour' | translate }}{{ 'user.password'| translate }}"
+                  id="password"
+              
+                [ngClass]="{
+                  'is-invalid': form.get('password').invalid && (submitted || form.get('password').touched), 'invalid-input': form.get('password').invalid && (submitted || form.get('password').touched), 'valid-input': form.get('password').valid,
+                  'initial-input': form.get('password').errors?.required
+                }" 
+              />
+                <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                  {{ CustomControler.message }}
+                </div>
+                <div *ngIf="form.get('password').invalid && (submitted || form.get('password').touched)" class="invalid-feedback">
+                  <div *ngIf="form.get('password')?.errors.required">
+                    {{ 'passwordRequired' | translate }}
                   </div>
-                  <div class="form-group">
-                    <label class="form-control-label">{{ 'writeAgaine' | translate }}</label>
-                    <input class="form-control" type="password" formControlName="confirm_password" [(ngModel)]="input2" placeholder="{{ 'enterYour' | translate }}{{ 'user.password'| translate }}"
-                      id="confirm_password" [ngClass]="{
-                        'is-invalid': f['confirm_password'].touched && f['confirm_password'].invalid
-                      }" />
-                    <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
-                      {{ CustomControler.message }}
-                    </div>
-                    <div *ngIf="f['confirm_password'].touched && f['confirm_password'].invalid" class="invalid-feedback">
-                      <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['required']">
-                        {{ 'passwordRequired' | translate }}
-                      </div>
-                      <div *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['confirm_password']">
-                        {{ 'enterValidPwd' | translate }}
-                      </div>
-                    </div>
+                  <div *ngIf="form.get('password')?.errors['pattern']">
+                    {{ 'passwordFormat' | translate }}
                   </div>
-              <button *ngIf="!waitingResponse" [disabled]="form.invalid" (click)="comparer()" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+                  <div *ngIf="!form.get('password')?.errors['pattern'] && form.get('password')?.errors?.minlength">
+                    {{ 'passwordLength' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">{{ 'writeAgaine' | translate }}</label>
+                <div class="input-group mb-3">
+                  <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'"
+                    formControlName="password_confirm" autocomplete="false"
+                    placeholder="{{ 'confirmYour' | translate }}{{ 'user.password' | translate }}" id="password_confirm"
+                    [ngClass]="{
+                      'is-invalid':
+                        (submitted || form.get('password_confirm').touched) && form.get('password_confirm').invalid
+                    }" 
+                  />
+                  <span class="input-group-text" id="togglePassword" (click)="passwordFunctions.togglePasswordVisibility()">
+                    <i class="fas toggle-password" [ngClass]="passwordFunctions.hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                  </span>
+                </div>
+                <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
+                  {{ CustomControler.message }}
+                </div>
+                <div *ngIf="(submitted || form.get('password_confirm').touched) && form.get('password_confirm').invalid">
+                  <div *ngIf="form.get('password_confirm').errors['required']" class="custom-invalid-feedback">
+                    {{ 'passwordRequired' | translate }}
+                  </div>
+                  <div *ngIf="!form.get('password_confirm').errors['required'] && form.get('password_confirm').errors['notEquivalent']" class="custom-invalid-feedback">
+                    {{ 'passwordsNotMatch' | translate }}
+                  </div>
+                </div>
+              </div>
+              <password-validator-template [form]="form"></password-validator-template>
+              <button *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
                 {{ 'send' | translate }}
               </button>
               <div *ngIf="waitingResponse">
@@ -61,7 +75,7 @@
               </div>
               <!-- /Social Login -->
               <div class="text-center dont-have">
-                {{ 'dontHaveAccount' | translate }} ?
+                {{ 'dontHaveAccount' | translate }}
                 <a [routerLink]="'/register'" style="color: #1749a5;">{{ 'createAccount' | translate }}</a>
               </div>
               <div class="text-center dont-have">
@@ -74,4 +88,5 @@
     </div>
   </div>
 </div>
+<app-language-template></app-language-template>
 <!-- /Main Wrapper -->

@@ -1,7 +1,7 @@
 
-<div *ngIf="lang == 'en'" (click)="setLang('en')" id="change-lang">
+<div *ngIf="lang === 'en'" (click)="setLang('fr')" id="change-lang">
   <a style="color: #fff;"><img src="assets/img/flags/fr.png" alt="Français" />Fr</a>
 </div>
-<div *ngIf="lang == 'fr'" (click)="setLang('fr')" id="change-lang">
+<div *ngIf="lang === 'fr'" (click)="setLang('en')" id="change-lang">
   <a style="color: #fff;"><img src="assets/img/flags/us.png" alt="English" />En</a>
 </div>

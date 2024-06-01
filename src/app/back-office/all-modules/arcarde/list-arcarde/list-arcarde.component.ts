@@ -29,7 +29,7 @@ export class ListArcardeComponent implements OnInit {
               private activedRouter: ActivatedRoute,
               private translationService: TranslationService,
               ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde();
-                  this.translate.use(this.translationService.getLanguage());
+                  this.translate.use(this.translationService.getCurrentLanguage());
                   // this.getId();
             }
 

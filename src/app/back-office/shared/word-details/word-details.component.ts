@@ -80,7 +80,7 @@ export class WordDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     console.log("user details: ", this.userData);
 
     this.generalForm = this.formLog.group({

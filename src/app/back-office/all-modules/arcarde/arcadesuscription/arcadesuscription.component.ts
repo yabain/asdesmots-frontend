@@ -22,7 +22,7 @@ export class ArcadesuscriptionComponent implements OnInit {
   ) {
       this.arcadeServ.initFormControl();
       this.loadAllArcarde();
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
   }
 
   ngOnInit(): void {

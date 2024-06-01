@@ -21,7 +21,7 @@ export class CreateArcardeComponent implements OnInit {
               private location: Location,
               private translationService: TranslationService,  
               ) { 
-                  this.translate.use(this.translationService.getLanguage());
+                  this.translate.use(this.translationService.getCurrentLanguage());
                   this.arcadeServ.initFormControl(); 
                   this.arcadeServ.initFormCreationArcarde()}
 

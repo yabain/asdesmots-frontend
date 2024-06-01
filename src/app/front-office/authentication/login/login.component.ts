@@ -7,29 +7,23 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { WebStorage } from 'src/app/shared/storage/web.storage';
+import { PasswordFunctions } from '../../shared/helpers/password/functions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers: [PasswordFunctions]
 })
 export class LoginComponent implements OnInit {
   waitingResponse = false;
   submitted = false;
   error = false;
   errorMsg = '';
-  lang: string;
-  en: boolean = false;
-  fr: boolean = false;
+  userNotVerified: boolean = false;
 
-  textDir: String = 'ltr';
-  public Toggledata=true;
   public CustomControler:any
   public subscription: Subscription;
-  // form = new FormGroup({
-  //   email: new FormControl("admin@dreamguys.in", [Validators.required]),
-  //   password: new FormControl('123456', [Validators.required]),
-  // });
   form: FormGroup;
 
   get f() {
@@ -40,32 +34,9 @@ export class LoginComponent implements OnInit {
     private storage: WebStorage,
     private formLog: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
-    public translationService: TranslationService,
     private userService: UserService,
-    private router: Router,
+    public passwordFunctions: PasswordFunctions
     ) {
-
-      this.lang = this.translationService.initLanguage();
-      
-      if (this.lang == 'en'){
-        this.en = true;
-        this.fr = false;
-      } else if (this.lang == 'fr'){
-        this.en = false;
-        this.fr = true;
-      } else {
-        this.lang = 'en';
-        this.en = true;
-        this.fr = false;
-      }
-
-      //this is to determine the text direction depending on the selected language
-      translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
-      });
-
     this.subscription = this.storage.Loginvalue.subscribe((data) => {
       if(data != 0){
         this.CustomControler = data;
@@ -76,11 +47,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.Checkuser();
-    this.translate.use(this.translationService.getLanguage());
-    // console.log('111 Venant du service: ', this.translationService.getLanguage());    
+    this.storage.Checkuser();   
     this.form = this.formLog.group({
-        'field_password': ['', 
+        'password': ['', 
           Validators.compose([
             Validators.required
           ])
@@ -95,14 +64,14 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.submitted = true;
+    
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
-    this.submitted = true;
     this.waitingResponse = true;
 
-    // console.log('user datas: ', this.form.value);
     this.authService.authLogin(this.form.value)
     .then((result) => {
       console.log("UserDatas login", result.data.user);
@@ -115,27 +84,12 @@ export class LoginComponent implements OnInit {
       this.errorMsg = error.message;
       this.error = true;
       this.submitted = false;
+      this.userNotVerified = error?.status == 403 ? true : false;
     });
     // this.storage.Login(this.form.value);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  navigateToHome() {
-    this.router.navigate(['welcome']);
-  }
-
-  iconLogle(){
-    this.Toggledata = !this.Toggledata
-  }
-
-  setEnLang(){
-    this.translationService.setLanguage('en');
-  }
-
-  setFrLang(){
-    this.translationService.setLanguage('fr');
   }
 }

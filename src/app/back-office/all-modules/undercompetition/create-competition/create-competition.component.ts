@@ -31,7 +31,7 @@ export class CreateCompetitionComponent implements OnInit {
               private location: Location,
               public arcardeSrv: ArcardeService
               ) {
-      this.translate.use(this.translation.getLanguage());
+      this.translate.use(this.translation.getCurrentLanguage());
       this.loadListOfArcarde();
       this.sousCompetion.initFormControl();
       this.sousCompetion.initFormUpdate();

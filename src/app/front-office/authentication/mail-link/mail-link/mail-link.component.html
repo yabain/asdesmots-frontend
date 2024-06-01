@@ -20,16 +20,10 @@
             </div>
 
             <div *ngIf="!waitingResponse"><br>
-              <div  *ngIf="!error" style="background-color: rgba(2, 127, 17, 0.839);
-              border-radius: 5px;
-              padding: 5px; color: #fff;
-              margin-top: 5px"><b>{{ 'success' | translate }}:</b><br> {{msg}}
-
+              <div *ngIf="!error" class="custom-alert bg-success"><b>
+                {{ 'success' | translate }}:</b><br> {{msg}}
               </div>
-              <div  *ngIf="error" style="background-color: rgba(152, 4, 4, 0.776);
-                border-radius: 5px;
-                padding: 5px; color: #fff;
-                margin-top: 5px"><b>{{ 'error' | translate }}:</b><br> {{msg}}
+              <div *ngIf="error" class="custom-alert bg-danger"><b>{{ 'error' | translate }}:</b><br> {{msg}}
               </div>
               <br>
               <button class="btn btn-lg btn-block btn-primary w-100" type="submit">
@@ -47,4 +41,5 @@
     </div>
   </div>
 </div>
+<app-language-template></app-language-template>
 <!-- /Main Wrapper -->

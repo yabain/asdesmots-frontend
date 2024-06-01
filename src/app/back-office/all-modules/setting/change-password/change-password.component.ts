@@ -22,7 +22,7 @@ export class ChangePasswordComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
   }
 
   resetPwd() {

@@ -67,7 +67,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
 
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     // this.getLevelIdToUrl();
     // this.findLevelById(this.levelId);
     // this.getWordListBylevel(this.levelId);

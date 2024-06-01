@@ -7,49 +7,35 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class TranslationService {
     private keyLanguage = 'userLanguage';
-    public userLanguage: string;
     private supportedLanguages = ['fr', 'en'];
 
     constructor(
-        private translate: TranslateService,
+        private translateService: TranslateService,
     ) {
 
-		translate.addLangs(this.supportedLanguages);
-		translate.setDefaultLang(this.initLanguage());
-		translate.use(this.initLanguage());
-        
-        this.initLanguage();
+		translateService.addLangs(this.supportedLanguages);
+		translateService.setDefaultLang('fr');
     }
 
-    initLanguage() {
-        this.userLanguage = localStorage.getItem(this.keyLanguage);
-        console.log('get storage valeur initaile de la langue: ', this.userLanguage);
-
-        if (!this.userLanguage) {
-            this.userLanguage = 'fr';
-        } else if (this.userLanguage == '') {
-            this.userLanguage = 'fr';
-        }
-        return this.userLanguage;
-
+    getCurrentLanguage() {
+        const lang = localStorage.getItem(this.keyLanguage);
+        return lang ? lang : this.translateService.getDefaultLang();
     }
 
-    setLanguage(language) {
-        this.userLanguage = language;
-        localStorage.setItem(this.keyLanguage, this.userLanguage);
-        console.log('valeur set de la langue: ', this.userLanguage);
-        window.location.reload();
-    }
-
-    getLanguage() {
-        return this.userLanguage;
+    initLanguage(): void {
+        // return this.translate.currentLang;
+        this.translateService.use(this.getCurrentLanguage());
     }
 
     getAvailableLanguage() {
         return this.supportedLanguages;
     }
+    
+    setLanguage(language) {
+        localStorage.setItem(this.keyLanguage, language);
+    }
 
     transformMessageLanguage(message :string) {
-        return this.translate.instant(message);
+        return this.translateService.instant(message);
     }
 }

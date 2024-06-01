@@ -36,12 +36,7 @@ export class SidemenuComponent implements OnInit {
     private translate: TranslateService,
     public translationService: TranslationService
   ) {
-    //this is to determine the text direction depending on the selected language
-    translate.onLangChange.subscribe((event: LangChangeEvent) =>
-    {
-      this.textDir = event.lang == 'fr'? 'rtl' : 'ltr';
-    });
-    this.lang = this.translationService.initLanguage();
+    this.lang = this.translationService.getCurrentLanguage();
     
     if (this.lang == 'en'){
       this.en = true;
@@ -66,7 +61,7 @@ export class SidemenuComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
 
     $(document).on('click', '#filter_search', function() {
       $('#filter_inputs').slideToggle("slow");

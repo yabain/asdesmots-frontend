@@ -20,6 +20,7 @@ import { TranslationService } from './shared/services/translation/language.servi
 import { ProgressIndeterminateModule } from './shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { CommonModule } from '@angular/common';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { EmailVerificationModule } from './front-office/authentication/email-verification/email-verification.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,6 +41,7 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
     CommonModule,
     // AuthentificationModule,
     ProgressIndeterminateModule,
+    EmailVerificationModule,
     // FooterModule,
     ToastrModule.forRoot(
       {

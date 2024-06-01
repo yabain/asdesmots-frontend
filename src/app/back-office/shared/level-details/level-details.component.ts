@@ -47,7 +47,7 @@ export class LevelDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
     console.log("level datas: ", this.levelData);
 
     this.levelForm = this.formLog.group({

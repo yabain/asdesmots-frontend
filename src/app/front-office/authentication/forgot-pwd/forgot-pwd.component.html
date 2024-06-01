@@ -5,7 +5,7 @@
       <div class="loginbox">
         <div class="login-right">
           <div class="login-right-wrap">
-            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo" (click)="navigateToHome()"
+            <img class="img-fluid logo-dark mb-2" src="assets/img/logo-full-adesmots.png" alt="Logo" routerLink="['/']"
             style="height: 10vw; width: 20vw !important;" />
               <br>
             <h1>{{ 'forgotPwd' | translate }}</h1>
@@ -18,25 +18,22 @@
                 <label class="form-control-label">{{ 'user.emailAddress' | translate }}</label>
                 <input class="form-control" type="text" formControlName="field_email" placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}"
                   id="field_email" [ngClass]="{
-                    'is-invalid': f['field_email'].touched && f['field_email'].invalid
+                    'is-invalid': (f['field_email'].touched || submitted) && f['field_email'].invalid
                   }" />
                 <div class="invalid-feedback" *ngIf="CustomControler?.status === 'email'">
                   {{ CustomControler.message }}
                 </div>
-                <div *ngIf="f['field_email'].touched && f['field_email'].invalid" class="invalid-feedback">
-                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['required']">
+                <div *ngIf="(f['field_email'].touched || submitted) && f['field_email'].invalid" class="invalid-feedback">
+                  <div *ngIf="f['field_email'].errors?.required">
                     {{ 'emailRequired' | translate }}
                   </div>
-                  <div *ngIf="f['field_email'].errors && f['field_email'].errors['field_email']">
+                  <div *ngIf="f['field_email'].errors?.email">
                     {{ 'enterValidEmail' | translate }}
                   </div>
                 </div>
               </div>
               <div *ngIf="!waitingResponse">
-              <div *ngIf="sended" style="background-color: rgba(7, 129, 23, 0.275);
-              border-radius: 5px;
-              padding: 5px;
-              margin-top: 5px"><b style="color: rgb(31, 31, 31)"> {{ 'emailResetSended' | translate }} </b><br>
+              <div class="custom-alert" *ngIf="sended" style="background-color: rgba(7, 129, 23, 0.275);"><b style="color: rgb(31, 31, 31)"> {{ 'emailResetSended' | translate }} </b><br>
                 <p style="color: rgb(26, 26, 26)">{{ 'seeSpam' | translate }}
                 </p>
               </div>
@@ -46,7 +43,7 @@
               </button>
             </div>
               <div *ngIf="!sended">
-              <button *ngIf="!waitingResponse" [disabled]="form.invalid" class="btn btn-lg btn-block btn-primary w-100" type="submit">
+              <button *ngIf="!waitingResponse" class="btn btn-lg btn-block btn-primary w-100" type="submit">
                 {{ 'send' | translate }}
               </button></div>
               <div *ngIf="waitingResponse">
@@ -54,7 +51,7 @@
               </div>
               <!-- /Social Login -->
               <div class="text-center dont-have">
-                {{ 'dontHaveAccount' | translate }} ?
+                {{ 'dontHaveAccount' | translate }}
                 <a [routerLink]="'/register'" style="color: #1749a5;">{{ 'createAccount' | translate }}</a>
               </div>
               <div class="text-center dont-have">
@@ -67,4 +64,5 @@
     </div>
   </div>
 </div>
+<app-language-template></app-language-template>
 <!-- /Main Wrapper -->

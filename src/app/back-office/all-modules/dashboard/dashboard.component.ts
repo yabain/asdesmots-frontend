@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.scrollToTop();
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
 
     var options = {
       colors: ['#7638ff', '#ff737b', '#fda600', '#1ec1b0'],

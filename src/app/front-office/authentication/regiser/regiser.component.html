@@ -28,7 +28,7 @@
                       {{ 'firstNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="firstname-message" *ngIf="form1.get('field_firstName').touched && form1.get('field_firstName').errors?.minlength">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_firstName').touched && form1.get('field_firstName').errors?.minlength">Au moins  {{ firstNameMinLength }} caractères</p>
                 </div>
 
                 <div class="form-group">
@@ -41,10 +41,10 @@
                     }" />
                   <div *ngIf="form1.get('field_lastName').invalid && (f1Submitted || form1.get('field_lastName').touched)" class="invalid-feedback">
                     <div *ngIf="form1.get('field_lastName').errors?.required">
-                      {{ 'firstNameRequired' | translate }}
+                      {{ 'lastNameRequired' | translate }}
                     </div>
                   </div>
-                  <p class="firstname-message" *ngIf="form1.get('field_lastName').touched && form1.get('field_lastName').errors?.minlength">Au moins 4 caractères</p>
+                  <p class="firstname-message" *ngIf="form1.get('field_lastName').touched && form1.get('field_lastName').errors?.minlength">Au moins {{ lastNameMinLength}} caractères</p>
                 </div>
 
                 <div class="form-group">
@@ -133,16 +133,15 @@
                      [onlyCountries]="onlyCountry"
                     >
                    </ngx-intl-tel-input>
-                   <div *ngIf="form1.get('field_phone').invalid && (f1Submitted || form1.get('field_phone').touched)" class="invalid-feedback">
+                   <div *ngIf="form1.get('field_phone').invalid && (f1Submitted || form1.get('field_phone').touched)" class="custom-invalid-feedback">
                       {{ 'phoneInvalid' | translate }}
                    </div>
                  </div>
                 <br>
 
-                <div class="wrapper" style="display: flex; justify-content: flex-end;">
-                  <a (click)="next()" style="
-                  font-size: 15px;
-                  padding-left: 10px;"><b><span>{{'next'| translate}} &raquo;</span></b></a>
+                <div class="wrapper navigate-button navigate-right">
+                  <a (click)="next()">
+                  <b><span>{{'next'| translate}} &raquo;</span></b></a>
                 </div><br><br>
 
               </form>
@@ -163,7 +162,7 @@
                     <div *ngIf="form2.get('field_email').errors?.required">
                       {{ 'emailRequired' | translate }}
                     </div>
-                    <div *ngIf="form2.get('field_email')?.errors['email']">
+                    <div *ngIf="form2.get('field_email')?.errors?.email">
                       {{ 'enterValidEmail' | translate }}
                     </div>
                   </div>
@@ -171,22 +170,22 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.password' | translate }}<span class="text-danger">*</span></label>
                   <div class="pass-group">
-                    <input class="form-control" [type]="hashedPassword ? 'password' : 'text'" type="password"
-                      formControlName="field_password" autocomplete="false"
+                    <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'" type="password"
+                      formControlName="password" autocomplete="false"
                       placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
-                        'is-invalid': form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched), 'invalid-input': form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched), 'valid-input': form2.get('field_password').valid,
-                        'initial-input': form2.get('field_password').errors?.required
+                        'is-invalid': form2.get('password').invalid && (f2Submitted || form2.get('password').touched), 'invalid-input': form2.get('password').invalid && (f2Submitted || form2.get('password').touched), 'valid-input': form2.get('password').valid,
+                        'initial-input': form2.get('password').errors?.required
                       }" 
                     />
-                    <div *ngIf="form2.get('field_password').invalid && (f2Submitted || form2.get('field_password').touched)" class="invalid-feedback">
-                        <div *ngIf="form2.get('field_password')?.errors.required">
+                    <div *ngIf="form2.get('password').invalid && (f2Submitted || form2.get('password').touched)" class="invalid-feedback">
+                        <div *ngIf="form2.get('password')?.errors.required">
                           {{ 'passwordRequired' | translate }}
                         </div>
-                        <div *ngIf="form2.get('field_password')?.errors['pattern']">
+                        <div *ngIf="form2.get('password')?.errors['pattern']">
                           {{ 'passwordFormat' | translate }}
                         </div>
-                        <div *ngIf="!form2.get('field_password')?.errors['pattern'] && form2.get('field_password')?.errors?.minlength">
+                        <div *ngIf="!form2.get('password')?.errors['pattern'] && form2.get('password')?.errors?.minlength">
                           {{ 'passwordLength' | translate }}
                         </div>
                     </div>
@@ -194,64 +193,31 @@
                     <label class="form-control-label">{{ 'user.confpassword' | translate }}<span class="text-danger">*</span></label>
                     <br>
                     <div class="input-group mb-3">
-                      <input class="form-control" [type]="hashedPassword ? 'password' : 'text'"
-                        formControlName="field_password_confirm" autocomplete="false"
-                        placeholder="{{ 'confirmYour' | translate }}{{ 'user.password' | translate }}" id="field_password_confirm"
+                      <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'"
+                        formControlName="password_confirm" autocomplete="false"
+                        placeholder="{{ 'confirmYour' | translate }}{{ 'user.password' | translate }}" id="password_confirm"
                         [ngClass]="{
                           'is-invalid':
-                            (f2Submitted || form2.get('field_password_confirm').touched) && form2.get('field_password_confirm').invalid
+                            (f2Submitted || form2.get('password_confirm').touched) && form2.get('password_confirm').invalid
                         }" />
-                        <span class="input-group-text" id="togglePassword" (click)="togglePasswordVisibility()">
-                          <i class="fas toggle-field_password" [ngClass]="hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        <span class="input-group-text" id="togglePassword" (click)="passwordFunctions.togglePasswordVisibility()">
+                          <i class="fas toggle-password" [ngClass]="passwordFunctions.hashedPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                         </span>
                     </div>
-                    <div *ngIf="(f2Submitted || form2.get('field_password_confirm').touched) && form2.get('field_password_confirm').invalid">
-                      <div *ngIf="form2.get('field_password_confirm').errors['required']" class="custom-invalid-feedback">
+                    <div *ngIf="(f2Submitted || form2.get('password_confirm').touched) && form2.get('password_confirm').invalid">
+                      <div *ngIf="form2.get('password_confirm').errors['required']" class="custom-invalid-feedback">
                         {{ 'passwordRequired' | translate }}
                       </div>
-                      <div *ngIf="!form2.get('field_password_confirm').errors['required'] && form2.get('field_password_confirm').errors['notEquivalent']" class="custom-invalid-feedback">
+                      <div *ngIf="!form2.get('password_confirm').errors['required'] && form2.get('password_confirm').errors['notEquivalent']" class="custom-invalid-feedback">
                         {{ 'passwordsNotMatch' | translate }}
                       </div>
                     </div>
                   </div>
-                  <div class="mt-2" style="background-color: rgba(248, 180, 71, 0.575);
-                    border-radius: 5px;
-                    padding: 15px;
-                    margin-top: 5px">
-                    <b style="color: #000"> {{ 'pwdShouldBe' | translate }} </b> <br>
-                    <ol class="pt-2">
-                      <li>
-                        <input type="checkbox" class="checkbox-inside">
-                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': !form2.get('field_password')?.errors?.minlength}" ></i>
-                        {{ 'upTo8Char' | translate }}
-                      </li>
-  
-                      <li>
-                        <input type="checkbox" class="checkbox-inside">
-                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;"  [ngClass]="{'condition-true': passwordFunction.uppercaseChar(form2.get('field_password').value)}"></i>
-                        {{ 'upTo1Captal' | translate }}
-                      </li>
-                      <li>
-                        <input type="checkbox" class="checkbox-inside">
-                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': passwordFunction.numberChar(form2.get('field_password').value)}" ></i>
-                        {{ 'upTo1Number' | translate }}
-                      </li>
-                      <li>
-                        <input type="checkbox" class="checkbox-inside">
-                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': passwordFunction.specialChar(form2.get('field_password').value)}" ></i>
-                        {{ 'upTo1SpecialCahr' | translate }}
-                      </li>
-                      <li>
-                        <input type="checkbox" class="checkbox-inside">
-                        <i class="fa-solid fa-check fa-beat fa-xl custom-check" style="color: #3dcb15;" [ngClass]="{'condition-true': !form2.get('field_password').errors?.required && passwordsMatch()}" ></i>
-                        {{ 'passwordMatch' | translate }}
-                      </li>
-                    </ol>
-                  </div>
+                  
                 </div>
                 <div class="form-group">
                   <div class="custom-control d-flex">
-                    <input type="checkbox" formControlName="field_agree" id="field_agree"  class="custom-select"
+                    <input type="checkbox" formControlName="field_agree" id="field_agree" class="custom-select"
                     [ngClass]="{
                       'is-invalid':
                         f2Submitted && form2.get('field_agree').invalid
@@ -267,12 +233,11 @@
                       </div>
                   </div>
                 </div>
-                <div class="wrapper" style="display: flex;">
-                  <a (click)="previous()" style="width: 16vh !important;
-                  font-size: 15px;
-                  padding-left: 10px;"><b><span>&laquo; {{'back'| translate}}</span></b></a>
-                </div><br><br>
-
+                <div class="wrapper navigation-button navigate-left">
+                  <a (click)="previous()">
+                  <b><span>&laquo; {{'back'| translate}}</span></b></a>
+                </div>
+                <password-validator-template [form]="form2"></password-validator-template>
                 <div class="form-group mb-0">
                   <button *ngIf="!waitingResponse" [disabled]="step < 2"  (click)="submit()"
                     class="btn btn-lg btn-block btn-primary w-100" type="button">
@@ -299,7 +264,7 @@
             </div>
             <!-- /Social Login -->
             <div class="text-center dont-have">
-              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">Connexion</a>
+              {{ 'haveAccount' | translate }}? <a [routerLink]="'/login'" style="color: #1749a5;">{{ 'connexion' | translate }}</a>
             </div>
           </div>
         </div>
@@ -343,27 +308,27 @@
 
         <div class="w3-row-padding w3-center w3-margin-top">
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;;">1</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">1</div>
               <p>{{ 'openYourMail1' | translate }} </p>
               <p>{{ 'openYourMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;;">2</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">2</div>
               <p>{{ 'openConfirmMail1' | translate }} </p>
               <p>{{ 'openConfirmMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px; background-color: #fff; color: #124eae;;">
-              <h3 style="font-size: 2rem; color: #124eae;">{{ 'step' | translate }}</h3><br>
-              <div style="font-size:120px; color: #124eae;;">3</div>
+            <div class="w3-card w3-container">
+              <h3>{{ 'step' | translate }}</h3><br>
+              <div class="counter">3</div>
               <p>{{ 'clickConfirm1' | translate }} </p>
               <p>{{ 'clickConfirm2' | translate }}</p>
               <p>{{ 'clickConfirm3' | translate }}</p>

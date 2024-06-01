@@ -8,22 +8,24 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    CommonModule,
-    LoginRoutingModule,
-    RouterModule,
-    ReactiveFormsModule,
-    ProgressIndeterminateModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })
-  ],
+    declarations: [LoginComponent],
+    imports: [
+        CommonModule,
+        LoginRoutingModule,
+        RouterModule,
+        ReactiveFormsModule,
+        ProgressIndeterminateModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        SharedModule
+    ]
 })
 export class LoginModule { }

@@ -2,13 +2,6 @@
     display: none;
 }
 
-.bg-img {
-    background-image: url("../../../../assets/img/elements.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: #124eae;
-}
-
 .login-nav {
     background-color: #fff;
     color: #124eae;
@@ -72,40 +65,12 @@ p {
 }
 
 
-
-.checkbox-inside{
-    appearance: none;
-}
-    
-.checkbox-inside::before {
-    content: '';
-    width: 16px;
-    height: 16px;
-    border: none;
-    background-color: white;
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    right: 2px;
-}
-
-.custom-check {
-    position: relative;
-    bottom: -1px;
-    right: 19px;
-    z-index: 4;
-}
-
 .custom-checkbox {
     padding-left: 10px;
 }
 
 .fa-solid {
     visibility: hidden;
-}
-
-.condition-true {
-    visibility: visible;
 }
 
 .initial-border {
@@ -165,14 +130,20 @@ border: 1px solid red;
 .initial-input {
     border: 1px solid #dee2e6;
 }
-    
-ol {
-    list-style: none;
+
+.navigate-button {
+    display: flex; 
+    justify-content: flex-end;
 }
 
-.custom-invalid-feedback {
-    width: 100%;
-    margin-top: .25rem;
-    font-size: .875em;
-    color: #dc3545;
+.navigate-button a {
+    font-size: 15px;
+}
+
+.navigate-right {
+    align-items: end;
+}
+
+.navigate-left {
+    align-items: start; 
 }

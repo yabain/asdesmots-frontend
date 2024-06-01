@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
     this.scrollToTop();
     // this.userData = this.userService.getLocalStorageUser();
     // Pricing Options Show
-    this.translate.use(this.translationService.getLanguage());
+    this.translate.use(this.translationService.getCurrentLanguage());
 
   }
   files: File[] = [];

@@ -25,7 +25,7 @@ export class RegiserComponent implements OnInit {
   error = false;
   errorMsg = '';
   mailSended = false;
-  step = 2;
+  step = 1;
   form1: FormGroup;
   form2: FormGroup;
   countries: any = [];

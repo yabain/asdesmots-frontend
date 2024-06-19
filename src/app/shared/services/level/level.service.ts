@@ -409,7 +409,7 @@ export class LevelService {
         this.api.get('gamelevel', this.headers).subscribe(
           (result) => {
             this.levelList = result.data;
-            console.log('refresh resultat de get list: ', result.data);
+            console.log('refresh resultat de get list: ', result.data.levels);
             localStorage.setItem('levels-list', JSON.stringify(this.levelList));
             resolve(result.data);
           },

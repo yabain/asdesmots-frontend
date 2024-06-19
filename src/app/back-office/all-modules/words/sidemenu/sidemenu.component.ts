@@ -100,7 +100,6 @@ export class SidemenuComponent implements OnInit{
     this.totalFrWords = 0;
 
     for (const level of this.levelList) {
-      console.log("mots du nv courant :", level.words)
       if (level.words && level.words.length > 0) {
         this.totalWords += level.words.length;
 
@@ -295,10 +294,13 @@ export class SidemenuComponent implements OnInit{
   }
 
   getLevelList() {
-    console.log("roro");
-    if (JSON.parse(localStorage.getItem('levels-list'))) {
-      this.levelList = JSON.parse(localStorage.getItem('levels-list'));
-      this.calculateWordSums();
+    if (JSON.parse(localStorage.getItem('levels-li st'))) {
+      const data = JSON.parse(localStorage.getItem('levels-list'));
+      this.levelList = data.levels;
+      this.totalEnWords = data.enWordsLength;
+      this.totalFrWords = data.frWordsLength;
+      this.totalWords = data.enWordsLength + data.frWordsLength;
+      // this.calculateWordSums();
       console.log("liste niveau " + this.levelList);
       console.log("reponse server: ", this.levelService.getAllLevels())
     }
@@ -309,15 +311,19 @@ export class SidemenuComponent implements OnInit{
         .then((result) => {
           console.log("le resultat : ", result)
           this.waitingResponse = false;
-          this.levelList = result;
+          const data = result
+          this.levelList = data.levels;
+          this.totalEnWords = data.enWordsLength;
+          this.totalFrWords = data.frWordsLength;
+          this.totalWords = data.enWordsLength + data.frWordsLength;
           console.log('levellist :', this.levelList)
-          this.calculateWordSums();
+          // this.calculateWordSums();
         })
         .catch((error) => {
           console.error('Erreur: ', error.message);
           this.toastr.error(error.message, 'Error', { timeOut: 10000 });
           this.waitingResponse = false;
-        });;
+        });
     }
   }
 

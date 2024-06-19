@@ -36,7 +36,7 @@
                   <div class="input-group mb-3">
                     <input class="form-control" [type]="passwordFunctions.hashedPassword ? 'password' : 'text'"
                       formControlName="password" autocomplete="false"
-                      placeholder="{{ 'EnterYour' | translate }}{{ 'user.password' | translate }}" id="password"
+                      placeholder="{{ 'enterYour' | translate }}{{ 'user.password' | translate }}" id="password"
                       [ngClass]="{
                         'is-invalid':
                           (submitted || f['password'].touched) && f['password'].invalid
@@ -76,9 +76,9 @@
               </button>
               <div *ngIf="userNotVerified">
                 <div class="custom-alert bg-warning">
-                  {{ 'http.response.emailNotVerified1' | translate }}
-                  <a class="blinking-link" [routerLink]="['/email-verification']">{{ 'http.response.emailNotVerified2' | translate }}</a>
-                  {{ 'http.response.emailNotVerified3' | translate }}
+                  {{ 'errorResponse.emailNotVerified1' | translate }}
+                  <a class="blinking-link" [routerLink]="['/email-verification']">{{ 'errorResponse.emailNotVerified2' | translate }}</a>
+                  {{ 'errorResponse.emailNotVerified3' | translate }}
                 </div>
               </div>
               <div *ngIf="waitingResponse">

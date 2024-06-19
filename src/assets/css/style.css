@@ -3664,21 +3664,20 @@ table.table-inbox tbody tr.checked {
 
 .w3-card {
 	border-radius: 20px;
-	padding: 80px;
-	min-height:460px; 
+	padding: 1rem;
+	min-height:250px; 
 	background-color: #fff; 
 	color: #124eae;
 	margin: 20px 0;
 }
 
 .w3-card h3 {
-	margin-top: 60px;
 	font-size: 2rem; 
 	color: #124eae;
 }
 
 .w3-card .counter {
-	font-size:120px; 
+	font-size:50px; 
 	color: #124eae;
 }
 
@@ -8500,6 +8499,7 @@ body[data-layout-mode=dark] .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-o
 	}
 }
 
+/* Block country select on input phone intl */
 .iti__selected-flag {
     pointer-events: none;
 }
@@ -8546,3 +8546,9 @@ ol, ul {
 	padding: 15px;
 	margin-top: 5px;
 }
+
+.ng-dropdown-panel {
+	white-space: normal;
+	height: fit-content;
+	width: fit-content;
+  }

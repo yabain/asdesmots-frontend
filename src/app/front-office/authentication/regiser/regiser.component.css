@@ -147,3 +147,6 @@ border: 1px solid red;
 .navigate-left {
     align-items: start; 
 }
+.w3-card:hover {
+    transform: scale(1.05); /* Augmente la taille de 5% */
+}

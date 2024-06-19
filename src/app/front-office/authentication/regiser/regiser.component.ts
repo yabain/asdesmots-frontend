@@ -126,9 +126,14 @@ export class RegiserComponent implements OnInit {
       ...this.form1.value, 
       ...this.form2.value,
       field_country: this.currentCountry.name,
-      field_phone: this.form1.value.field_phone.e164Number
     }
-
+    
+    if(this.form1.get('field_phone')?.value) {
+      data = {...data, field_phone: this.form1.value.field_phone.e164Number };
+    } else {
+      delete data.field_phone;
+    }
+    
     this.authService.createAccount(data)
       .then(() => {
         this.f2Submitted = false;

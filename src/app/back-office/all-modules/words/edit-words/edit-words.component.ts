@@ -67,10 +67,8 @@ export class EditWordsComponent implements OnInit {
     this.allModulesService.get("customers").subscribe((res) => {
       this.allCustomers = res;
       //passing edit id
-
       this.edit(this.id);
     });
-
 }
 editCustomer() {
   if (this.editCustomerForm.valid) {

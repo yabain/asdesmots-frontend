@@ -73,7 +73,10 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     // this.findLevelById(this.levelId);
     // this.getWordListBylevel(this.levelId);
     // console.log("wordData00: ", this.wordData)
+    this.initUpdateForm();
+  }
 
+  initUpdateForm() {
     this.wordForm = this.formLog.group({
       '_id': [this.wordData._id, Validators.compose([
         Validators.required,
@@ -92,7 +95,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
         Validators.minLength(1)])],
     });
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.wordForm) {
       this.wordData = changes.wordData.currentValue;
@@ -132,8 +134,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
       this.wordsService.getWordListBylevel(this.levelId, true)
         .then((result) => {
           this.levelService.getAllLevels(true).then((data) => {
-            console.log(data)
-            this.wordsList = data.levels;
+            this.levelList = data.levels;
           });
           this.waiting = false;
         })
@@ -154,7 +155,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
         this.refreshList();
         this.waiting = false;
         $('#cancel-btn00').click();
-        setTimeout(() => {location.reload();}, 1000);
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
@@ -207,13 +207,17 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   editeWord() {
+    if(this.wordForm.invalid)
+      return;
+      
     this.waiting = true;
     console.log("General datas: ", this.wordForm.value);
     this.wordsService.updateWord(this.wordForm.value)
       .then((result) => {
         this.waiting = false;
         this.refreshList();
-        $('#close-modal').click();
+        this.initUpdateForm();
+        $('#close-edit-modal').click();
       })
       .catch((error) => {
         this.waiting = false;

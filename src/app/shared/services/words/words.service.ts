@@ -52,7 +52,7 @@ export class WordsService {
     private errorsService: ErrorsService
   ) { }
 
-  createWord([wordEnForm, wordFrForm]: any): Promise<any> {
+  createWord(wordForm: any): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
@@ -63,7 +63,7 @@ export class WordsService {
       //   'gameLevelId': word.
       // };
 
-      this.api.post('gamelevel/word', [wordEnForm, wordFrForm], this.headers)
+      this.api.post('gamelevel/word', wordForm, this.headers)
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode === 201) {
@@ -202,7 +202,7 @@ export class WordsService {
           this.toastr.success('Word was deleted !!', null, { timeOut: 5000 });
           resolve(response);
         }, error => {
-          this; this.errorsService.errorsInformations(error, "delete word")
+          this.errorsService.errorsInformations(error, "delete word")
           reject(error);
         });
     });

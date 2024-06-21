@@ -374,6 +374,33 @@ export class LevelService {
         );
     });
   }
+  
+  async sortLevels(levels: []): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      this.api
+        .put(`gamelevel/sort-list`, levels, this.headers)
+        .subscribe(
+          (response: any) => {
+            this.getAllLevels();
+            if (response.statusCode === 200) {
+              this.toastr.success(
+                'levels have been sorted successfully.',
+                'Success',
+                { timeOut: 7000 }
+              );
+            }
+            console.log('respose: ', response);
+            resolve(response);
+          },
+          (error: any) => {
+            this.errorsService.errorsInformations(error, 'sort levels', '0');
+            reject(error);
+          }
+        );
+    });
+  }
 
   //recuperer les informations d'un utilisateur
   getLevelById(id): Promise<any> {
@@ -404,13 +431,13 @@ export class LevelService {
 
   // Get News to server
   getAllLevels(refresh?: boolean): Promise<any> {
-    if (refresh === true) {
+    if (refresh) {
       return new Promise((resolve, reject) => {
         this.api.get('gamelevel', this.headers).subscribe(
           (result) => {
             this.levelList = result.data;
             console.log('refresh resultat de get list: ', result.data.levels);
-            localStorage.setItem('levels-list', JSON.stringify(this.levelList));
+            sessionStorage.setItem('levels-list', JSON.stringify(this.levelList));
             resolve(result.data);
           },
           (error) => {
@@ -421,7 +448,7 @@ export class LevelService {
       });
     } else {
       return new Promise((resolve, reject) => {
-        this.levelList = JSON.parse(localStorage.getItem('levels-list'));
+        this.levelList = JSON.parse(sessionStorage.getItem('levels-list'));
         if (this.levelList != undefined) {
           resolve(this.levelList);
         } else {

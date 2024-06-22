@@ -8,9 +8,9 @@
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th style="text-align: center;">All words</th>
-              <th style="text-align: center;">En words</th>
-              <th style="text-align: center;">FR words</th>
+              <th style="text-align: center;">{{ 'words.all' | translate }}</th>
+              <th style="text-align: center;">{{ 'english' | translate }}</th>
+              <th style="text-align: center;">{{ 'french' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +27,7 @@
       <div class="card">
         <div class="card-header">
           <h5 class="card-title d-flex justify-content-between">
-            <span>{{'words.level' | translate }} ({{levelList.length}})</span>
+            <span>{{'words.levels' | translate }} ({{levelList.length}})</span>
             <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#addLevel" (click)="resetForm()"><i
                 class="fas fa-plus"></i></a>
           </h5>
@@ -111,56 +111,57 @@
     <div class="modal-content p-4">
       <div class="modal-icon text-center mb-3">
         <i class="fas fa-trash-alt text-danger"></i>
+        <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
       </div>
       <div class="modal-text text-center">
-        <h2>{{ 'delete' | translate }} <b>{{ levelData?.name }}</b> ?</h2>
-        <br>
-        <ng-container *ngIf="levelData?.words && levelData.words.length > 0; else noWordsForm" >
-          <!-- Formulaire pour le transfert des mots -->
-          <form (ngSubmit)="TransfertWords()" [formGroup]="transferWordsForm">
-            <!-- <p>{{'words.transferMessage' | translate}}</p> -->
-            <p>{{ 'words.whichLevel' | translate }}</p>
-            <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId" (change)="onLevelChange($event)">
-              <option value="">{{ 'select' | translate }}</option>
-              <option *ngFor="let levelItem of filteredLevelList" [value]="levelItem._id">
-                {{ levelItem.name }}
-              </option>
-
-            </select>
-            <div class="text-center mt-4 mb-0">
-              <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn">
-                {{ 'cancel' | translate }}
-              </button>
-              <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
-                [disabled]="!transferWordsForm.valid" (ngSubmit)="TransfertWords()">
-                {{ 'words.transferAndDelete' | translate }}
-              </button>
-              <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
-                <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-              </button>
-            </div>
-          </form>
-        </ng-container>
-
-        <ng-template #noWordsForm>
-          <!-- Formulaire pour la suppression directe du niveau sans transfert de mots -->
-          <form (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
-            <!-- <p>{{'noWords.deleteMessage' | translate}}</p> -->
-            <div class="modal-footer text-center">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
-                {{ 'cancel' | translate }}
-              </button>
-              <button type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
-                [hidden]="!modalVisible">
-                {{ 'delete' | translate }}
-              </button>
-              <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
-                <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-              </button>
-            </div>
-          </form>
-        </ng-template>
-
+        <div class="modal-text text-center pb-3">
+          <ng-container>
+            <ng-template [ngIf]="!levelData.words?.length" [ngIfElse]="transfertTemplate">
+              {{ 'confirmDeleteText' | translate }} <b>{{levelData?.name}} ?</b>
+              <!-- Formulaire pour la suppression directe du niveau sans transfert de mots -->
+              <form class="py-2" (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
+                <!-- <p>{{'noWords.deleteMessage' | translate}}</p> -->
+                <div class="modal-footer text-center">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                    {{ 'cancel' | translate }}
+                  </button>
+                  <button *ngIf="!waitingResponse" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
+                    [hidden]="!modalVisible">
+                    {{ 'delete' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                    <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+                  </button>
+                </div>
+              </form>  
+            </ng-template>
+            <ng-template #transfertTemplate>
+              {{ 'words.whichLevel' | translate }}
+              <b>{{levelData?.name}} </b>
+              {{ 'words.whichLevel2' | translate }} 
+              <form class="py-2" (ngSubmit)="TransfertWords()" [formGroup]="transferWordsForm">
+                <!-- <p>{{'words.transferMessage' | translate}}</p> -->
+                <select class="form-control" formControlName="groupHeriterId" id="groupHeriterId" (change)="onLevelChange($event)">
+                  <option value="">{{ 'words.selectLevel' | translate }}</option>
+                  <option *ngFor="let levelItem of filteredLevelList" [value]="levelItem._id">
+                    {{ levelItem.name }}
+                  </option>
+                </select>
+                <div class="text-center mt-4 mb-0">
+                  <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn">
+                    {{ 'cancel' | translate }}
+                  </button>
+                  <button type="submit" *ngIf="!waitingResponse" class="btn btn-danger" id="delete-btn"
+                    [disabled]="!transferWordsForm.valid" (ngSubmit)="TransfertWords()">
+                    {{ 'words.transferAndDelete' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                    <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </ng-container>
       </div>
     </div>
   </div>

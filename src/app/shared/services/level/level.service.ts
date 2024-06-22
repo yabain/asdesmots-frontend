@@ -375,7 +375,7 @@ export class LevelService {
     });
   }
   
-  async sortLevels(levels: []): Promise<any> {
+  async sortLevels(levels: {id: string, level: number }[]): Promise<any> {
 
     return new Promise((resolve, reject) => {
 

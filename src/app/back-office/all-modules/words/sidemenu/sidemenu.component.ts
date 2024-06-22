@@ -141,11 +141,14 @@ export class SidemenuComponent implements OnInit{
       return;
     }
     this.waitingResponse = true
-    console.log('addLevel: ', this.levelForm.value);
-    this.levelService.createLevel(this.levelForm.value)
+    const data = {
+      ...this.levelForm.value, 
+    }
+    this.levelService.createLevel(data)
       .then(async () => {
         this.submitted = false;
         this.waitingResponse = false;
+        this.levelList.push(data)
         await this.refreshList();
         $('#cancel-btn1').click();
       })
@@ -203,9 +206,9 @@ export class SidemenuComponent implements OnInit{
     this.levelService.deleteLevelId(this.deleteLevelForm.value.levelDataId)
       .then(async () => {
         // this.waitingResponse = false;
+        await this.refreshList();
         this.modalVisible = true;
         // this.submitted = false;
-        await this.refreshList();
         $('#cancel-btn').click();
       })
       .catch((error) => {
@@ -278,7 +281,8 @@ export class SidemenuComponent implements OnInit{
       .then(async (result) => {
         this.levelList = result.levels;
         this.waitingResponse = false;
-        await this.levelService.sortLevels(this.levelList);
+        const data = this.sortabledata(this.levelList)
+        await this.levelService.sortLevels(data);
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
@@ -327,18 +331,20 @@ export class SidemenuComponent implements OnInit{
     const previousIndex = event.previousIndex;
     const currentIndex = event.currentIndex;
     this.resortList();
-    const data = this.levelList.map((elem: any) => {
-      return {
-        id: elem._id,
-        level: elem.level
-      }
-    });
-    console.log(this.levelList)
+    const data = this.sortabledata(this.levelList)
     await this.levelService.sortLevels(data);
   }
   resortList(){
     this.levelList.forEach((elem: any, index) => {
       elem.level = index + 1;
+    })
+  }
+  sortabledata(data: any[]): {id: string, level: number }[]{
+    return data.map((elem: any) => {
+      return {
+        id: elem._id,
+        level: elem.level
+      }
     })
   }
   updateLevel(){
@@ -354,10 +360,9 @@ export class SidemenuComponent implements OnInit{
     this.waiting = true;
     console.log("General datas: ", this.levelForm.value);
     this.levelService.updateLevel(this.levelForm.value._id, this.levelForm.value)
-      .then(async (result) => {
+      .then((result) => {
         this.waiting = false;
         this.refreshList();
-        await this.levelService.sortLevels(this.levelList);
         $('#close-modal').click();
       })
       .catch((error) => {

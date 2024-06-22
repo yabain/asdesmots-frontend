@@ -175,7 +175,7 @@
     "registrationEnd": "Registration end date",
     "wanTo": "Are you sure you want to unsubscribe from the arcade",
     "changeStatus": "Change Status",
-    "selectLangChange": "Change language",
+    "selectLangChange": "Select language",
     "welcome": "Welcome",
     "internalError": "Internal Server error. Try again later please",
     "emailResetSended": "A verification email has been sent to your email",
@@ -184,6 +184,8 @@
     "deleteAccountMsge": "When you delete your account, you lose access to AsDesMots account services, and we permanently delete your personal data.",
     "surDeleteAccount": "Are you sure you want to close your account?",
     "confirmDeleteAccount": "Confirm that I want to delete my account.",
+    "confirmDeleteTitle":"Warning",
+    "confirmDeleteText":"Are you sure you want to delete",
     "user": {
         "user": "User",
         "id": "Id",
@@ -324,24 +326,31 @@
         "sendMsg": "Send us your message"
     },
     "words": {
-        "level": "level",
+        "all":"All",
+        "level": "Level",
+        "levels": "Levels",
         "word": "Word",
         "wordList": "Words list",
         "wordsCount": "Word count",
         "starter": "Starter",
         "advence": "Advence",
         "hard": "Hard",
-        "wordStat": "escription in french",
+        "wordStat": "Words statistics",
         "addNewWords": "Add a word",
         "addNewLevel": "Add a level",
         "wordInFr": "Word in french",
         "wordInEn": "Word in english",
         "wordDescriptionEn": "Description in english",
         "wordDescriptionFr": "Description in french",
-        "whichLevel": "What level do you want to transfer his words to",
+        "whichLevel": "You are about to delete the level",
+        "whichLevel2": "that contains words. you need to transfer them to another level first.",
         "noWords": "No words to show",
         "inEnglish": "in english",
-        "inFrench": "in french"
+        "inFrench": "in french",
+        "transferAndDelete": "Transfer and delete",
+        "editWord":"Word edit",
+        "editLevel":"Level edit",
+        "selectLevel":"Select the niveau"
     },
     "form":{
         "passwordReset":"Your password have been successfully reset.",
@@ -350,6 +359,10 @@
         "emailVerified":"Your email address has been verified.",
         "loggedOut":"You have been successfully logged out.",
         "loggedIn":"You are logged in, enjoy 🎉"
+    },
+    "action":{
+        "delete":"Delete",
+        "cancel":"Cancel"
     },
     "errorResponse": {
       "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",

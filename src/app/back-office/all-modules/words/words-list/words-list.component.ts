@@ -133,8 +133,10 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
       this.waiting = true;
       this.wordsService.getWordListBylevel(this.levelId, true)
         .then((result) => {
+          this.wordsList = result;
           this.levelService.getAllLevels(true).then((data) => {
             this.levelList = data.levels;
+            this.level = this.levelList.find(elem => elem._id == this.levelId)
           });
           this.waiting = false;
         })

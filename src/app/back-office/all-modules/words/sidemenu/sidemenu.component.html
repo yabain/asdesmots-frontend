@@ -104,9 +104,93 @@
 
 
 
-<!-- nouvelle fenêtre modale -->
 
-<div class="modal custom-modal fade" id="deleteLevel" role="dialog"  [hidden]="!modalVisible">
+<!-- Add level -->
+<div class="modal custom-modal fade" id="addLevel" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-3">
+        <img src="assets/img/logo-white.png" alt="" width="30px">
+        <h4 class="card-title text-center">{{ 'words.addNewLevel' | translate }}</h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="align-items-center">
+        <form (ngSubmit)="addLevel()" [formGroup]="levelForm">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">{{ 'words.level' | translate }} <span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="name"
+                  placeholder="{{ 'words.level' | translate }}" id="name" [ngClass]="{
+                    'is-invalid': f['name'].touched && f['name'].invalid
+                  }" required />
+              </div>
+              <div class="form-group">
+                <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
+                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Address"
+                  formControlName="description" id="description" [ngClass]="{
+                    'is-invalid': f['description'].touched && f['description'].invalid
+                  }" required></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
+            {{'close' | translate }}
+          </button>
+          <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addLevel()">
+            <span> {{'add' | translate }}</span>
+          </button>
+          <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
+            <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit level -->
+<div class="modal custom-modal fade" id="editLevel" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-3">
+        <img src="assets/img/logo-white.png" alt="" width="30px">
+        <h4 class="card-title text-center">{{ 'words.editLevel' | translate }}</h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="align-items-center">
+        <form (ngSubmit)="updateLevel()" [formGroup]="levelForm">
+          <div class="form-group">
+            <label for="name">{{ 'words.level' | translate }}<span class="mandatory">*</span></label>
+            <input class="form-control" type="text" formControlName="name" id="name" required />
+          </div>
+          <div class="form-group">
+            <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
+            <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
+              formControlName="description" id="description" required></textarea>
+          </div>
+          <div class="text-center mt-4 mb-0">
+            <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal"
+              id="close-modal" style="margin-right: 20px;">
+              {{'close' | translate }}
+            </button>
+            <button type="submit" *ngIf="!waiting" class="btn btn-success" (click)="updateLevel()">
+              {{'save' | translate }}
+            </button>
+            <button type="button" *ngIf="waiting" class="btn btn-success" disabled>
+              <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- nouvelle fenêtre modale -->
+<div class="modal custom-modal fade" id="deleteLevel" role="dialog" [hidden]="!modalVisible">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-icon text-center mb-3">
@@ -162,90 +246,6 @@
               </form>
             </ng-template>
           </ng-container>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Edit level -->
-<div class="modal custom-modal fade" id="editLevel" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-3">
-        <img src="assets/img/logo-white.png" alt="" width="30px">
-        <h4 class="card-title text-center">{{ 'words.editLevel' | translate }}</h4>
-        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
-      </div>
-      <div class="align-items-center">
-        <form (ngSubmit)="updateLevel()" [formGroup]="levelForm">
-          <div class="form-group">
-            <label for="name">{{ 'words.level' | translate }}<span class="mandatory"></span> *</label>
-            <input class="form-control" type="text" formControlName="name" id="name" required />
-          </div>
-          <div class="form-group">
-            <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-            <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
-              formControlName="description" id="description" required></textarea>
-          </div>
-          <div class="text-center mt-4 mb-0">
-            <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal"
-              id="close-modal" style="margin-right: 20px;">
-              {{'close' | translate }}
-            </button>
-            <button type="submit" *ngIf="!waiting" class="btn btn-success" (click)="updateLevel()">
-              {{'save' | translate }}
-            </button>
-            <button type="button" *ngIf="waiting" class="btn btn-success" disabled>
-              <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Add level -->
-<div class="modal custom-modal fade" id="addLevel" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-3">
-        <img src="assets/img/logo-white.png" alt="" width="30px">
-        <h4 class="card-title text-center">{{ 'words.addNewLevel' | translate }}</h4>
-        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
-      </div>
-      <div class="align-items-center">
-        <form (ngSubmit)="addLevel()" [formGroup]="levelForm">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="name">{{ 'words.level' | translate }} <span class="mandatory">*</span></label>
-                <input class="form-control" type="text" formControlName="name"
-                  placeholder="{{ 'words.level' | translate }}" id="name" [ngClass]="{
-                    'is-invalid': f['name'].touched && f['name'].invalid
-                  }" required />
-              </div>
-              <div class="form-group">
-                <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Address"
-                  formControlName="description" id="description" [ngClass]="{
-                    'is-invalid': f['description'].touched && f['description'].invalid
-                  }" required></textarea>
-              </div>
-            </div>
-          </div>
-        </form>
-        <div class="text-center">
-          <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
-            {{'close' | translate }}
-          </button>
-          <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addLevel()">
-            <span> {{'add' | translate }}</span>
-          </button>
-          <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
-            <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button>
-        </div>
       </div>
     </div>
   </div>

@@ -34,7 +34,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   level: Level;
   wordForm: FormGroup;
   routerSubscribe: any;
-  levelList = JSON.parse(localStorage.getItem('levels-list'));
+  levelList;
   url;
 
 
@@ -56,7 +56,8 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
         this.waiting = true;
         this.wordsList = undefined;
         this.getLevelIdToUrl();
-        this.findLevelById(this.levelId);
+        this.refreshList();
+        // this.findLevelById(this.levelId);
         this.scrollToTop();
         setTimeout(() => {
           this.getWordListBylevel(this.levelId);
@@ -71,8 +72,11 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     // this.getLevelIdToUrl();
     // this.findLevelById(this.levelId);
     // this.getWordListBylevel(this.levelId);
-    console.log("wordData00: ", this.wordData)
+    // console.log("wordData00: ", this.wordData)
+    this.initUpdateForm();
+  }
 
+  initUpdateForm() {
     this.wordForm = this.formLog.group({
       '_id': [this.wordData._id, Validators.compose([
         Validators.required,
@@ -91,7 +95,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
         Validators.minLength(1)])],
     });
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.wordForm) {
       this.wordData = changes.wordData.currentValue;
@@ -126,17 +129,20 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   refreshList() {
-    this.waiting = true;
-    this.wordsService.getWordListBylevel(this.levelId, true)
-      .then((result) => {
-        this.levelService.getAllLevels(true);
-        this.wordsList = JSON.parse(localStorage.getItem(this.levelId));
-        this.waiting = false;
-      })
-      .catch((error) => {
-        console.error('Erreur: ', error.message);
-        this.waiting = false;
-      });
+    if(this.levelId){
+      this.waiting = true;
+      this.wordsService.getWordListBylevel(this.levelId, true)
+        .then((result) => {
+          this.levelService.getAllLevels(true).then((data) => {
+            this.levelList = data.levels;
+          });
+          this.waiting = false;
+        })
+        .catch((error) => {
+          console.error('Erreur: ', error.message);
+          this.waiting = false;
+        });
+    }
   }
 
   filter() { }
@@ -149,7 +155,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
         this.refreshList();
         this.waiting = false;
         $('#cancel-btn00').click();
-        setTimeout(() => {location.reload();}, 1000);
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
@@ -171,7 +176,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
 
   getWordListBylevel(levelId) {
     this.waiting = true;
-    console.log('jqhsjdhqj jqhsdjkqhk: ', levelId);
     if (levelId && levelId != undefined) {
       this.wordsList = this.wordsService.getWordListBylevel(levelId)
         .then((result) => {
@@ -203,13 +207,17 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   editeWord() {
+    if(this.wordForm.invalid)
+      return;
+      
     this.waiting = true;
     console.log("General datas: ", this.wordForm.value);
     this.wordsService.updateWord(this.wordForm.value)
       .then((result) => {
         this.waiting = false;
         this.refreshList();
-        $('#close-modal').click();
+        this.initUpdateForm();
+        $('#close-edit-modal').click();
       })
       .catch((error) => {
         this.waiting = false;

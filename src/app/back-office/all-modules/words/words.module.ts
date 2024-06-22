@@ -13,8 +13,8 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { WordDetailsModule } from '../../shared/word-details/word-details.module';
+import { SidemenuComponent } from "./sidemenu/sidemenu.component";
 
 @NgModule({
     declarations: [
@@ -22,7 +22,6 @@ import { WordDetailsModule } from '../../shared/word-details/word-details.module
         WordsListComponent,
         AddWordsComponent,
         EditWordsComponent,
-        SidemenuComponent
     ],
     imports: [
         CommonModule,
@@ -40,7 +39,8 @@ import { WordDetailsModule } from '../../shared/word-details/word-details.module
                 deps: [HttpClient]
             }
         }),
-        WordDetailsModule
+        WordDetailsModule,
+        SidemenuComponent
     ]
 })
 export class WordsModule {}

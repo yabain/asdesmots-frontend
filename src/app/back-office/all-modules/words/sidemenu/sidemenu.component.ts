@@ -5,21 +5,36 @@ import {
   Router,
   ActivatedRoute,
 } from '@angular/router';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { CommonServiceService } from 'src/app/services/common-service.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Word } from 'src/app/shared/entities/word';
-
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  CdkDragDrop,
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
+import { ProgressIndeterminateModule } from "../../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
 @Component({
-  selector: 'app-sidemenu',
-  templateUrl: './sidemenu.component.html',
-  styleUrls: ['./sidemenu.component.css'],
+    selector: 'app-sidemenu',
+    templateUrl: './sidemenu.component.html',
+    standalone: true,
+    styleUrls: ['./sidemenu.component.css'],
+    imports: [CommonModule, 
+      DragDropModule, 
+      TranslateModule, 
+      ProgressIndeterminateModule,
+      ReactiveFormsModule
+    ]
 })
 export class SidemenuComponent implements OnInit{
 
@@ -94,29 +109,6 @@ export class SidemenuComponent implements OnInit{
     })
   }
 
-  calculateWordSums() {
-    this.totalWords = 0;
-    this.totalEnWords = 0;
-    this.totalFrWords = 0;
-
-    for (const level of this.levelList) {
-      console.log("mots du nv courant :", level.words)
-      if (level.words && level.words.length > 0) {
-        this.totalWords += level.words.length;
-
-        for (const word of level.words) {
-          console.log("type du mot :", word.type)
-          if (word.type === 'en') {
-            this.totalEnWords++;
-          } else if (word.type === 'fr') {
-            this.totalFrWords++;
-          }
-        }
-      }
-
-    }
-  }
-
   filterLevels(): void {
     this.filteredLevelList = this.levelList.filter(level => level._id !== this.levelData._id);
   }
@@ -151,10 +143,10 @@ export class SidemenuComponent implements OnInit{
     this.waitingResponse = true
     console.log('addLevel: ', this.levelForm.value);
     this.levelService.createLevel(this.levelForm.value)
-      .then(() => {
+      .then(async () => {
         this.submitted = false;
         this.waitingResponse = false;
-        this.refreshList();
+        await this.refreshList();
         $('#cancel-btn1').click();
       })
       .catch((error) => {
@@ -186,11 +178,11 @@ export class SidemenuComponent implements OnInit{
     this.waitingResponse = true;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
     this.levelService.deleteLevel(this.deleteLevelForm.value.levelDataId, this.newLevelId)
-      .then(() => {
+      .then(async () => {
         // this.waitingResponse = false;
         this.modalVisible = true;
         // this.submitted = false;
-        this.refreshList();
+        await this.refreshList();
         $('#cancel-btn').click();
       })
       .catch((error) => {
@@ -209,11 +201,11 @@ export class SidemenuComponent implements OnInit{
     this.waitingResponse = true;
     console.log('deleteLevelForm: ', this.deleteLevelForm.value);
     this.levelService.deleteLevelId(this.deleteLevelForm.value.levelDataId)
-      .then(() => {
+      .then(async () => {
         // this.waitingResponse = false;
         this.modalVisible = true;
         // this.submitted = false;
-        this.refreshList();
+        await this.refreshList();
         $('#cancel-btn').click();
       })
       .catch((error) => {
@@ -280,12 +272,13 @@ export class SidemenuComponent implements OnInit{
     this.commonService.nextmessage(name);
   }
 
-  refreshList() {
+  async refreshList() {
     this.waitingResponse = true;
     this.levelService.getAllLevels(true)
-      .then((result) => {
-        this.levelList = result;
+      .then(async (result) => {
+        this.levelList = result.levels;
         this.waitingResponse = false;
+        await this.levelService.sortLevels(this.levelList);
       })
       .catch((error) => {
         console.error('Erreur: ', error.message);
@@ -295,36 +288,59 @@ export class SidemenuComponent implements OnInit{
   }
 
   getLevelList() {
-    console.log("roro");
-    if (JSON.parse(localStorage.getItem('levels-list'))) {
-      this.levelList = JSON.parse(localStorage.getItem('levels-list'));
-      this.calculateWordSums();
+    if (JSON.parse(sessionStorage.getItem('levels-list'))) {
+      const data = JSON.parse(sessionStorage.getItem('levels-list'));
+      this.levelList = data.levels;
+      this.totalEnWords = data.enWordsLength;
+      this.totalFrWords = data.frWordsLength;
+      this.totalWords = data.enWordsLength + data.frWordsLength;
       console.log("liste niveau " + this.levelList);
-      console.log("reponse server: ", this.levelService.getAllLevels())
     }
     else {
       this.waitingResponse = true;
-      this.levelService.getAllLevels()
+      this.levelService.getAllLevels(true)
 
         .then((result) => {
           console.log("le resultat : ", result)
           this.waitingResponse = false;
-          this.levelList = result;
+          const data = result
+          this.levelList = data.levels;
+          this.totalEnWords = data.enWordsLength;
+          this.totalFrWords = data.frWordsLength;
+          this.totalWords = data.enWordsLength + data.frWordsLength;
           console.log('levellist :', this.levelList)
-          this.calculateWordSums();
+          // this.calculateWordSums();
         })
         .catch((error) => {
           console.error('Erreur: ', error.message);
           this.toastr.error(error.message, 'Error', { timeOut: 10000 });
           this.waitingResponse = false;
-        });;
+        });
     }
   }
 
   get f() {
     return this.levelForm.controls;
   }
-
+  async drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.levelList, event.previousIndex, event.currentIndex);
+    const previousIndex = event.previousIndex;
+    const currentIndex = event.currentIndex;
+    this.resortList();
+    const data = this.levelList.map((elem: any) => {
+      return {
+        id: elem._id,
+        level: elem.level
+      }
+    });
+    console.log(this.levelList)
+    await this.levelService.sortLevels(data);
+  }
+  resortList(){
+    this.levelList.forEach((elem: any, index) => {
+      elem.level = index + 1;
+    })
+  }
   updateLevel(){
     if (this.levelForm.invalid) {
       return;
@@ -338,9 +354,10 @@ export class SidemenuComponent implements OnInit{
     this.waiting = true;
     console.log("General datas: ", this.levelForm.value);
     this.levelService.updateLevel(this.levelForm.value._id, this.levelForm.value)
-      .then((result) => {
+      .then(async (result) => {
         this.waiting = false;
         this.refreshList();
+        await this.levelService.sortLevels(this.levelList);
         $('#close-modal').click();
       })
       .catch((error) => {
@@ -348,5 +365,3 @@ export class SidemenuComponent implements OnInit{
       });
   }
 }
-
-

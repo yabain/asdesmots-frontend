@@ -59,12 +59,12 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
       }
-    })
+    }),
   ],
   providers: [
     AllModulesService,
     AuthenticationGuard,
-    TranslationService
+    TranslationService,
   ],
   bootstrap: [
     AppComponent,

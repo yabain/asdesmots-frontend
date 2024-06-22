@@ -1,3 +1,7 @@
 .selected{
     background-color: #3063AD;
 }
+.drop-down-item {
+    cursor: move;
+}
+  

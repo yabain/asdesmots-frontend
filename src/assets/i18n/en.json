@@ -119,6 +119,7 @@
     "editMethode": "Edit method",
     "openYourMail1": "Open your mailbox with which",
     "openYourMail2": "you have registered.",
+    "confirmYour": "Confirm your ",
     "step": "Step",
     "openConfirmMail1": "Open the ''no-reply'' email from AsDesMots",
     "openConfirmMail2": "asking you to confirm your email.",
@@ -127,7 +128,7 @@
     "anonceLastStep": "Your account has been created. Finalize your registration by following the confirmation steps in your e-mail.",
     "clickConfirm1": "Click on the email verification button and",
     "clickConfirm2": "you have completed your registration.",
-    "clickConfirm3": "Your account is now active",
+    "clickConfirm3": "Your account is now active.",
     "needAccound": "Apply for a merchant account",
     "selectCountry": "Select your country",
     "selectCity": "Select your city",
@@ -342,18 +343,27 @@
         "inEnglish": "in english",
         "inFrench": "in french"
     },
-    
-    "http": {
-        "response": {
-            "verifiedEmail": "Your email has been verified.",
-            "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
-            "emailNotVerified2": "this link ",
-            "emailNotVerified3": "to request a new one.",
-            "expiredEmailValidationLink": "Your verification email has expired.",
-            "userNotFound": "The given information didn't match our records.",
-            "emailAlreadyConfirmed": "The email has already been confirmed.",
-            "internalServerError": "Internal Server Error.",
-            "emailVerifyLinkSent": "Your verification link has been sent, check your inbox."
-        }
+    "form":{
+        "passwordReset":"Your password have been successfully reset.",
+        "passwordResetLinkSent":"A new password reset link has been sent to your address !",
+        "accountCreated":"Your account has been created. You will receive a confirmation email.",
+        "emailVerified":"Your email address has been verified.",
+        "loggedOut":"You have been successfully logged out.",
+        "loggedIn":"You are logged in, enjoy 🎉"
+    },
+    "errorResponse": {
+      "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
+      "emailNotVerified2": "this link ",
+      "emailNotVerified3": "to request a new one.",
+      "userNotFound": "The given information didn't match our records.",
+      "emailAlreadyConfirmed": "The email has already been confirmed.",
+      "internalServerError": "Internal Server Error.",
+      "emailVerifyLinkSent": "Your verification link has been sent, check your inbox.",
+      "emailNotConfirmed": "Your account is not verified",
+      "unexpectedError":"An unexpected error occured.",
+      "expiredEmailValidationLink":"The link has expired.",
+      "emailAlreadyUsed":"The given email adress is alredy used.",
+      "accountDisactivated":"Your account has been desactivated, please contact support.",
+      "invalidCredentials":"Invalid email or password"
     }
 }

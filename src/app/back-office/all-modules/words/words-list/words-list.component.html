@@ -8,7 +8,7 @@
       </ul>
     </div>
     <div class="col-auto">
-      <a [routerLink]="'/words/add-word'" class="btn btn-primary me-2"
+      <a class="btn btn-primary me-2" data-bs-target="#create_modal" data-bs-toggle="modal"
         style="color: #035858 !important; background-color: #ffff !important;">
         <i class="fas fa-plus"></i>
       </a>
@@ -102,24 +102,30 @@
   </div>
 </div>
 
+<div class="modal custom-modal fade" id="create_modal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <app-add-words></app-add-words>
+    </div>
+  </div>
+</div>
+
 <div class="modal custom-modal fade" id="delete_word" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-          <i class="fas fa-trash-alt text-danger"></i>
-        </div>
-        <div class="modal-text text-center">
-          {{'delete' | translate }} <h4> {{wordData.name}} ?</h4>
-          <!-- <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{wordData.name}}</b>? </p> -->
-        </div>
+    <div class="modal-content p-4">
+      <div class="modal-icon text-center mb-3">
+        <i class="fas fa-trash-alt text-danger"></i>
       </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn00">
-          {{'close' | translate }}
+      <div class="modal-text text-center">
+        {{'delete' | translate }} <h4> {{wordData.name}} ?</h4>
+        <!-- <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{wordData.name}}</b>? </p> -->
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
+          {{'action.cancel' | translate }}
         </button>
         <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="deleteWord(wordData)">
-          {{'delete' | translate }}
+          {{'action.delete' | translate }}
         </button>
         <button type="button" *ngIf="waiting" class="btn btn-danger" disabled>
           <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
@@ -128,104 +134,77 @@
     </div>
   </div>
 </div>
-<!-- /Delete Tax Modal -->
 
 <div class="modal custom-modal fade" id="details" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="card text-center">
-          <div class="modal-text text-center">
-            <h2>{{wordData.name}}</h2>
-            <a class="btn btn-secondary me-2 text-secondary" style="background-color: #ffff !important;"
-              (click)="speak(wordData)">
-              <i class="fas fa-volume-up"></i>
-            </a>
-            <br><br>
-
-            <p>{{wordData.description}}
-            <p>
-              <!-- <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{wordData.name}}</b>? </p> -->
-          </div>
-
-          <div class="text-left"><br>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              {{'close' | translate }}
-            </button>
-            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
-          </div>
+    <div class="modal-content p-4">
+      <div class="text-center">
+        <h2>{{wordData.name}}</h2>
+        <a class="btn btn-secondary me-2 mb-2 text-secondary" style="background-color: #ffff !important;"
+          (click)="speak(wordData)">
+          <i class="fas fa-volume-up"></i>
+        </a>
+        <p>{{wordData.description}}<p>
+        <div class="text-left"><br>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            {{'close' | translate }}
+          </button>
         </div>
       </div>
-      <!-- <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          {{'cancel' | translate }}
-        </button>
-        <button type="button" class="btn btn-primary" (click)="deleteword()" data-bs-dismiss="modal">
-          Delete
-        </button>
-      </div> -->
     </div>
   </div>
 </div>
 
 <div class="modal custom-modal fade" id="edit" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="modal-body">
-          <div class="modal-icon text-center mb-3">
-            <i class="fas fa-edit text-secondary"></i>
+    <div class="modal-content p-4">
+      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-3">
+        <img src="assets/img/logo-white.png" alt="" width="30px">
+        <h4 class="card-title text-center">{{ 'words.editWord' | translate }}</h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="align-items-center">
+        <form (ngSubmit)="editeWord()" [formGroup]="wordForm">
+          <div class="form-group">
+            <label for="name">{{ 'words.word' | translate }}<span class="mandatory"></span> *</label>
+            <input class="form-control" type="text" formControlName="name" id="name" required />
           </div>
-          <div class="modal-text text-center">
-            <h2>Edit word</h2>
-            <!-- <p *ngIf="userData.isDisabled==false">{{'wanTo' | translate }} {{'desactive' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p>
-              <p *ngIf="userData.isDisabled==true">{{'wanTo' | translate }} {{'active' | translate }} <b>{{userData.firstName}} {{userData.lastName}}</b>? </p> -->
+          <div class="form-group">
+            <label class="form-control-label">{{ 'words.level' | translate }} :</label>
+            <select name="gameLevelId" id="gameLevelId" class="form-control" formControlName="gameLevelId" required>
+              <option value="" selected>-- {{ 'select' | translate }} --</option>
+              <option *ngFor="let level of levelList" value="{{level._id}}">
+                {{level.name}}
+              </option>
+            </select>
           </div>
-        </div>
-        <div class="card">
-          <form (ngSubmit)="editeWord()" [formGroup]="wordForm">
-            <div class="form-group">
-              <label for="name">{{ 'words.word' | translate }}<span class="mandatory"></span> *</label>
-              <input class="form-control" type="text" formControlName="name" id="name" required />
-            </div>
-            <div class="form-group">
-              <label class="form-control-label">{{ 'words.level' | translate }} :</label>
-              <select name="gameLevelId" id="gameLevelId" class="form-control" formControlName="gameLevelId" required>
-                <option value="" selected>-- {{ 'select' | translate }} --</option>
-                <option *ngFor="let level of levelList" value="{{level._id}}">
-                  {{level.name}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-control-label">{{ 'user.language' | translate }} : {{wordData.type}}</label>
-              <select name="type" id="type" class="form-control" formControlName="type" required>
-                <option value="" selected>-- {{ 'selectLangChange' | translate }} --</option>
-                <option value="en">English</option>
-                <option value="fr">French</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-              <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
-                formControlName="description" id="description" required></textarea>
-            </div>
-            <br>
-            <div class="modal-footer text-center">
-              <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal" id="close-modal"
-                style="margin-right: 20px;">
-                {{'close' | translate }}
-              </button>
-              <button type="submit" *ngIf="!waiting" class="btn btn-success" (click)="editeWord()">
-                {{'save' | translate }}
-              </button>
-              <button type="button" *ngIf="waiting" class="btn btn-success" disabled>
-                <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-              </button>
-              <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
-            </div>
-          </form>
-        </div>
+          <div class="form-group">
+            <label class="form-control-label">{{ 'user.language' | translate }} : {{wordData.type}}</label>
+            <select name="type" id="type" class="form-control" formControlName="type" required>
+              <option value="" selected>-- {{ 'selectLangChange' | translate }} --</option>
+              <option value="en">English</option>
+              <option value="fr">French</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
+            <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
+              formControlName="description" id="description" required></textarea>
+          </div>
+          <div class="text-center mt-4 mb-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close-edit-modal"
+              style="margin-right: 20px;">
+              {{'close' | translate }}
+            </button>
+            <button type="submit" *ngIf="!waiting" class="btn btn-success" (click)="editeWord()">
+              {{'save' | translate }}
+            </button>
+            <button type="button" *ngIf="waiting" class="btn btn-success" disabled>
+              <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+            </button>
+            <!-- <button type="submit" class="btn btn-primary" disabled>{{'save' | translate }}</button> -->
+          </div>
+        </form>
       </div>
     </div>
   </div>

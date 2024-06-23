@@ -175,7 +175,7 @@
     "to": "sur",
     "wanTo": "Etes-vous sûr de vouloir vous désinscrire de l'arcade",
     "changeStatus": "Changer le status",
-    "selectLangChange": "Changer sa langue",
+    "selectLangChange": "Sélectionner la langue",
     "welcome": "Bienvenue",
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
@@ -183,6 +183,8 @@
     "deleteAccountMsge": "Lorsque vous supprimez votre compte, vous perdez l'accès aux services AsDesMots et nous supprimons définitivement vos données personnelles.",
     "surDeleteAccount": "Êtes-vous sûr de vouloir fermer votre compte ?",
     "confirmDeleteAccount": "Je confirmer que je souhaite supprimer mon compte.",
+    "confirmDeleteTitle":"Attention",
+    "confirmDeleteText":"Êtes-vous sûr de vouloir supprimer",
     "user": {
         "user": "Utilisateur",
         "id": "Id",
@@ -325,7 +327,9 @@
 
     },
     "words": {
+        "all":"Tout",
         "level": "Niveau",
+        "levels": "Niveaux",
         "language": "Langue",
         "word": "Mot",
         "wordList": "List des mots",
@@ -333,18 +337,22 @@
         "starter": "Débutant",
         "advence": "Avancé",
         "hard": "Dificile",
-        "wordStat": "Statistiques",
+        "wordStat": "Statistiques des mots",
         "addNewWords": "Ajouter un mot",
         "addNewLevel": "Ajouter un niveau",
         "wordInFr": "Mot en française",
         "wordInEn": "Mot en anglais",
         "wordDescriptionEn": "Description en englais",
         "wordDescriptionFr": "Description en français",
-        "whichLevel": "Dans quel niveau voulez-vous transférer ses mots",
+        "whichLevel": "Vous êtes sur le point de supprimer le niveau ",
+        "whichLevel2": "qui contient des mots. vous devez d'abord les transférer à un autre niveau.",
         "noWords": "Aucun mots à afficher",
         "inEnglish": "en englais",
         "inFrench": "en français",
-        "transferAndDelete": "transférer et supprimer"
+        "transferAndDelete": "transférer et supprimer",
+        "editWord":"Modification du mot",
+        "editLevel":"Modification du niveau",
+        "selectLevel":"Sélectionnez le niveau"
     },
     "form": {
         "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",
@@ -353,6 +361,10 @@
         "emailVerified": "Votre adresse e-mail a été vérifiée.",
         "loggedOut": "Vous avez été déconnecté avec succès.",
         "loggedIn": "Vous êtes connecté, profitez-en 🎉"
+    },
+    "action":{
+        "delete":"Supprimer",
+        "cancel":"Annuler"
     },
     "errorResponse": {
       "emailNotVerified1": "Votre adresse e-mail n'a pas été vérifiée. Accédez à votre boîte de réception et cliquez sur le lien de vérification qui vous a été envoyé lors de la création de votre compte. Si vous ne l'avez pas reçu, vous pouvez utiliser ",
@@ -365,7 +377,7 @@
       "emailNotConfirmed": "Votre compte n'est pas vérifié.",
       "unexpectedError": "Une erreur inattendue s'est produite.",
       "expiredEmailValidationLink": "Le lien a expiré.",
-      "emailAlreadyUsed": "L'adresse e-mail donnée est déjà utilisée.",
+      "emailAlreadyUsed": "L'adresse e-mail fourni est déjà utilisée.",
       "accountDisactivated": "Votre compte a été désactivé, veuillez contacter le support.",
       "invalidCredentials":"Email ou mot de passe incorrect"
     }

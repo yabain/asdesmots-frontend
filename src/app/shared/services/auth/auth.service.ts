@@ -203,6 +203,7 @@ export class AuthService {
               });
               break;
           }
+          reject(error);
         });
     });
 

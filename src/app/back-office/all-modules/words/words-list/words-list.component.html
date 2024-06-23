@@ -1,30 +1,28 @@
-<div class="page-header">
-  <div class="row align-items-center">
-    <div class="col">
-      <!-- <h3 class="page-title">{{'words.word' | translate }}s</h3> -->
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'words.level' | translate }}</a></li>
-        <li class="breadcrumb-item active" *ngIf="level">{{ level.name }}</li>
-      </ul>
-    </div>
-    <div class="col-auto">
-      <a class="btn btn-primary me-2" data-bs-target="#create_modal" data-bs-toggle="modal"
-        style="color: #035858 !important; background-color: #ffff !important;">
-        <i class="fas fa-plus"></i>
-      </a>
-      <a (click)="refreshList()" class="btn btn-primary me-2"
-        style="color: #035858 !important; background-color: #ffff !important;">
-        <i class="fas fa-refresh"></i>
-      </a>
-    </div>
-  </div>
-</div>
-<!-- /Page Header -->
-
 <div class="row">
   <div class="col-sm-12">
     <div class="card card-table">
       <div class="card-body">
+        <div class="page-header pt-3 px-4">
+          <div class="row align-items-center">
+            <div class="col">
+              <!-- <h3 class="page-title">{{'words.word' | translate }}s</h3> -->
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'words.level' | translate }}</a></li>
+                <li class="breadcrumb-item active" *ngIf="level">{{ level.name }}</li>
+              </ul>
+            </div>
+            <div class="col-auto">
+              <a class="btn btn-primary me-2" data-bs-target="#create_modal" data-bs-toggle="modal"
+                style="color: #035858 !important; background-color: #ffff !important;">
+                <i class="fas fa-plus"></i>
+              </a>
+              <a (click)="refreshList()" class="btn btn-primary"
+                style="color: #035858 !important; background-color: #ffff !important;">
+                <i class="fas fa-refresh"></i>
+              </a>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table datatable class="table table-stripped table-hover" *ngIf="!waiting">
             <thead class="thead-light">
@@ -33,7 +31,7 @@
                 <th>{{'user.language' | translate}}</th>
                 <!-- <th>{{'description' | translate }}</th> -->
                 <th>{{'user.creationDate' | translate}}</th>
-                <th class="text-end">Actions</th>
+                <th class="text-end">{{ 'actions' | translate }}</th>
               </tr>
             </thead>
             <tbody *ngIf="haveToShow">
@@ -78,7 +76,7 @@
                 <th>{{'words.word' | translate }}s</th>
                 <th>{{'user.language' | translate}}</th>
                 <th>{{'user.creationDate' | translate }}</th>
-                <th class="text-end">Actions</th>
+                <th class="text-end">{{ 'actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -115,10 +113,10 @@
     <div class="modal-content p-4">
       <div class="modal-icon text-center mb-3">
         <i class="fas fa-trash-alt text-danger"></i>
+        <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
       </div>
-      <div class="modal-text text-center">
-        {{'delete' | translate }} <h4> {{wordData.name}} ?</h4>
-        <!-- <p>{{'wanTo' | translate }}{{'delete' | translate }} <b>{{wordData.name}}</b>? </p> -->
+      <div class="modal-text text-center pb-3">
+        {{'confirmDeleteText' | translate }} <b>{{wordData.name}} ?</b>  
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
@@ -166,11 +164,11 @@
       <div class="align-items-center">
         <form (ngSubmit)="editeWord()" [formGroup]="wordForm">
           <div class="form-group">
-            <label for="name">{{ 'words.word' | translate }}<span class="mandatory"></span> *</label>
+            <label for="name">{{ 'words.word' | translate }}<span class="mandatory"> *</span></label>
             <input class="form-control" type="text" formControlName="name" id="name" required />
           </div>
           <div class="form-group">
-            <label class="form-control-label">{{ 'words.level' | translate }} :</label>
+            <label class="form-control-label">{{ 'words.level' | translate }}<span class="mandatory"> *</span></label>
             <select name="gameLevelId" id="gameLevelId" class="form-control" formControlName="gameLevelId" required>
               <option value="" selected>-- {{ 'select' | translate }} --</option>
               <option *ngFor="let level of levelList" value="{{level._id}}">
@@ -179,11 +177,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label">{{ 'user.language' | translate }} : {{wordData.type}}</label>
+            <label class="form-control-label">{{ 'user.language' | translate }}<span class="mandatory"> *</span></label>
             <select name="type" id="type" class="form-control" formControlName="type" required>
               <option value="" selected>-- {{ 'selectLangChange' | translate }} --</option>
-              <option value="en">English</option>
-              <option value="fr">French</option>
+              <option value="en">{{ 'english' | translate }}</option>
+              <option value="fr">{{ 'french' | translate }}</option>
             </select>
           </div>
           <div class="form-group">

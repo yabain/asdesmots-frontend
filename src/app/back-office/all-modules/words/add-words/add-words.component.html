@@ -6,7 +6,7 @@
 <div class="align-items-center" *ngIf="!waitingResponse">
 	<form (ngSubmit)="addWords()" [formGroup]="wordForm">
 		<div class="form-group">
-			<label for="name">{{ 'words.word' | translate }} {{ 'words.inEnglish' | translate }}<span
+			<label for="name">{{ 'words.word' | translate }}<span
 					class="mandatory">*</span></label>
 			<input class="form-control" type="text" formControlName="name"
 				placeholder="{{ 'words.word' | translate }}" id="name" [ngClass]="{
@@ -19,7 +19,8 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="form-control-label">{{ 'words.language' | translate }} :</label>
+			<label class="form-control-label">{{ 'words.language' | translate }}<span
+				class="mandatory">*</span></label>
 			<select name="type" id="type" class="form-control"
 				formControlName="type" [ngClass]="{
 			'is-invalid': f['type'].touched && f['type'].invalid
@@ -37,7 +38,8 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="form-control-label">{{ 'words.level' | translate }} :</label>
+			<label class="form-control-label">{{ 'words.level' | translate }}<span
+				class="mandatory">*</span></label>
 			<select name="gameLevelId" id="gameLevelId" class="form-control"
 				formControlName="gameLevelId" [ngClass]="{
 			'is-invalid': f['gameLevelId'].touched && f['gameLevelId'].invalid
@@ -55,7 +57,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label>{{ 'description' | translate }} {{ 'words.inEnglish' | translate }} <span class="mandatory">*</span></label>
+			<label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
 			<textarea rows="5" cols="5" class="form-control" placeholder="Enter Address"
 				formControlName="description" id="description" [ngClass]="{
 			  'is-invalid': f['description'].touched && f['description'].invalid

@@ -99,16 +99,17 @@ export class AddWordsComponent implements OnInit {
       console.log("les informations du mot envoyé: ", this.wordForm.value);
       this.wordService.createWord(this.wordForm.value)
       .then(() => {
-              this.addingWords = false;
-              this.toastr.success('Word was added', 'Done', { timeOut: 10000 });
-              $('#create-cancel-btn').click();
-              this.wordForm.reset();
-            })
-            .catch((error) => {
-              // console.log('fr form: ', this.wordFrForm.value);
-              this.errorsService.errorsInformations(error, 'add french word');
-              this.addingWords = false;
-            });
+        // this.refreshList();
+        this.addingWords = false;
+        this.toastr.success('Word was added', 'Done', { timeOut: 10000 });
+        $('#create-cancel-btn').click();
+        this.wordForm.reset();
+      })
+      .catch((error) => {
+        // console.log('fr form: ', this.wordFrForm.value);
+        this.errorsService.errorsInformations(error, 'add french word');
+        this.addingWords = false;
+      });
     }
   }
 

@@ -160,7 +160,7 @@ export class WordsService {
 
   //recuperer les informations d'un utilisateur
   getWordListBylevel(levelId, isRefresh?: boolean): Promise<any> {
-    if (isRefresh === true) {
+    if (isRefresh) {
       return new Promise<any>((resolve, reject) => {
         this.api.get(`gamelevel/${levelId}/words`, this.headers)
           .subscribe(response => {

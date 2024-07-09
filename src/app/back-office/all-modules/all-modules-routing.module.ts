@@ -1,7 +1,9 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AllModulesComponent } from 'src/app/back-office/all-modules/all-modules.component';
 import { AuthenticationGuard } from 'src/app/services/guard/auth/authentication.guard';
+import { ErrorInterceptor } from 'src/app/shared/interceptor/error.interceptor';
 
 const routes: Routes = [
   // {
@@ -80,6 +82,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ]
 })
 export class AllModulesRoutingModule { }

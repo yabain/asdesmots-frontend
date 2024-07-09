@@ -16,13 +16,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
     CommonModule,
     ListCompetitionRoutingModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
 
   ]
 })

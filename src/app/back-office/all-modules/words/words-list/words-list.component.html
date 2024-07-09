@@ -164,30 +164,73 @@
       <div class="align-items-center">
         <form (ngSubmit)="editeWord()" [formGroup]="wordForm">
           <div class="form-group">
-            <label for="name">{{ 'words.word' | translate }}<span class="mandatory"> *</span></label>
-            <input class="form-control" type="text" formControlName="name" id="name" required />
+            <label for="name">{{ 'words.word' | translate }}<span
+                class="mandatory">*</span></label>
+            <input class="form-control" type="text" formControlName="name"
+              placeholder="{{ 'words.word' | translate }}" id="name" [ngClass]="{
+              'is-invalid': f['name'].touched && f['name'].invalid
+            }" required />
+            <div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
+              <div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
+                {{ 'required' | translate }}
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label">{{ 'words.level' | translate }}<span class="mandatory"> *</span></label>
-            <select name="gameLevelId" id="gameLevelId" class="form-control" formControlName="gameLevelId" required>
-              <option value="" selected>-- {{ 'select' | translate }} --</option>
+            <label class="form-control-label">{{ 'words.language' | translate }}<span
+              class="mandatory">*</span></label>
+            <select name="type" id="type" class="form-control"
+              formControlName="type" [ngClass]="{
+            'is-invalid': (f['type'].touched || submitted) && f['type'].invalid
+            }">
+              <option value="">-- {{ 'select' | translate }} --</option>
+              <option *ngFor="let type of wordTypes" value="{{type.value}}">
+                {{type.name}}
+              </option>
+            </select>
+            <div *ngIf="(f['type'].touched || submitted) && f['type'].invalid"
+              class="invalid-feedback">
+              <div *ngIf="f['type'].errors && f['type'].errors['required']">
+                {{ 'required' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">{{ 'words.level' | translate }}<span
+              class="mandatory">*</span></label>
+            <select name="gameLevelId" id="gameLevelId" class="form-control"
+              formControlName="gameLevelId" [ngClass]="{
+            'is-invalid': (f['gameLevelId'].touched || submitted) && f['gameLevelId'].invalid
+            }">
+              <option value="">-- {{ 'select' | translate }} --</option>
               <option *ngFor="let level of levelList" value="{{level._id}}">
                 {{level.name}}
               </option>
             </select>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label">{{ 'user.language' | translate }}<span class="mandatory"> *</span></label>
-            <select name="type" id="type" class="form-control" formControlName="type" required>
-              <option value="" selected>-- {{ 'selectLangChange' | translate }} --</option>
-              <option value="en">{{ 'english' | translate }}</option>
-              <option value="fr">{{ 'french' | translate }}</option>
-            </select>
+            <div *ngIf="(f['gameLevelId'].touched || submitted) && f['gameLevelId'].invalid"
+              class="invalid-feedback">
+              <div *ngIf="f['gameLevelId'].errors && f['gameLevelId'].errors['required']">
+                {{ 'required' | translate }}
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-            <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
-              formControlName="description" id="description" required></textarea>
+            <textarea rows="5" cols="5" class="form-control" placeholder="{{ 'description' | translate}}"
+              formControlName="description" id="description" [ngClass]="{
+              'is-invalid': (f['description'].touched || submitted) && f['description'].invalid
+            }" required></textarea>
+            <div *ngIf="(f['description'].touched || submitted) && f['description'].invalid"
+              class="invalid-feedback">
+              <div *ngIf="f['description'].errors && f['description'].errors['required']"
+                style="color: red;">
+                {{ 'required' | translate }}
+              </div>
+              <div *ngIf="f['description'].errors && f['description'].errors?.minlength"
+                style="color: red;">
+                <p [translate]="'minLength'" [translateParams]="{ minLength: minDescLength}"></p>
+              </div>
+            </div>
           </div>
           <div class="text-center mt-4 mb-0">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close-edit-modal"

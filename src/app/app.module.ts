@@ -28,7 +28,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -66,9 +65,9 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
     AuthenticationGuard,
     TranslationService,
   ],
+  exports: [TranslateModule],
   bootstrap: [
     AppComponent,
-  ],
-  exports: [TranslateModule]
+  ]
 })
 export class AppModule {}

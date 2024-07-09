@@ -32,13 +32,7 @@ import { DataTablesModule } from 'angular-datatables';
     RoleRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-  }),
+    TranslateModule,
   DataTablesModule
   ]
 })

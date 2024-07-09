@@ -37,13 +37,6 @@ import { DataTablesModule } from 'angular-datatables';
     ReactiveFormsModule,
     FormsModule,
     DataTablesModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
   ]
 })
 export class UndercompetitionModule { }

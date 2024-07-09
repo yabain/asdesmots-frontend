@@ -24,7 +24,9 @@ export class AddWordsComponent implements OnInit {
   levelList?: any = '';
   allWordsLevels?: any;
   addingWords: boolean = false;
+  submitted: boolean = false;
   waitingResponse = false;
+  minDescLength: number = 4;
   wordTypes = [
     {name: "Francais", value: 'fr'},
     {name: "English", value: 'en'}
@@ -69,13 +71,12 @@ export class AddWordsComponent implements OnInit {
     this.wordForm = this.formLog.group({
       'name': ['', Validators.required
       ],
-      'description': ['', Validators.compose([
+      'description': ['',[
         Validators.required,
-        Validators.minLength(4)])
+        Validators.minLength(4)]
       ],
-      'gameLevelId': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)])
+      'gameLevelId': [, Validators.compose([
+        Validators.required])
       ],
       'type': [, Validators.required]
     });
@@ -93,15 +94,16 @@ export class AddWordsComponent implements OnInit {
 
   addWords() {
     if (this.wordForm.invalid) {
-      this.toastr.error('The form is invalid', 'Infalid form', { timeOut: 10000 });
+      this.submitted = true;
       return;
     } else {
-      console.log("les informations du mot envoyé: ", this.wordForm.value);
+      this.waitingResponse = true
       this.wordService.createWord(this.wordForm.value)
       .then(() => {
         // this.refreshList();
         this.addingWords = false;
-        this.toastr.success('Word was added', 'Done', { timeOut: 10000 });
+        this.submitted = false;
+        this.waitingResponse = false;
         $('#create-cancel-btn').click();
         this.wordForm.reset();
       })
@@ -109,6 +111,8 @@ export class AddWordsComponent implements OnInit {
         // console.log('fr form: ', this.wordFrForm.value);
         this.errorsService.errorsInformations(error, 'add french word');
         this.addingWords = false;
+        this.submitted = false;
+        this.waitingResponse = false;
       });
     }
   }

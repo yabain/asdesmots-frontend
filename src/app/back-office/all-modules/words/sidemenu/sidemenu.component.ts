@@ -43,7 +43,6 @@ export class SidemenuComponent implements OnInit{
   totalEnWords: number;
   totalFrWords: number;
   waitingResponse = false;
-  submitted = true;
   levels: any;
   levelList?: any = '';
   levelData?: any = '';
@@ -52,6 +51,7 @@ export class SidemenuComponent implements OnInit{
   item: any;
   public levelControler: any
   waiting: boolean = false;
+  minDescLength: number = 4;
 
   name: any
   splitVal;
@@ -69,6 +69,7 @@ export class SidemenuComponent implements OnInit{
   selectedLevelId: string;
   oldLevelId: string;
   selectedLevel: Level;
+  submitted: boolean = false;
 
   constructor(
     private router: Router,
@@ -92,7 +93,7 @@ export class SidemenuComponent implements OnInit{
       ],
       'description': [this.levelData.description, Validators.compose([
         Validators.required,
-        Validators.minLength(4)])
+        Validators.minLength(this.minDescLength)])
       ]
     });
 
@@ -137,6 +138,7 @@ export class SidemenuComponent implements OnInit{
   }
 
   addLevel() {
+    this.submitted = true;
     if (this.levelForm.invalid) {
       return;
     }
@@ -348,6 +350,7 @@ export class SidemenuComponent implements OnInit{
     })
   }
   updateLevel(){
+    this.submitted = true;
     if (this.levelForm.invalid) {
       return;
     }
@@ -362,11 +365,13 @@ export class SidemenuComponent implements OnInit{
     this.levelService.updateLevel(this.levelForm.value._id, this.levelForm.value)
       .then((result) => {
         this.waiting = false;
+        this.submitted = false;
         this.refreshList();
         $('#close-modal').click();
       })
       .catch((error) => {
         this.waiting = false;
+        this.submitted = false;
       });
   }
 }

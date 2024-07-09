@@ -6,6 +6,7 @@
     "enterYour": "Enter your ",
     "enteragainYour": "Enter again your ",
     "pwdShouldBe": "Ensure that these requirements are met: ",
+    "minLength": "Minnimum {{minLength}} char",
     "upTo8Char": "Minimum 8 characters long",
     "upTo1Captal": "At least one capital letter",
     "upTo1Number": "At least one capital number",
@@ -45,6 +46,7 @@
     "enterValidEmail": "Enter a valid email.",
     "enterValidPwd": "Enter a valid password.",
     "passwordRequired": "The password is required.",
+    "noLevelFound":"No level found to add word",
     "profile": "Profile",
     "keyDuplicate":"Duplication of the part name, please change it",
     "level": "Level",
@@ -364,6 +366,12 @@
         "delete":"Delete",
         "cancel":"Cancel"
     },
+    "successResponse": {
+        "created":"successfully created",
+        "updated":"successfully updated",
+        "deleted":"successfully deleted",
+        "sorted":"successfully sorted"
+    },
     "errorResponse": {
       "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
       "emailNotVerified2": "this link ",
@@ -373,10 +381,11 @@
       "internalServerError": "Internal Server Error.",
       "emailVerifyLinkSent": "Your verification link has been sent, check your inbox.",
       "emailNotConfirmed": "Your account is not verified",
-      "unexpectedError":"An unexpected error occured.",
       "expiredEmailValidationLink":"The link has expired.",
       "emailAlreadyUsed":"The given email adress is alredy used.",
       "accountDisactivated":"Your account has been desactivated, please contact support.",
-      "invalidCredentials":"Invalid email or password"
+      "invalidCredentials":"Invalid email or password",
+      "unexpectedError":"An unexpected error occured.",
+      "alreadyExists": "alrerady exists"
     }
 }

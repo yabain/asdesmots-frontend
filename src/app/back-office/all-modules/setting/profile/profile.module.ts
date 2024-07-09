@@ -16,13 +16,6 @@ import { UserDetailsModule } from 'src/app/back-office/shared/user-details/user-
     RouterModule,
     TranslateModule,
     UserDetailsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })
   ],
 })
 export class ProfileModule { }

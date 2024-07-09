@@ -29,13 +29,19 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   public tempId: any;
   levelId: string = '';
   waiting: boolean = false;
+  submitted: boolean = false;
   wordData: any = '';
   haveToShow: boolean = false;
   level: Level;
   wordForm: FormGroup;
   routerSubscribe: any;
+  minDescLength: number = 4;
   levelList;
   url;
+  wordTypes = [
+    {name: "Francais", value: 'fr'},
+    {name: "English", value: 'en'}
+  ]
 
 
   constructor(
@@ -79,20 +85,16 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   initUpdateForm() {
     this.wordForm = this.formLog.group({
       '_id': [this.wordData._id, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
+        Validators.required])],
       'name': [this.wordData.name, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
+        Validators.required])],
       'description': [this.wordData.description, Validators.compose([
         Validators.required,
-        Validators.minLength(1)])],
+        Validators.minLength(this.minDescLength)])],
       'gameLevelId': [this.wordData.gamelevelId, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
+        Validators.required])],
       'type': [this.wordData.type, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
+        Validators.required])],
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -116,7 +118,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   getLevelIdToUrl() {
     if (this.route.snapshot.params['id'] && this.route.snapshot.params['id'] != undefined) {
       this.levelId = this.route.snapshot.params['id'];
-      console.log("new levelId: ", this.levelId);
     } else {
       // this.levelId = JSON.parse(localStorage.getItem('levels-list'))[0]._id;
       // console.log("first levelId: ", this.levelId);
@@ -141,7 +142,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
           this.waiting = false;
         })
         .catch((error) => {
-          console.error('Erreur: ', error.message);
           this.waiting = false;
         });
     }
@@ -151,7 +151,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
 
   deleteWord(word) {
     this.waiting = true;
-    console.log('Deleting word: ', word);
     this.wordsService.deleteWord(word, this.levelId)
       .then((result) => {
         this.refreshList();
@@ -181,7 +180,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     if (levelId && levelId != undefined) {
       this.wordsList = this.wordsService.getWordListBylevel(levelId)
         .then((result) => {
-          console.log('0000: ', result);
           if (result.length > 0) {
             this.haveToShow = true
           } else { this.haveToShow = false }
@@ -209,20 +207,21 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   editeWord() {
+    this.submitted = true;
     if(this.wordForm.invalid)
       return;
-      
     this.waiting = true;
-    console.log("General datas: ", this.wordForm.value);
     this.wordsService.updateWord(this.wordForm.value)
       .then((result) => {
         this.waiting = false;
+        this.submitted = false;
         this.refreshList();
         this.initUpdateForm();
         $('#close-edit-modal').click();
       })
       .catch((error) => {
         this.waiting = false;
+        this.submitted = false;
       });
   }
 

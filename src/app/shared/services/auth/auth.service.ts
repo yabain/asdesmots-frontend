@@ -86,9 +86,18 @@ export class AuthService {
             return 0;
           }
         }, (error: any) => {
-          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-            this.toastr.error(res, 'Error');
-          });
+          switch(error.status) {
+            case(404) :
+              this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
+                this.toastr.error(res, 'error');
+              });
+              break;
+            default:
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+          }
           reject(error);
         });
     });
@@ -304,16 +313,22 @@ export class AuthService {
                 this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               case(403) :
                 this.translate.get('errorResponse.emailAlreadyConfirmed').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               case(500) :
                 this.translate.get('errorResponse.internalServerError').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               default:
-            this.toastr.error(error.message, 'Error');
+                this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+                break;
             }
             
             reject(error);

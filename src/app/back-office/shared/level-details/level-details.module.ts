@@ -18,13 +18,7 @@ imports: [
   ReactiveFormsModule,
   ProgressIndeterminateModule,
   FormsModule,
-  TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-    }
-  })
+  TranslateModule
 ],
 exports: [
   LevelDetailsComponent

@@ -19,14 +19,7 @@ export function createTranslateLoader(httpClient: HttpClient) {
   imports: [
     CommonModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      // defaultLanguage: 'fr',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    })
+    TranslateModule
   ],
   exports: [ProgressIndeterminateComponent]
 })

@@ -1,5 +1,7 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ErrorInterceptor } from 'src/app/shared/interceptor/error.interceptor';
 import { AddWordsComponent } from './add-words/add-words.component';
 import { EditWordsComponent } from './edit-words/edit-words.component';
 import { WordsListComponent } from './words-list/words-list.component';
@@ -23,6 +25,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class WordsRoutingModule {}

@@ -15,13 +15,7 @@ imports: [
   CommonModule,
   RouterModule,
   // FooterRoutingModule,
-  TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-    }
-  })
+  TranslateModule
 ],
 exports: [FooterComponent]
 })

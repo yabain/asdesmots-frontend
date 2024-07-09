@@ -7,6 +7,7 @@ import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 import { Level } from 'src/app/shared/entities/level';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Word } from '../../entities/word';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -27,29 +28,7 @@ export class LevelService {
   levelData: any;
 
   levelList: Level[] = [];
-  levelListfixed: Level[] = [
-    {
-      _id: 'jfhdsjklfghdskflhd',
-      name: 'Débutant',
-      description: 'Ici la description du niveau débutant',
-      words: ['80', '81', '82', '83', '84', '85'],
-      createAt: '25/01/2015',
-    },
-    {
-      _id: 'jfhdsjklfghdskflhd',
-      name: 'Intermeriaire',
-      description: 'Ici la description du niveau Intermeriaire',
-      words: ['80', '81', '82', '83', '84', '85'],
-      createAt: '25/01/2095',
-    },
-    {
-      _id: 'dghghghjghjfhj',
-      name: 'Advenced',
-      description: 'Ici la description du niveau Advenced',
-      words: ['80', '81', '82', '83', '84', '85'],
-      createAt: '25/01/2085',
-    },
-  ];
+  levelListfixed: Level[] = [];
   result: any;
 
   headers = {
@@ -69,7 +48,8 @@ export class LevelService {
     private router: Router,
     private toastr: ToastrService,
     private errorsService: ErrorsService,
-    private http: HttpClient
+    private http: HttpClient,
+    private translate: TranslateService
   ) // private level: Level
   {}
 
@@ -83,17 +63,17 @@ export class LevelService {
       this.api.post('gamelevel', params, this.headers).subscribe(
         (response: any) => {
           this.getAllLevels();
-          if (response.statusCode === 201) {
-            this.toastr.success(
-              'Level has been created successfully',
-              'Success',
-              { timeOut: 5000 }
-            );
-          }
+          this.translate.get('words.level').subscribe((word: string) => {
+            this.translate.get('successResponse.created').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
           resolve(response);
         },
         (error: any) => {
-          this.errorsService.errorsInformations(error, 'create level');
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         }
       );
@@ -109,19 +89,18 @@ export class LevelService {
 
       this.api.delete(`gamelevel/${oldLevelId}/${newLevelId}`, this.headers).subscribe(
         (response: any) => {
-          console.log('Level deleted', response);
           this.getAllLevels();
-          if (response.statusCode === 200) {
-            this.toastr.success(
-              'Level has been deleted successfully',
-              'Success',
-              { timeOut: 5000 }
-            );
-          }
+          this.translate.get('words.level').subscribe((word: string) => {
+            this.translate.get('successResponse.deleted').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
           resolve(response);
         },
         (error: any) => {
-          this.errorsService.errorsInformations(error, 'delete level');
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         }
       );
@@ -129,22 +108,20 @@ export class LevelService {
   }
 
   deleteLevelId(levelDataId) {
-    console.log("hello ronice");
     return new Promise((resolve, reject) => {
       this.api.delete(`gamelevel/${levelDataId}`, this.headers).subscribe(
         (response) => {
-          console.log('Level deleted', response);
-          if (response.statusCode === 200) {
-            this.toastr.success(
-              'Level has been deleted successfully',
-              'Success',
-              { timeOut: 5000 }
-            );
-          }
+          this.translate.get('words.level').subscribe((word: string) => {
+            this.translate.get('successResponse.deleted').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
           resolve(response);
         },
         (error) => {
-          this.errorsService.errorsInformations(error, 'delete level');
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         }
       );
@@ -223,28 +200,19 @@ export class LevelService {
     return new Promise((resolve, reject) => {
       this.api.get(`gamelevel/${oldLevelId}/words`, this.headers)
         .subscribe(data => {
-          console.log("réponse serveur à la récupération des mots du niveau à supprimer: ", data);
           this.allWords = Array.from(data.data);
-          console.log("mots récupérés: ", this.allWords);
-
           this.api.get('gamelevel', this.headers)
             .subscribe(response => {
-              console.log("réponse serveur à la récupération de tous les niveaux: ", response);
               this.allLevels = Array.from(response.data);
-              console.log("niveaux récupérés: ", this.allLevels);
-
               const specificLevel = this.allLevels.find((level) => level._id === newLevelId);
-              console.log("niveau spécifique trouvé avec ses informations de base: ", specificLevel);
-
               this.allWords.forEach(word => {
                 specificLevel.words.push(word._id);
               });
-
-              console.log("les nouvelles informations sur specificLevel: ", specificLevel);
-              console.log("taille de specificLevel après ajout des mots du niveau à supprimer: ", specificLevel.words.length);
-
               resolve(); // Résoudre la promesse avec succès
             }, error => {
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
               reject(error); // Rejeter la promesse en cas d'erreur lors de la récupération des niveaux
             });
         }, error => {
@@ -344,8 +312,6 @@ export class LevelService {
 
   // permet d'update les infos d'un niveau
   updateLevel(levelId: any, levelData?: any): Promise<any> {
-    console.log('upsate user: ', levelData);
-
     return new Promise((resolve, reject) => {
       let params = {
         name: levelData.name,
@@ -357,18 +323,17 @@ export class LevelService {
         .subscribe(
           (response: any) => {
             this.getAllLevels();
-            if (response.statusCode === 200) {
-              this.toastr.success(
-                'level has been udapted successfully.',
-                'Success',
-                { timeOut: 7000 }
-              );
-            }
-            console.log('respose: ', response);
+            this.translate.get('words.level').subscribe((word: string) => {
+              this.translate.get('successResponse.deleted').subscribe((message: string) => {
+                this.toastr.success(`${word} ${message}`, 'Error');
+              });
+            });
             resolve(response);
           },
           (error: any) => {
-            this.errorsService.errorsInformations(error, 'update level', '0');
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
             reject(error);
           }
         );
@@ -384,18 +349,16 @@ export class LevelService {
         .subscribe(
           (response: any) => {
             this.getAllLevels();
-            if (response.statusCode === 200) {
-              this.toastr.success(
-                'levels have been sorted successfully.',
-                'Success',
-                { timeOut: 7000 }
-              );
-            }
-            console.log('respose: ', response);
-            resolve(response);
+            this.translate.get('words.levels').subscribe((word: string) => {
+              this.translate.get('successResponse.sorted').subscribe((message: string) => {
+                this.toastr.success(`${word} ${message}`, 'Error');
+              });
+            });
           },
           (error: any) => {
-            this.errorsService.errorsInformations(error, 'sort levels', '0');
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
             reject(error);
           }
         );
@@ -421,7 +384,9 @@ export class LevelService {
             },
             (error) => {
               console.log(error);
-              this.errorsService.errorsInformations(error, 'get level', '0');
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
               reject(error);
             }
           );
@@ -436,12 +401,13 @@ export class LevelService {
         this.api.get('gamelevel', this.headers).subscribe(
           (result) => {
             this.levelList = result.data;
-            console.log('refresh resultat de get list: ', result.data.levels);
             sessionStorage.setItem('levels-list', JSON.stringify(this.levelList));
             resolve(result.data);
           },
           (error) => {
-            this.errorsService.errorsInformations(error, 'get level list', '0');
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
             reject(error);
           }
         );
@@ -468,11 +434,9 @@ export class LevelService {
               resolve(result.data);
             },
             (error) => {
-              this.errorsService.errorsInformations(
-                error,
-                'get level list',
-                '0'
-              );
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
               reject(error);
             }
           );

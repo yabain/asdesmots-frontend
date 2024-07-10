@@ -13,8 +13,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { WordDetailsModule } from '../../shared/word-details/word-details.module';
 import { SidemenuComponent } from "./sidemenu/sidemenu.component";
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from 'src/app/shared/interceptor/error.interceptor';
 
 @NgModule({
     declarations: [

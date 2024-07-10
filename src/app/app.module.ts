@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationGuard } from './shared/guard/auth/authentication.guard';
@@ -21,6 +21,7 @@ import { ProgressIndeterminateModule } from './shared/elements/progress-indeterm
 import { CommonModule } from '@angular/common';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { EmailVerificationModule } from './front-office/authentication/email-verification/email-verification.module';
+import { ErrorInterceptor } from './shared/interceptor/error.interceptor';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -64,6 +65,7 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
     AllModulesService,
     AuthenticationGuard,
     TranslationService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   exports: [TranslateModule],
   bootstrap: [

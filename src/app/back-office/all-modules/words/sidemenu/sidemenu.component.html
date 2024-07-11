@@ -27,7 +27,7 @@
       <div class="card">
         <div class="card-header">
           <h5 class="card-title d-flex justify-content-between">
-            <span>{{'words.levels' | translate }} ({{levelList.length}})</span>
+            <span>{{'words.levels' | translate }} ({{levelList?.length}})</span>
             <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#addLevel" (click)="resetForm()"><i
                 class="fas fa-plus"></i></a>
           </h5>
@@ -44,12 +44,12 @@
             <table class="table table-stripped table-hover">
               <tbody cdkDropList (cdkDropListDropped)="drop($event)">
                 <tr *ngFor="let level of levelList; let i = index" class="drop-down-item" cdkDrag [class.selected]="curentLevel === level._id">
-                  <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
-                  <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
+                  <td (click)="navigateToLevel(level)">{{level.name}}</td>
+                  <td (click)="navigateToLevel(level)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#editLevel"
                       (click)="updateLevelForm(level)"><i class="far fa-edit me-1"></i></a>
-                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="levelData = level" (click)="filterLevels()"
+                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="filterLevels(level)"
                       class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                   </td>
                 </tr>
@@ -155,10 +155,10 @@
           <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
             {{'close' | translate }}
           </button>
-          <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addLevel()">
+          <button *ngIf="!waiting" type="button" class="btn btn-success" (click)="addLevel()">
             <span> {{'add' | translate }}</span>
           </button>
-          <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
+          <button type="button" class="btn btn-success" *ngIf="waiting" disabled>
             <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
           </button>
         </div>
@@ -230,7 +230,7 @@
         <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
       </div>
       <div class="modal-text text-center">
-        <div class="modal-text text-center pb-3">
+        <div class="modal-text text-center">
           <ng-container>
             <ng-template [ngIf]="!levelData.words?.length" [ngIfElse]="transfertTemplate">
               {{ 'confirmDeleteText' | translate }} <b>{{levelData?.name}} ?</b>
@@ -241,11 +241,11 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
                     {{ 'cancel' | translate }}
                   </button>
-                  <button *ngIf="!waitingResponse" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
+                  <button *ngIf="!waiting" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
                     [hidden]="!modalVisible">
                     {{ 'delete' | translate }}
                   </button>
-                  <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                  <button type="button" class="btn btn-danger" *ngIf="waiting" disabled>
                     <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
                   </button>
                 </div>

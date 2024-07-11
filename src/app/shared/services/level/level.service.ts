@@ -383,7 +383,6 @@ export class LevelService {
               resolve(success.data);
             },
             (error) => {
-              console.log(error);
               this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
                 this.toastr.error(res, 'Error');
               });

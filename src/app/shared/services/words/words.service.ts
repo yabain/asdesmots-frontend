@@ -218,7 +218,6 @@ export class WordsService {
       type: wordData.type
     }
     return word;
-
   }
 
 }

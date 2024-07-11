@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="table-responsive">
-          <table datatable class="table table-stripped table-hover" *ngIf="!waiting">
+          <table datatable class="table table-stripped table-hover" *ngIf="!waitingResponse">
             <thead class="thead-light">
               <tr>
                 <th>{{'words.word' | translate }}s</th>
@@ -34,7 +34,7 @@
                 <th class="text-end">{{ 'actions' | translate }}</th>
               </tr>
             </thead>
-            <tbody *ngIf="haveToShow">
+            <tbody *ngIf="wordsList?.length">
               <tr *ngFor="let word of wordsList; let i = index" (click)="wordData = word" data-bs-toggle="modal"
                 data-bs-target="#details">
                 <td>{{ word.name }}</td>
@@ -58,7 +58,7 @@
                 </td>
               </tr>
             </tbody>
-            <tbody *ngIf="!haveToShow">
+            <tbody *ngIf="!wordsList?.length">
               <tr>
                 <td></td>
                 <td class="text-center">
@@ -70,7 +70,7 @@
               </tr>
             </tbody>
           </table>
-          <table datatable class="table table-stripped table-hover" *ngIf="waiting">
+          <table datatable class="table table-stripped table-hover" *ngIf="waitingResponse">
             <thead class="thead-light">
               <tr>
                 <th>{{'words.word' | translate }}s</th>

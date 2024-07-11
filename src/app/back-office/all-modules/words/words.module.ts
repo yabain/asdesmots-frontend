@@ -32,7 +32,7 @@ import { SidemenuComponent } from "./sidemenu/sidemenu.component";
         ProgressIndeterminateModule,
         TranslateModule,
         WordDetailsModule,
-        SidemenuComponent
+        SidemenuComponent,
     ]
 })
 export class WordsModule {}

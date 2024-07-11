@@ -340,20 +340,19 @@ export class LevelService {
     });
   }
   
-  async sortLevels(levels: {id: string, level: number }[]): Promise<any> {
-
+  sortLevels(levels: {id: string, level: number }[]): Promise<any> {
     return new Promise((resolve, reject) => {
-
       this.api
         .put(`gamelevel/sort-list`, levels, this.headers)
         .subscribe(
           (response: any) => {
             this.getAllLevels();
-            this.translate.get('words.levels').subscribe((word: string) => {
-              this.translate.get('successResponse.sorted').subscribe((message: string) => {
-                this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('words.levels').subscribe((words: string) => {
+              this.translate.get('successResponse.queued').subscribe((message: string) => {
+                this.toastr.success(`${words} ${message}`, 'Error');
               });
             });
+            resolve(response);
           },
           (error: any) => {
             this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {

@@ -4,7 +4,6 @@
     <div class="col-lg-12">
       <div class="card card-body">
         <h5>{{'words.wordStat' | translate }}</h5>
-
         <table class="table">
           <thead class="thead-light">
             <tr>
@@ -23,7 +22,6 @@
           </tbody>
         </table>
       </div>
-
       <div class="card">
         <div class="card-header">
           <h5 class="card-title d-flex justify-content-between">
@@ -43,7 +41,10 @@
           <div class="table-responsive" *ngIf="!waitingResponse">
             <table class="table table-stripped table-hover">
               <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                <tr *ngFor="let level of levelList; let i = index" class="drop-down-item" cdkDrag [class.selected]="curentLevel === level._id">
+                <tr *ngFor="let level of levelList; let i = index" cdkDrag 
+                  class="{{(currentLevel?._id === level._id)?'selected':''}}" 
+                  cdkDrag>
+                  <td class="dragable"><i class="fa fa-grip"></i></td>
                   <td (click)="navigateToLevel(level)">{{level.name}}</td>
                   <td (click)="navigateToLevel(level)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
@@ -237,8 +238,8 @@
               <!-- Formulaire pour la suppression directe du niveau sans transfert de mots -->
               <form class="py-2" (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
                 <!-- <p>{{'noWords.deleteMessage' | translate}}</p> -->
-                <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                <div class=" mt-4 mb-0 text-center">
+                  <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn">
                     {{ 'cancel' | translate }}
                   </button>
                   <button *ngIf="!waiting" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"

@@ -370,7 +370,7 @@
         "created":"successfully created",
         "updated":"successfully updated",
         "deleted":"successfully deleted",
-        "sorted":"successfully sorted"
+        "queued":"successfully queued"
     },
     "errorResponse": {
       "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",

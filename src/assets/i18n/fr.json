@@ -372,7 +372,7 @@
         "created": "créé avec succès",
         "updated": "mis à jour avec succès",
         "deleted": "supprimé avec succès",
-        "sorted": "trié avec succès"
+        "queued": "mis en file d'attente avec succès"
     },
     "errorResponse": {
       "emailNotVerified1": "Votre adresse e-mail n'a pas été vérifiée. Accédez à votre boîte de réception et cliquez sur le lien de vérification qui vous a été envoyé lors de la création de votre compte. Si vous ne l'avez pas reçu, vous pouvez utiliser ",

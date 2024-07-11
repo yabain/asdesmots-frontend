@@ -10,13 +10,9 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  DragDropModule,
-} from '@angular/cdk/drag-drop';
 import { ProgressIndeterminateModule } from "../../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
 import { WordDataService } from '../word-data.service';
+import { CdkDragDrop, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 @Component({
     selector: 'app-sidemenu',
     templateUrl: './sidemenu.component.html',
@@ -30,7 +26,6 @@ import { WordDataService } from '../word-data.service';
     ]
 })
 export class SidemenuComponent implements OnInit{
-
 
   totalWords: number;
   totalEnWords: number;
@@ -51,7 +46,7 @@ export class SidemenuComponent implements OnInit{
   base;
   page;
   url;
-  curentLevel;
+  currentLevel: Level;
   levelForm: FormGroup;
   deleteLevelForm: FormGroup;
   transferWordsForm: FormGroup;
@@ -63,6 +58,7 @@ export class SidemenuComponent implements OnInit{
   oldLevelId: string;
   selectedLevel: Level;
   submitted: boolean = false;
+  displayedColumns: string[] = ['level', 'name', 'words', 'actions'];
 
   constructor(
     public commonService: CommonServiceService,
@@ -82,11 +78,14 @@ export class SidemenuComponent implements OnInit{
       this.totalWords = data.enWordsLength + data.frWordsLength;
       if(this.levelList) {
         const levs = this.sortabledata(data.levels)
-        await this.levelService.sortLevels(levs);
+        this.levelService.sortLevels(levs);
       }
     });
     this.wordDataService.levelFetching$.subscribe((value: any) => {
       this.waitingResponse = value;
+    })
+    this.wordDataService.currentLevel$.subscribe((level: any) => {
+      this.currentLevel = level;
     })
     this.getLevelList();
     this.translate.use(this.translationService.getCurrentLanguage());
@@ -293,9 +292,11 @@ export class SidemenuComponent implements OnInit{
   }
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.levelList, event.previousIndex, event.currentIndex);
-    this.resortList();
-    const data = this.sortabledata(this.levelList)
-    await this.levelService.sortLevels(data);
+    if(event.previousIndex !== event.currentIndex){
+      this.resortList();
+      const data = this.sortabledata(this.levelList)
+      this.levelService.sortLevels(data);
+    }
   }
   resortList(){
     this.levelList.forEach((elem: any, index) => {

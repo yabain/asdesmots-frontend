@@ -13,7 +13,6 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { FooterModule } from '../shared/footer/footer.module';
 import { GamePlayComponent } from './game-play/game-play.component';
-
 @NgModule({
   declarations: [
     AllModulesComponent,

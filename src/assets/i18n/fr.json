@@ -28,6 +28,7 @@
     "agreeRequired": "Vous devez accepter les termes",
     "emailVerification": "Verification d'email",
     "offSession": "Session expirée",
+    "alreadyUsed": "déjà existant",
     "and": "et ",
     "or": "ou",
     "name": "Nom",
@@ -388,6 +389,7 @@
       "accountDisactivated": "Votre compte a été désactivé, veuillez contacter le support.",
       "invalidCredentials":"Email ou mot de passe incorrect",
       "unexpectedError": "Une erreur inattendue s'est produite.",
-      "alreadyExists": "existe déjà"
+      "alreadyExists": "existe déjà",
+      "duplicatedEntry":"Entrée en double"
     }
   }

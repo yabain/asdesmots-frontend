@@ -28,6 +28,7 @@
     "name": "Name",
     "end": "End",
     "maxPlayers": "Max number of players",
+    "alreadyUsed": "already exists",
     "required": "Required",
     "policy": "Politiques ",
     "dataUsage": "data usage.",
@@ -386,6 +387,7 @@
       "accountDisactivated":"Your account has been desactivated, please contact support.",
       "invalidCredentials":"Invalid email or password",
       "unexpectedError":"An unexpected error occured.",
-      "alreadyExists": "alrerady exists"
+      "alreadyExists": "alrerady exists",
+      "duplicatedEntry":"Duplicated entry"
     }
 }

@@ -89,7 +89,10 @@ export class AddWordsComponent implements OnInit {
     });
   }
 
-
+  nameChanged() {
+    delete this.wordForm.controls['name'].errors?.['used'];
+  }
+  
   addWords() {
     if (this.wordForm.invalid) 
       return;
@@ -106,6 +109,8 @@ export class AddWordsComponent implements OnInit {
       this.wordForm.reset();
     })
     .catch((error) => {
+      if(error.includes('Word already exists') || error.errors?.alreadyUsed)
+        this.wordForm.controls['name'].setErrors({ used: true });
       this.addingWords = false;
       this.submitted = false;
       this.waiting = false;

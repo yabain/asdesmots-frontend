@@ -11,10 +11,15 @@
 			<input class="form-control" type="text" formControlName="name"
 				placeholder="{{ 'words.word' | translate }}" id="name" [ngClass]="{
 			  'is-invalid': f['name'].touched && f['name'].invalid
-			}" required />
+			}"
+			(change)="nameChanged()"
+			/>
 			<div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
 				<div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
 					{{ 'required' | translate }}
+				</div>
+				<div *ngIf="f['name'].errors && f['name'].errors['used']" style="color: red;">
+					{{ 'words.word' | translate }} {{ 'alreadyUsed' | translate }}
 				</div>
 			</div>
 		</div>

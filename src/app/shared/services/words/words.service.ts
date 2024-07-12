@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { catchError, EMPTY, iif, Observable, of, Subject, switchMap, throwError } from 'rxjs';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 import { Word } from 'src/app/shared/entities/word';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -16,7 +18,7 @@ export class WordsService {
 
   headers = {
     'Authorization': 'Bearer ' + this.api.getAccessToken(),
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8'
   }
   
   constructor(
@@ -24,27 +26,30 @@ export class WordsService {
     private router: Router,
     private toastr: ToastrService,
     private translate: TranslateService,
-    private errorsService: ErrorsService
+    private httpClient: HttpClient
   ) { }
 
   createWord(wordForm: any): Promise<any> {
-
     return new Promise((resolve, reject) => {
-
-      this.api.post('gamelevel/word', wordForm, this.headers)
-        .subscribe((response: any) => {
-          this.translate.get('words.word').subscribe((word: string) => {
-            this.translate.get('successResponse.created').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
-            });
+      this.httpClient.post(`${environment.url}/gamelevel/word`, wordForm, { headers: this.headers})
+      .subscribe((response: any) => { 
+        this.translate.get('words.word').subscribe((word: string) => {
+          this.translate.get('successResponse.created').subscribe((message: string) => {
+            this.toastr.success(`${word} ${message}`, 'Error');
           });
-          resolve(response);
-        }, (error: any) => {
+        });
+        resolve(response);
+      }, (error) => {
+        if(error.includes('Word already exists') || error.errors?.alreadyUsed) 
+          this.translate.get('errorResponse.duplicatedEntry').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+        else 
           this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
             this.toastr.error(res, 'Error');
           });
-          reject(error);
-        });
+        reject(error);
+      })
     });
   }
 

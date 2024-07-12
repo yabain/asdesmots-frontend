@@ -120,16 +120,22 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="name">{{ 'words.level' | translate }} <span class="mandatory">*</span></label>
+                <label for="name">{{ 'words.level' | translate }}<span
+                    class="mandatory">*</span></label>
                 <input class="form-control" type="text" formControlName="name"
                   placeholder="{{ 'words.level' | translate }}" id="name" [ngClass]="{
-                    'is-invalid': f['name'].touched && f['name'].invalid
-                  }" required />
-                  <div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
-                    <div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
-                      {{ 'required' | translate }}
-                    </div>
+                  'is-invalid': f['name'].touched && f['name'].invalid
+                }"
+                (change)="nameChanged()"
+                />
+                <div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
+                  <div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
+                    {{ 'required' | translate }}
                   </div>
+                  <div *ngIf="f['name'].errors && f['name'].errors['used']" style="color: red;">
+                    {{ 'words.level' | translate }} {{ 'alreadyUsed' | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>

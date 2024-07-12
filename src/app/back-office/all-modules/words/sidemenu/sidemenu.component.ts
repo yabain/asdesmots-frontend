@@ -141,13 +141,16 @@ export class SidemenuComponent implements OnInit{
     this.wordDataService.currentLevelSubject.next(level)
     this.wordDataService.listWordBylevel(level._id, false)
   }
+  
+  nameChanged() {
+    delete this.levelForm.controls['name'].errors?.['used'];
+  }
 
   addLevel() {
+    if (this.levelForm.invalid)
+      return;
     this.submitted = true;
     this.waiting = true;
-    if (this.levelForm.invalid) {
-      return;
-    }
     const data = {
       ...this.levelForm.value, 
     }
@@ -157,9 +160,12 @@ export class SidemenuComponent implements OnInit{
         this.waiting = false;
         this.levelList.push(data)
         await this.refreshList();
+        this.levelForm.reset();
         $('#cancel-btn1').click();
       })
       .catch((error) => {
+        if(error.includes('Level already exists') || error.errors?.alreadyUsed)
+          this.levelForm.controls['name'].setErrors({ used: true });
         this.submitted = false;
         this.waiting = false;
       });

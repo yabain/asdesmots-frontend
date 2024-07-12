@@ -69,11 +69,15 @@ export class LevelService {
             });
           });
           resolve(response);
-        },
-        (error: any) => {
-          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-            this.toastr.error(res, 'Error');
-          });
+        }, (error) => {
+          if(error.includes('Level already exists') || error.errors?.alreadyUsed) 
+            this.translate.get('errorResponse.duplicatedEntry').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
+          else 
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
           reject(error);
         }
       );

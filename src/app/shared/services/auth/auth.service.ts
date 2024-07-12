@@ -124,6 +124,7 @@ export class AuthService {
           this.translate.get('form.passwordReset').subscribe((res: string) => {
             this.toastr.success(res, 'Success');
           });
+          this.router.navigate(["/login"]);
           return resolve(response);
         }, (error: any) => {
           this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
@@ -307,8 +308,9 @@ export class AuthService {
             switch(error.status) {
               case(401) :
                 this.translate.get('errorResponse.expiredEmailValidationLink').subscribe((res: string) => {
-                  this.toastr.success(res, 'Error');
+                  this.toastr.error(res, 'Error');
                 });
+                break;
               case(404) :
                 this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
@@ -346,7 +348,6 @@ export class AuthService {
         .subscribe(response => {
           resolve(response);
         }, error => {
-          console.log('erreur: ', error)
           if (error.status == 406) {
             this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
               this.toastr.error(res, 'error');

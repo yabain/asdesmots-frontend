@@ -52,7 +52,7 @@ export class NewPwdComponent implements OnInit {
       'password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)])
+        this.passwordFunctions.patern])
       ],
       'password_confirm': ['', Validators.required]
     },{validator: PasswordMatch.MatchingPasswords('password', 'password_confirm')});

@@ -1,6 +1,9 @@
+import { Validators } from "@angular/forms";
+
 export class PasswordFunctions {
 
     hashedPassword:boolean = true;
+    patern = Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[_!?&$*,.';+\-@#\$%\^&\*])(?=.{8,})/)
     
     uppercaseChar(value: string): boolean {
         return /[A-Z]/.test(value);
@@ -11,7 +14,7 @@ export class PasswordFunctions {
     }
     
     specialChar(value: string): boolean {
-        return /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        return /[_!?&$*,.';+\-@#\$%\^&\*]/.test(value);
     }
     
     togglePasswordVisibility() {

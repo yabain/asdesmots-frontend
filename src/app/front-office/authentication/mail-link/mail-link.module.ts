@@ -22,13 +22,7 @@ import { SharedModule } from "../../shared/shared.module";
         RouterModule,
         ReactiveFormsModule,
         ProgressIndeterminateModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
+        TranslateModule,
         SharedModule
     ]
 })

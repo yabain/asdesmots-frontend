@@ -19,13 +19,7 @@ import { HttpClient } from '@angular/common/http';
     WelcomeRoutingModule,
     RouterModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    TranslateModule
   ],
   providers: []
 })

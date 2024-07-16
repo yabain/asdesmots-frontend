@@ -8572,4 +8572,7 @@ ol, ul {
 	white-space: normal;
 	height: fit-content;
 	width: fit-content;
-  }
+}
+.invalid-feedback {
+	display: block;
+}

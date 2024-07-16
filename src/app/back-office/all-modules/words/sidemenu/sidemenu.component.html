@@ -4,7 +4,6 @@
     <div class="col-lg-12">
       <div class="card card-body">
         <h5>{{'words.wordStat' | translate }}</h5>
-
         <table class="table">
           <thead class="thead-light">
             <tr>
@@ -23,11 +22,10 @@
           </tbody>
         </table>
       </div>
-
       <div class="card">
         <div class="card-header">
           <h5 class="card-title d-flex justify-content-between">
-            <span>{{'words.levels' | translate }} ({{levelList.length}})</span>
+            <span>{{'words.levels' | translate }} ({{levelList?.length}})</span>
             <a class="btn btn-sm btn-white" data-bs-toggle="modal" data-bs-target="#addLevel" (click)="resetForm()"><i
                 class="fas fa-plus"></i></a>
           </h5>
@@ -43,13 +41,16 @@
           <div class="table-responsive" *ngIf="!waitingResponse">
             <table class="table table-stripped table-hover">
               <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                <tr *ngFor="let level of levelList; let i = index" class="drop-down-item" cdkDrag [class.selected]="curentLevel === level._id">
-                  <td (click)="navigateToLevel(level._id)">{{level.name}}</td>
-                  <td (click)="navigateToLevel(level._id)">({{level.words.length}} {{'words.word' | translate }}s)</td>
+                <tr *ngFor="let level of levelList; let i = index" cdkDrag 
+                  class="{{(currentLevel?._id === level._id)?'selected':''}}" 
+                  cdkDrag>
+                  <td class="dragable"><i class="fa fa-grip"></i></td>
+                  <td (click)="navigateToLevel(level)">{{level.name}}</td>
+                  <td (click)="navigateToLevel(level)">({{level.words.length}} {{'words.word' | translate }}s)</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-white text-success me-2" data-bs-toggle="modal" data-bs-target="#editLevel"
                       (click)="updateLevelForm(level)"><i class="far fa-edit me-1"></i></a>
-                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="levelData = level" (click)="filterLevels()"
+                    <a data-bs-toggle="modal" data-bs-target="#deleteLevel" (click)="filterLevels(level)"
                       class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
                   </td>
                 </tr>
@@ -119,18 +120,40 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="name">{{ 'words.level' | translate }} <span class="mandatory">*</span></label>
+                <label for="name">{{ 'words.level' | translate }}<span
+                    class="mandatory">*</span></label>
                 <input class="form-control" type="text" formControlName="name"
                   placeholder="{{ 'words.level' | translate }}" id="name" [ngClass]="{
-                    'is-invalid': f['name'].touched && f['name'].invalid
-                  }" required />
+                  'is-invalid': f['name'].touched && f['name'].invalid
+                }"
+                (change)="nameChanged()"
+                />
+                <div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
+                  <div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
+                    {{ 'required' | translate }}
+                  </div>
+                  <div *ngIf="f['name'].errors && f['name'].errors['used']" style="color: red;">
+                    {{ 'words.level' | translate }} {{ 'alreadyUsed' | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Address"
+                <textarea rows="5" cols="5" class="form-control" placeholder="{{ 'description' | translate}}"
                   formControlName="description" id="description" [ngClass]="{
                     'is-invalid': f['description'].touched && f['description'].invalid
                   }" required></textarea>
+                  <div *ngIf="(f['description'].touched || submitted) && f['description'].invalid"
+                    class="invalid-feedback">
+                    <div *ngIf="f['description'].errors && f['description'].errors['required']"
+                      style="color: red;">
+                      {{ 'required' | translate }}
+                    </div>
+                    <div *ngIf="f['description'].errors && f['description'].errors?.minlength"
+                      style="color: red;">
+                      <p [translate]="'minLength'" [translateParams]="{ minLength: minDescLength}"></p>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -139,10 +162,10 @@
           <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
             {{'close' | translate }}
           </button>
-          <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="addLevel()">
+          <button *ngIf="!waiting" type="button" class="btn btn-success" (click)="addLevel()">
             <span> {{'add' | translate }}</span>
           </button>
-          <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
+          <button type="button" class="btn btn-success" *ngIf="waiting" disabled>
             <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
           </button>
         </div>
@@ -165,11 +188,27 @@
           <div class="form-group">
             <label for="name">{{ 'words.level' | translate }}<span class="mandatory">*</span></label>
             <input class="form-control" type="text" formControlName="name" id="name" required />
+            <div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
+              <div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
+                {{ 'required' | translate }}
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-            <textarea rows="5" cols="5" class="form-control" placeholder="Write the word description"
+            <textarea rows="5" cols="5" class="form-control" placeholder="{{ 'description' | translate}}"
               formControlName="description" id="description" required></textarea>
+              <div *ngIf="(f['description'].touched || submitted) && f['description'].invalid"
+                class="invalid-feedback">
+                <div *ngIf="f['description'].errors && f['description'].errors['required']"
+                  style="color: red;">
+                  {{ 'required' | translate }}
+                </div>
+                <div *ngIf="f['description'].errors && f['description'].errors?.minlength"
+                  style="color: red;">
+                  <p [translate]="'minLength'" [translateParams]="{ minLength: minDescLength}"></p>
+                </div>
+              </div>
           </div>
           <div class="text-center mt-4 mb-0">
             <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal"
@@ -198,22 +237,22 @@
         <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
       </div>
       <div class="modal-text text-center">
-        <div class="modal-text text-center pb-3">
+        <div class="modal-text text-center">
           <ng-container>
             <ng-template [ngIf]="!levelData.words?.length" [ngIfElse]="transfertTemplate">
               {{ 'confirmDeleteText' | translate }} <b>{{levelData?.name}} ?</b>
               <!-- Formulaire pour la suppression directe du niveau sans transfert de mots -->
               <form class="py-2" (ngSubmit)="deleteLevel()" [formGroup]="deleteLevelForm">
                 <!-- <p>{{'noWords.deleteMessage' | translate}}</p> -->
-                <div class="modal-footer text-center">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn">
+                <div class=" mt-4 mb-0 text-center">
+                  <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn">
                     {{ 'cancel' | translate }}
                   </button>
-                  <button *ngIf="!waitingResponse" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
+                  <button *ngIf="!waiting" type="submit" (ngSubmit)="deleteLevel()" class="btn btn-danger" id="delete-btn"
                     [hidden]="!modalVisible">
                     {{ 'delete' | translate }}
                   </button>
-                  <button type="button" class="btn btn-danger" *ngIf="waitingResponse" disabled>
+                  <button type="button" class="btn btn-danger" *ngIf="waiting" disabled>
                     <span><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
                   </button>
                 </div>

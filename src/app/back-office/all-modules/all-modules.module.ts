@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AllModulesRoutingModule } from './all-modules-routing.module';
 import { AllModulesComponent } from './all-modules.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
@@ -13,7 +13,6 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { FooterModule } from '../shared/footer/footer.module';
 import { GamePlayComponent } from './game-play/game-play.component';
-
 @NgModule({
   declarations: [
     AllModulesComponent,
@@ -28,13 +27,7 @@ import { GamePlayComponent } from './game-play/game-play.component';
     ReactiveFormsModule,
     FooterModule,
     ProgressIndeterminateModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
     ToastrModule.forRoot(
       {
         timeOut: 1500,

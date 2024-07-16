@@ -21,13 +21,7 @@ import { SharedModule } from '../../shared/shared.module';
     FormsModule,
     SharedModule,
     ProgressIndeterminateModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
     NgxIntlTelInputModule
   ]
 })

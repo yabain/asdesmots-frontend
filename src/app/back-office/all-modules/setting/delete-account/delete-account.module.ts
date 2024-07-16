@@ -13,12 +13,7 @@ import { HttpClient } from '@angular/common/http';
     CommonModule,
     DeleteAccountRoutingModule,
     RouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })],
+    TranslateModule
+  ],
 })
 export class DeleteAccountModule {}

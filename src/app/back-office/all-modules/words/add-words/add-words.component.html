@@ -3,7 +3,7 @@
 	<h4 class="card-title text-center">{{ 'words.addNewWords' | translate }}</h4>
 	<span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
 </div>
-<div class="align-items-center" *ngIf="!waitingResponse">
+<div class="align-items-center">
 	<form (ngSubmit)="addWords()" [formGroup]="wordForm">
 		<div class="form-group">
 			<label for="name">{{ 'words.word' | translate }}<span
@@ -11,10 +11,15 @@
 			<input class="form-control" type="text" formControlName="name"
 				placeholder="{{ 'words.word' | translate }}" id="name" [ngClass]="{
 			  'is-invalid': f['name'].touched && f['name'].invalid
-			}" required />
-			<div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
+			}"
+			(change)="nameChanged()"
+			/>
+			<div *ngIf="(f['name'].touched || submitted) && f['name'].invalid" class="invalid-feedback">
 				<div *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red;">
 					{{ 'required' | translate }}
+				</div>
+				<div *ngIf="f['name'].errors && f['name'].errors['used']" style="color: red;">
+					{{ 'words.word' | translate }} {{ 'alreadyUsed' | translate }}
 				</div>
 			</div>
 		</div>
@@ -23,14 +28,14 @@
 				class="mandatory">*</span></label>
 			<select name="type" id="type" class="form-control"
 				formControlName="type" [ngClass]="{
-			'is-invalid': f['type'].touched && f['type'].invalid
+			'is-invalid': (f['type'].touched || submitted) && f['type'].invalid
 		  }">
 				<option value="">-- {{ 'select' | translate }} --</option>
 				<option *ngFor="let type of wordTypes" value="{{type.value}}">
 					{{type.name}}
 				</option>
 			</select>
-			<div *ngIf="f['type'].touched && f['type'].invalid"
+			<div *ngIf="(f['type'].touched || submitted) && f['type'].invalid"
 				class="invalid-feedback">
 				<div *ngIf="f['type'].errors && f['type'].errors['required']">
 					{{ 'required' | translate }}
@@ -42,14 +47,14 @@
 				class="mandatory">*</span></label>
 			<select name="gameLevelId" id="gameLevelId" class="form-control"
 				formControlName="gameLevelId" [ngClass]="{
-			'is-invalid': f['gameLevelId'].touched && f['gameLevelId'].invalid
+			'is-invalid': (f['gameLevelId'].touched || submitted) && f['gameLevelId'].invalid
 		  }">
 				<option value="">-- {{ 'select' | translate }} --</option>
 				<option *ngFor="let level of levelList" value="{{level._id}}">
 					{{level.name}}
 				</option>
 			</select>
-			<div *ngIf="f['gameLevelId'].touched && f['gameLevelId'].invalid"
+			<div *ngIf="(f['gameLevelId'].touched || submitted) && f['gameLevelId'].invalid"
 				class="invalid-feedback">
 				<div *ngIf="f['gameLevelId'].errors && f['gameLevelId'].errors['required']">
 					{{ 'required' | translate }}
@@ -58,15 +63,19 @@
 		</div>
 		<div class="form-group">
 			<label>{{ 'description' | translate }} <span class="mandatory">*</span></label>
-			<textarea rows="5" cols="5" class="form-control" placeholder="Enter Address"
+			<textarea rows="5" cols="5" class="form-control" placeholder="{{ 'description' | translate}}"
 				formControlName="description" id="description" [ngClass]="{
-			  'is-invalid': f['description'].touched && f['description'].invalid
+			  'is-invalid': (f['description'].touched || submitted) && f['description'].invalid
 			}" required></textarea>
-			<div *ngIf="f['description'].touched && f['description'].invalid"
+			<div *ngIf="(f['description'].touched || submitted) && f['description'].invalid"
 				class="invalid-feedback">
 				<div *ngIf="f['description'].errors && f['description'].errors['required']"
 					style="color: red;">
 					{{ 'required' | translate }}
+				</div>
+				<div *ngIf="f['description'].errors && f['description'].errors?.minlength"
+					style="color: red;">
+					<p [translate]="'minLength'" [translateParams]="{ minLength: minDescLength}"></p>
 				</div>
 			</div>
 		</div>
@@ -75,17 +84,11 @@
 		<button type="button" style="margin-right: 20px;" class="btn btn-secondary" data-bs-dismiss="modal" id="create-cancel-btn">
 		  {{'close' | translate }}
 		</button>
-		<button *ngIf="!addingWords" type="button" class="btn btn-success" (click)="addWords()">
+		<button *ngIf="!waiting" type="button" class="btn btn-success" (click)="addWords()">
 			<span> {{'add' | translate }}</span>
 		</button>
-		<button type="button" class="btn btn-success" *ngIf="addingWords" disabled>
+		<button type="button" class="btn btn-success" *ngIf="waiting" [disabled]="true">
 			<span><img src="assets/img/loader.gif" alt="" width="30px"></span>
 		</button>
 	</div>
-</div>
-
-<div *ngIf="waitingResponse">
-	<h4 class="card-title">{{ 'words.addNewWords' | translate }}</h4><br>
-	<img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-	No level found to add word
 </div>

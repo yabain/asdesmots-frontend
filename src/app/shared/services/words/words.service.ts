@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { catchError, EMPTY, iif, Observable, of, Subject, switchMap, throwError } from 'rxjs';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 import { Word } from 'src/app/shared/entities/word';
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -13,69 +16,40 @@ import { Word } from 'src/app/shared/entities/word';
 })
 export class WordsService {
 
-  params: any;
-  wordData: any;
   headers = {
     'Authorization': 'Bearer ' + this.api.getAccessToken(),
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8'
   }
-
-  wordsList: Word[] = [];
-  wordsListfixed: Word[] = [
-    {
-      _id: 'sdfsdfsdfsdfs',
-      name: 'Maison',
-      createdAt: '',
-      description: 'Ici la description du mot',
-      type: '80',
-    },
-    {
-      _id: 'sdqhdfhsfghjfgf',
-      name: 'Hôpital',
-      createdAt: '',
-      description: 'Ici la description du mot',
-      type: '80',
-    },
-    {
-      _id: 'dfdfgdfgdghjghj,',
-      name: 'Bouteil',
-      createdAt: '',
-      description: 'Ici la description du mot',
-      type: '80',
-    }
-  ];
-
+  
   constructor(
     private api: ApiService,
     private router: Router,
     private toastr: ToastrService,
-    private errorsService: ErrorsService
+    private translate: TranslateService,
+    private httpClient: HttpClient
   ) { }
 
   createWord(wordForm: any): Promise<any> {
-
     return new Promise((resolve, reject) => {
-
-      // const params = {
-      //   'name': word.name,
-      //   'description': word.description,
-      //   'type': word.type,
-      //   'gameLevelId': word.
-      // };
-
-      this.api.post('gamelevel/word', wordForm, this.headers)
-        .subscribe((response: any) => {
-          if (response) {
-            if (response.statusCode === 201) {
-              // this.router.navigate(['login']);
-              this.toastr.success("Word has been add", 'Success', { timeOut: 5000 });
-            }
-            resolve(response);
-          }
-        }, (error: any) => {
-          this.errorsService.errorsInformations(error, "update word");
-          reject(error);
+      this.httpClient.post(`${environment.url}/gamelevel/word`, wordForm, { headers: this.headers})
+      .subscribe((response: any) => { 
+        this.translate.get('words.word').subscribe((word: string) => {
+          this.translate.get('successResponse.created').subscribe((message: string) => {
+            this.toastr.success(`${word} ${message}`, 'Error');
+          });
         });
+        resolve(response);
+      }, (error) => {
+        if(error.includes('Word already exists') || error.errors?.alreadyUsed) 
+          this.translate.get('errorResponse.duplicatedEntry').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+        else 
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+        reject(error);
+      })
     });
   }
 
@@ -91,14 +65,23 @@ export class WordsService {
       };
       this.api.put(`gamelevel/${wordData.gameLevelId}/word/${wordData._id}`, params, this.headers)
         .subscribe((response: any) => {
-            this.toastr.success("The word has been updated", 'Success', { timeOut: 7000 });
-          console.log("respose: ", response)
+          this.translate.get('words.word').subscribe((word: string) => {
+            this.translate.get('successResponse.created').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
           resolve(response);
-        }, (error) => {
+        }, (error: any) => {
           if(error.error.message[0].includes('duplicate key') == true){
-            this.toastr.warning("", 'This word exist', { timeOut: 10000 });
+            this.translate.get('words.word').subscribe((word: string) => {
+              this.translate.get('errorResponse.alreadyExists').subscribe((message: string) => {
+                this.toastr.success(`${word} ${message}`, 'Error');
+              });
+            });
           } else {
-            this.errorsService.errorsInformations(error, "update word")
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
           }
           reject(error);
         });
@@ -107,7 +90,6 @@ export class WordsService {
 
   // Get News to server
   getAllWords(): Promise<any> {
-    console.log('Get all words.')
     return new Promise((resolve, reject) => {
       this.api.get('words', this.headers)
         .subscribe(result => {
@@ -123,7 +105,9 @@ export class WordsService {
           return 0;
 
         }, error => {
-          this.errorsService.errorsInformations(error, "get all word", '0')
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         });
     });
@@ -152,7 +136,9 @@ export class WordsService {
           return 0;
 
         }, error => {
-          this.errorsService.errorsInformations(error, "get all word", '0')
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         });
     });
@@ -167,7 +153,9 @@ export class WordsService {
             localStorage.setItem(levelId, JSON.stringify(response.data));
             resolve(response.data);
           }, error => {
-            this.errorsService.errorsInformations(error, "get word's list", "0")
+            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
             reject(error);
           })
       })
@@ -186,7 +174,9 @@ export class WordsService {
 
               resolve(response.data);
             }, error => {
-              this.errorsService.errorsInformations(error, "get word's list", "0")
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
               reject(error);
             })
         }
@@ -199,10 +189,16 @@ export class WordsService {
     return new Promise((resolve, reject) => {
       this.api.delete(`gamelevel/${gameLevelId}/words/${word._id}`, this.headers)
         .subscribe(response => {
-          this.toastr.success('Word was deleted !!', null, { timeOut: 5000 });
+          this.translate.get('words.word').subscribe((word: string) => {
+            this.translate.get('successResponse.deleted').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
           resolve(response);
         }, error => {
-          this.errorsService.errorsInformations(error, "delete word")
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
           reject(error);
         });
     });
@@ -227,7 +223,6 @@ export class WordsService {
       type: wordData.type
     }
     return word;
-
   }
 
 }

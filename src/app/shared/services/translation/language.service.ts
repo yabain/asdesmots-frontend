@@ -32,6 +32,8 @@ export class TranslationService {
     }
     
     setLanguage(language) {
+        this.translateService.use(language);
+        console.log('curLang', language);
         localStorage.setItem(this.keyLanguage, language);
     }
 

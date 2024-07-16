@@ -58,7 +58,6 @@ export class ApiService {
       if (event.target.files && event.target.files.length > 0) {
 
         const file = event.target.files[0];
-        console.log(file);
         reader.readAsDataURL(file);
 
         reader.onload = () => {
@@ -204,8 +203,6 @@ export class ApiService {
       height: '195'
     };
 
-    console.log(imageEntity);
-
     return imageEntity;
   }
 
@@ -259,7 +256,6 @@ export class ApiService {
     //   }
     //   endpoint += '?' + req;
     // }
-    console.log(this.url + endpoint, { 'headers': options });
     return this.http.get(this.url + endpoint, { 'headers': options });
   }
 
@@ -273,7 +269,6 @@ export class ApiService {
       }
       endpoint += '?' + req;
     }
-    console.log(this.url + '/' + endpoint);
     return this.http.get(this.url + '/' + endpoint, { 'headers': options , });
   }
 
@@ -293,7 +288,6 @@ export class ApiService {
   // HTTP put
 
   put(endpoint: string, body: any, options?: any): Observable<any> {
-    console.log("put request: ", this.url + endpoint, body);
     return this.http.put(this.url + '/' + endpoint + '/', body, { 'headers': options });
   }
 
@@ -308,9 +302,7 @@ export class ApiService {
 
   // HTTP delete
   delete(endpoint: string ,options?: any, body?: any): Observable<any>{
-    
-    console.log('delete url request', this.url + '/' + endpoint)
-
+  
     return this.http.delete(this.url + '/' + endpoint, {
       headers: options,
       body
@@ -319,7 +311,6 @@ export class ApiService {
 
   deleteListWinnerCriterias(endpoint: string , options?: any): Observable<any>{
     
-    console.log('delete url request', this.url + '/' + endpoint);
     // const params = new HttpParams()
     // .set('gameId', gameId)
     // .set('gameWinnerCriteriasId', gameWinnerCriteriasId);
@@ -429,8 +420,6 @@ export class ApiService {
    *  Manage server error
    */
   manageServerError(error: any) {
-
-    console.log(error);
 
     switch (error.status) {
 

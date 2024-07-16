@@ -41,22 +41,15 @@
 	<ul class="nav nav-tabs user-menu">
 		<!-- Flag -->
 		<li class="nav-item  flag-nav">
-			<a *ngIf="en" (click)="setFrLang()" href="javascript:void(0)" class="nav-link dropdown-toggle"
+			<a href="javascript:void(0)" class="nav-link dropdown-toggle"
 				aria-controls="collapseExample3" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
-				<img src="assets/img/flags/fr.png" alt="" height="20"> <span> Français</span>
+				<img src="{{ currentLang.flagImg }}" alt="" height="20"> <span>{{ currentLang.name }}</span>
 			</a>
-			<a *ngIf="fr" href="javascript:void(0)" (click)="setEnLang()" class="nav-link dropdown-toggle"
-				aria-controls="collapseExample3" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
-				<img src="assets/img/flags/us.png" alt="" height="20"> <span> English</span>
-			</a>
-			<!-- <div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
-				<a (click)="setEnLang()" class="dropdown-item">
-					<img src="assets/img/flags/us.png" alt="" height="16"> English
+			<div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
+				<a *ngFor="let lang of languages" (click)="setLanguage(lang)" class="dropdown-item">
+					<img src="{{lang.flagImg}}" alt="" height="16"> {{ lang.name }}
 				</a>
-				<a (click)="setFrLang()" class="dropdown-item">
-					<img src="assets/img/flags/fr.png" alt="" height="16"> French
-				</a>
-			</div> -->
+			</div>
 		</li>
 		<!-- /Flag -->
 

@@ -6,6 +6,7 @@
     "refreshPage": "Veillez vous reconnecter",
     "arcardenotFound": "Arcarde introuvable",
     "noInternet": "Pas de connexion Internet",
+    "minLength": "Minimum {{minLength}} caractères",
     "keyDuplicate":"Duplication du nom de la partie, Veillez le changer",
     "internalError": "Erreur interne du serveur. Réessayez plus tard s'il vous plaît",
     "enterYour": "Entrez votre ",
@@ -27,6 +28,7 @@
     "agreeRequired": "Vous devez accepter les termes",
     "emailVerification": "Verification d'email",
     "offSession": "Session expirée",
+    "alreadyUsed": "déjà existant",
     "and": "et ",
     "or": "ou",
     "name": "Nom",
@@ -48,6 +50,7 @@
     "enterValidEmail": "Entrez un email valid.",
     "enterValidPwd": "Entrez un mot de passe valid.",
     "passwordRequired": "Le mot de passe est requis.",
+    "noLevelFound":"Aucun niveau trouvé pour ajouter un mot",
     "profile": "Profil",
     "settings": "Paramètres",
     "logOut": "Déconnexion",
@@ -366,6 +369,12 @@
         "delete":"Supprimer",
         "cancel":"Annuler"
     },
+    "successResponse": {
+        "created": "créé avec succès",
+        "updated": "mis à jour avec succès",
+        "deleted": "supprimé avec succès",
+        "queued": "mis en file d'attente avec succès"
+    },
     "errorResponse": {
       "emailNotVerified1": "Votre adresse e-mail n'a pas été vérifiée. Accédez à votre boîte de réception et cliquez sur le lien de vérification qui vous a été envoyé lors de la création de votre compte. Si vous ne l'avez pas reçu, vous pouvez utiliser ",
       "emailNotVerified2": "ce lien ",
@@ -375,11 +384,12 @@
       "internalServerError": "Erreur interne du serveur.",
       "emailVerifyLinkSent": "Votre lien de vérification a été envoyé, vérifiez votre boîte de réception.",
       "emailNotConfirmed": "Votre compte n'est pas vérifié.",
-      "unexpectedError": "Une erreur inattendue s'est produite.",
       "expiredEmailValidationLink": "Le lien a expiré.",
       "emailAlreadyUsed": "L'adresse e-mail fourni est déjà utilisée.",
       "accountDisactivated": "Votre compte a été désactivé, veuillez contacter le support.",
-      "invalidCredentials":"Email ou mot de passe incorrect"
+      "invalidCredentials":"Email ou mot de passe incorrect",
+      "unexpectedError": "Une erreur inattendue s'est produite.",
+      "alreadyExists": "existe déjà",
+      "duplicatedEntry":"Entrée en double"
     }
-    
   }

@@ -12,13 +12,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
     ToastrModule.forRoot(
       {
         timeOut: 1500,

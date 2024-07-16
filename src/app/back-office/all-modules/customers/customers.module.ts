@@ -26,13 +26,7 @@ import { UserDetailsModule } from '../../shared/user-details/user-details.module
         DataTablesModule,
         ModalModule.forRoot(),
         ProgressIndeterminateModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
+        TranslateModule,
         UserDetailsModule
     ]
 })

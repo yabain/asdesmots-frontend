@@ -82,7 +82,7 @@ export class RegiserComponent implements OnInit {
         Validators.email])
       ],
       password: ['', [Validators.required,Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)
+        this.passwordFunctions.patern
       ]],
       password_confirm: ['', [Validators.required]],
       field_agree: [false, [Validators.requiredTrue]],

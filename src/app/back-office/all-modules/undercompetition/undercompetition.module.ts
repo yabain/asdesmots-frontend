@@ -16,7 +16,7 @@ import { ListPartsComponent } from './list-parts/list-parts.component';
 import { FormatDatePipe } from './list-competition/pipe/format-date.pipe';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 import { DataTablesModule } from 'angular-datatables';
-
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { DataTablesModule } from 'angular-datatables';
     ProgressIndeterminateModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
     DataTablesModule,
   ]
 })

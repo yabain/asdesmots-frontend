@@ -4,36 +4,20 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title"></h3>
+          <h3 class="page-title">{{'arcade.new' | translate }} {{'competition.competition' | translate }}</h3>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item " style="cursor: pointer;"><a [routerLink]="'/index'">Accueil </a></li>
-            <li class="breadcrumb-item" style="cursor: pointer;"><a
-                [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
-            <li class="breadcrumb-item active">Creation</li>
+            <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }}</a></li>
+            <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">{{ 'competition.competition' | translate }}</a></li>
+            <li class="breadcrumb-item active">{{ 'creation' | translate }}</li>
           </ul>
         </div>
-
-        <div class="row" *ngIf="!sousCompetion.waitingResponse">
-          <div class="card card-table">
-            <div class="card-header text-center">
+        <div *ngIf="!sousCompetion.waitingResponse" class="row g-4">
+          <div class="card">
+            <!-- <div class="card-header text-center">
               <h5> Creation nouvelle competition</h5>
-            </div>
+            </div> -->
             <div class="card-body">
               <h6 class="text-end"> {{ sousCompetitionSelctedData.name }} </h6>
-              <form [formGroup]="formIdArcarde">
-                <div class="col">
-                  <div class="form-group">
-                    <label for="arceadID"> Arcarde </label>
-                    <select type="text" name="arceadID" formControlName="idArcarde" class="form-control" id="arceadID"
-                      [ngClass]="{ 'is-invalid': formIdArcarde.controls['idArcarde'].touched && formIdArcarde.controls['idArcarde'].invalid}">
-                      <option value="">--Chosir une arcarde--</option>
-                      <option *ngFor="let arcarde of arcardeSrv.listArcardeUser" [value]="arcarde._id"> {{ arcarde.name
-                        }} </option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-
               <form [formGroup]="sousCompetion.form">
                 <div class="row">
                   <div class="col">
@@ -48,6 +32,15 @@
                       <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
                         [ngClass]="{ 'is-invalid': sousCompetion.f['description'].touched && sousCompetion.f['description'].invalid}">
                     </div>
+                    <div class="form-group">
+                      <label for="arceadID"> Arcarde </label>
+                      <select type="text" name="arceadID" formControlName="idArcarde" class="form-control" id="arceadID"
+                        [ngClass]="{ 'is-invalid': formIdArcarde.controls['idArcarde'].touched && formIdArcarde.controls['idArcarde'].invalid}">
+                        <option value="">--Chosir une arcarde--</option>
+                        <option *ngFor="let arcarde of arcardeSrv.listArcardeUser" [value]="arcarde._id"> {{ arcarde.name
+                          }} </option>
+                      </select>
+                    </div>
 
                     <div class="form-group">
                       <label for="level" class="form-control-label"> Niveau </label>
@@ -58,18 +51,18 @@
                         </option>
                       </select>
                     </div>
-
-                    <div class="form-check form-switch text-center">
-                      <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch"
-                        id="flexSwitchCheckChecked">
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Partie Unique ?</label>
-                    </div>
-
-                    <div class="form-check form-switch text-center">
-                      <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer"
-                        (click)="sousCompetion.f['canRegisterPlayer'].setValue(sousCompetion.form.get('canRegisterPlayer')?.value ? false:true);"
-                        role="switch" id="flexSwitchCheckChecked">
-                      <label class="form-check-label" for="flexSwitchCheckChecked">can Register Player ?</label>
+                    <div class="row col-md-12 m-1">
+                      <div class="form-check form-switch col-md-6">
+                        <input class="form-check-input" type="checkbox" formControlName="isSinglePart" role="switch"
+                          id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Partie Unique ?</label>
+                      </div>
+                      <div class="form-check form-switch col-md-6">
+                        <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer"
+                          (click)="sousCompetion.f['canRegisterPlayer'].setValue(sousCompetion.form.get('canRegisterPlayer')?.value ? false:true);"
+                          role="switch" id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Can Register Player ?</label>
+                      </div>
                     </div>
 
                     <div class="form-group">
@@ -126,7 +119,6 @@
                         <option value="en">Anglais</option>
                       </select>
                     </div>
-
                     <div class="form-group">
                       <label for="parentCompetition">Parent Competition*</label>
                       <select type="text" name="parentCompetition" class="form-control"
@@ -137,29 +129,19 @@
                           location.name }} </option>
                       </select>
                     </div>
-
-                    <button (click)="backClicked()" class="btn btn-primary me-2"
-                            style="color: #035858 !important; background-color: #ffff !important;">
-                            <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
-                            </button>
-                            <!-- <button type="button"  style="margin-left: 10px;" class="btn btn-success" [disabled]="!sousCompetion.form.valid" *ngIf="!sousCompetion.creationDone"  (click)="doCreationCompetion()">
-                              <span *ngIf="!sousCompetion.waitingResponse" >Creer  <i class="fa fa-plus" aria-hidden="true"></i></span>
-                              <span *ngIf="sousCompetion.waitingResponse" > <img src="../../../../../assets/img/loader.gif" alt="" width="30px"> </span>
-                            </button>  -->
-                    <button type="button" style="margin-left: 10px;" class="btn btn-success"
-                      [disabled]="!sousCompetion.form.valid || loading" *ngIf="!sousCompetion.creationDone"
-                      (click)="doCreationCompetion()">
-                      <span *ngIf="!loading">Créer <i class="fa fa-plus" aria-hidden="true"></i></span>
-                      <span *ngIf="loading">
-                        <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-                      </span>
-                    </button>
+                    <div class="d-flex justify-content-start justify-content-lg-end">
+                      <button type="button" style="margin-left: 10px;" class="btn btn-success"
+                        [disabled]="!sousCompetion.form.valid || loading" *ngIf="!sousCompetion.creationDone"
+                        (click)="doCreationCompetion()">
+                        <span *ngIf="!loading">Créer <i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span *ngIf="loading">
+                          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </form>
-
-
-
             </div>
           </div>
         </div>

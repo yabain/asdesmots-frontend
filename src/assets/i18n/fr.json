@@ -128,6 +128,7 @@
     "competitionName": "Nom Compétition",
     "cancel": "Annuler",
     "actions": "Actions",
+    "update": "Mise à jour",
     "editMethode": "Modifier la méthode",
     "openYourMail1": "Ouvrez votre mail avec",
     "openYourMail2": "lequel vous vous êtes inscrit.",
@@ -356,6 +357,21 @@
         "editWord":"Modification du mot",
         "editLevel":"Modification du niveau",
         "selectLevel":"Sélectionnez le niveau"
+    },
+    "arcade": {
+        "arcade": "Arcade",
+        "arcades": "Arcades",
+        "type": "Type",
+        "online": "En ligne",
+        "offline": "Hors ligne",
+        "list": "Liste des arcades",
+        "new": "Nouveau",
+        "subscribers": "Abonnés"
+    },
+    "competition": {
+        "competition": "Compétition",
+        "competitions": "Compétitions",
+        "list": "Liste des compétitions"
     },
     "form": {
         "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",

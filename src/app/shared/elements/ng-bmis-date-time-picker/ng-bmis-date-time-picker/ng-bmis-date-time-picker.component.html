@@ -1,0 +1,28 @@
+<div class="date-time-input" (click)="toggleDateTimePicker()">
+    <input type="text" id="dateTimeInput" placeholder="Select date and time" readonly>
+    <span class="calendar-icon">📅</span>
+    
+    <div class="date-time-picker" [style.display]="dateTimePickerVisible ? 'block' : 'none'">
+      <div class="picker-header">
+        <div class="month-year-selector">
+          <select id="monthSelect" (change)="updateCalendar()"></select>
+          <select id="yearSelect" (change)="updateCalendar()"></select>
+        </div>
+      </div>
+      <div class="calendar">
+        <div class="weekdays">
+          <div class="weekday">Su</div>
+          <div class="weekday">Mo</div>
+          <div class="weekday">Tu</div>
+          <div class="weekday">We</div>
+          <div class="weekday">Th</div>
+          <div class="weekday">Fr</div>
+          <div class="weekday">Sa</div>
+        </div>
+        <div class="days"></div>
+      </div>
+      <div class="time-picker">
+        <input type="time" (change)="updateDisplay()">
+      </div>
+    </div>
+  </div>  

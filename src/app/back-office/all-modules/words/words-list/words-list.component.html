@@ -6,9 +6,9 @@
           <div class="row align-items-center">
             <div class="col">
               <!-- <h3 class="page-title">{{'words.word' | translate }}s</h3> -->
-              <ul class="breadcrumb">
+              <ul class="breadcrumb" *ngIf="level">
                 <li class="breadcrumb-item"><a [routerLink]="'/index'">{{'words.level' | translate }}</a></li>
-                <li class="breadcrumb-item active" *ngIf="level">{{ level.name }}</li>
+                <li class="breadcrumb-item active">{{ level.name }}</li>
               </ul>
             </div>
             <div class="col-auto">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="table-responsive">
-          <table datatable class="table table-stripped table-hover" *ngIf="!waitingResponse">
+          <table datatable [dtOptions]="dataTableTranslateService.dtOptions" class="table table-stripped table-hover" *ngIf="!waitingResponse">
             <thead class="thead-light">
               <tr>
                 <th>{{'words.word' | translate }}s</th>
@@ -94,6 +94,57 @@
               </tr>
             </tbody>
           </table>
+          <!-- <table datatable class="table table-stripped table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>{{'words.word' | translate }}s</th>
+                <th>{{'user.language' | translate}}</th>
+                <th>{{'user.creationDate' | translate}}</th>
+                <th class="text-end">{{ 'actions' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="!waitingResponse; else loading">
+                <ng-container *ngIf="wordsList?.length;else empty">
+                  <tr *ngFor="let word of wordsList; let i = index" (click)="wordData = word" data-bs-toggle="modal"
+                    data-bs-target="#details">
+                    <td>{{ word.name }}</td>
+                    <td>{{ word.type }}</td>
+                    <td>{{ word.createdAt | date: 'dd-mm-yyyy'}} at {{ word.createdAt | date: 'hh:mm'}}</td>
+                    <td class="text-end">
+                      <a class="btn btn-secondary me-2 text-secondary" style="background-color: #ffff !important;"
+                        (click)="speak(word)">
+                        <i class="fas fa-volume-up"></i>
+                      </a>
+                      <a class="btn btn-sm btn-white text-success me-2" (click)="updateForm(word)" data-bs-toggle="modal"
+                        data-bs-target="#edit"><i class="far fa-edit me-1"></i></a>
+                      <a (click)="tempId = word.firstName" data-bs-toggle="modal" data-bs-target="#delete_word"
+                        class="btn btn-sm btn-white text-danger me-2"><i class="far fa-trash-alt me-1"></i></a>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-template #empty>
+                  <tr>
+                    <td colspan="4" class="text-center">
+                      <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+                      <br>{{'words.noWords' | translate}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </ng-container>
+              <ng-template #loading>
+                <tr>
+                  <td colspan="4">
+                    <div class="row text-center">
+                      <div class="col-sm-12 text-center">
+                        <app-progress-indeterminate [type]=true></app-progress-indeterminate>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table> -->
         </div>
       </div>
     </div>

@@ -355,6 +355,15 @@
         "editLevel":"Level edit",
         "selectLevel":"Select the niveau"
     },
+    "arcade": {
+        "arcade":"Arcade",
+        "arcades":"Arcades",
+        "type": "Type",
+        "online": "Online",
+        "offline": "Offline",
+        "list":"Arcades list",
+        "new":"New"
+    },
     "form":{
         "passwordReset":"Your password have been successfully reset.",
         "passwordResetLinkSent":"A new password reset link has been sent to your address !",
@@ -389,5 +398,19 @@
       "unexpectedError":"An unexpected error occured.",
       "alreadyExists": "alrerady exists",
       "duplicatedEntry":"Duplicated entry"
+    },
+    "DATA_TABLE": {
+        "SEARCH": "Search",
+        "LENGTH_MENU": "Show _MENU_ entries",
+        "ZERO_RECORDS": "No matching records found",
+        "INFO": "Showing _START_ to _END_ of _TOTAL_ entries",
+        "INFO_EMPTY": "Showing 0 to 0 of 0 entries",
+        "INFO_FILTERED": "(filtered from _MAX_ total entries)",
+        "LOADING_RECORDS": "Loading...",
+        "PROCESSING": "Processing...",
+        "FIRST": "First",
+        "LAST": "Last",
+        "NEXT": "Next",
+        "PREVIOUS": "Previous"
     }
 }

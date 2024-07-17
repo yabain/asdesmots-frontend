@@ -9,6 +9,7 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,16 @@ export class ArcardeService {
   deleteDone: boolean = false;
   waitingResponseSuscrib: boolean = false;
   formUpdate: any;
-
+  headers = {
+    'Authorization': 'Bearer ' + this.api.getAccessToken(),
+    'Content-Type': 'application/json; charset=UTF-8'
+  }
   constructor(private api: ApiService,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private location: Location,
-    private languageService: TranslationService
+    private languageService: TranslationService,
+    private translate: TranslateService,
   ) { this.authorization = { 'Authorization': 'Bearer ' + this.api.getAccessToken() } }
 
   get f() {
@@ -322,24 +327,42 @@ export class ArcardeService {
     }
   }
 
-  deleteArcarde(id: string) {
-    console.log('id arcarde to delete', id);
-    /* this.waitingResponse = true;
-     this.deleteDone = false;
-     this.api.delete(Endpoint.DELETE_ARCARDE+id, this.authorization).subscribe((resp)=>{
-           this.waitingResponse = false;
-           this.deleteDone = true;
-           this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000});
-     }, (error)=>{
-       if (error.status == 500) {
-         this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-       } else if (error.status == 401) {
-         this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
-       } else {
-         this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
-       }
-       this.waitingResponse = false;
-     });*/
+  deleteArcarde(id: string): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      this.api.delete(Endpoint.DELETE_ARCARDE+id, this.headers)
+        .subscribe(response => {
+          this.translate.get('arcade.arcade').subscribe((word: string) => {
+            this.translate.get('successResponse.deleted').subscribe((message: string) => {
+              this.toastr.success(`${word} ${message}`, 'Error');
+            });
+          });
+          resolve(response);
+        }, error => {
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+          reject(error);
+        });
+    });
+    
+    // console.log('id arcarde to delete', id);
+    // this.waitingResponse = true;
+    //  this.deleteDone = false;
+    //  this.api.delete(Endpoint.DELETE_ARCARDE+id, this.authorization).subscribe((resp)=>{
+    //        this.waitingResponse = false;
+    //        this.deleteDone = true;
+    //        this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000});
+    //  }, (error)=>{
+    //    if (error.status == 500) {
+    //      this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
+    //    } else if (error.status == 401) {
+    //      this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
+    //    } else {
+    //      this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
+    //    }
+    //    this.waitingResponse = false;
+    //  });
   }
 
   getArcardeById(id: string) {

@@ -14,7 +14,10 @@ import { CreateArcardeComponent } from './create-arcarde/create-arcarde.componen
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
-
+import { SharedModule } from '../../shared/shared.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
     declarations: [
@@ -33,7 +36,10 @@ import { HttpLoaderFactory } from 'src/app/app.module';
         ReactiveFormsModule,
         FormsModule,
         DataTablesModule,
-
+        SharedModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
     ]
 })
 export class ArcardeModule { }

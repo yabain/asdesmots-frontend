@@ -149,7 +149,7 @@
     "seeMore": "Découvrir",
     "apercuArcarde":"Aperçu de toutes les arcardes existantes",
     "playLotto": "Commencer",
-    "showmore": "Montre plus",
+    "showmore": "Afficher les details",
     "startding":"Demarrer",
     "listsubscribers": "Liste des abonnés",
     "ifQuery": "Si vous avez des questions à propos de la loterie ou de quoi que ce soit d'autre!",
@@ -391,5 +391,19 @@
       "unexpectedError": "Une erreur inattendue s'est produite.",
       "alreadyExists": "existe déjà",
       "duplicatedEntry":"Entrée en double"
+    },
+    "DATA_TABLE": {
+        "SEARCH": "Rechercher",
+        "LENGTH_MENU": "Afficher _MENU_ entrées",
+        "ZERO_RECORDS": "Aucun enregistrement correspondant trouvé",
+        "INFO": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+        "INFO_EMPTY": "Affichage de 0 à 0 sur 0 entrées",
+        "INFO_FILTERED": "(filtré de _MAX_ entrées au total)",
+        "LOADING_RECORDS": "Chargement...",
+        "PROCESSING": "Traitement...",
+        "FIRST": "Premier",
+        "LAST": "Dernier",
+        "NEXT": "Suivant",
+        "PREVIOUS": "Précédent"
     }
   }

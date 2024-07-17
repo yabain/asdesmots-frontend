@@ -6,6 +6,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { State } from 'src/app/shared/entities/state.enum';
+import { DataTableTranslateService } from 'src/app/services/data-table-translate.service';
 
 @Component({
   selector: 'app-list-arcarde',
@@ -16,6 +17,7 @@ export class ListArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
   userID: string ='';
   gameState = State;
+  waiting: boolean = false;
 
   // @ViewChild('process_running_gameStarted') process_running_gameStarted: TemplateRef<any>;
 
@@ -27,6 +29,7 @@ export class ListArcardeComponent implements OnInit {
               public userServ:  UserService,
               private router: Router,
               private activedRouter: ActivatedRoute,
+              public dataTableTranslateService: DataTableTranslateService,
               private translationService: TranslationService,
               ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde();
                   this.translate.use(this.translationService.getCurrentLanguage());
@@ -90,7 +93,15 @@ export class ListArcardeComponent implements OnInit {
     }
    }
 
-   doDelete(){
+   delete(){
+    this.waiting = true;
+    this.arcadeServ.deleteArcarde(this.arcardeData._id)
+      .then(() => {
+        this.waiting = false;
+        // this.refreshList();
+        $('#cancel-btn00').click();
+      })
+      this
       this.arcadeServ.deleteArcarde(this.arcardeData._id);
    }
 

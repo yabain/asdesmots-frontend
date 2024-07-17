@@ -185,7 +185,6 @@ export class WordsService {
   }
 
   deleteWord(word: Word, gameLevelId: string): Promise<any> {
-
     return new Promise((resolve, reject) => {
       this.api.delete(`gamelevel/${gameLevelId}/words/${word._id}`, this.headers)
         .subscribe(response => {

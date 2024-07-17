@@ -23,6 +23,7 @@ export class ListCompetitionComponent implements OnInit {
   id_Arcarde : string = ''; //id arcade of the new register competion;
   formIdArcarde!: FormGroup;
   gameState = State;
+  waiting: boolean = false;
   userID: string = '';
 
   constructor(public sousCompetion: SousCompetitionService,
@@ -80,7 +81,7 @@ export class ListCompetitionComponent implements OnInit {
    goToCriteriasList(id: string){
       this.route.navigateByUrl('/undercompetition/competition/criterias/'+id);
   }
-
+  
   startCompetition(idCompetition: string){
         const id = this.arcardeSrv.getCompetitonArcardeID(idCompetition);
 
@@ -94,5 +95,9 @@ export class ListCompetitionComponent implements OnInit {
 
   listSuscriberCompetition(sousCompetion: any) {
 
+  }
+  
+  delete() {
+  
   }
 }

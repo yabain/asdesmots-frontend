@@ -8576,3 +8576,13 @@ ol, ul {
 .invalid-feedback {
 	display: block;
 }
+.custom-card { 
+	transition: all 0.3s ease; 
+	background-color: #f9f9f9;
+	border: none;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.custom-card:hover { 
+	box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}

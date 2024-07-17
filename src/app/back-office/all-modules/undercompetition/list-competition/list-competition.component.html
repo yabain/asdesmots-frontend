@@ -35,92 +35,76 @@ Page Wrapper
     </div>
 
     <div class="row" *ngIf="!arcardeSrv.waitingResponse">
-        <div class="card card-table">
-          <div class="card-header">
-            <h4 class="card-title">Competition List</h4>
-            <p class="card-text">
-                List of all existings competition.
-            </p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table datatable class="table table-stripped table-hover">
-                <thead class="thead-light">
-                  <tr>
-                    <th>{{'Competition Name' | translate }}</th>
-                    <th>{{'Competition Parent Name' | translate }}</th>
-                    <th>{{'Description' | translate }}</th>
-
-                    <th class="text-center">Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion"
-                         (click)="sousCompetitionSelctedData = sousCompetion" >
-                        <td>
-                              <span> {{ sousCompetion.name }} </span>
-                        </td>
-                        <td>
-                            {{ sousCompetion.parentCompetition | getParentName }}
-                        </td>
-                        <td>
-                              <span> {{ sousCompetion.description }} </span>
-                        </td>
-
-                        <td class="text-center">
-
-                          <div class="dropdown dropdown-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
-                              <a class="dropdown-item"
-                                  style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="listSuscriberCompetition(sousCompetion._id)">
-                                   <i class="fa fa-users" aria-hidden="true"></i>
-                                   <span style="margin-left: 5px;"> List of subscribers</span>
-                              </a>
-                              <a class="dropdown-item"  (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a>
-                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete" ><i class="far fa-trash-alt me-2"></i>
-                                 <span style="margin-left: 5px;">Delete</span>
-                              </a>
-                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i class="far fa-eye me-2"></i>
-                                 <span style="margin-left: 5px;">Show more</span>
-                              </a>
-                              <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
-
-                                <span style="margin-left: 5px;"> List of parts  </span>
-                              </a>
-                              <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
-                                 <span style="margin-left: 5px;">List of Criterias</span>
-                              </a>
-
-                              <div *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
-                              </div>
-                              <ng-template #process_running_gameStarted>
-                                <span style="color: green;" class="text-center dropdown-item">
-                                  Starting Competition...
-                                </span>
-                             </ng-template>
-
-                             <ng-template #process_running_down>
-                                <a class="dropdown-item"
-                                  *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
-                                  (click)="startCompetition(sousCompetion._id)"
-                                  style="cursor: pointer;" >
-
-                                    <i class="fa fa-play" aria-hidden="true"></i>
-                                    <span style="margin-left: 5px;"> Start Competition </span>
-                                </a>
-                             </ng-template>
-                            </div>
-                          </div>
-                        </td>
-                    </tr>
-                </tbody>
-              </table>
+    
+      <div *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion" class="col">
+        <div class="custom-card h-100">
+          <div class="card-body pb-0">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="mb-4">
+                <h5 class="card-title">{{ sousCompetion.name }}</h5>
+                <p class="card-text text-primary">{{ sousCompetion.parentCompetition | getParentName }}</p>
+                <p class="card-text">{{ sousCompetion.description | truncate:200 }}</p>
+              </div>
+              <div class="dropdown">
+                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <a class="dropdown-item"
+                      style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="listSuscriberCompetition(sousCompetion._id)">
+                       <i class="fa fa-users" aria-hidden="true"></i>
+                       <span style="margin-left: 5px;"> List of subscribers</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item"  (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete" ><i class="far fa-trash-alt me-2"></i>
+                      <span style="margin-left: 5px;">Delete</span>
+                   </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i class="far fa-eye me-2"></i>
+                      <span style="margin-left: 5px;">Show more</span>
+                   </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
+                      <span style="margin-left: 5px;"> List of parts  </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
+                      <span style="margin-left: 5px;">List of Criterias</span>
+                   </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          <!-- <div class="card-footer bg-transparent border-top-0 text-end" *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
+          </div> -->
+          <ng-template #process_running_gameStarted>
+            <p style="color: green;" class="text-center dropdown-item">
+              Starting Competition...
+            </p>
+         </ng-template>
+    
+         <ng-template #process_running_down>
+            <a class="dropdown-item"
+              *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
+              (click)="startCompetition(sousCompetion._id)"
+              style="cursor: pointer;" >
+    
+                <i class="fa fa-play" aria-hidden="true"></i>
+                <p style="margin-left: 5px;"> Start Competition </p>
+            </a>
+         </ng-template>
         </div>
+      </div>
+    
       </div>
     </div>
 </div>
@@ -128,32 +112,6 @@ Page Wrapper
 <div class="row" *ngIf="!sousCompetion.waitingResponse">
   <div class="col-sm-12">
     <router-outlet></router-outlet>
-  </div>
-</div>
-
-<div class="modal custom-modal fade" id="delete" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> Supprimer Competition </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-        </div>
-        <div class="modal-text text-center">
-          <p> Fonctionnalité non pris en charge ! </p>
-         <!-- <p>{{'wanTo' | translate }} supprimer :  << <b>{{ sousCompetitionSelctedData.name }}</b> >> ? </p>-->
-        </div>
-      </div>
-
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-          {{ 'close' | translate }}
-        </button>
-
-      </div>
-    </div>
   </div>
 </div>
 
@@ -313,6 +271,31 @@ Page Wrapper
           <button data-bs-dismiss="modal" class="btn btn-secondary">
               {{ 'close' | translate }}
           </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="delete" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-icon text-center mb-3">
+        <i class="fas fa-trash-alt text-danger"></i>
+        <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
+      </div>
+      <div class="modal-text text-center pb-3">
+        {{'confirmDeleteText' | translate }} <b>{{sousCompetitionSelctedData.name}} ?</b>  
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
+          {{'action.cancel' | translate }}
+        </button>
+        <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="delete()">
+          {{'action.delete' | translate }}
+        </button>
+        <button type="button" *ngIf="waiting" class="btn btn-danger" disabled>
+          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
+        </button>
       </div>
     </div>
   </div>

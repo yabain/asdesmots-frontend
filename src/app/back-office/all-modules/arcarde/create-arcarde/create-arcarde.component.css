@@ -1,0 +1,15 @@
+.bg-icon {
+    background-color: rgb(209, 209, 209);
+}
+
+.custom-card {
+    cursor: pointer;
+	border: 1px solid #c2c2c2 ;
+}
+.custom-card.active {
+	border: 1px solid #26af48 ;
+	background-color: #eafff3;
+}
+.custom-card.invalid {
+	border: 1px solid #dc3545 ;
+}

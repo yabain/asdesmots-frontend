@@ -8581,7 +8581,7 @@ ol, ul {
 	flex-direction: column;
 	transition: all 0.3s ease; 
 	background-color: #f9f9f9;
-	border: none;
+	border: 1px solid #fbfbfb ;
 	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	min-height: calc(100% - 20px);
@@ -8599,6 +8599,6 @@ ol, ul {
 	background-color: #f8f8f8;
 	border-top: 1px solid #ddd;
 }
-.custom-card .bg-success-light {
+.custom-card .competition-running {
 	cursor: wait;
 }

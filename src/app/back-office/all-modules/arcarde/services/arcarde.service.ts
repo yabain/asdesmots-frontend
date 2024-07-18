@@ -91,9 +91,9 @@ export class ArcardeService {
     this.formControlCreateArcarde = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      isOnlineGame: ['', Validators.required],
-      canRegisterPlayer: ['', Validators.required],
-      isFreeRegistrationPlayer: ['', Validators.required],
+      isOnlineGame: ['', Validators.requiredTrue],
+      canRegisterPlayer: ['', Validators.requiredTrue],
+      isFreeRegistrationPlayer: ['', Validators.requiredTrue],
       maxPlayersNumber: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
@@ -105,6 +105,10 @@ export class ArcardeService {
       Object.assign(this.newArcarde, data);
     });
 
+  }
+  
+  toggleCheckbox(control: string) {
+    this.formControlCreateArcarde.get(control)?.setValue(!this.formControlCreateArcarde.get(control)?.value);
   }
 
   initDefaultBooeleanValues() {

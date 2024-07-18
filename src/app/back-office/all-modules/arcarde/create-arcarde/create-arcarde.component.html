@@ -12,89 +12,119 @@
               <li class="breadcrumb-item active">{{ 'creation' | translate }}</li>
             </ul>
           </div>
-
-          <div class="row g-4">
-            <div class="card">
-              <!-- <div class="card-header text-center">
-                <h5> {{ 'createNewCompetition' | translate }} </h5>
-              </div> -->
-              <div class="card-body">
-                <form [formGroup]="arcadeServ.formControlCreateArcarde">
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                          <label for="name"> {{ 'name' | translate }} </label>
-                          <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                          [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
-                          >
+          
+          <form [formGroup]="arcadeServ.formControlCreateArcarde">
+            <div class="row g-4 pt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row px-0">
+                    <div class="col-12 col-md-4" (click)="arcadeServ.toggleCheckbox('isOnlineGame')">
+                      <div class="custom-card p-3"
+                          [ngClass]="{ 
+                            'active': arcadeServ.formControlCreateArcarde.get('isOnlineGame')?.value,
+                            'invalid': arcadeServ.f_Creation['isOnlineGame'].touched && arcadeServ.f_Creation['isOnlineGame'].invalid
+                          }"
+                        >
+                        <div class="card-body text-center pb-0">
+                          <h5 class="card-title">
+                            <p class="badge badge-pill bg-icon rounded-pill p-3">
+                              <i class="fa fa-wifi"></i>                    
+                            </p>
+                          </h5>
+                          <p class="card-text pt-3">Online Competition</p>
+                        </div>
                       </div>
-                      <div class="form-group">
-                          <label for="desc"> {{ 'description' | translate }} </label>
-                          <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
-                          >
-                      </div>
-                      <div class="form-group">
-                          <label for="maxPlayersNumber"> {{'maxPlayers' | translate }} </label>
-                          <input type="number" min="2" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
-                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
-                          >
-                      </div>
-                      <div class="form-group">
-                          <label for="endRegistrationDate"> {{'registrationEnd' | translate }} </label>
-                          <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
-                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
-                          >
-                      </div>
+                      <input class="d-none" type="checkbox" formControlName="isOnlineGame">
                     </div>
-                    <div class="col">
-                      <div class="form-group">
-                          <label for="startDate"> {{'startDate' | translate }} </label>
-                          <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
-                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
-                          >
+                    <div class="col-12 col-md-4" (click)="arcadeServ.toggleCheckbox('canRegisterPlayer')">
+                      <div class="custom-card p-3"
+                        [ngClass]="{ 
+                          'active': arcadeServ.formControlCreateArcarde.get('canRegisterPlayer')?.value,
+                          'invalid': arcadeServ.f_Creation['canRegisterPlayer'].touched && arcadeServ.f_Creation['canRegisterPlayer'].invalid
+                        }">
+                        <div class="card-body text-center pb-0">
+                          <h5 class="card-title">
+                            <p class="badge badge-pill bg-icon rounded-pill p-3">
+                              <i class="fa-solid fa-gamepad"></i>
+                            </p>
+                          </h5>
+                          <p class="card-text pt-3"> {{ 'registerPlayers' | translate }}</p>
+                        </div>
                       </div>
-                      <div class="form-group">
-                          <label for="endDate"> {{'endDate' | translate }} </label>
-                          <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
-                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
-                          >
+                      <input class="d-none" type="checkbox" formControlName="canRegisterPlayer">
+                    </div>
+                    <div class="col-12 col-md-4" (click)="arcadeServ.toggleCheckbox('isFreeRegistrationPlayer')">
+                      <div class="custom-card p-3"
+                        [ngClass]="{ 
+                          'active': arcadeServ.formControlCreateArcarde.get('isFreeRegistrationPlayer')?.value,
+                          'invalid': arcadeServ.f_Creation['isFreeRegistrationPlayer'].touched && arcadeServ.f_Creation['isFreeRegistrationPlayer'].invalid
+                        }">
+                        <div class="card-body text-center pb-0">
+                          <h5 class="card-title">
+                            <p class="badge badge-pill bg-icon rounded-pill p-3">
+                              <!-- <i class="fa fa-dollar"></i> -->
+                              <i class="fa-solid fa-comments-dollar"></i>
+                            </p>
+                          </h5>
+                          <p class="card-text text-center pt-3">{{'freeRegistration' | translate }}</p>
+                        </div>
                       </div>
-                      <!--<div class="form-check form-switch text-center">
-                          <input class="form-check-input" type="checkbox" formControlName="isOnlineGame" role="switch" id="flexSwitchCheckChecked">
-                          <label class="form-check-label" for="flexSwitchCheckChecked">Partie En ligne </label>
-                      </div>-->
-                      <div class="form-group">
+                      <input class="d-none" type="checkbox" formControlName="isFreeRegistrationPlayer">
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="name"> {{ 'name' | translate }} </label>
+                        <input type="text" name="name" class="form-control" formControlName="name" id="name"
+                          [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
+                        >
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="maxPlayersNumber"> {{'maxPlayers' | translate }} </label>
+                        <input type="number" min="2" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
+                        >
+                      </div>
+                      <div class="form-group col-12">
+                          <label for="desc"> {{ 'description' | translate }} </label>
+                          <textarea type="text" name="desc" class="form-control" formControlName="description" id="desc"
+                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
+                          ></textarea>
+                      </div>
+                      <div class="form-group col-md-6">
                         <label for="startRegistrationDate">{{'recordingStart' | translate }} </label>
                         <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
                         [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
                         >
                       </div>
-                      <div class="row col-md-12 m-1">
-                        <div class="form-check form-switch col-md-5">
-                            <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecke">
-                            <label class="form-check-label" for="flexSwitchCheckChecke"> {{ 'registerPlayers' | translate }} ?</label>
-                        </div>
-                        <div class="form-check form-switch col-md-7">
-                            <input class="form-check-input" type="checkbox" formControlName="isFreeRegistrationPlayer" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked"> {{'freeRegistration' | translate }} ?</label>
-                        </div>
+                      <div class="form-group col-md-6">
+                          <label for="endRegistrationDate"> {{'registrationEnd' | translate }} </label>
+                          <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
+                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
+                          >
                       </div>
-                      <!-- <button (click)="backClicked()" class="btn btn-primary me-2"
-                      style="color: #035858 !important; background-color: #ffff !important;">
-                      <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
-                      </button> -->
-                    </div>
-                    <div class="d-flex justify-content-end">
-                      <button type="button" class="btn btn-primary" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
-                        <span *ngIf="!arcadeServ.waitingResponse"> {{ 'create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
-                        <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-                      </button>
-                    </div>
+                      <div class="form-group col-md-6">
+                          <label for="startDate"> {{'startDate' | translate }} </label>
+                          <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
+                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
+                          >
+                      </div>
+                      <div class="form-group col-md-6">
+                          <label for="endDate"> {{'endDate' | translate }} </label>
+                          <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
+                          [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
+                          >
+                      </div>
+                      <div class="col-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
+                          <span *ngIf="!arcadeServ.waitingResponse"> {{ 'create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                          <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
+                        </button>
+                      </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>

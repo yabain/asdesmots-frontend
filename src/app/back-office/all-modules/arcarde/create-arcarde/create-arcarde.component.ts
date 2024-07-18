@@ -6,6 +6,7 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../services/arcarde.service';
 import { Location } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-arcarde',
@@ -14,34 +15,42 @@ import { Location } from '@angular/common';
 })
 export class CreateArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
-  constructor(public arcadeServ: ArcardeService, 
-              private translate: TranslateService,
-              public userServ:  UserService,
-              private router: Router,
-              private location: Location,
-              private translationService: TranslationService,  
-              ) { 
-                  this.translate.use(this.translationService.getCurrentLanguage());
-                  this.arcadeServ.initFormControl(); 
-                  this.arcadeServ.initFormCreationArcarde()}
+  createForm: FormGroup;
+  constructor(
+    public arcadeServ: ArcardeService, 
+      private translate: TranslateService,
+      public userServ:  UserService,
+      private router: Router,
+      private location: Location,
+      private fb: FormBuilder,
+      private translationService: TranslationService,  
+      ) { 
+      this.translate.use(this.translationService.getCurrentLanguage());
+      this.arcadeServ.initFormControl(); 
+      this.arcadeServ.initFormCreationArcarde()
+    }
 
   ngOnInit(): void {
+    this.createForm = this.fb.group({
+      isFreeRegistrationPlayer:[''],
+      type:[''],
+      canRegisterPlayer:[''],
+    })
   }
 
   createArcarde(){
     if(this.arcadeServ.formControlCreateArcarde.valid){
       this.arcadeServ.verificationAndCreateNewArcarde();
     }
-   }
+  }
 
-    resetFormCreation(){
-      this.arcadeServ.formControlCreateArcarde.reset();
-      this.arcadeServ.isCreationDone = false;
-   }
+  resetFormCreation(){
+    this.arcadeServ.formControlCreateArcarde.reset();
+    this.arcadeServ.isCreationDone = false;
+  }
    
-   backClicked(){
-      this.resetFormCreation();
-      this.location.back();
-   }
-
+  backClicked(){
+    this.resetFormCreation();
+    this.location.back();
+  }
 }

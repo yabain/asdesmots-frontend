@@ -85,12 +85,10 @@ Page Wrapper
             </div>
           </div>
           <div class="card-footer bg-transparent border-top-0 text-end">
-            <p class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-primary-light' }}">
-              <a class="dropdown-item"
-                *ngIf="sousCompetion.gameState !== gameState.RUNNING"
+            <p class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light competition-running' : 'badge badge-pill bg-primary-light' }}">
+              <a *ngIf="sousCompetion.gameState !== gameState.RUNNING"
                 (click)="startCompetition(sousCompetion._id)"
-                style="cursor: pointer;"
-              >
+                style="cursor: pointer;">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </a>
               <i *ngIf="sousCompetion.gameState === gameState.RUNNING" class="fa fa-pause" aria-hidden="true"></i>

@@ -36,8 +36,8 @@ Page Wrapper
 
     <div class="row" *ngIf="!arcardeSrv.waitingResponse">
     
-      <div *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion" class="col">
-        <div class="custom-card h-100">
+      <div *ngFor="let sousCompetion of arcardeSrv.listUnderCompetion" class="col-12 col-md-4 col-lg-3">
+        <div class="custom-card">
           <div class="card-body pb-0">
             <div class="d-flex justify-content-between align-items-start">
               <div class="mb-4">
@@ -83,6 +83,18 @@ Page Wrapper
                 </ul>
               </div>
             </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 text-end">
+            <p class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-primary-light' }}">
+              <a class="dropdown-item"
+                *ngIf="sousCompetion.gameState !== gameState.RUNNING"
+                (click)="startCompetition(sousCompetion._id)"
+                style="cursor: pointer;"
+              >
+                <i class="fa fa-play" aria-hidden="true"></i>
+              </a>
+              <i *ngIf="sousCompetion.gameState === gameState.RUNNING" class="fa fa-pause" aria-hidden="true"></i>
+            </p>
           </div>
           <!-- <div class="card-footer bg-transparent border-top-0 text-end" *ngIf="sousCompetion.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
           </div> -->

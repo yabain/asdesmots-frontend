@@ -41,13 +41,14 @@
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div *ngFor="let arcarde of arcadeServ.listArcardeUser" class="col">
-          <div class="custom-card h-100">
+      <div class="row">
+        <div *ngFor="let arcarde of arcadeServ.listArcardeUser" class="col-12 col-md-4 col-lg-3">
+          <div class="custom-card">
             <div class="card-body pb-0">
               <div class="d-flex justify-content-between align-items-start">
                 <div class="mb-0">
                   <h5 class="card-title">{{ arcarde.name }}</h5>
+                  <p></p>
                   <p class="card-text">{{ arcarde.description | truncate:200 }}</p>
                 </div>
                 <div class="dropdown">
@@ -101,7 +102,7 @@
               </div>
             </div>
             <div class="card-footer bg-transparent border-top-0 text-end">
-              <p class="btn btn-sm  {{ arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' }}">
+              <p class="btn btn-sm bottom-0 {{ arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' }}">
                 {{ (arcarde.isOnlineGame ? 'arcade.online': 'arcade.offline') | translate }}
               </p>
             </div>

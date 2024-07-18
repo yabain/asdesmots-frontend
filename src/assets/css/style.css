@@ -8577,12 +8577,28 @@ ol, ul {
 	display: block;
 }
 .custom-card { 
+	display: flex;
+	flex-direction: column;
 	transition: all 0.3s ease; 
 	background-color: #f9f9f9;
 	border: none;
 	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	min-height: calc(100% - 20px);
+	margin-bottom: 20px;
 }
 .custom-card:hover { 
 	box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.custom-card .card-body {
+	flex: 1;
+	padding: 16px;
+}
+.custom-card .card-footer {
+	padding: 16px;
+	background-color: #f8f8f8;
+	border-top: 1px solid #ddd;
+}
+.custom-card .bg-success-light {
+	cursor: wait;
 }

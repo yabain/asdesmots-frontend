@@ -91,9 +91,9 @@ export class ArcardeService {
     this.formControlCreateArcarde = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      isOnlineGame: ['', Validators.requiredTrue],
-      canRegisterPlayer: ['', Validators.requiredTrue],
-      isFreeRegistrationPlayer: ['', Validators.requiredTrue],
+      isOnlineGame: [, Validators.requiredTrue],
+      canRegisterPlayer: [, Validators.requiredTrue],
+      isFreeRegistrationPlayer: [, Validators.requiredTrue],
       maxPlayersNumber: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],

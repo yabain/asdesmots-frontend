@@ -364,7 +364,15 @@
         "offline": "Offline",
         "list":"Arcades list",
         "new":"New",
-        "subscribers":"Subscribers"
+        "subscribers":"Subscribers",
+        "free":"Free",
+        "paid":"Paid",
+        "visible":"Visible",
+        "hidden":"Hidden",
+        "competitionType": "Competition Type",
+        "visibility": "Visibility",
+        "registrationType": "Registration type",
+        "callToAction": "Click on the card if you want to update the value of this item."
     },
     "competition": {
         "competition":"Competition",

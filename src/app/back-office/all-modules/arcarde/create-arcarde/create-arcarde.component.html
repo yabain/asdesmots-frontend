@@ -25,13 +25,24 @@
                             'invalid': arcadeServ.f_Creation['isOnlineGame'].touched && arcadeServ.f_Creation['isOnlineGame'].invalid
                           }"
                         >
+                        <div class="card-header">
+                          {{ 
+                            (arcadeServ.formControlCreateArcarde.get('isOnlineGame')?.value ?
+                            'arcade.online' : 'arcade.offline') | translate
+                          }}
+                        </div>
                         <div class="card-body text-center pb-0">
                           <h5 class="card-title">
                             <p class="badge badge-pill bg-icon rounded-pill p-3">
-                              <i class="fa fa-wifi"></i>                    
+                              <i class="fa fa-gamepad"></i>                    
                             </p>
                           </h5>
-                          <p class="card-text pt-3">Online Competition</p>
+                          <h5 class="card-text pt-3">
+                            {{ 'arcade.competitionType' | translate }}
+                          </h5>
+                          <span class="text-muted">
+                            {{ 'arcade.callToAction' | translate }}
+                          </span>
                         </div>
                       </div>
                       <input class="d-none" type="checkbox" formControlName="isOnlineGame">
@@ -42,13 +53,24 @@
                           'active': arcadeServ.formControlCreateArcarde.get('canRegisterPlayer')?.value,
                           'invalid': arcadeServ.f_Creation['canRegisterPlayer'].touched && arcadeServ.f_Creation['canRegisterPlayer'].invalid
                         }">
+                        <div class="card-header">
+                          {{ 
+                            (arcadeServ.formControlCreateArcarde.get('canRegisterPlayer')?.value ?
+                            'arcade.visible' : 'arcade.hidden') | translate
+                          }}
+                        </div>
                         <div class="card-body text-center pb-0">
                           <h5 class="card-title">
                             <p class="badge badge-pill bg-icon rounded-pill p-3">
-                              <i class="fa-solid fa-gamepad"></i>
+                              <i class="fa-solid fa-eye"></i>
                             </p>
                           </h5>
-                          <p class="card-text pt-3"> {{ 'registerPlayers' | translate }}</p>
+                          <h5 class="card-text pt-3">
+                            {{ 'arcade.visibility' | translate }}
+                          </h5>
+                          <span class="text-muted">
+                            {{ 'arcade.callToAction' | translate }}
+                          </span>
                         </div>
                       </div>
                       <input class="d-none" type="checkbox" formControlName="canRegisterPlayer">
@@ -59,6 +81,12 @@
                           'active': arcadeServ.formControlCreateArcarde.get('isFreeRegistrationPlayer')?.value,
                           'invalid': arcadeServ.f_Creation['isFreeRegistrationPlayer'].touched && arcadeServ.f_Creation['isFreeRegistrationPlayer'].invalid
                         }">
+                        <div class="card-header">
+                          {{ 
+                            (arcadeServ.formControlCreateArcarde.get('isFreeRegistrationPlayer')?.value ?
+                            'arcade.free' : 'arcade.paid') | translate
+                          }}
+                        </div>
                         <div class="card-body text-center pb-0">
                           <h5 class="card-title">
                             <p class="badge badge-pill bg-icon rounded-pill p-3">
@@ -66,7 +94,12 @@
                               <i class="fa-solid fa-comments-dollar"></i>
                             </p>
                           </h5>
-                          <p class="card-text text-center pt-3">{{'freeRegistration' | translate }}</p>
+                          <h5 class="card-text pt-3">
+                            {{ 'arcade.registrationType' | translate }}
+                          </h5>
+                          <span class="text-muted">
+                            {{ 'arcade.callToAction' | translate }}
+                          </span>
                         </div>
                       </div>
                       <input class="d-none" type="checkbox" formControlName="isFreeRegistrationPlayer">

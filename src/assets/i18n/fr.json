@@ -366,7 +366,15 @@
         "offline": "Hors ligne",
         "list": "Liste des arcades",
         "new": "Nouvelle",
-        "subscribers": "Abonnés"
+        "subscribers": "Abonnés",
+        "free": "Gratuit",
+        "paid": "Payant",
+        "visible": "Visible",
+        "hidden": "Non visible",
+        "competitionType": "Type de compétition",
+        "visibility": "Visibilité",
+        "registrationType": "Type d'inscription",
+        "callToAction": "Cliquez sur la carte si vous souhaitez modifier la valeur de cet élément."
     },
     "competition": {
         "competition": "Compétition",

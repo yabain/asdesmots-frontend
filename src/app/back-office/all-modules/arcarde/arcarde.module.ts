@@ -15,6 +15,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { SharedModule } from '../../shared/shared.module';
+import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { SharedModule } from '../../shared/shared.module';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
+        NgBmisDateTimePickerModule
     ]
 })
 export class ArcardeModule { }

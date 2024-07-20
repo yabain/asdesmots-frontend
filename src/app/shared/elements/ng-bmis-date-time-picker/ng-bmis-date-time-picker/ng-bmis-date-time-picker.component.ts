@@ -11,7 +11,7 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
   selectedDate = new Date();
   months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   isDropdownAbove = false;
-  inputElement: any;
+  dateTimeInput: any;
   dateTimePicker: any;
   calendarIcon: any;
   daysContainer: any;
@@ -53,11 +53,11 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
   initializePicker() {
     
     const uniqueDpInputId = `datetime-picker-input-${Math.random().toString(36).substr(2, 9)}`;
-    this.inputElement = this.el.nativeElement.querySelector('input');
-    this.renderer.setAttribute(this.inputElement, 'id', uniqueDpInputId);
+    this.dateTimeInput = this.el.nativeElement.querySelector('input');
+    this.renderer.setAttribute(this.dateTimeInput, 'id', uniqueDpInputId);
     this.dateTimePicker = document.getElementById(this.dateTimePickerId) as HTMLSelectElement;
     this.calendarIcon = document.getElementById(this.calendarIconId) as HTMLElement;
-    this.dateTimePicker = document.getElementById(this.dateTimePickerId) as HTMLElement;
+    // this.dateTimePicker = document.getElementById(this.dateTimePickerId) as HTMLElement;
     this.daysContainer = document.getElementById(this.daysContainerId) as HTMLElement;
     this.timeInput = document.getElementById(this.timeInputId) as HTMLInputElement;
     this.monthSelect = document.getElementById(this.monthSelectId) as HTMLSelectElement;
@@ -143,7 +143,7 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
 
     const updateDisplay = () => {
       updateCalendar();
-      this.inputElement.value = `${this.selectedDate.toLocaleDateString()} ${this.timeInput.value || '00:00'}`;
+      this.dateTimeInput.value = `${this.selectedDate.toLocaleDateString()} ${this.timeInput.value || '00:00'}`;
     };
 
     const toggleDateTimePicker = () => {
@@ -159,7 +159,7 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
     this.yearSelect.addEventListener('change', updateCalendar);
 
     document.addEventListener('click', (event) => {
-      if (!this.dateTimePicker.contains(event.target as Node) && event.target !== this.calendarIcon && event.target !== this.inputElement) {
+      if (!this.dateTimePicker.contains(event.target as Node) && event.target !== this.calendarIcon && event.target !== this.dateTimeInput) {
         this.dateTimePicker.style.display = 'none';
       }
     });
@@ -170,23 +170,21 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
   }
 
   adjustDropdownPosition() {
-    const dateTimePicker = document.querySelector('.date-time-picker') as HTMLElement;
-    const dateTimeInput = document.getElementById('dateTimeInput') as HTMLInputElement;
 
-    const inputRect = dateTimeInput?.getBoundingClientRect();
-    const pickerRect = dateTimePicker?.getBoundingClientRect();
+    const inputRect = this.dateTimeInput.getBoundingClientRect();
+    const pickerRect = this.dateTimePicker.getBoundingClientRect();
 
-    const spaceBelow = window.innerHeight - inputRect?.bottom;
-    const spaceAbove = inputRect?.top;
+    const spaceBelow = window.innerHeight - inputRect.bottom;
+    const spaceAbove = inputRect.top;
 
     if (spaceBelow < pickerRect.height && spaceAbove > pickerRect.height) {
       this.isDropdownAbove = true;
-      dateTimePicker.style.top = 'auto';
-      dateTimePicker.style.bottom = 'calc(100% + 5px)';
+      this.dateTimePicker.style.top = 'auto';
+      this.dateTimePicker.style.bottom = 'calc(100% + 5px)';
     } else {
       this.isDropdownAbove = false;
-      dateTimePicker.style.top = 'calc(100% + 5px)';
-      dateTimePicker.style.bottom = 'auto';
+      this.dateTimePicker.style.top = 'calc(100% + 5px)';
+      this.dateTimePicker.style.bottom = 'auto';
     }
   }
 }

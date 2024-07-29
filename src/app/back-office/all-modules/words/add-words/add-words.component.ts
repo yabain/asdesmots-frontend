@@ -10,6 +10,8 @@ import { LevelService } from 'src/app/shared/services/level/level.service';
 import { WordsService } from 'src/app/shared/services/words/words.service';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 import { Location } from '@angular/common';
+import { WordDataService } from '../word-data.service';
+import { Level } from 'src/app/shared/entities/level';
 
 @Component({
   selector: 'app-add-words',
@@ -18,13 +20,19 @@ import { Location } from '@angular/common';
 })
 export class AddWordsComponent implements OnInit {
 
-
   public pipe = new DatePipe("en-US");
-  public wordEnForm!: FormGroup;
-  public wordFrForm!: FormGroup;
-  levelList?: any = '';
+  public wordForm!: FormGroup;
+  levelList: [] = [];
+  allWordsLevels?: any;
   addingWords: boolean = false;
-  waitingResponse = false
+  submitted: boolean = false;
+  waiting = false;
+  level: Level;
+  minDescLength: number = 4;
+  wordTypes = [
+    {name: "Francais", value: 'fr'},
+    {name: "English", value: 'en'}
+  ]
 
   constructor(public router: Router,
     private toastr: ToastrService,
@@ -33,21 +41,15 @@ export class AddWordsComponent implements OnInit {
     private levelService: LevelService,
     private wordService: WordsService,
     private translationService: TranslationService,
-    private errorsService: ErrorsService,
+    private wordDataService: WordDataService,
     private location: Location) {
-    this.waitingResponse = true;
-
     if (!localStorage.getItem('levels-list')) {
-      this.levelService.getAllLevels()
-        .then(() => {
-          this.levelList = JSON.parse(localStorage.getItem('levels-list'));
-          console.log('levelList good: ', this.levelList);
-          this.waitingResponse = false;
-        });
+      this.wordDataService.getLevels()
     }
     else {
-          this.levelList = JSON.parse(localStorage.getItem('levels-list'));
-      this.waitingResponse = false;
+      const data = JSON.parse(localStorage.getItem('levels-list'));
+      this.levelList = data.levels;
+      this.allWordsLevels = data.levels;
     }
   }
 
@@ -56,37 +58,25 @@ export class AddWordsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.wordDataService.levels$.subscribe((data: any) => {
+      this.levelList = data.levels;
+    })
+    this.wordDataService.currentLevel$.subscribe((value: any) => {
+      this.level = value;
+    })
     this.translate.use(this.translationService.getCurrentLanguage());
     this.scrollToTop();
-
-    this.wordEnForm = this.formLog.group({
+    this.wordForm = this.formLog.group({
       'name': ['', Validators.required
       ],
-      'description': ['', Validators.compose([
+      'description': ['',[
         Validators.required,
-        Validators.minLength(4)])
+        Validators.minLength(4)]
       ],
-      'gameLevelId': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)])
+      'gameLevelId': [this.level?._id, Validators.compose([
+        Validators.required])
       ],
-      'type': ['en', Validators.required
-      ]
-    });
-
-    this.wordFrForm = this.formLog.group({
-      'name': ['', Validators.required
-      ],
-      'description': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)])
-      ],
-      'gameLevelId': ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(4)])
-      ],
-      'type': ['fr', Validators.required
-      ]
+      'type': [, Validators.required]
     });
   }
 
@@ -99,72 +89,36 @@ export class AddWordsComponent implements OnInit {
     });
   }
 
-
+  nameChanged() {
+    delete this.wordForm.controls['name'].errors?.['used'];
+  }
+  
   addWords() {
-    if (this.wordEnForm.invalid && this.wordFrForm.invalid) {
-      this.toastr.error('The form is invalid', 'Infalid form', { timeOut: 10000 });
+    if (this.wordForm.invalid) 
       return;
-    } else {
-      console.log("les informations du mot envoyé: ", this.wordFrForm.value);
-      this.wordService.createWord([this.wordEnForm.value, this.wordFrForm.value])
-      .then(() => {
-              console.log("mes tableaux: ", this.wordEnForm.value, this.wordFrForm.value)
-              this.addingWords = false;
-              this.toastr.success('French word was added', 'Done', { timeOut: 10000 });
-              // this.wordFrForm.reset();
-            })
-            .catch((error) => {
-              // console.log('fr form: ', this.wordFrForm.value);
-              this.errorsService.errorsInformations(error, 'add french word');
-              this.addingWords = false;
-            });
-    }
-
-    // if (this.wordEnForm.valid) {
-    //   this.addingWords = true;
-    //   this.wordService.createWord(this.wordEnForm.value, this.wordEnForm.value.gameLevelId)
-    //     .then(() => {
-    //       this.levelService.getAllLevels(true);
-    //       this.addingWords = false;
-    //       this.toastr.success('English word was added', 'Done', { timeOut: 10000 });
-    //       this.wordEnForm.reset(); // reset form after submit
-    //     setTimeout(() => {location.reload();}, 1000);
-    //     })
-    //     .catch((error) => {
-    //       this.errorsService.errorsInformations(error, 'add english word');
-    //       // console.log('en form: ', this.wordEnForm.value);
-    //       this.addingWords = false;
-    //     });
-    // }
-
-    // if (this.wordFrForm.valid) {
-    //   this.addingWords = true;
-    //   this.wordService.createWord(this.wordFrForm.value, this.wordFrForm.value.gameLevelId)
-    //     .then(() => {
-    //       this.addingWords = false;
-    //       this.toastr.success('French word was added', 'Done', { timeOut: 10000 });
-    //       this.wordFrForm.reset();
-    //     })
-    //     .catch((error) => {
-    //       // console.log('fr form: ', this.wordFrForm.value);
-    //       this.errorsService.errorsInformations(error, 'add french word');
-    //       this.addingWords = false;
-    //     });
-    // }
-
-    // this.removeWordListInLevel();
-    // this.levelService.getAllLevels(true);
+      
+    this.submitted = true;
+    this.waiting = true;
+    this.wordService.createWord(this.wordForm.value)
+    .then(() => {
+      this.wordDataService.listWordBylevel(this.wordForm.get('gameLevelId')?.value);
+      this.addingWords = false;
+      this.submitted = false;
+      this.waiting = false;
+      $('#create-cancel-btn').click();
+      this.wordForm.reset();
+    })
+    .catch((error) => {
+      if(error.includes('Word already exists') || error.errors?.alreadyUsed)
+        this.wordForm.controls['name'].setErrors({ used: true });
+      this.addingWords = false;
+      this.submitted = false;
+      this.waiting = false;
+    });
   }
-
-  removeWordListInLevel() {
-    for (let i = 0; i < this.levelList.length; i++) {
-      // console.log("test id key", this.levelList[i]._id);
-      localStorage.removeItem(this.levelList[i]._id);
-    }
-  }
-
+  
   get f() {
-    return this.wordEnForm.controls;
+    return this.wordForm.controls;
   }
 
   backClicked() {

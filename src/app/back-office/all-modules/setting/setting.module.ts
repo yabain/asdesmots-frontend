@@ -19,13 +19,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     SettingRoutingModule,
     ModalModule.forRoot(),
     RouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

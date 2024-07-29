@@ -9,12 +9,10 @@ import { AddWordsComponent } from './add-words/add-words.component';
 import { EditWordsComponent } from './edit-words/edit-words.component';
 import { DataTablesModule } from "angular-datatables";
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
-import { HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { WordDetailsModule } from '../../shared/word-details/word-details.module';
+import { SidemenuComponent } from "./sidemenu/sidemenu.component";
 
 @NgModule({
     declarations: [
@@ -22,7 +20,6 @@ import { WordDetailsModule } from '../../shared/word-details/word-details.module
         WordsListComponent,
         AddWordsComponent,
         EditWordsComponent,
-        SidemenuComponent
     ],
     imports: [
         CommonModule,
@@ -33,14 +30,9 @@ import { WordDetailsModule } from '../../shared/word-details/word-details.module
         DataTablesModule,
         ModalModule.forRoot(),
         ProgressIndeterminateModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        WordDetailsModule
+        TranslateModule,
+        WordDetailsModule,
+        SidemenuComponent,
     ]
 })
 export class WordsModule {}

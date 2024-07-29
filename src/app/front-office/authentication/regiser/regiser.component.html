@@ -153,7 +153,7 @@
                 <div class="form-group">
                   <label class="form-control-label">{{ 'user.emailAddress' | translate }}<span class="text-danger">*</span></label>
                   <input class="form-control" type="email" formControlName="field_email"
-                    placeholder="{{ 'enterYour' | translate }}{{ 'user.lastName' | translate }}" id="field_email"
+                    placeholder="{{ 'enterYour' | translate }}{{ 'user.email' | translate }}" id="field_email"
                     [ngClass]="{
                       'is-invalid': form2.get('field_email').invalid && (f2Submitted || form2.get('field_email').touched), 'invalid-input': form2.get('field_email').invalid && (f2Submitted || form2.get('field_email').touched), 'valid-input': form2.get('field_email').valid,
                       'initial-input': form2.get('field_email').errors?.required
@@ -269,7 +269,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="mailSended">
+      <div *ngIf="mailSended" class="post-registration">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -279,10 +279,10 @@
 
 
         <!-- Header -->
-        <header class="w3-container w3-theme w3-padding" id="myHeader"
+        <header class="w3-container w3-theme" id="myHeader"
           style="background-color: #fff !important; border-radius: 10px;">
           <div class="w3-center">
-            <h1 class="w3-xxxlarge w3-animate-bottom">{{ 'congrate' | translate }} !</h1>
+            <h3 class="w3-xxxlarge w3-animate-bottom">{{ 'congrate' | translate }} !</h3>
             <h4>{{ 'anonceLastStep' | translate }}</h4>
           </div>
         </header>
@@ -308,34 +308,30 @@
 
         <div class="w3-row-padding w3-center w3-margin-top">
           <div class="w3-third">
-            <div class="w3-card w3-container">
-              <h3>{{ 'step' | translate }}</h3><br>
+            <div class="w3-card">
+              <h3>{{ 'step' | translate }}</h3>
               <div class="counter">1</div>
-              <p>{{ 'openYourMail1' | translate }} </p>
-              <p>{{ 'openYourMail2' | translate }}</p>
+              <p>{{ 'openYourMail1' | translate }} {{ 'openYourMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container">
-              <h3>{{ 'step' | translate }}</h3><br>
+            <div class="w3-card">
+              <h3>{{ 'step' | translate }}</h3>
               <div class="counter">2</div>
-              <p>{{ 'openConfirmMail1' | translate }} </p>
-              <p>{{ 'openConfirmMail2' | translate }}</p>
+              <p>{{ 'openConfirmMail1' | translate }} {{ 'openConfirmMail2' | translate }}</p>
             </div>
           </div>
 
           <div class="w3-third">
-            <div class="w3-card w3-container">
-              <h3>{{ 'step' | translate }}</h3><br>
+            <div class="w3-card">
+              <h3>{{ 'step' | translate }}</h3>
               <div class="counter">3</div>
-              <p>{{ 'clickConfirm1' | translate }} </p>
-              <p>{{ 'clickConfirm2' | translate }}</p>
-              <p>{{ 'clickConfirm3' | translate }}</p>
+              <p>{{ 'clickConfirm1' | translate }} {{ 'clickConfirm2' | translate }} {{ 'clickConfirm3' | translate }}</p>
             </div>
           </div>
         </div>
-        <div class="w3-padding-32" style="color: #fff;"> {{ 'and' | translate }}
+        <div style="color: #fff;"> {{ 'and' | translate }}
           <a [routerLink]="'/login'">
             <button class="w3-btn w3-xlarge login-nav" onclick="document.getElementById('id01').style.display='block'"
               style="font-weight:900; margin-left: 10px;"> {{ 'connexion' | translate }}</button>

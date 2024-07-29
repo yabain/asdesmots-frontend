@@ -78,16 +78,26 @@ export class AuthService {
 
       this.api.post('user/auth/reset-password-link', params, headers)
         .subscribe((response: any) => {
-          // this.router.navigate(['/login']);
           if (response) {
-            console.log('Success00: ', response);
-            // this.router.navigate(['login']);
-            this.toastr.success('A password reset link has been sent to your email.', 'Success');
+            this.translate.get('form.passwordResetLinkSent').subscribe((res: string) => {
+              this.toastr.success(res, 'Success');
+            });
             resolve(response);
             return 0;
           }
         }, (error: any) => {
-          this.errorsService.errorsInformations(error, 'reset password');
+          switch(error.status) {
+            case(404) :
+              this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
+                this.toastr.error(res, 'error');
+              });
+              break;
+            default:
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+          }
           reject(error);
         });
     });
@@ -111,21 +121,16 @@ export class AuthService {
 
       this.api.put('user/auth/reset-password', params, header)
         .subscribe((response: any) => {
-          if (response) {
-            if (response.statusCode == 200) {
-              this.toastr.success('Your password has been updated successfully !', 'Success');
-              this.router.navigate(['/login']);
-              resolve(response);
-              return 0;
-            }
-            reject(response);
-            return 0;
-          }
-          reject(response);
-          return 0;
+          this.translate.get('form.passwordReset').subscribe((res: string) => {
+            this.toastr.success(res, 'Success');
+          });
+          this.router.navigate(["/login"]);
+          return resolve(response);
         }, (error: any) => {
-          this.errorsService.errorsInformations(error, "reset password");
-          reject(error);
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+          return reject(error);
         });
     });
 
@@ -145,7 +150,9 @@ export class AuthService {
         .subscribe(result => {
           localStorage.clear();
           this.isLoggedIn = false;
-          this.toastr.success('Your session has been disconnected!', 'Success', { timeOut: 5000 });
+          this.translate.get('form.loggedOut').subscribe((res: string) => {
+            this.toastr.success(res, 'Success');
+          });
           this.router.navigate(["/login"]);
           resolve(result);
         }, (error: any) => {
@@ -186,31 +193,27 @@ export class AuthService {
         .subscribe((response: any) => {
           if (response) {
             if (response.statusCode === 201) {
-              this.registResult = true;
-              // this.router.navigate(['login']);
-              this.toastr.success("Your account has been created. You will receive a confirmation email.", 'Success');
+              this.translate.get('form.accountCreated').subscribe((res: string) => {
+                this.toastr.success(res, 'Success');
+              });
             }
             resolve(response);
             return 0;
           }
         }, (error: any) => {
-          this.toastr.error(error.message, 'Error', {timeOut: 5000});
-          this.errorsService.errorsInformations(error, 'create account');
-          if (error.status == 400) {
-            this.registResult = false;
-            this.toastr.error(error.message, 'Error', {timeOut: 5000});
-            reject(error.message);
-          } else if (error.status == 409) {
-            this.registResult = false;
-            this.toastr.error("This email address is already used.", 'Error');
-            reject(error.message);
-          } else if (error.status == 500) {
-            this.registResult = false;
-            this.toastr.error('Internal server error: ' + error.message, 'Error');
-            reject(error.message);
+          switch(error.status) {
+            case(409):
+              this.translate.get('errorResponse.emailAlreadyUsed').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+            default:
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
           }
-          this.registResult = false;
-          reject(error.message);
+          reject(error);
         });
     });
 
@@ -250,25 +253,37 @@ export class AuthService {
           // const words = profilePicture.split('yaba-in.com/');
           // response.data.user.profilePicture = words[1];
 
-          if (response.data.user.emailConfirmed === false) {
-            this.logOut();
-            this.toastr.warning('Your email was not verified. Go to your mail box.', null, { timeOut: 10000 });
-            // return false;
-          } else if (response.data.user.isDisabled === true) {
-            this.logOut();
-            this.toastr.warning('Your account was desabled. Please contact administrator at support@asdesmots.com', null, { timeOut: 10000 });
-            // return false;
-          } else {
-            // this.webStorage.Login(user);
+          if (response.data.user && response.data.access_token) {
             this.api.setAccessToken(response.data.access_token);
-            // console.log('User infos: ', response.data.user);
-            this.router.navigate(['index']);
-            this.toastr.success('Welcome !!');
+            this.router.navigate(['/index']);
+            this.translate.get('form.loggedIn').subscribe((res: string) => {
+              this.toastr.success(res, 'Success');
+            });
           }
           resolve(response);
         }, error => {
-          this.errorsService.errorsInformations(error, 'login');
-          this.registResult = false;
+          switch(error.status) {
+            case(401):
+              this.translate.get('errorResponse.invalidCredentials').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+            case(403):
+              this.translate.get('errorResponse.accountDisactivated').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+            case(406):
+              this.translate.get('errorResponse.emailNotConfirmed').subscribe((res: string) => {
+                this.toastr.warning(res, 'Warning');
+              });
+              break;
+            default :
+              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+              break;
+          }
           reject(error);
 
         });
@@ -286,29 +301,36 @@ export class AuthService {
       return new Promise((resolve, reject) => {
         this.api.post('email/confirm', param, header)
           .subscribe(response => {
-            this.toastr.success('http.response.verifiedEmail', 'Success');
+            this.toastr.success('form.emailVerified', 'Success');
             this.router.navigateByUrl('/login');
             resolve(response);
           }, error => {
             switch(error.status) {
               case(401) :
-                this.translate.get('http.response.expiredEmailValidationLink').subscribe((res: string) => {
-                  this.toastr.success(res, 'Error');
+                this.translate.get('errorResponse.expiredEmailValidationLink').subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
                 });
+                break;
               case(404) :
-                this.translate.get('http.response.userNotFound').subscribe((res: string) => {
+                this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               case(403) :
-                this.translate.get('http.response.emailAlreadyConfirmed').subscribe((res: string) => {
+                this.translate.get('errorResponse.emailAlreadyConfirmed').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               case(500) :
-                this.translate.get('http.response.internalServerError').subscribe((res: string) => {
+                this.translate.get('errorResponse.internalServerError').subscribe((res: string) => {
                   this.toastr.error(res, 'error');
                 });
+                break;
               default:
-            this.toastr.error(error.message, 'Error');
+                this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+                break;
             }
             
             reject(error);
@@ -326,20 +348,19 @@ export class AuthService {
         .subscribe(response => {
           resolve(response);
         }, error => {
-          console.log('erreur: ', error)
           if (error.status == 406) {
-            this.translate.get('http.response.userNotFound').subscribe((res: string) => {
+            this.translate.get('errorResponse.userNotFound').subscribe((res: string) => {
               this.toastr.error(res, 'error');
             });
           }
           else if (error.status == 403) {
-            this.translate.get('http.response.emailAlreadyConfirmed').subscribe((res: string) => {
+            this.translate.get('errorResponse.emailAlreadyConfirmed').subscribe((res: string) => {
               this.toastr.error(res, 'error');
             });
           }
           
           else if (error.status == 500) {
-            this.translate.get('http.response.internalServerError').subscribe((res: string) => {
+            this.translate.get('errorResponse.internalServerError').subscribe((res: string) => {
               this.toastr.error(res, 'error');
             });
           } else {

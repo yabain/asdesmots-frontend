@@ -16,18 +16,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // TranslateModule,
+    TranslateModule,
     FormsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })
   ]
 })
-export class AddWordsModule { 
-
-}
+export class AddWordsModule {}
 

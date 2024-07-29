@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
       this.errorMsg = error.message;
       this.error = true;
       this.submitted = false;
-      this.userNotVerified = error?.status == 403 ? true : false;
+      this.userNotVerified = error?.status == 406 ? true : false;
     });
     // this.storage.Login(this.form.value);
   }

@@ -15,9 +15,11 @@ declare var $: any;
 })
 export class SidemenuComponent implements OnInit {
   showDropdown = true;
-  lang: string;
-  en: boolean = false;
-  fr: boolean = false;
+  languages: languageModel[] = [
+    {name: 'English', value: 'en', flagImg:'assets/img/flags/us.png'},
+    {name: 'Français', value: 'fr', flagImg:'assets/img/flags/fr.png'}
+  ]
+  currentLang: languageModel;
   public bellCollapsed = true;
   public userCollapsed = true;
   public langCollapsed = true;
@@ -36,19 +38,18 @@ export class SidemenuComponent implements OnInit {
     private translate: TranslateService,
     public translationService: TranslationService
   ) {
-    this.lang = this.translationService.getCurrentLanguage();
-    
-    if (this.lang == 'en'){
-      this.en = true;
-      this.fr = false;
-    } else if (this.lang == 'fr'){
-      this.en = false;
-      this.fr = true;
-    } else {
-      this.lang = 'en';
-      this.en = true;
-      this.fr = false;
+    let lang = this.translationService.getCurrentLanguage() ?? 'fr';
+    switch(lang) {
+      case 'en' : 
+        this.currentLang = this.languages[0];
+        break;
+      case 'fr' : 
+        this.currentLang = this.languages[1];
+        break;
+      default :
+        this.currentLang = this.languages[1];
     }
+    
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.splitVal = event.url.split('/');
@@ -126,11 +127,13 @@ export class SidemenuComponent implements OnInit {
     this.authService.logOut();
   }
 
-  setEnLang(){
-    this.translationService.setLanguage('en');
+  setLanguage(language: languageModel) {
+    this.translationService.setLanguage(language.value);
+    this.currentLang = language;
   }
-
-  setFrLang(){
-    this.translationService.setLanguage('fr');
-  }
+}
+class languageModel {
+  name!: string;
+  value!: string;
+  flagImg!: string;
 }

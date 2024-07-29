@@ -20,6 +20,7 @@ export class NewPwdComponent implements OnInit {
   waitingResponse = false;
   error = false;
   errorMsg = '';
+  success = false;
 
   textDir: String = 'ltr';
   public Toggledata = true;
@@ -51,7 +52,7 @@ export class NewPwdComponent implements OnInit {
       'password': ['', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!?&$*,.';+-@#\$%\^&\*])(?=.{8,})/)])
+        this.passwordFunctions.patern])
       ],
       'password_confirm': ['', Validators.required]
     },{validator: PasswordMatch.MatchingPasswords('password', 'password_confirm')});
@@ -69,6 +70,8 @@ export class NewPwdComponent implements OnInit {
     this.authService.reNewPassword(this.form.value.password, localStorage.getItem('pwd_email_datas'))
       .then((result) => {
         this.submitted = false;
+        this.success = true;
+        this.form.reset();
         this.waitingResponse = false;
       })
       .catch((error) => {

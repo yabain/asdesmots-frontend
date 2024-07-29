@@ -6,6 +6,7 @@
     "refreshPage": "Veillez vous reconnecter",
     "arcardenotFound": "Arcarde introuvable",
     "noInternet": "Pas de connexion Internet",
+    "minLength": "Minimum {{minLength}} caractères",
     "keyDuplicate":"Duplication du nom de la partie, Veillez le changer",
     "internalError": "Erreur interne du serveur. Réessayez plus tard s'il vous plaît",
     "enterYour": "Entrez votre ",
@@ -27,6 +28,7 @@
     "agreeRequired": "Vous devez accepter les termes",
     "emailVerification": "Verification d'email",
     "offSession": "Session expirée",
+    "alreadyUsed": "déjà existant",
     "and": "et ",
     "or": "ou",
     "name": "Nom",
@@ -48,6 +50,7 @@
     "enterValidEmail": "Entrez un email valid.",
     "enterValidPwd": "Entrez un mot de passe valid.",
     "passwordRequired": "Le mot de passe est requis.",
+    "noLevelFound":"Aucun niveau trouvé pour ajouter un mot",
     "profile": "Profil",
     "settings": "Paramètres",
     "logOut": "Déconnexion",
@@ -128,6 +131,7 @@
     "editMethode": "Modifier la méthode",
     "openYourMail1": "Ouvrez votre mail avec",
     "openYourMail2": "lequel vous vous êtes inscrit.",
+    "confirmYour": "Confirmez votre ",
     "step": "Etape",
     "openConfirmMail1": "Ouvrez le mail ''no-reply'' de AsDesMots vous",
     "openConfirmMail2": "demandant de confirmer votre email.",
@@ -135,7 +139,7 @@
     "anonceLastStep": "Votre compte a été créé. Finalisez votre inscription en suivant les étape de confirmation de votre E-mail.",
     "clickConfirm1": "Cliquer sur le bouton de vérification e-mail et ",
     "clickConfirm2": "vous avez terminé votre inscription. Votre",
-    "clickConfirm3": "compte est désormais actif",
+    "clickConfirm3": "compte est désormais actif.",
     "needAccound": "Sollicitez un compte marchant",
     "selectCountry": "Votre Pays",
     "selectCity": "Votre ville",
@@ -174,7 +178,7 @@
     "to": "sur",
     "wanTo": "Etes-vous sûr de vouloir vous désinscrire de l'arcade",
     "changeStatus": "Changer le status",
-    "selectLangChange": "Changer sa langue",
+    "selectLangChange": "Sélectionner la langue",
     "welcome": "Bienvenue",
     "emailResetSended": "Un mail de vérification a été envoyé à votre adresse email",
     "seeSpam": "Vérifiez également vos 'SPAM'. Si vous ne l'avez pas reçu, cliquez sur Renvoyer.",
@@ -182,6 +186,8 @@
     "deleteAccountMsge": "Lorsque vous supprimez votre compte, vous perdez l'accès aux services AsDesMots et nous supprimons définitivement vos données personnelles.",
     "surDeleteAccount": "Êtes-vous sûr de vouloir fermer votre compte ?",
     "confirmDeleteAccount": "Je confirmer que je souhaite supprimer mon compte.",
+    "confirmDeleteTitle":"Attention",
+    "confirmDeleteText":"Êtes-vous sûr de vouloir supprimer",
     "user": {
         "user": "Utilisateur",
         "id": "Id",
@@ -324,7 +330,9 @@
 
     },
     "words": {
+        "all":"Tout",
         "level": "Niveau",
+        "levels": "Niveaux",
         "language": "Langue",
         "word": "Mot",
         "wordList": "List des mots",
@@ -332,32 +340,56 @@
         "starter": "Débutant",
         "advence": "Avancé",
         "hard": "Dificile",
-        "wordStat": "Statistiques",
+        "wordStat": "Statistiques des mots",
         "addNewWords": "Ajouter un mot",
         "addNewLevel": "Ajouter un niveau",
         "wordInFr": "Mot en française",
         "wordInEn": "Mot en anglais",
         "wordDescriptionEn": "Description en englais",
         "wordDescriptionFr": "Description en français",
-        "whichLevel": "Dans quel niveau voulez-vous transférer ses mots",
+        "whichLevel": "Vous êtes sur le point de supprimer le niveau ",
+        "whichLevel2": "qui contient des mots. vous devez d'abord les transférer à un autre niveau.",
         "noWords": "Aucun mots à afficher",
         "inEnglish": "en englais",
         "inFrench": "en français",
-        "transferAndDelete": "transférer et supprimer"
+        "transferAndDelete": "transférer et supprimer",
+        "editWord":"Modification du mot",
+        "editLevel":"Modification du niveau",
+        "selectLevel":"Sélectionnez le niveau"
     },
-    
-    "http": {
-        "response": {
-          "verifiedEmail": "Votre email a été vérifié.",
-          "emailNotVerified1": "Votre email n'a pas été vérifié. Accédez à votre boîte mail et cliquez sur le lien de verification qui vous a été envoyé lors de la creation de votre compte. si vous ne l'avez pas reçu, vous pouvez utiliser ",
-          "emailNotVerified2": "ce lien ",
-          "emailNotVerified3": "pour en demander un nouveau.",
-          "expiredEmailValidationLink": "Votre email de vérification a expiré.",
-          "userNotFound": "Les informations fournies ne correspondent pas à nos enregistrements.",
-          "emailAlreadyConfirmed": "L'email a déjà été confirmé.",
-          "internalServerError": "Erreur Interne du Serveur.",
-          "emailVerifyLinkSent": "Votre lien de vérification a été envoyé, vérifiez votre boîte de réception."
-        }
+    "form": {
+        "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",
+        "passwordResetLinkSent": "Un nouveau lien de réinitialisation de mot de passe a été envoyé à votre adresse !",
+        "accountCreated": "Votre compte a été créé. Vous recevrez un e-mail de confirmation.",
+        "emailVerified": "Votre adresse e-mail a été vérifiée.",
+        "loggedOut": "Vous avez été déconnecté avec succès.",
+        "loggedIn": "Vous êtes connecté, profitez-en 🎉"
+    },
+    "action":{
+        "delete":"Supprimer",
+        "cancel":"Annuler"
+    },
+    "successResponse": {
+        "created": "créé avec succès",
+        "updated": "mis à jour avec succès",
+        "deleted": "supprimé avec succès",
+        "queued": "mis en file d'attente avec succès"
+    },
+    "errorResponse": {
+      "emailNotVerified1": "Votre adresse e-mail n'a pas été vérifiée. Accédez à votre boîte de réception et cliquez sur le lien de vérification qui vous a été envoyé lors de la création de votre compte. Si vous ne l'avez pas reçu, vous pouvez utiliser ",
+      "emailNotVerified2": "ce lien ",
+      "emailNotVerified3": "pour en demander un nouveau.",
+      "userNotFound": "Les informations fournies ne correspondent pas à nos enregistrements.",
+      "emailAlreadyConfirmed": "L'adresse e-mail a déjà été confirmée.",
+      "internalServerError": "Erreur interne du serveur.",
+      "emailVerifyLinkSent": "Votre lien de vérification a été envoyé, vérifiez votre boîte de réception.",
+      "emailNotConfirmed": "Votre compte n'est pas vérifié.",
+      "expiredEmailValidationLink": "Le lien a expiré.",
+      "emailAlreadyUsed": "L'adresse e-mail fourni est déjà utilisée.",
+      "accountDisactivated": "Votre compte a été désactivé, veuillez contacter le support.",
+      "invalidCredentials":"Email ou mot de passe incorrect",
+      "unexpectedError": "Une erreur inattendue s'est produite.",
+      "alreadyExists": "existe déjà",
+      "duplicatedEntry":"Entrée en double"
     }
-    
   }

@@ -13,13 +13,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
     CommonModule,
     ChangePasswordRoutingModule,
     RouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })
+    TranslateModule
   ]
 })
 export class ChangePasswordModule { }

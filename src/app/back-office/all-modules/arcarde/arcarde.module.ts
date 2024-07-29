@@ -33,13 +33,6 @@ import { HttpLoaderFactory } from 'src/app/app.module';
         ReactiveFormsModule,
         FormsModule,
         DataTablesModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
 
     ]
 })

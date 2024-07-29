@@ -17,6 +17,7 @@ import { Level } from 'src/app/shared/entities/level';
 import { SpeakService } from 'src/app/shared/services/speak/speak.service';
 import { Word } from 'src/app/shared/entities/word';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WordDataService } from '../word-data.service';
 
 @Component({
   selector: 'app-words-list',
@@ -24,18 +25,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./words-list.component.css']
 })
 export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
-  public wordsList: any = [];
+  public wordsList: [] = [];
+  public levelList: [] = [];
   errorMessage: any;
   public tempId: any;
-  levelId: string = '';
   waiting: boolean = false;
+  waitingResponse: boolean = false;
+  submitted: boolean = false;
   wordData: any = '';
-  haveToShow: boolean = false;
   level: Level;
   wordForm: FormGroup;
   routerSubscribe: any;
-  levelList = JSON.parse(localStorage.getItem('levels-list'));
+  minDescLength: number = 4;
   url;
+  wordTypes = [
+    {name: "Francais", value: 'fr'},
+    {name: "English", value: 'en'}
+  ]
 
 
   constructor(
@@ -44,54 +50,52 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     private translate: TranslateService,
     private translationService: TranslationService,
     private formLog: FormBuilder,
-    private srvModuleService: AllModulesService,
-    private location: Location,
     private wordsService: WordsService,
     private levelService: LevelService,
     private toastr: ToastrService,
-    private speakService: SpeakService) {
-
+    private wordDataService: WordDataService,
+    private speakService: SpeakService) 
+  {
     this.routerSubscribe = router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.waiting = true;
         this.wordsList = undefined;
-        this.getLevelIdToUrl();
-        this.findLevelById(this.levelId);
-        this.scrollToTop();
-        setTimeout(() => {
-          this.getWordListBylevel(this.levelId);
-        }, 1000);
       }
     });
   }
 
   ngOnInit(): void {
 
-    this.translate.use(this.translationService.getCurrentLanguage());
-    // this.getLevelIdToUrl();
-    // this.findLevelById(this.levelId);
-    // this.getWordListBylevel(this.levelId);
-    console.log("wordData00: ", this.wordData)
-
-    this.wordForm = this.formLog.group({
-      '_id': [this.wordData._id, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
-      'name': [this.wordData.name, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
-      'description': [this.wordData.description, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
-      'gameLevelId': [this.wordData.gamelevelId, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
-      'type': [this.wordData.type, Validators.compose([
-        Validators.required,
-        Validators.minLength(1)])],
+    this.wordDataService.words$.subscribe(async (words: any) => {
+      this.wordsList = await words;
     });
+    this.wordDataService.wordFetching$.subscribe((value: any) => {
+      this.waitingResponse = value;
+    })
+    this.wordDataService.currentLevel$.subscribe((value: any) => {
+      this.level = value;
+    })
+    this.wordDataService.levels$.subscribe((data: any) => {
+      this.levelList = data.levels;
+    })
+    this.translate.use(this.translationService.getCurrentLanguage());
+    this.initUpdateForm();
   }
 
+  initUpdateForm() {
+    this.wordForm = this.formLog.group({
+      '_id': [this.wordData._id, Validators.compose([
+        Validators.required])],
+      'name': [this.wordData.name, Validators.compose([
+        Validators.required])],
+      'description': [this.wordData.description, Validators.compose([
+        Validators.required,
+        Validators.minLength(this.minDescLength)])],
+      'gameLevelId': [this.wordData.gamelevelId, Validators.compose([
+        Validators.required])],
+      'type': [this.wordData.type, Validators.compose([
+        Validators.required])],
+    });
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.wordData && this.wordForm) {
       this.wordData = changes.wordData.currentValue;
@@ -106,92 +110,24 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     this.routerSubscribe.unsubscribe();
   }
 
-  scrollToTop(): void {
-    window.scrollTo(0, 0);
-  }
-
-  getLevelIdToUrl() {
-    if (this.route.snapshot.params['id'] && this.route.snapshot.params['id'] != undefined) {
-      this.levelId = this.route.snapshot.params['id'];
-      console.log("new levelId: ", this.levelId);
-    } else {
-      // this.levelId = JSON.parse(localStorage.getItem('levels-list'))[0]._id;
-      // console.log("first levelId: ", this.levelId);
-      // if (!this.levelId) {
-      //   console.log("no levelId: ", this.levelId);
-      this.haveToShow = false
-      this.waiting = false;
-      // }
-    }
-  }
-
-  refreshList() {
-    this.waiting = true;
-    this.wordsService.getWordListBylevel(this.levelId, true)
-      .then((result) => {
-        this.levelService.getAllLevels(true);
-        this.wordsList = JSON.parse(localStorage.getItem(this.levelId));
-        this.waiting = false;
-      })
-      .catch((error) => {
-        console.error('Erreur: ', error.message);
-        this.waiting = false;
-      });
+  refreshList(refeshLevelsList: boolean = true) {
+    this.wordDataService.listWordBylevel(this.level._id, refeshLevelsList);
   }
 
   filter() { }
 
   deleteWord(word) {
     this.waiting = true;
-    console.log('Deleting word: ', word);
-    this.wordsService.deleteWord(word, this.levelId)
-      .then((result) => {
-        this.refreshList();
+    this.wordsService.deleteWord(word, this.level._id)
+      .then(() => {
         this.waiting = false;
+        this.refreshList();
         $('#cancel-btn00').click();
-        setTimeout(() => {location.reload();}, 1000);
       })
       .catch((error) => {
-        console.error('Erreur: ', error.message);
-        this.toastr.error(error.message, 'Error', { timeOut: 10000 });
         this.waiting = false;
+        this.toastr.error(error.message, 'Error', { timeOut: 10000 });
       });
-  }
-
-  findLevelById(levelId) {
-    this.levelService.getLevelById(levelId)
-      .then((response) => {
-        this.level = response
-        // this.waiting = false;
-      })
-      .catch((erro) => {
-        // this.waiting = false;
-      });
-  }
-
-  getWordListBylevel(levelId) {
-    this.waiting = true;
-    console.log('jqhsjdhqj jqhsdjkqhk: ', levelId);
-    if (levelId && levelId != undefined) {
-      this.wordsList = this.wordsService.getWordListBylevel(levelId)
-        .then((result) => {
-          console.log('0000: ', result);
-          if (result.length > 0) {
-            this.haveToShow = true
-          } else { this.haveToShow = false }
-          this.wordsList = result;
-          this.waiting = false;
-        })
-        .catch((error) => {
-          // console.log("55555: ", error);
-          this.toastr.warning('Can not get word list', 'Warning', { timeOut: 20000 });
-          this.haveToShow = false;
-          this.waiting = false;
-        });
-    } else {
-      this.haveToShow = false;
-      this.waiting = false;
-    }
   }
 
   speak(word: Word) {
@@ -204,15 +140,20 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
 
   editeWord() {
     this.waiting = true;
-    console.log("General datas: ", this.wordForm.value);
+    this.submitted = true;
+    if(this.wordForm.invalid)
+      return;
     this.wordsService.updateWord(this.wordForm.value)
-      .then((result) => {
+      .then(() => {
+        this.submitted = false;
+        this.refreshList(false);
         this.waiting = false;
-        this.refreshList();
-        $('#close-modal').click();
+        this.initUpdateForm();
+        $('#close-edit-modal').click();
       })
       .catch((error) => {
         this.waiting = false;
+        this.submitted = false;
       });
   }
 
@@ -224,7 +165,7 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     this.wordForm.controls._id.setValue(word._id);
     this.wordForm.controls.name.setValue(word.name);
     this.wordForm.controls.description.setValue(word.description);
-    this.wordForm.controls.gameLevelId.setValue(this.levelId);
+    this.wordForm.controls.gameLevelId.setValue(this.level._id);
     this.wordForm.controls.type.setValue(word.type);
   }
 }

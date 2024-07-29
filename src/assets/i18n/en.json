@@ -6,6 +6,7 @@
     "enterYour": "Enter your ",
     "enteragainYour": "Enter again your ",
     "pwdShouldBe": "Ensure that these requirements are met: ",
+    "minLength": "Minnimum {{minLength}} char",
     "upTo8Char": "Minimum 8 characters long",
     "upTo1Captal": "At least one capital letter",
     "upTo1Number": "At least one capital number",
@@ -27,6 +28,7 @@
     "name": "Name",
     "end": "End",
     "maxPlayers": "Max number of players",
+    "alreadyUsed": "already exists",
     "required": "Required",
     "policy": "Politiques ",
     "dataUsage": "data usage.",
@@ -45,6 +47,7 @@
     "enterValidEmail": "Enter a valid email.",
     "enterValidPwd": "Enter a valid password.",
     "passwordRequired": "The password is required.",
+    "noLevelFound":"No level found to add word",
     "profile": "Profile",
     "keyDuplicate":"Duplication of the part name, please change it",
     "level": "Level",
@@ -119,6 +122,7 @@
     "editMethode": "Edit method",
     "openYourMail1": "Open your mailbox with which",
     "openYourMail2": "you have registered.",
+    "confirmYour": "Confirm your ",
     "step": "Step",
     "openConfirmMail1": "Open the ''no-reply'' email from AsDesMots",
     "openConfirmMail2": "asking you to confirm your email.",
@@ -127,7 +131,7 @@
     "anonceLastStep": "Your account has been created. Finalize your registration by following the confirmation steps in your e-mail.",
     "clickConfirm1": "Click on the email verification button and",
     "clickConfirm2": "you have completed your registration.",
-    "clickConfirm3": "Your account is now active",
+    "clickConfirm3": "Your account is now active.",
     "needAccound": "Apply for a merchant account",
     "selectCountry": "Select your country",
     "selectCity": "Select your city",
@@ -174,7 +178,7 @@
     "registrationEnd": "Registration end date",
     "wanTo": "Are you sure you want to unsubscribe from the arcade",
     "changeStatus": "Change Status",
-    "selectLangChange": "Change language",
+    "selectLangChange": "Select language",
     "welcome": "Welcome",
     "internalError": "Internal Server error. Try again later please",
     "emailResetSended": "A verification email has been sent to your email",
@@ -183,6 +187,8 @@
     "deleteAccountMsge": "When you delete your account, you lose access to AsDesMots account services, and we permanently delete your personal data.",
     "surDeleteAccount": "Are you sure you want to close your account?",
     "confirmDeleteAccount": "Confirm that I want to delete my account.",
+    "confirmDeleteTitle":"Warning",
+    "confirmDeleteText":"Are you sure you want to delete",
     "user": {
         "user": "User",
         "id": "Id",
@@ -323,37 +329,65 @@
         "sendMsg": "Send us your message"
     },
     "words": {
-        "level": "level",
+        "all":"All",
+        "level": "Level",
+        "levels": "Levels",
         "word": "Word",
         "wordList": "Words list",
         "wordsCount": "Word count",
         "starter": "Starter",
         "advence": "Advence",
         "hard": "Hard",
-        "wordStat": "escription in french",
+        "wordStat": "Words statistics",
         "addNewWords": "Add a word",
         "addNewLevel": "Add a level",
         "wordInFr": "Word in french",
         "wordInEn": "Word in english",
         "wordDescriptionEn": "Description in english",
         "wordDescriptionFr": "Description in french",
-        "whichLevel": "What level do you want to transfer his words to",
+        "whichLevel": "You are about to delete the level",
+        "whichLevel2": "that contains words. you need to transfer them to another level first.",
         "noWords": "No words to show",
         "inEnglish": "in english",
-        "inFrench": "in french"
+        "inFrench": "in french",
+        "transferAndDelete": "Transfer and delete",
+        "editWord":"Word edit",
+        "editLevel":"Level edit",
+        "selectLevel":"Select the niveau"
     },
-    
-    "http": {
-        "response": {
-            "verifiedEmail": "Your email has been verified.",
-            "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
-            "emailNotVerified2": "this link ",
-            "emailNotVerified3": "to request a new one.",
-            "expiredEmailValidationLink": "Your verification email has expired.",
-            "userNotFound": "The given information didn't match our records.",
-            "emailAlreadyConfirmed": "The email has already been confirmed.",
-            "internalServerError": "Internal Server Error.",
-            "emailVerifyLinkSent": "Your verification link has been sent, check your inbox."
-        }
+    "form":{
+        "passwordReset":"Your password have been successfully reset.",
+        "passwordResetLinkSent":"A new password reset link has been sent to your address !",
+        "accountCreated":"Your account has been created. You will receive a confirmation email.",
+        "emailVerified":"Your email address has been verified.",
+        "loggedOut":"You have been successfully logged out.",
+        "loggedIn":"You are logged in, enjoy 🎉"
+    },
+    "action":{
+        "delete":"Delete",
+        "cancel":"Cancel"
+    },
+    "successResponse": {
+        "created":"successfully created",
+        "updated":"successfully updated",
+        "deleted":"successfully deleted",
+        "queued":"successfully queued"
+    },
+    "errorResponse": {
+      "emailNotVerified1": "Your email has not been verified. Access your mailbox and click on the verification link that was sent to you when creating your account. If you haven't received it, you can use ",
+      "emailNotVerified2": "this link ",
+      "emailNotVerified3": "to request a new one.",
+      "userNotFound": "The given information didn't match our records.",
+      "emailAlreadyConfirmed": "The email has already been confirmed.",
+      "internalServerError": "Internal Server Error.",
+      "emailVerifyLinkSent": "Your verification link has been sent, check your inbox.",
+      "emailNotConfirmed": "Your account is not verified",
+      "expiredEmailValidationLink":"The link has expired.",
+      "emailAlreadyUsed":"The given email adress is alredy used.",
+      "accountDisactivated":"Your account has been desactivated, please contact support.",
+      "invalidCredentials":"Invalid email or password",
+      "unexpectedError":"An unexpected error occured.",
+      "alreadyExists": "alrerady exists",
+      "duplicatedEntry":"Duplicated entry"
     }
 }

@@ -21,7 +21,7 @@ export class CreateCompetitionComponent implements OnInit {
   id_Arcarde : string = ''; //id arcade of the new register competion;
   formIdArcarde!: FormGroup;
   loading: boolean = false;
-  constructor(public sousCompetion: SousCompetitionService,
+  constructor(public sousCompetionService: SousCompetitionService,
               private fb: FormBuilder,
               private translate: TranslateService,
               private toastr: ToastrService,
@@ -33,8 +33,8 @@ export class CreateCompetitionComponent implements OnInit {
               ) {
       this.translate.use(this.translation.getCurrentLanguage());
       this.loadListOfArcarde();
-      this.sousCompetion.initFormControl();
-      this.sousCompetion.initFormUpdate();
+      this.sousCompetionService.initFormControl();
+      this.sousCompetionService.initFormUpdate();
       this.initArcardeFormID();
       this.getLevel();
    }
@@ -50,18 +50,18 @@ export class CreateCompetitionComponent implements OnInit {
 
     this.formIdArcarde.valueChanges.subscribe((idChoossed)=>{
         this.id_Arcarde = idChoossed;
-        this.sousCompetion.buildListParentCompetition(idChoossed.idArcarde);
+        this.sousCompetionService.buildListParentCompetition(idChoossed.idArcarde);
     });
   }
 
   // doCreationCompetion(){
   //   this.loading = true;
-  //     this.sousCompetion.createCompetition(this.sousCompetion.newUnderCompetionParam, this.id_Arcarde);
+  //     this.sousCompetionService.createCompetition(this.sousCompetionService.newUnderCompetionParam, this.id_Arcarde);
   //     this.arcardeSrv.loadArcade();
-  //     this.sousCompetion.loadListUnderCompetition();
+  //     this.sousCompetionService.loadListUnderCompetition();
   //     this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
   //     this.location.back();
-  //     this.sousCompetion.loadListUnderCompetition();
+  //     this.sousCompetionService.loadListUnderCompetition();
   //     this.loading = false;
   // }
 
@@ -69,14 +69,14 @@ export class CreateCompetitionComponent implements OnInit {
     this.loading = true; // Activer le loader
 
     // Obtenez les données du formulaire
-    const competionData = this.sousCompetion.form.value;
+    const competionData = this.sousCompetionService.form.value;
 
     // Effectuez l'appel au service
-    this.sousCompetion.createCompetition(competionData, this.id_Arcarde).subscribe(
+    this.sousCompetionService.createCompetition(competionData, this.id_Arcarde).subscribe(
       (resp) => {
         // Succès de la création de la compétition
         this.arcardeSrv.loadArcade();
-        this.sousCompetion.loadListUnderCompetition();
+        this.sousCompetionService.loadListUnderCompetition();
         this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
 
         // Désactivez le loader une fois que le traitement est terminé
@@ -105,8 +105,8 @@ export class CreateCompetitionComponent implements OnInit {
   }
 
   resetFormCreation(){
-    this.sousCompetion.form.reset();
-    this.sousCompetion.creationDone = false;
+    this.sousCompetionService.form.reset();
+    this.sousCompetionService.creationDone = false;
     this.route.navigateByUrl('/undercompetition/competition/list');
   }
 
@@ -114,7 +114,7 @@ export class CreateCompetitionComponent implements OnInit {
     if(this.arcardeSrv.listArcardeUser.length == 0){
         this.arcardeSrv.loadArcade();
     }
-    this.sousCompetion.loadListUnderCompetition();
+    this.sousCompetionService.loadListUnderCompetition();
   }
 
   getLevel(){

@@ -1,103 +1,69 @@
-<div class="page-wrapper">
-  <div class="content container-fluid">
-    <div class="page-header">
-      <div class="row align-items-center">
-        <div class="col">
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item" style="cursor: pointer;"><a
-                [routerLink]="'/undercompetition/competition/list'">Competition</a></li>
-            <li class="breadcrumb-item active" style="cursor: pointer;"> {{ competitionData.name }} </li>
-            <li class="breadcrumb-item active"> Partie </li>
-          </ul>
-        </div>
-        <div class="col-auto">
-          <a class="btn btn-primary me-2" class="btn btn-primary me-2" data-bs-target="#addParts"
-            data-bs-toggle="modal" style="color: #035858 !important; background-color: #ffff !important;">
-            <i class="fas fa-plus" data-toggle="tooltip" data-placement="top"
-              title="Create new Parts for this competition"></i>
-          </a>
-        </div>
-      </div>
-    </div>
+<div *ngIf="gamePartSrv.waitingResponse" class="d-flex align-items-center justify-content-center vh-50">
+  <img src="assets/img/loader.gif" alt="" width="30px" />
+</div>
+<div *ngIf="!gamePartSrv.waitingResponse" class="card">
+  <div class="card-header">
+    <h4 class="card-title">Liste des Parties</h4>
+    <p class="card-text">
+      Liste des paties de cette competition.
+    </p>
   </div>
-
-  <div class="text-center">
-    <span *ngIf="gamePartSrv.waitingResponse">
-      <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-    </span>
-  </div>
-
-  <div class="row" *ngIf="!gamePartSrv.waitingResponse">
-    <div class="card card-table">
-      <div class="card-header">
-        <h4 class="card-title">Liste des Parties</h4>
-        <p class="card-text">
-          Liste des paties de cette competition.
-        </p>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table datatable class="table table-stripped table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th>{{'name' | translate }} </th>
-                <th>Description</th>
-                <th> {{ 'level' | translate }} </th>
-                <th> {{ 'level' | translate }} </th>
-                <th class="text-end">Actions</th>
-              </tr>
-            </thead>
-            <tbody *ngIf="gamePartSrv.listGameParts.length !== 0">
-              <tr *ngFor="let part of gamePartSrv.listGameParts" (click)="partChooseData = part">
-                <td>
-                  {{ part.name }}
-                </td>
-                <td>{{ part.description }}</td>
-                <!-- <td>{{ customer.country }}</td> -->
-                <td>{{ part.gameLevel?.name }}</td>
-                <td class="text-end">
-                  <div class="dropdown dropdown-action">
-                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
-                        class="fas fa-ellipsis-h"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePart"><i
-                          class="far fa-trash-alt me-2"></i>
-                        <span style="margin-left: 5px;">Delete</span>
-                      </a>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i
-                          class="far fa-eye me-2"></i>
-                        <span style="margin-left: 5px;">Show more</span>
-                      </a>
-                      <div *ngIf="part.gameState === gameState.NO_START">
-
-                        <span style="color: green;" class="text-center dropdown-item" (click)="sartGame(part._id)">
-                          <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
-                        </span>
-
-                      </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="gamePartSrv.listGameParts?.length; else noGameParts">
+        <table datatable class="table table-stripped table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>{{'name' | translate }} </th>
+              <th>Description</th>
+              <th> {{ 'level' | translate }} </th>
+              <th> {{ 'level' | translate }} </th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let part of gamePartSrv.listGameParts" (click)="partChooseData = part">
+              <td>
+                {{ part.name }}
+              </td>
+              <td>{{ part.description }}</td>
+              <td></td>
+              <td>{{ part.gameLevel?.name }}</td>
+              <td class="text-end">
+                <div class="dropdown dropdown-action">
+                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePart">
+                      <i class="far fa-trash-alt me-2"></i>
+                      <span style="margin-left: 5px;">Delete</span>
+                    </a>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details">
+                      <i class="far fa-eye me-2"></i>
+                      <span style="margin-left: 5px;">Show more</span>
+                    </a>
+                    <div *ngIf="part.gameState === gameState.NO_START">
+                      <span style="color: green;" class="text-center dropdown-item" (click)="startGame(part._id)">
+                        <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
+                      </span>
                     </div>
                   </div>
-
-              </tr>
-            </tbody>
-            <tbody *ngIf="gamePartSrv.listGameParts.length == 0">
-              <tr>
-                <td></td>
-                <td class="text-center">
-                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                  <br>Aucune Partie !
-                </td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noGameParts>
+        <div class="text-center">
+          <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+          <br>Aucune Partie !
         </div>
-      </div>
+      </ng-template>
     </div>
   </div>
 </div>
-
 
 <div class="modal custom-modal fade" id="deletePart" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
@@ -131,8 +97,6 @@
     </div>
   </div>
 </div>
-
-
 <div class="modal custom-modal fade" id="addParts" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -216,9 +180,6 @@
     </div>
   </div>
 </div>
-
-
-
 <div class="modal custom-modal fade" id="details" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

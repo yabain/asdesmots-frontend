@@ -7,6 +7,7 @@ import { ListCretariasComponent } from './list-cretarias/list-cretarias.componen
 import { ListPartsComponent } from './list-parts/list-parts.component';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 import { CompetitionResolver } from './update-competition/parentCompetetion.resolver';
+import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 
 const routes: Routes = [
   { path: '', component: UndercompetitionComponent,
@@ -15,8 +16,12 @@ const routes: Routes = [
         path: 'competition/list',
         component: ListCompetitionComponent
       },
+      {
+        path: 'competition/details/:id',
+        component: CompetitionDetailsComponent
+      },
      {
-        path: 'competition/update/:id',
+        path: 'competition/edit/:id',
         component: UpdateCompetitionComponent,
         resolve: {
           currentCompetition: CompetitionResolver,

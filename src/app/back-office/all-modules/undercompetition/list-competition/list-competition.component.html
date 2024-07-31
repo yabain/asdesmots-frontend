@@ -5,7 +5,7 @@ Page Wrapper
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title"></h3>
+          <h3 class="page-title">Competitions</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor:pointer"><a [routerLink]="'/index'">Accueil </a></li>
             <li class="breadcrumb-item active">Competitions</li>
@@ -19,10 +19,6 @@ Page Wrapper
           <a class="btn btn-primary me-2" [routerLink]="'/undercompetition/competition/create'"
             style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="Create new competition">
             <i class="fas fa-plus"  ></i>
-          </a>
-          <a class="btn btn-primary me-2"
-            style="color: #035858 !important; background-color: #ffff !important;" (click)="refresh()">
-            <i class="fas fa-refresh"  data-toggle="tooltip" data-placement="top" title="refresh this list"></i>
           </a>
         </div>
       </div>
@@ -40,44 +36,33 @@ Page Wrapper
         <div class="custom-card">
           <div class="card-body pb-0">
             <div class="d-flex justify-content-between align-items-start">
-              <div class="mb-4">
-                <h5 class="card-title">{{ sousCompetion.name }}</h5>
-                <p class="card-text text-primary">{{ sousCompetion.parentCompetition | getParentName }}</p>
-                <p class="card-text">{{ sousCompetion.description | truncate:200 }}</p>
-              </div>
+              <a class="text-decoration-none" [routerLink]="['/undercompetition/competition/details',sousCompetion._id]" style="color: inherit">
+                <div class="mb-4">
+                  <h5 class="card-title">{{ sousCompetion.name }}</h5>
+                  <p class="card-text text-primary">
+                    <a [routerLink]="['/undercompetition/competition/details',sousCompetion.parentCompetition]">
+                      {{ sousCompetion.parentCompetition | getParentName }}
+                    </a>
+                  </p>
+                  <p class="card-text">{{ sousCompetion.description | truncate:200 }}</p>
+                </div>
+              </a>
               <div class="dropdown">
                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fas fa-ellipsis-h"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>
-                    <a class="dropdown-item"
-                      style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="listSuscriberCompetition(sousCompetion._id)">
-                       <i class="fa fa-users" aria-hidden="true"></i>
-                       <span style="margin-left: 5px;"> List of subscribers</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"  (click)="initUpdatingForm(sousCompetion)"><i class="far fa-edit me-2"></i>Edit</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete" ><i class="far fa-trash-alt me-2"></i>
-                      <span style="margin-left: 5px;">Delete</span>
-                   </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details"><i class="far fa-eye me-2"></i>
+                    <a class="dropdown-item" [routerLink]="['/undercompetition/competition/details',sousCompetion._id]"><i class="far fa-eye me-2"></i>
                       <span style="margin-left: 5px;">Show more</span>
                    </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" (click)="goToPartsList(sousCompetion._id)" ><i class="fa fa-list" ></i>
-                      <span style="margin-left: 5px;"> List of parts  </span>
-                    </a>
+                    <a [routerLink]="['/undercompetition/competition/edit',sousCompetion._id]" class="dropdown-item"><i class="far fa-edit me-2"></i>Edit</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" (click)="goToCriteriasList(sousCompetion._id)"><i class="fa fa-list"></i>
-                      <span style="margin-left: 5px;">List of Criterias</span>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete" ><i class="far fa-trash-alt me-2"></i>
+                      <span style="margin-left: 5px;">Delete</span>
                    </a>
                   </li>
                 </ul>
@@ -137,7 +122,6 @@ Page Wrapper
           <h5> {{ sousCompetitionSelctedData.name }} </h5>
         </div>
         <div class="modal-text">
-
           <div class="row">
             <ul class="nav nav-tabs nav-tabs-bottom nav-justified" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">

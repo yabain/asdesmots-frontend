@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input  } from '@angular/core';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { ActivatedRoute } from '@angular/router';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
@@ -7,12 +7,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-list-cretarias',
+  selector: 'app-game-cretarias-list',
   templateUrl: './list-cretarias.component.html',
   styleUrls: ['./list-cretarias.component.css']
 })
 export class ListCretariasComponent implements OnInit {
-  idCompetition: string = '';
+  @Input() competitionID: string = '';
   listCriterias : WinnigsCriterias[] = [];
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
   formAddCriteria: FormGroup;
@@ -44,11 +44,11 @@ export class ListCretariasComponent implements OnInit {
     if(this.competitionSrv.listWinningCriterias.length == 0){
         this.competitionSrv.loadGameCriterias();
     }
-      this.idCompetition = this.route.snapshot.params['id'];
+      this.competitionID = this.route.snapshot.params['id'];
   }
 
   async getCompetitionCriteria(){
-    await this.competitionSrv.getCompetionWiningsCriteria(this.idCompetition)
+    await this.competitionSrv.getCompetionWiningsCriteria(this.competitionID)
     .then((listCriteria) => {
       this.listCriterias = listCriteria;
       this.changeDetectorRef.detectChanges()
@@ -62,7 +62,7 @@ export class ListCretariasComponent implements OnInit {
 
       const modalDiv =  document.getElementById('addCriteria');
       console.log(this.formAddCriteria.get('idCriteria').value)
-      const result = await this.competitionSrv.addCriteria(this.idCompetition, this.formAddCriteria.get('idCriteria').value);
+      const result = await this.competitionSrv.addCriteria(this.competitionID, this.formAddCriteria.get('idCriteria').value);
     
       if (result === true) {
         modalDiv.classList.remove('show');
@@ -80,7 +80,7 @@ export class ListCretariasComponent implements OnInit {
   }
 
   async doDelete(){
-    const result = await this.competitionSrv.removeWinningCriteria(this.idCompetition, this.selectedCriteriaId);
+    const result = await this.competitionSrv.removeWinningCriteria(this.competitionID, this.selectedCriteriaId);
     if(result == true) await this.getCompetitionCriteria();
     this.changeDetectorRef.detectChanges();
     

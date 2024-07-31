@@ -48,10 +48,10 @@ export class ArcardeService {
   }
   constructor(private api: ApiService,
     private toastr: ToastrService,
+    private translate: TranslateService,
     private fb: FormBuilder,
     private location: Location,
     private languageService: TranslationService,
-    private translate: TranslateService,
   ) { this.authorization = { 'Authorization': 'Bearer ' + this.api.getAccessToken() } }
 
   get f() {
@@ -369,21 +369,8 @@ export class ArcardeService {
     //  });
   }
 
-  getArcardeById(id: string) {
-    this.api.get(Endpoint.GET_ACARDE_BY_ID + id, this.authorization).subscribe((resp) => {
-      console.log(resp);
-    }, (error: any) => {
-
-      if (error.status == 500) {
-        this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-      } else if (error.status == 401) {
-        this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
-      } else if (error.status == 404) {
-        this.toastr.error(this.languageService.transformMessageLanguage("arcardenotFound"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-      } else {
-        this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
-      }
-    });
+  getArcardeById(id: string): Promise<Arcarde> {
+    return this.api.get(Endpoint.GET_ACARDE_BY_ID + id, this.authorization).toPromise();
   }
 
   addUserToAccarde() {

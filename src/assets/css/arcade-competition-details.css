@@ -1,0 +1,51 @@
+.nav-link.active {
+    background-color: #FFFFFF;
+    color: #3063AD;
+}
+.nav-item {
+    height: 35px;
+    color: #344054;
+    cursor: pointer;
+}
+.nav-item:hover {
+    color: #3063AD;
+}
+.nav-pills {
+    background-color: #EAECF0;
+    width: max-content;
+    border-radius: 10px;
+    padding: 5px;
+}
+.tag {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+.tag-player {
+    background-color: #e0f7fa;
+    color: #00838f;
+}
+.tag-coach {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+.icon-button {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+.icon-button:hover {
+    color: #495057;
+}
+.inovices-widget-icon {
+    font-size: 42px;
+    opacity: 0.1;
+}
+@media (max-width: 767.98px) {
+    .nav {
+        display: flex;
+    }
+}

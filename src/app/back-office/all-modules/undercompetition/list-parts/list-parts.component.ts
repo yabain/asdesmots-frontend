@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GamePartsService } from './service/game-parts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GamePart } from 'src/app/shared/entities/gamePart.model';
@@ -13,12 +13,12 @@ import { ArcardeService } from '../../arcarde/services/arcarde.service';
 
 
 @Component({
-  selector: 'app-list-parts',
+  selector: 'app-game-list-parts',
   templateUrl: './list-parts.component.html',
   styleUrls: ['./list-parts.component.css']
 })
 export class ListPartsComponent implements OnInit {
-  competitionID: string = '';
+  @Input() competitionID: string;
   competitionData: SousCompetion = new SousCompetion();
 
   partChooseData : GamePart = new GamePart();
@@ -35,6 +35,7 @@ export class ListPartsComponent implements OnInit {
               public partService: GamePartsService,
               public arcardeSrv: ArcardeService,
              ) {
+                console.log(this.competitionID);
                 this.gamePartSrv.dateNow = new Date();
                 this.gamePartSrv.initForm();
                 this.getListParts();
@@ -45,7 +46,6 @@ export class ListPartsComponent implements OnInit {
   }
 
   getListParts(){
-    this.competitionID = this.route.snapshot.params['id'];
     this.competitionData = this.SousCompetSrv.getData(this.competitionID);
     this.gamePartSrv.f['gameCompetitionID'].setValue(this.competitionID);
     this.gamePartSrv.getListGamePart(this.competitionID);
@@ -71,7 +71,7 @@ export class ListPartsComponent implements OnInit {
       }
   }
 
-  sartGame(partID: any) {
+  startGame(partID: any) {
     console.log(partID)
     this.gameManager.startGame({
       competitionID: this.competitionID,

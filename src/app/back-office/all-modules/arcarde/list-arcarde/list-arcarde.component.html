@@ -16,20 +16,14 @@
               style="color: #035858 !important; background-color: #ffff !important;">
               <i class="fas fa-plus"></i>
             </a> -->
+            <a class="btn btn-primary me-2" [routerLink]="'/arcarde/create'"
+              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="Create new Arcarde" >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
             <a class="btn btn-primary me-2"
               style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="subscribe to an arcade" (click)="goToAcradeSuscription()">
               <i class="fa fa-user-plus" aria-hidden="true"></i>
             </a>
-            <a class="btn btn-primary me-2" [routerLink]="'/arcarde/create'"
-            style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="Create new Arcarde" >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            </a>
-
-            <a class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip" data-placement="top" title="refresh the list" (click)="refresh()">
-              <i class="fas fa-refresh"></i>
-            </a>
-
           </div>
         </div>
       </div>
@@ -46,29 +40,24 @@
           <div class="custom-card">
             <div class="card-body pb-0">
               <div class="d-flex justify-content-between align-items-start">
-                <div class="mb-0">
-                  <h5 class="card-title">{{ arcarde.name }}</h5>
-                  <p></p>
-                  <p class="card-text">{{ arcarde.description | truncate:200 }}</p>
-                </div>
+                <a class="text-decoration-none" [routerLink]="['/arcarde/details',arcarde._id]" style="color: inherit">
+                  <div class="mb-0">
+                    <h5 class="card-title text-primary">{{ arcarde.name }}</h5>
+                    <p></p>
+                    <p class="card-text">{{ arcarde.description | truncate:200 }}</p>
+                  </div>
+                </a>
                 <div class="dropdown">
                   <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-ellipsis-h"></i>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li>
-                      <a class="dropdown-item"
-                        style="cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#details">
+                      <a class="dropdown-item" [routerLink]="['/arcarde/details',arcarde._id]"
+                        style="cursor: pointer;">
                         <i class="fa fa-eye"></i>
                          <span style="margin-left: 5px;"> {{ 'showmore' | translate }} </span>
                       </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item"
-                        style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="list of suscriber for this arcarde" (click)="goToListUser(arcarde._id)">
-                         <i class="fa fa-users" aria-hidden="true"></i>
-                         <span style="margin-left: 5px;"> {{ 'listsubscribers' | translate }}</span>
-                       </a>
                     </li>
                     <li>
                       <a class="dropdown-item"
@@ -209,7 +198,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal custom-modal fade" id="suscribe_arcarde" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -277,7 +265,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal custom-modal fade" id="delete" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">

@@ -63,8 +63,8 @@ export class SousCompetitionService {
         startDate : ['', Validators.required],
         endDate: ['', Validators.required],
         maxOfWinners: ['', Validators.required],
-        lang: ['', Validators.required],
-        parentCompetition : ['', Validators.required],
+        lang: [, Validators.required],
+        parentCompetition : [, Validators.required],
         parentCompetionId: ['']
 
     });
@@ -182,6 +182,9 @@ export class SousCompetitionService {
       this.waitingResponse = false;
     });
 
+}
+getCompetitionById(CompetitionId: any): Promise<any> {
+  return this.api.get(EndpointSousCompetion.GET_ALL_COMPETITION + CompetitionId, this.authorization).toPromise()
 }
 
 loadListCompetition(idCompetition: string) {
@@ -358,6 +361,26 @@ createCompetition(competionData: SousCompetion, dataArcarde: any): Observable<an
           })
         });
   }
+  
+  getCompetionsubscribers(idCompetition: string): Promise<any[]>{
+    this.waitingCriteriasResp = true;
+    return new Promise((resole, reject)=>{
+          this.api.get(`EndpointSousCompetion.GET_ALL_COMPETITION/participants${{idCompetition}}`, this.authorization).subscribe((resp)=>{
+            this.waitingCriteriasResp = false;
+            resole(resp.data);
+        },(error: any)=> {
+          reject([]);
+          if (error.status == 500) {
+            this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
+          } else if (error.status == 401) {
+            this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
+          } else {
+            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+          }
+          this.waitingCriteriasResp = false;
+          })
+        });
+  }
 
   addCriteria(gameId: string, gameWinnerCriteriasId: string): Promise<boolean>{
     return new Promise<boolean>((resolve,reject) => {
@@ -445,7 +468,11 @@ createCompetition(competionData: SousCompetion, dataArcarde: any): Observable<an
       }
       return new SousCompetion();
   }
-
+  
+  toggleCheckbox(control: string) {
+    this.form.get(control)?.setValue(!this.form.get(control)?.value);
+  }
+  
   getParentCompetitionID(idCompetition: string): string {
     let parentID;
     parentID = this.underCompetiton.parentCompetition._id;

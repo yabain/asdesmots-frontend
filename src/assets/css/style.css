@@ -8602,3 +8602,6 @@ ol, ul {
 .custom-card .competition-running {
 	cursor: wait;
 }
+.vh-50 {
+	height: 50vh;
+}

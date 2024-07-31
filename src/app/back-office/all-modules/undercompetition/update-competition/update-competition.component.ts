@@ -46,9 +46,6 @@ export class UpdateCompetitionComponent implements OnInit {
               ) {
       this.translate.use(this.translatiton.getCurrentLanguage());
       this.sousCompetion.loadListUnderCompetition(),
-      // this.sousCompetion.initFormUpdate();
-
-      // this.getID();
       this.getLevel();
    }
 
@@ -63,7 +60,8 @@ export class UpdateCompetitionComponent implements OnInit {
        console.log("name of parentCmpetition: ", this.parentCompetitionName);
     } else {
       this.inputHidden = false;
-      this.competitionResolve.parentCompetition = '';
+      if(this.competitionResolve)
+        this.competitionResolve.parentCompetition = '';
     }
     this.getID();
   }
@@ -148,6 +146,10 @@ export class UpdateCompetitionComponent implements OnInit {
     } else {
       console.log('Aucune compétition sélectionnée');
     }
+  }
+  
+  toggleCheckbox(control: string) {
+    this.formUpdate.get(control)?.setValue(!this.formUpdate.get(control)?.value);
   }
 }
 

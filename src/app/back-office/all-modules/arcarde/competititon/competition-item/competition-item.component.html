@@ -1,0 +1,14 @@
+  <ng-container *ngIf="competition.children && competition.children.length > 0; else noChildren">
+    <details>
+      <summary>{{ competition.name }}</summary>
+      <!-- <p>{{ competition.description }}</p> -->
+      <ul *ngIf="competition.children && competition.children.length > 0">
+        <li *ngFor="let child of competition.children">
+          <app-competition-item [competition]="child"></app-competition-item>
+        </li>
+      </ul>
+    </details>
+  </ng-container>
+  <ng-template #noChildren>
+    <p>{{ competition.description }}</p>
+  </ng-template>

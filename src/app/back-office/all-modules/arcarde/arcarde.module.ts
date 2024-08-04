@@ -14,6 +14,9 @@ import { DataTablesModule } from 'angular-datatables';
 import { SharedModule } from '../../shared/shared.module';
 import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
 import { ArcadeDetailsComponent } from './arcade-details/arcade-details.component';
+import { CompetititonComponent } from './competititon/competititon.component';
+import { SubCompetitionComponent } from './competititon/sub-competition/sub-competition.component';
+import { CompetitionItemComponent } from './competititon/competition-item/competition-item.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +25,10 @@ import { ArcadeDetailsComponent } from './arcade-details/arcade-details.componen
         ArcadesuscriptionComponent,
         FormatDatePipe,
         CreateArcardeComponent,
-        ArcadeDetailsComponent
+        ArcadeDetailsComponent,
+        CompetititonComponent,
+        SubCompetitionComponent,
+        CompetitionItemComponent
     ],
     imports: [
         CommonModule,

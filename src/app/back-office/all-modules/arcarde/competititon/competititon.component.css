@@ -1,0 +1,10 @@
+.tree {
+  --spacing: 1.5rem;
+  --radius: 10px;
+}
+
+li {
+  display: block;
+  position: relative;
+  padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
+}

@@ -22,10 +22,15 @@
     </div>
     <div class="d-md-flex justify-content-between">
       <nav class="nav nav-pills">
-        <a class="nav-item nav-link" [class.active]="activeTab === 'overview'"
-          (click)="setActiveTab('overview')">Overview</a>
-        <a class="nav-item nav-link" [class.active]="activeTab === 'subscribers'"
-          (click)="setActiveTab('subscribers')">Subscribers</a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">
+          Overview
+        </a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'subscribers'" (click)="setActiveTab('subscribers')">
+          Subscribers
+        </a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'competitions'" (click)="setActiveTab('competitions')">
+          Competitions
+        </a>
       </nav>
       <div *ngIf="activeTab === 'overview'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2
@@ -49,6 +54,13 @@
           data-bs-target="#addSubscriber"
           data-bs-toggle="modal">
           <i class="fa fa-user-plus"></i>
+        </a>
+      </div>
+      <div *ngIf="activeTab === 'competitions'" class="text-md-end mt-3 mt-md-0">
+        <a  class="btn btn-outline-primary me-2" 
+          data-bs-target="#addCompetition"
+          data-bs-toggle="modal">
+          <i class="fa fa-plus"></i>
         </a>
       </div>
     </div>
@@ -166,7 +178,7 @@
       </div>
       <div *ngIf="activeTab === 'subscribers'">
         <div class="text-center" *ngIf="arcardeServ.waitingResponse">
-          <img src="../../../../../assets/img/loader.gif" height="45px" alt="" />
+          <img src="assets/img/loader.gif" height="45px" alt="" />
         </div>
         <div class="card">
           <div class="card-header">
@@ -181,10 +193,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="../../../../../assets/img/user-profile.png" alt="User Image" />
+                        src="assets/img/user-profile.png" alt="User Image" />
                     </a>
                     <a> {{ user.firstName }} {{ user.lastName }}<br /> </a>
-                    <!-- <span class="tag tag-coach ms-2">COACH</span> -->
                   </div>
                   <div>
                     <span>{{ user.email }}</span>
@@ -203,82 +214,11 @@
             <div *ngIf="!arcardeServ.listUser.length" class="text-center">
               {{ "arcade.noSubscribers" | translate }}
             </div>
-            <div *ngFor="let user of arcardeServ.listUser" class="custom-card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="../../../../../assets/img/user-profile.png" alt="User Image" />
-                    </a>
-                    <a> {{ user.firstName }} {{ user.lastName }}<br /> </a>
-                    <!-- <span class="tag tag-coach ms-2">COACH</span> -->
-                  </div>
-                  <div>
-                    <span>{{ user.email }}</span>
-                  </div>
-                  <div>
-                    <span>{{ user.phoneNumber }}</span>
-                  </div>
-                  <div>
-                    <button class="icon-button" (click)="removeUser(user._id)">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-        <!-- <div class="row" *ngIf="!arcardeServ.waitingResponse">
-<div class="col-sm-12">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-stripped table-hover datatable">
-          <thead class="thead-light">
-            <tr>
-              <th>{{'user.user' | translate }}</th>
-              <th>{{'user.email' | translate }}</th>
-              <th>{{'user.phone' | translate }}</th>
-              <th class="text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="arcardeServ.listUser.length != 0">
-              <tr *ngFor="let user of arcardeServ.listUser">
-                  <td>
-                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                      src="../../../../../assets/img/user-profile.png" alt="User Image" /></a>
-                  <a>{{ user.firstName }} {{ user.lastName }}</a>
-                  </td>
-
-                  <td>
-                      {{ user.email }}
-                  </td>
-
-                  <td> {{ user.phoneNumber }} </td>
-
-                  <td class="text-center">
-                      <button class="btn btn-danger" (click)="removeUser(user._id)">
-                          remove
-                      </button>
-                  </td>
-              </tr>
-          </tbody>
-          <tbody *ngIf="arcardeServ.listUser.length == 0">
-            <tr>
-              <td></td>
-              <td class="text-center">
-                <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                <br>Aucun Utilisateur !
-              </td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-
-    </div>
-  </div>
-</div> -->
+      <div *ngIf="activeTab === 'competitions'">
+        <app-arcade-competititon></app-arcade-competititon>
       </div>
     </div>
   </div>

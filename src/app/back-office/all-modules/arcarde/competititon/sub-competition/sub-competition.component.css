@@ -1,0 +1,79 @@
+.competition-container {
+  /* border-left: 2px solid #ddd; */
+  position: relative;
+}
+.competition-collapse {
+  padding: 1rem;
+  background-color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+}
+.arcade-children {
+  padding-left: 0.5rem;
+}
+
+.competition-collapse {
+  --spacing: 1.5rem;
+  --radius: 10px;
+  margin-left: calc(var(--radius) - var(--spacing) / 2);
+  background-color: #FFFFFF;
+  padding: 1rem;
+  padding-left: calc(2 * var(--spacing) - var(--radius));
+  /* border-left: 2px solid #ddd; */
+  cursor: pointer;
+}
+.competition-data {
+  padding-top: 1rem;
+}
+.competition-container::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(- var(--spacing) - var(--radius));
+  left: calc(- var(--spacing) - var(--radius) -1rem);
+  width: calc(var(--spacing) + 2px);
+  height: calc(100% - var(--spacing) - var(--radius));
+  line-height: calc(2 * var(--radius) - 2px);
+  /* border: solid #ddd; */
+  border-width: 0 0 2px 2px;
+}
+.competition-collapse.is-child::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(- var(--spacing) - var(--radius) - 1rem);
+  left: calc(- var(--spacing) - var(--radius) -1rem -2px);
+  width: calc(var(--spacing) + 2px);
+  height: calc(100% - var(--radius) - 1rem);
+  line-height: calc(2 * var(--radius) - 2px);
+  /* border: solid #ddd; */
+  border-width: 0 0 2px 2px;
+}
+
+.competition-collapse.parent::after {
+  content: '-';
+  background: #696;
+  line-height: calc(2 * var(--radius) - 2px);
+  text-align: center;
+  color: #ddd;
+}
+
+.competition-collapse.parent.collapsed::after {
+  content: '+';
+}
+
+.competition-collapse.last-child {
+  border-color: transparent;
+}
+
+.competition-collapse::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(2.2 * var(--spacing) / 2 - var(--radius) + 0.5rem);
+  left: calc(var(--spacing) - var(--radius) - 2px);
+  width: calc(2 * var(--radius));
+  height: calc(2 * var(--radius));
+  border-radius: 50%;
+  background: #ddd;
+}

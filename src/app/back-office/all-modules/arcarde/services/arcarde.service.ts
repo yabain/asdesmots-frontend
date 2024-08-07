@@ -10,6 +10,8 @@ import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +54,7 @@ export class ArcardeService {
     private fb: FormBuilder,
     private location: Location,
     private languageService: TranslationService,
+    private httpClient: HttpClient
   ) { this.authorization = { 'Authorization': 'Bearer ' + this.api.getAccessToken() } }
 
   get f() {
@@ -100,21 +103,9 @@ export class ArcardeService {
       startRegistrationDate: ['', Validators.required],
       endRegistrationDate: ['', Validators.required]
     });
-    this.initDefaultBooeleanValues();
     this.formControlCreateArcarde.valueChanges.subscribe((data: any) => {
       Object.assign(this.newArcarde, data);
     });
-
-  }
-  
-  toggleCheckbox(control: string) {
-    this.formControlCreateArcarde.get(control)?.setValue(!this.formControlCreateArcarde.get(control)?.value);
-  }
-
-  initDefaultBooeleanValues() {
-    this.f_Creation['canRegisterPlayer'].setValue(true);
-    this.f_Creation['isFreeRegistrationPlayer'].setValue(false);
-    this.f_Creation['isOnlineGame'].setValue(true);
 
   }
 
@@ -269,29 +260,28 @@ export class ArcardeService {
       });
   }
 
-  createNewArcarde() {
-    this.waitingResponse = true;
-    this.isCreationDone = false;
-    this.api.post(Endpoint.CREATE_ARCARDE, this.newArcarde, this.authorization).subscribe((response) => {
-      console.log('creation Response', response);
-      this.waitingResponse = false;
-      this.isCreationDone = false;
-      // this.waitingResponse = true;
-      // this.isCreationDone = false;
-      this.toastr.success('Arcarde Created', this.languageService.transformMessageLanguage("succes"), { timeOut: 10000 });
-    }, (error: any) => {
-      if (error.status == 500) {
-        this.toastr.error(this.languageService.transformMessageLanguage("internalError"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-      } else if (error.status == 401) {
-        this.toastr.error(this.languageService.transformMessageLanguage("refreshPage"), this.languageService.transformMessageLanguage('offSession'), { timeOut: 10000 });
-      } else if (error.status == 404) {
-        this.toastr.error(this.languageService.transformMessageLanguage("arcardenotFound"), this.languageService.transformMessageLanguage('error'), { timeOut: 10000 });
-      } else {
-        this.toastr.error(this.languageService.transformMessageLanguage("noInternet"), this.languageService.transformMessageLanguage('error'), { timeOut: 7000 });
-      }
-      this.waitingResponse = false;
+  create(formData: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(`${environment.url}/${Endpoint.CREATE_ARCARDE}`, formData, { headers: this.headers}).subscribe((response: any) => { 
+        this.translate.get('arcade.arcade').subscribe((arcade: string) => {
+          this.translate.get('successResponse.created').subscribe((message: string) => {
+            this.toastr.success(`${arcade} ${message}`, 'Error');
+          });
+        });
+        return resolve(response);
+      }, (error) => {
+        if(error.includes('Arcade already exists') || error.errors?.alreadyUsed) 
+          this.translate.get('errorResponse.duplicatedEntry').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+        else 
+          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+        console.log(error);
+        return reject(error);
+      })
     });
-    //  this.waitingResponse = false;
   }
 
   changeState(data: { gameArcardeID: string, state: any }) {
@@ -462,78 +452,6 @@ export class ArcardeService {
       });
     }
 
-  }
-
-  verificationAndCreateNewArcarde() {
-    const newStartDate = new Date(this.newArcarde.startDate);
-    if (newStartDate < this.dateNow) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'Start date must be greater than or equal to today'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (this.newArcarde.endDate < this.newArcarde.startDate) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'the end date must be greater than the start date'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (
-      this.newArcarde.startRegistrationDate > this.newArcarde.startDate
-    ) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'The recording start date must be less than or equal to the start date'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (
-      this.newArcarde.startRegistrationDate > this.newArcarde.endDate
-    ) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'The recording start date must be less than the end date'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (
-      this.newArcarde.endRegistrationDate <
-      this.newArcarde.startRegistrationDate
-    ) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'The recording end date must be greater than the recording end date'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (this.newArcarde.endRegistrationDate > this.newArcarde.endDate) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'The recording end date must be less than the end date'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else if (this.newArcarde.maxPlayersNumber < 2) {
-      return this.toastr.error(
-        this.languageService.transformMessageLanguage(
-          'There should be at least 2 players'
-        ),
-        'Error',
-        { timeOut: 5000 }
-      );
-    } else {
-      this.createNewArcarde();
-      this.location.back();
-      this.loadArcade();
-    }
   }
 
 }

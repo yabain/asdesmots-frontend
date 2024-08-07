@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'ng-bmis-date-time-picker',
@@ -7,6 +7,8 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnInit, Renderer2, 
   encapsulation: ViewEncapsulation.None
 })
 export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
+  @Output() dateTimeChange = new EventEmitter<string>();
+
   currentDate = new Date();
   selectedDate = new Date();
   months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -51,13 +53,11 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
   }
 
   initializePicker() {
-    
     const uniqueDpInputId = `datetime-picker-input-${Math.random().toString(36).substr(2, 9)}`;
     this.dateTimeInput = this.el.nativeElement.querySelector('input');
     this.renderer.setAttribute(this.dateTimeInput, 'id', uniqueDpInputId);
     this.dateTimePicker = document.getElementById(this.dateTimePickerId) as HTMLSelectElement;
     this.calendarIcon = document.getElementById(this.calendarIconId) as HTMLElement;
-    // this.dateTimePicker = document.getElementById(this.dateTimePickerId) as HTMLElement;
     this.daysContainer = document.getElementById(this.daysContainerId) as HTMLElement;
     this.timeInput = document.getElementById(this.timeInputId) as HTMLInputElement;
     this.monthSelect = document.getElementById(this.monthSelectId) as HTMLSelectElement;
@@ -141,9 +141,18 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
       }
     };
 
+    const formatDateTime = (date: Date, time: string): string => {
+      const yyyy = date.getFullYear();
+      const MM = (date.getMonth() + 1).toString().padStart(2, '0');
+      const dd = date.getDate().toString().padStart(2, '0');
+      return `${yyyy}-${MM}-${dd} ${time || '00:00'}`;
+    };
+
     const updateDisplay = () => {
       updateCalendar();
-      this.dateTimeInput.value = `${this.selectedDate.toLocaleDateString()} ${this.timeInput.value || '00:00'}`;
+      const formattedDateTime = formatDateTime(this.selectedDate, this.timeInput?.value);
+      this.dateTimeInput.value = formattedDateTime;
+      this.dateTimeChange.emit(formattedDateTime);
     };
 
     const toggleDateTimePicker = () => {
@@ -166,11 +175,11 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
 
     this.monthSelect.value = this.currentDate.getMonth().toString();
     this.yearSelect.value = currentYear.toString();
+    
     updateDisplay();
   }
 
   adjustDropdownPosition() {
-
     const inputRect = this.dateTimeInput.getBoundingClientRect();
     const pickerRect = this.dateTimePicker.getBoundingClientRect();
 

@@ -21,10 +21,6 @@
             data-placement="top" title="Create new Arcarde">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-primary me-2" style="color: #035858 !important; background-color: #ffff !important;"
-            data-toggle="tooltip" data-placement="top" title="subscribe to an arcade" (click)="goToAcradeSuscription()">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-          </a>
         </div>
       </div>
     </div>
@@ -37,7 +33,7 @@
     </div>
 
     <div class="row">
-      <div *ngFor="let arcarde of arcadeServ.listArcardeUser" class="col-12 col-md-4 col-lg-3">
+      <div *ngFor="let arcarde of arcades" class="col-12 col-md-4 col-lg-3">
         <div class="custom-card">
           <div class="card-body pb-0">
             <div class="d-flex justify-content-between align-items-start">
@@ -66,26 +62,6 @@
                       <span style="margin-left: 5px;"> {{'delete' | translate}} </span>
                     </a>
                   </li>
-                  <!-- <li>
-                      <a class="dropdown-item" 
-                        *ngIf="arcarde.gameState === gameState.RUNNING then process_running_gameStarted else process_running_down">
-                      </a>
-                      <ng-template #process_running_gameStarted>
-                        <span class="text-primary text-center mx-3">
-                              {{'startding' | translate }} Arcarde...
-                        </span>
-                      </ng-template>
-                      <ng-template #process_running_down>
-                        <a class="dropdown-item"
-                          *ngIf="(userID === arcarde.owner)"
-                          (click)="startArcarde(arcarde._id)"
-                          style="cursor: pointer;" >
-
-                            <i class="fa fa-play" aria-hidden="true"></i>
-                            <span style="margin-left: 5px;"> {{ 'start' | translate}} Arcarde </span>
-                        </a>
-                      </ng-template>
-                    </li> -->
                 </ul>
               </div>
             </div>
@@ -264,8 +240,7 @@
       </div>
 
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2"
-          (click)="resetFormSuscribtion()">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
           {{'close' | translate }}
         </button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
@@ -280,27 +255,4 @@
     </div>
   </div>
 </div>
-<div class="modal custom-modal fade" id="delete" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-icon text-center mb-3">
-        <i class="fas fa-trash-alt text-danger"></i>
-        <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
-      </div>
-      <div class="modal-text text-center pb-3">
-        {{'confirmDeleteText' | translate }} <b>{{arcardeData.name}} ?</b>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
-          {{'action.cancel' | translate }}
-        </button>
-        <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="delete()">
-          {{'action.delete' | translate }}
-        </button>
-        <button type="button" *ngIf="waiting" class="btn btn-danger" disabled>
-          <img src="../../../../../assets/img/loader.gif" alt="" width="30px">
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-delete-arcade-modal [arcadeData]="arcardeData"></app-delete-arcade-modal>

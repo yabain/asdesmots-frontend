@@ -17,6 +17,7 @@ import { ArcadeDetailsComponent } from './arcade-details/arcade-details.componen
 import { CompetititonComponent } from './competititon/competititon.component';
 import { SubCompetitionComponent } from './competititon/sub-competition/sub-competition.component';
 import { CompetitionItemComponent } from './competititon/competition-item/competition-item.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { CompetitionItemComponent } from './competititon/competition-item/compet
         ArcadeDetailsComponent,
         CompetititonComponent,
         SubCompetitionComponent,
-        CompetitionItemComponent
+        CompetitionItemComponent,
+        DeleteModalComponent
     ],
     imports: [
         CommonModule,

@@ -24,6 +24,7 @@ export class CreateArcardeComponent implements OnInit {
     public userServ: UserService,
     private location: Location,
     private fb: FormBuilder,
+    private router: Router,
     private translationService: TranslationService
   ) {
     this.translate.use(this.translationService.getCurrentLanguage());
@@ -96,6 +97,7 @@ export class CreateArcardeComponent implements OnInit {
       this.submitted = false;
       this.waitingResponse = false;
       this.createForm.reset();
+      this.router.navigate(['/arcarde/list-arcarde'])
     })
     .catch((error) => {
       if(error.includes('Arcade already exists') || error.errors?.alreadyUsed)
@@ -103,7 +105,6 @@ export class CreateArcardeComponent implements OnInit {
       this.submitted = false;
       this.waitingResponse = false;
     });
-    this.arcadeServ.create(this.createForm.value);
   }
 
   toggleCheckbox(control: string) {

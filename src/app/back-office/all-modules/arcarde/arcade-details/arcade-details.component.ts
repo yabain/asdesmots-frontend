@@ -32,39 +32,14 @@ export class ArcadeDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.idArcard = this.activedRouter.snapshot.params['idArcarde'];
     this.arcardeServ.getListUsersOfArcardes(this.idArcard);
-    this.arcardeServ.getArcardeById(this.idArcard).then(
-      (resp: any) => {
+    this.arcardeServ
+      .getArcardeById(this.idArcard)
+      .then((resp: any) => {
         this.arcardeData = resp.data;
-        console.log(resp);
-      },
-      (error: any) => {
-        if (error.status == 500) {
-          this.toastr.error(
-            this.translation.transformMessageLanguage('internalError'),
-            this.translation.transformMessageLanguage('error'),
-            { timeOut: 10000 }
-          );
-        } else if (error.status == 401) {
-          this.toastr.error(
-            this.translation.transformMessageLanguage('refreshPage'),
-            this.translation.transformMessageLanguage('offSession'),
-            { timeOut: 10000 }
-          );
-        } else if (error.status == 404) {
-          this.toastr.error(
-            this.translation.transformMessageLanguage('arcardenotFound'),
-            this.translation.transformMessageLanguage('error'),
-            { timeOut: 10000 }
-          );
-        } else {
-          this.toastr.error(
-            this.translation.transformMessageLanguage('noInternet'),
-            this.translation.transformMessageLanguage('error'),
-            { timeOut: 7000 }
-          );
-        }
-      }
-    );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   setActiveTab(tab: string) {
@@ -79,16 +54,12 @@ export class ArcadeDetailsComponent implements OnInit {
     this.router.navigateByUrl('/arcarde/suscribe');
   }
 
-  refresh() {
-    this.arcardeServ.getListUsersOfArcardes(this.idArcard);
-  }
   startCompetition() {}
-  delete() {}
+  
   removeUser(userId: string) {
     this.arcardeServ.UnsuscribeUserToAcarde({
       gameID: this.idArcard,
       playerID: userId,
     });
-    this.refresh();
   }
 }

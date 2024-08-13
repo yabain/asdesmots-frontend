@@ -42,16 +42,16 @@ export class ListCompetitionComponent implements OnInit {
    }
 
   ngOnInit(): void {
-      this.loadUserID();
-      // this.sousCompetion.loadListCompetition();
+    this.loadUserID();
+    // this.sousCompetion.loadListCompetition();
   }
 
 
  async loadListOfArcarde(){
-      if(this.arcardeSrv.listArcardeUser.length == 0){
-          this.arcardeSrv.loadArcade();
-      }
-      this.sousCompetion.loadListUnderCompetition();
+    if(this.arcardeSrv.listArcardeUser.length == 0){
+        this.arcardeSrv.loadArcade();
+    }
+    this.sousCompetion.loadListUnderCompetition();
   }
 
   initUpdatingForm(sousCompet: SousCompetion){

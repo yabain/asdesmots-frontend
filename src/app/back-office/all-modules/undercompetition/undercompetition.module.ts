@@ -19,6 +19,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { SharedModule } from '../../shared/shared.module';
 import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
 import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CompetitionDetailsComponent } from './competition-details/competition-d
     FormatDatePipe,
     ListPartsComponent,
     CreateCompetitionComponent,
-    CompetitionDetailsComponent
+    CompetitionDetailsComponent,
+    DeleteModalComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { CompetitionDetailsComponent } from './competition-details/competition-d
     SharedModule,
     DataTablesModule,
     NgBmisDateTimePickerModule,
-  ]
+  ],
+  exports:[DeleteModalComponent]
 })
 export class UndercompetitionModule { }

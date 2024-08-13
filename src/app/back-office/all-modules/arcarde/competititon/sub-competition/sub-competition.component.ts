@@ -16,6 +16,8 @@ export interface Competition{
 })
 export class SubCompetitionComponent implements OnInit {
   @Input() competitions: Competition[];
+  @Input() arcadeId: string;
+
   gameState = State;
 
   isCollapsed: { [key: number]: boolean } = {};

@@ -3,48 +3,54 @@
     <div class="competition-container" *ngFor="let competition of competitions; let i = index">
       <div *ngIf="!competition.parentCompetition" class="tree">
       </div>
-      <div class="competition-collapse"
-        [ngClass]="{
+      <div class="competition-collapse" [ngClass]="{
           'collapsed': isCollapsed[i],
           'parent': competition.children?.length,
           'last-child': !competition.children?.length,
           'is-child': competition.parent_Id
-        }"
-        (click)="toggleCollapse(i)">
+        }" (click)="toggleCollapse(i)">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <i class="fas" [ngClass]="isCollapsed[i] ? 'fa-caret-right' : 'fa-caret-down'"></i>
             {{ competition.name }}
           </div>
           <div class="col-auto">
-            <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;">
+            <a class="badge badge-pill bg-info-light me-2"
+              [routerLink]="['/undercompetition/competition/details',competition._id]" data-toggle="tooltip"
+              data-placement="top" title="View details">
+              <i class="fas fa-eye"></i>
+            </a>
+            <a [routerLink]="['/arcarde/competition/create',arcadeId,competition._id]"
+              class="badge badge-pill bg-primary-light me-2" data-toggle="tooltip" data-placement="top"
+              title="New sub competition under this competition">
               <i class="fas fa-plus"></i>
             </a>
-            <a class="btn btn-primary me-2" [routerLink]="'/undercompetition/competition/create'"
-              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip"
-              data-placement="top" title="Create new competition">
+            <a class="badge badge-pill bg-success-light me-2"
+              [routerLink]="['/undercompetition/competition/edit',competition._id]" data-toggle="tooltip"
+              data-placement="top" title="Edit the competition">
               <i class="fa fa-pencil"></i>
             </a>
-            <a class="btn btn-primary me-2" [routerLink]="'/undercompetition/competition/create'"
-              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip"
-              data-placement="top" title="Create new competition">
-              <i class="fas fa-trash"></i>
+            <a class="{{ competition.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-info-light' }} me-2"
+              data-toggle="tooltip" data-placement="top"
+              title="{{ competition.gameState === gameState.RUNNING ? 'Stop the competition': 'Start  the competition' }}">
+              <i class="{{ competition.gameState === gameState.RUNNING? 'fa fa-pause':  'fa fa-play' }}"
+                aria-hidden="true"></i>
             </a>
-            <a class="btn {{ competition.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light competition-running' : 'badge badge-pill bg-primary-light' }} me-2"
-              [routerLink]="'/undercompetition/competition/create'"
-              style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip"
-              data-placement="top" title="Create new competition">
-              <i *ngIf="competition.gameState === gameState.RUNNING" class="fa fa-pause" aria-hidden="true"></i>
+            <a class="badge badge-pill bg-danger-light me-2" data-toggle="tooltip" data-placement="top"
+              title="Delete the competition" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competition._id">
+              <i class="fas fa-trash"></i>
             </a>
           </div>
         </div>
+        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id">
+        </app-delete-competition-modal>
         <div *ngIf="!isCollapsed[i]" class="competition-data">
           {{ competition.description }}
         </div>
       </div>
       <div class="arcade-children" *ngIf="!isCollapsed[i]">
-        <app-arcade-sub-competition [competitions]="competition.children"></app-arcade-sub-competition>
+        <app-arcade-sub-competition [competitions]="competition.children" [arcadeId]="arcadeId">
+        </app-arcade-sub-competition>
       </div>
     </div>
   </ng-container>

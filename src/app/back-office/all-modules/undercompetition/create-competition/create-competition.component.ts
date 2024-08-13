@@ -1,130 +1,161 @@
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
-import { Location } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
   selector: 'app-create-competition',
   templateUrl: './create-competition.component.html',
-  styleUrls: ['./create-competition.component.css']
+  styleUrls: ['./create-competition.component.css'],
 })
 export class CreateCompetitionComponent implements OnInit {
   sousCompetitionSelctedData: SousCompetion = new SousCompetion();
-  id_Arcarde : string = ''; //id arcade of the new register competion;
-  formIdArcarde!: FormGroup;
   loading: boolean = false;
-  constructor(public sousCompetionService: SousCompetitionService,
-              private fb: FormBuilder,
-              private translate: TranslateService,
-              private toastr: ToastrService,
-              private translation: TranslationService,
-              private route: Router,
-              public level: LevelService,
-              private location: Location,
-              public arcardeSrv: ArcardeService
-              ) {
-      this.translate.use(this.translation.getCurrentLanguage());
-      this.loadListOfArcarde();
-      this.sousCompetionService.initFormControl();
-      this.sousCompetionService.initFormUpdate();
-      this.initArcardeFormID();
-      this.getLevel();
-   }
+  submitted: boolean = false;
+  fetching: boolean = false;
+  createForm: FormGroup;
+  arcadeId: string;
+  competitions: any[] = [];
+  gameLevels: any[] = [];
+  parentCompetitionId: string = '';
+
+  constructor(
+    public sousCompetitionService: SousCompetitionService,
+    private fb: FormBuilder,
+    private router: Router,
+    public levelService: LevelService,
+    public arcardeSrv: ArcardeService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
+    this.parentCompetitionId = this.activatedRoute.snapshot.paramMap.get('parentCompetitionId');
+  }
 
   ngOnInit(): void {
-
-  }
-
-  initArcardeFormID(){
-     this.formIdArcarde = this.fb.group({
-        idArcarde: ['', Validators.required]
+    this.getLevelList();
+    this.getCompetitions();
+    this.createForm = this.fb.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(60),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(65),
+        ],
+      ],
+      gameLevel: ['', Validators.required],
+      isSinglePart: [true],
+      canRegisterPlayer: [false],
+      localisation: ['', Validators.required],
+      maxPlayerLife: ['', Validators.required],
+      maxTimeToPlay: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      maxOfWinners: ['', Validators.required],
+      lang: [, Validators.required],
+      parentCompetition: [this.parentCompetitionId],
     });
-
-    this.formIdArcarde.valueChanges.subscribe((idChoossed)=>{
-        this.id_Arcarde = idChoossed;
-        this.sousCompetionService.buildListParentCompetition(idChoossed.idArcarde);
-    });
   }
 
-  // doCreationCompetion(){
-  //   this.loading = true;
-  //     this.sousCompetionService.createCompetition(this.sousCompetionService.newUnderCompetionParam, this.id_Arcarde);
-  //     this.arcardeSrv.loadArcade();
-  //     this.sousCompetionService.loadListUnderCompetition();
-  //     this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
-  //     this.location.back();
-  //     this.sousCompetionService.loadListUnderCompetition();
-  //     this.loading = false;
-  // }
-
-  doCreationCompetion() {
-    this.loading = true; // Activer le loader
-
-    // Obtenez les données du formulaire
-    const competionData = this.sousCompetionService.form.value;
-
-    // Effectuez l'appel au service
-    this.sousCompetionService.createCompetition(competionData, this.id_Arcarde).subscribe(
-      (resp) => {
-        // Succès de la création de la compétition
-        this.arcardeSrv.loadArcade();
-        this.sousCompetionService.loadListUnderCompetition();
-        this.toastr.success('Competition Created', 'Success', { timeOut: 7000 });
-
-        // Désactivez le loader une fois que le traitement est terminé
+  getCompetitions() {
+    this.loading = true;
+    this.sousCompetitionService
+      .getAllCompettions(this.arcadeId)
+      .then((response: any) => {
+        this.competitions = response.data;
         this.loading = false;
-
-         // Naviguer vers la page de la liste des compétitions
-        this.route.navigateByUrl('/undercompetition/competition/list');
-      },
-      (error: any) => {
-        // Gestion des erreurs
-        if (error.status == 500) {
-          this.toastr.error("Internal Server Error. Try again later please.", 'Error', { timeOut: 10000 });
-        } else if (error.status == 401) {
-          this.toastr.error("Invalid Token", 'error', { timeOut: 10000 });
-        } else if (error.status == 404) {
-          this.toastr.error("Game Arcarde not found", 'Error', { timeOut: 10000 });
-        } else {
-          this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-        }
-
-        // Désactivez le loader en cas d'erreur
+      })
+      .catch((error) => {
+        console.error(error);
         this.loading = false;
-      }
-    );
-    // this.location.back();
+      });
   }
 
-  resetFormCreation(){
-    this.sousCompetionService.form.reset();
-    this.sousCompetionService.creationDone = false;
-    this.route.navigateByUrl('/undercompetition/competition/list');
-  }
-
-  async loadListOfArcarde(){
-    if(this.arcardeSrv.listArcardeUser.length == 0){
-        this.arcardeSrv.loadArcade();
+  getLevelList() {
+    if (JSON.parse(sessionStorage.getItem('levels-list'))) {
+      const data = JSON.parse(sessionStorage.getItem('levels-list'));
+      this.gameLevels = data.levels;
     }
-    this.sousCompetionService.loadListUnderCompetition();
+    else {
+      this.levelService.getAllLevels().then(response => {
+        this.gameLevels = response.levels;
+      }, (err: any) => {
+        console.log(err);
+      });
+    }
   }
 
-  getLevel(){
-      if(this.level.levelList.length === 0){
-          this.level.getAllLevels();
-      }
+  create() {
+    this.submitted = true;
+    if (this.createForm.invalid) {
+      return;
+    }
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mois commence à 0, donc ajoutez 1
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+    if (this.createForm.get('startDate')?.value < formattedDate)
+      this.createForm.controls['startDate'].setErrors({
+        laterThanToday: true,
+      });
+    if (
+      this.createForm.get('startDate')?.value <
+      this.createForm.get('endRegistrationDate')?.value
+    )
+      this.createForm.controls['startDate'].setErrors({
+        laterThanEndRegistrationDate: true,
+      });
+    if (
+      this.createForm.get('endDate')?.value <
+      this.createForm.get('startDate')?.value
+    )
+      this.createForm.controls['endDate'].setErrors({
+        laterThanStartDate: true,
+      });
+
+    if (this.createForm.invalid) {
+      return;
+    }
+    this.fetching = true;
+    this.sousCompetitionService
+      .create(this.createForm.value, this.arcadeId)
+      .then(() => {
+        this.submitted = false;
+        this.fetching = false;
+        this.createForm.reset();
+        this.router.navigate([`/arcarde/details/${this.arcadeId}`]);
+      })
+      .catch((error) => {
+        if (error.includes('Competition already exists') || error.errors?.alreadyUsed)
+          this.createForm.controls['name'].setErrors({ used: true });
+        this.submitted = false;
+        this.fetching = false;
+      });
   }
 
-  backClicked(){
-    this.resetFormCreation();
-    // this.location.back();
+  toggleCheckbox(control: string) {
+    this.createForm
+      .get(control)
+      ?.setValue(!this.createForm.get(control)?.value);
+  }
+
+  onDateTimeChange(newValue: string, control) {
+    this.createForm.get(control).setValue(newValue);
   }
 }

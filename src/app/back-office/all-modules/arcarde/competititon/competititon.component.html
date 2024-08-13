@@ -1,17 +1,9 @@
 <section id="competitions">
-  <div class="tree">
-    <app-arcade-sub-competition *ngIf="competitions?.length; else noCompetitions" [competitions]="competitions">
+  <div *ngIf="!fetching" class="tree">
+    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId">
     </app-arcade-sub-competition>
   </div>
-  <ng-template #noCompetitions>
-    <div class="text-center py-5">
-      <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-      <br>Aucune Competition !
-    </div>
-  </ng-template>
-</section>
-<section id="competitions">
-  <div class="card mt-5">
+  <div class="card {{ competitions?.length ? 'mt-5' : '' }}">
     <div class="card-header">
       <h4 class="card-title">Competitions tree</h4>
       <p class="card-text">
@@ -19,11 +11,24 @@
       </p>
     </div>
     <div class="card-body">
-      <ul class="tree list-unstyled">
+      <div class="row" *ngIf="fetching">
+        <div class="col-sm-12">
+            <div class="text-center">
+                <span>
+                  <img src="assets/img/loader.gif" alt="" width="30px">
+                </span>
+            </div>
+        </div>
+      </div>
+      <ul *ngIf="competitions?.length && !fetching" class="tree list-unstyled">
         <li *ngFor="let competition of competitions">
           <app-competition-item [competition]="competition"></app-competition-item>
         </li>
       </ul>
+      <div *ngIf="!competitions?.length && !fetching" class="text-center">
+        <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+        <br>Aucune Competition !
+      </div>
     </div>
   </div>
 </section>

@@ -8,7 +8,7 @@
   margin-bottom: 0.5rem;
   padding: 1rem;
 }
-.arcade-children {
+.arcade-children { /*Decaler  legerement vers la droite les enfants si necsssaire*/
   padding-left: 0.5rem;
 }
 
@@ -70,7 +70,7 @@
   content: '';
   display: block;
   position: absolute;
-  top: calc(2.2 * var(--spacing) / 2 - var(--radius) + 0.5rem);
+  top: calc(2.2 * var(--spacing) / 2 - var(--radius));
   left: calc(var(--spacing) - var(--radius) - 2px);
   width: calc(2 * var(--radius));
   height: calc(2 * var(--radius));

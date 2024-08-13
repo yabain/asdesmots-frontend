@@ -7,4 +7,6 @@ export enum EndpointSousCompetion{
         ADD_CRITERIAS_GAME = 'game-competition/apply-criteria',
         COMPETITION_STATE = 'game-competition/state',
         GET_ALL_COMPETITION = 'game-competition/',
+        GET_ALL_BY_ARCADE = 'game-competition/by-arcade',
+        DELETE_COMPETITION = 'game-competition',
 }

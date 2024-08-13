@@ -254,7 +254,6 @@ export class ArcardeService {
             });
             console.log('List of user: ', this.listUser);
           } else {
-            console.log('ronice3');
             this.listUser = [];
             this.toastr.error(
               this.languageService.transformMessageLanguage(

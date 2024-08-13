@@ -18,6 +18,7 @@ import { CompetititonComponent } from './competititon/competititon.component';
 import { SubCompetitionComponent } from './competititon/sub-competition/sub-competition.component';
 import { CompetitionItemComponent } from './competititon/competition-item/competition-item.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { UndercompetitionModule } from '../undercompetition/undercompetition.module';
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
+        UndercompetitionModule,
         NgBmisDateTimePickerModule
     ]
 })

@@ -10,7 +10,7 @@ import { SousCompetitionService } from '../services/sous-competition.service';
 @Component({
   selector: 'app-competition-details',
   templateUrl: './competition-details.component.html',
-  styleUrls: ['./competition-details.component.css']
+  styleUrls: ['./competition-details.component.css'],
 })
 export class CompetitionDetailsComponent implements OnInit {
   idCompetition: string = '';
@@ -23,53 +23,58 @@ export class CompetitionDetailsComponent implements OnInit {
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
 
   constructor(
-    public sousCompetitionService: SousCompetitionService,    
-    private translate: TranslateService,
-    private translation: TranslationService,
+    public sousCompetitionService: SousCompetitionService,
     private toastr: ToastrService,
     private router: Router,
-    private activedRouter: ActivatedRoute) {
+    private activedRouter: ActivatedRoute
+  ) {
+    this.idCompetition = this.activedRouter.snapshot.params['id'];
   }
 
   ngOnInit(): void {
-    this.idCompetition = this.activedRouter.snapshot.params['id'];
-    this.sousCompetitionService.getCompetitionById(this.idCompetition).then((resp: any) => {
-      this.competitionData = resp.data;
-      console.log(this.competitionData._id)
-    }, (error: any) => { })
-    this.sousCompetitionService.getCompetionsubscribers(this.idCompetition).then((resp: any) => {
-      this.subscribers = resp.data;
-    }, (error: any) => { })
-    this.sousCompetitionService.getCompetionWiningsCriteria(this.idCompetition).then((resp: any) => {
-      this.criterias = resp.data;
-    }, (error: any) => { })
+    this.sousCompetitionService.getCompetitionById(this.idCompetition).then(
+      (resp: any) => {
+        this.competitionData = resp.data;
+        console.log(this.competitionData._id);
+      },
+      (error: any) => {}
+    );
+    this.sousCompetitionService
+      .getCompetionsubscribers(this.idCompetition)
+      .then(
+        (resp: any) => {
+          this.subscribers = resp.data;
+        },
+        (error: any) => {}
+      );
+    this.sousCompetitionService
+      .getCompetionWiningsCriteria(this.idCompetition)
+      .then(
+        (resp: any) => {
+          this.criterias = resp.data;
+        },
+        (error: any) => {}
+      );
   }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
   }
-  
-  goToAcradeSuscription(){
+
+  goToAcradeSuscription() {
     this.router.navigateByUrl('/competition/suscribe');
   }
-  
-  removeUser(subscriberId: any){
-  }
-  
-  delete() {
-  
-  }
-  
-  startCompetition(){
+
+  removeUser(subscriberId: any) {}
+
+  startCompetition() {
     this.competitionData.changeState({
       gameCompetitionID: this.competitionData._id,
-      state: State.RUNNING
+      state: State.RUNNING,
     });
-
-}
-
-  selectedCriteria(criteriaId: string){
-    this.selectedCriteriaId = criteriaId;
   }
 
+  selectedCriteria(criteriaId: string) {
+    this.selectedCriteriaId = criteriaId;
+  }
 }

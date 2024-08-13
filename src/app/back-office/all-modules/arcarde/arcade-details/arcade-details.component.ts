@@ -13,7 +13,7 @@ import { ArcardeService } from '../services/arcarde.service';
   styleUrls: ['./arcade-details.component.css'],
 })
 export class ArcadeDetailsComponent implements OnInit {
-  idArcard: string = '';
+  arcadeId: string = '';
   gameState = State;
   activeTab: string = 'overview';
   arcardeData: any = new Arcarde();
@@ -24,16 +24,16 @@ export class ArcadeDetailsComponent implements OnInit {
     private translation: TranslationService,
     private toastr: ToastrService,
     private router: Router,
-    private activedRouter: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.initTranslation();
+    this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
   }
 
   ngOnInit(): void {
-    this.idArcard = this.activedRouter.snapshot.params['idArcarde'];
-    this.arcardeServ.getListUsersOfArcardes(this.idArcard);
+    this.arcardeServ.getListUsersOfArcardes(this.arcadeId);
     this.arcardeServ
-      .getArcardeById(this.idArcard)
+      .getArcardeById(this.arcadeId)
       .then((resp: any) => {
         this.arcardeData = resp.data;
       })
@@ -58,7 +58,7 @@ export class ArcadeDetailsComponent implements OnInit {
   
   removeUser(userId: string) {
     this.arcardeServ.UnsuscribeUserToAcarde({
-      gameID: this.idArcard,
+      gameID: this.arcadeId,
       playerID: userId,
     });
   }

@@ -5,38 +5,36 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">{{ sousCompetitionSelctedData?.name }}</h3>
+          <h3 class="page-title">{{ competitionData?.name }}</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }}</a></li>
             <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">{{ 'competition.competition' | translate }}</a></li>
-            <li class="breadcrumb-item"><a [routerLink]="['/undercompetition/competition/details',sousCompetitionSelctedData._id]">{{ sousCompetitionSelctedData?.name }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/undercompetition/competition/details',competitionData?._id]">{{ competitionData?.name }}</a></li>
             <li class="breadcrumb-item active" style="cursor: pointer;">{{ 'update' | translate }}</li>
           </ul>
         </div>
       </div>
     </div>
-
-    <div class="row g-4">
+    <div *ngIf="loading" class="text-center">
+      <span>
+        <img src="assets/img/loader.gif" alt="" width="30px">
+      </span>
+    </div>
+    <div *ngIf="!loading" class="row g-4">
       <div class="card">
         <div class="card-body">
-          <form [formGroup]="sousCompetion.formUpdate">
+          <form [formGroup]="updateForm">
             <div class="row">
-              <div class="col-12 col-md-6" (click)="
-                toggleCheckbox('isSinglePart')
-                ">
+              <div class="col-12 col-md-6" (click)="toggleCheckbox('isSinglePart')">
                 <div class="custom-card p-3" [ngClass]="{
-                    active:
-                      formUpdate?.get('isSinglePart')
-                        ?.value,
+                    active: updateForm.get('isSinglePart').value,
                     invalid:
-                    formUpdate?.['isSinglePart']
-                        ?.touched &&
-                      formUpdate?.['isSinglePart'].invalid
+                      updateForm.controls['isSinglePart'].touched &&
+                      updateForm.controls['isSinglePart'].invalid
                   }">
                   <div class="card-header">
                     {{
-                      (formUpdate?.get("isSinglePart")
-                        ?.value
+                      (updateForm.get("isSinglePart")?.value
                         ? "competition.yes"
                         : "competition.no"
                       ) | translate
@@ -58,23 +56,16 @@
                 </div>
                 <input class="d-none" type="checkbox" formControlName="isSinglePart" />
               </div>
-              <div class="col-12 col-md-6" (click)="
-                  toggleCheckbox('canRegisterPlayer')
-                ">
+              <div class="col-12 col-md-6" (click)="toggleCheckbox('canRegisterPlayer')">
                 <div class="custom-card p-3" [ngClass]="{
-                    active:
-                      formUpdate?.get('canRegisterPlayer')
-                        ?.value,
+                    active: updateForm.get('canRegisterPlayer')?.value,
                     invalid:
-                      formUpdate?.['canRegisterPlayer']
-                        ?.touched &&
-                      formUpdate?.['canRegisterPlayer']
-                        .invalid
+                      updateForm.controls['canRegisterPlayer']?.touched &&
+                      updateForm.controls['canRegisterPlayer']?.invalid
                   }">
                   <div class="card-header">
                     {{
-                      (formUpdate?.get("canRegisterPlayer")
-                        ?.value
+                      (updateForm.get("canRegisterPlayer")?.value
                         ? "arcade.visible"
                         : "arcade.hidden"
                       ) | translate
@@ -83,12 +74,15 @@
                   <div class="card-body text-center pb-0">
                     <h5 class="card-title">
                       <p class="badge badge-pill bg-icon rounded-pill p-3">
-                        <i
-                          class="fa-solid {{(formUpdate?.get('canRegisterPlayer')?.value ? 'fa-eye' : 'fa-eye-slash')}}"></i>
+                        <i class="fa-solid {{
+                            updateForm.get('canRegisterPlayer')?.value
+                              ? 'fa-eye'
+                              : 'fa-eye-slash'
+                          }}"></i>
                       </p>
                     </h5>
                     <h5 class="card-text pt-3">
-                      {{ 'arcade.visibility' | translate }}
+                      {{ "arcade.visibility" | translate }}
                     </h5>
                     <span class="text-muted">
                       {{ "arcade.callToAction" | translate }}
@@ -100,109 +94,279 @@
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="name"> Nom </label>
+                <label for="name"> {{ "name" | translate }} </label>
                 <input type="text" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{
                     'is-invalid':
-                      sousCompetion.formUpdt['name'].touched &&
-                      sousCompetion.formUpdt['name'].invalid
+                      (updateForm.controls['name']?.touched || submitted) &&
+                      updateForm.controls['name']?.invalid
                   }" />
+                <div *ngIf="
+                    (updateForm.controls['name'].touched || submitted) &&
+                    updateForm.controls['name'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['name'].errors &&
+                      updateForm.controls['name'].errors['required']
+                    " style="color: red">
+                    {{ "nameRequired" | translate }}
+                  </div>
+                  <div *ngIf="updateForm.controls['name']?.errors['used']" style="color: red">
+                    {{ "competition.competition" | translate }}
+                    {{ "alreadyUsed" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="localisation"> Localisation </label>
                 <input type="text" name="localisation" class="form-control" formControlName="localisation"
                   id="localisation" [ngClass]="{
                     'is-invalid':
-                      sousCompetion.formUpdt['localisation'].touched &&
-                      sousCompetion.formUpdt['localisation'].invalid
+                      updateForm.get('localisation')?.touched && updateForm.get('localisation')?.invalid
                   }" />
+                <div *ngIf="
+                      (updateForm.controls['localisation'].touched || submitted) &&
+                      updateForm.controls['localisation'].invalid
+                    " class="invalid-feedback">
+                  <div *ngIf="
+                        updateForm.controls['localisation'].errors &&
+                        updateForm.controls['localisation'].errors['required']
+                      " style="color: red">
+                    {{ "localisationRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="level" class="form-control-label">
-                  Niveau
-                </label>
+                <label for="level" class="form-control-label">Niveau</label>
                 <select name="level" formControlName="gameLevel" id="level" class="form-control">
                   <option value="">--choisir un niveau--</option>
-                  <option *ngFor="let item of level.levelList" [value]="item._id">
+                  <option *ngFor="let item of gameLevels" [value]="item._id">
                     {{ item.name }}
                   </option>
                 </select>
+                <div *ngIf="
+                    (updateForm.controls['gameLevel'].touched || submitted) &&
+                    updateForm.controls['gameLevel'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['gameLevel'].errors &&
+                      updateForm.controls['gameLevel'].errors['required']
+                    " style="color: red">
+                    {{ "gameLevelRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="lang">Lang </label>
+                <label for="lang">Language </label>
                 <select type="num" name="lang" class="form-control" formControlName="lang" id="lang" [ngClass]="{
-                    'is-invalid':
-                      sousCompetion.formUpdt['lang'].touched &&
-                      sousCompetion.formUpdt['lang'].invalid
+                    'is-invalid': updateForm.get('lang')?.touched && updateForm.get('lang')?.invalid
                   }">
                   <option value="">--choisir une langue--</option>
                   <option value="fr">Français</option>
                   <option value="en">Anglais</option>
                 </select>
+                <div *ngIf="
+                    (updateForm.controls['lang'].touched || submitted) &&
+                    updateForm.controls['lang'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['lang'].errors &&
+                      updateForm.controls['lang'].errors['required']
+                    " style="color: red">
+                    {{ "langRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="parentCompetition">Compétition parente </label>
-                  <select id="parentCompetition"  class="form-control" (change)="onCompetitionChange($event)">
-                    <option value="">-- {{ parentCompetitionName}} --</option>
-                    <!-- <option *ngFor="let competition of arcardeSrv.listUnderCompetion" value="{{competition._id}}">{{ competition.name }}</option> -->
-                  </select>
+                <label for="parentCompetition">Parent Competition*</label>
+                <select type="text" name="parentCompetition" class="form-control"
+                  formControlName="parentCompetition" id="customSelect" [ngClass]="{
+                    'is-invalid':
+                      updateForm.get('parentCompetition')?.touched &&
+                      updateForm.get('parentCompetition')?.invalid
+                  }">
+                  <option [value]="''">
+                    --choisir une competition parent--
+                  </option>
+                  <option *ngFor="let location of competitions" [value]="location._id">
+                    {{ location.name }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (updateForm.controls['parentCompetition'].touched || submitted) &&
+                    updateForm.controls['parentCompetition'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['parentCompetition'].errors &&
+                      updateForm.controls['parentCompetition'].errors['required']
+                    " style="color: red">
+                    {{ "parentCompetitionRequired" | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="maxPlayerLife"> Nombre de vie max </label>
+                <input type="number" name="maxPlayerLife" min="0" class="form-control"
+                  formControlName="maxPlayerLife" id="maxPlayerLife" [ngClass]="{
+                    'is-invalid':
+                      updateForm.get('maxPlayerLife')?.touched &&
+                      updateForm.get('maxPlayerLife')?.invalid
+                  }" />
+                <div *ngIf="
+                      (updateForm.controls['maxPlayerLife'].touched || submitted) &&
+                      updateForm.controls['maxPlayerLife'].invalid
+                    " class="invalid-feedback">
+                  <div *ngIf="
+                        updateForm.controls['maxPlayerLife'].errors &&
+                        updateForm.controls['maxPlayerLife'].errors['required']
+                      " style="color: red">
+                    {{ "maxPlayerLifeRequired" | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="maxTimeToPlay"> Temps de Decompte (s) </label>
+                <input type="number" min="0" name="maxTimeToPlay" class="form-control"
+                  formControlName="maxTimeToPlay" id="maxTimeToPlay" [ngClass]="{
+                    'is-invalid':
+                      updateForm.get('maxTimeToPlay')?.touched &&
+                      updateForm.get('maxTimeToPlay')?.invalid
+                  }" />
+                <div *ngIf="
+                      (updateForm.controls['maxTimeToPlay'].touched || submitted) &&
+                      updateForm.controls['maxTimeToPlay'].invalid
+                    " class="invalid-feedback">
+                  <div *ngIf="
+                        updateForm.controls['maxTimeToPlay'].errors &&
+                        updateForm.controls['maxTimeToPlay'].errors['required']
+                      " style="color: red">
+                    {{ "maxTimeToPlayRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="maxOfWinners">Nombre max de Gagnants </label>
                 <input type="number" min="0" name="maxOfWinners" class="form-control" formControlName="maxOfWinners"
                   id="maxOfWinners" [ngClass]="{
                     'is-invalid':
-                      sousCompetion.formUpdt['maxOfWinners'].touched &&
-                      sousCompetion.formUpdt['maxOfWinners'].invalid
+                      updateForm.get('maxOfWinners')?.touched && updateForm.get('maxOfWinners')?.invalid
                   }" />
+                <div *ngIf="
+                      (updateForm.controls['maxOfWinners'].touched || submitted) &&
+                      updateForm.controls['maxOfWinners'].invalid
+                    " class="invalid-feedback">
+                  <div *ngIf="
+                        updateForm.controls['maxOfWinners'].errors &&
+                        updateForm.controls['maxOfWinners'].errors['required']
+                      " style="color: red">
+                    {{ "maxOfWinnersRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="startDate"> Date de debut </label>
-                <ng-bmis-date-time-picker>
-                  <input type="text" name="startDate" class="form-control" formControlName="startDate" id="startDate"
-                    [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['startDate'].touched && sousCompetion.formUpdt['startDate'].invalid}"
-                  >
+                <label for="startDate">
+                  {{ "startDate" | translate }}
+                </label>
+                <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'startDate')">
+                  <input type="text" class="form-control" formControlName="startDate" [ngClass]="{
+                      'is-invalid':
+                        (updateForm.controls['startDate']?.touched ||
+                          submitted) &&
+                        updateForm.controls['startDate']?.invalid
+                    }" />
                 </ng-bmis-date-time-picker>
+                <div *ngIf="
+                    (updateForm.controls['startDate'].touched ||
+                      submitted) &&
+                    updateForm.controls['startDate'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['startDate'].errors &&
+                      updateForm.controls['startDate'].errors['required']
+                    " style="color: red">
+                    {{ "startDateRequired" | translate }}
+                  </div>
+                  <div *ngIf="
+                      updateForm.controls['startDate'].errors &&
+                      updateForm.controls['startDate'].errors[
+                        'laterThanEndRegistrationDate'
+                      ]
+                    " style="color: red">
+                    {{ "arcade.startDate" | translate }}
+                    {{ "arcade.laterThanEndDate" | translate }}
+                  </div>
+                  <div *ngIf="
+                      updateForm.controls['startDate'].errors &&
+                      updateForm.controls['startDate'].errors[
+                        'laterThanToday'
+                      ]
+                    " style="color: red">
+                    {{
+                      "arcade.startDateRequired" | translate
+                    }}
+                    {{ "arcade.laterThanToday" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="endDate"> Date de fin </label>
-                <ng-bmis-date-time-picker>
-                  <input type="text" name="endDate" class="form-control" formControlName="endDate" id="endDate"
-                    [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['endDate'].touched && sousCompetion.formUpdt['endDate'].invalid}"
-                  >
+                <label for="endDate"> {{ "endDate" | translate }} </label>
+                <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'endDate')">
+                  <input type="text" class="form-control" formControlName="endDate" [ngClass]="{
+                      'is-invalid':
+                        (updateForm.controls['endDate']?.touched ||
+                          submitted) &&
+                        updateForm.controls['endDate']?.invalid
+                    }" />
                 </ng-bmis-date-time-picker>
-              </div>
-
-              <div class="form-group col-md-6">
-                <label for="maxPlayerLife"> Nombre de vie max </label>
-                <input type="number" name="maxPlayerLife" min="0" class="form-control" formControlName="maxPlayerLife"
-                  id="maxPlayerLife" [ngClass]="{
-                    'is-invalid':
-                      sousCompetion.formUpdt['maxPlayerLife'].touched &&
-                      sousCompetion.formUpdt['maxPlayerLife'].invalid
-                  }" />
-              </div>
-              <div class="form-group col-md-6">
-                <label for="maxTimeToPlay"> Temps de Decompte (s) </label>
-                <input type="number" min="0" name="maxTimeToPlay" class="form-control" formControlName="maxTimeToPlay"
-                  id="maxTimeToPlay" [ngClass]="{
-                    'is-invalid':
-                      sousCompetion.formUpdt['maxTimeToPlay'].touched &&
-                      sousCompetion.formUpdt['maxTimeToPlay'].invalid
-                  }" />
+                <div *ngIf="
+                    (updateForm.controls['endDate'].touched || submitted) &&
+                    updateForm.controls['endDate'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['endDate'].errors &&
+                      updateForm.controls['endDate'].errors['required']
+                    " style="color: red">
+                    {{ "endDateRequired" | translate }}
+                  </div>
+                  <div *ngIf="
+                      updateForm.controls['endDate'].errors &&
+                      updateForm.controls['endDate'].errors[
+                        'laterThanStartDate'
+                      ]
+                    " style="color: red">
+                    {{ "arcade.endDate" | translate }}
+                    {{ "arcade.laterThanStartDate" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="form-group">
-                <label for="desc"> {{ 'description' | translate }} </label>
+                <label for="desc"> {{ "description" | translate }} </label>
                 <textarea type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                  [ngClass]="{ 'is-invalid': sousCompetion.formUpdt['description'].touched && sousCompetion.formUpdt['description'].invalid}"></textarea>
+                  [ngClass]="{
+                    'is-invalid':
+                      (updateForm.controls['description']?.touched ||
+                        submitted) &&
+                      updateForm.controls['description']?.invalid
+                  }"></textarea>
+                <div *ngIf="
+                    (updateForm.controls['description'].touched ||
+                      submitted) &&
+                    updateForm.controls['description'].invalid
+                  " class="invalid-feedback">
+                  <div *ngIf="
+                      updateForm.controls['description'].errors &&
+                      updateForm.controls['description'].errors['required']
+                    " style="color: red">
+                    {{ "descriptionRequired" | translate }}
+                  </div>
+                </div>
               </div>
               <div class="d-flex justify-content-start justify-content-lg-end">
-                <button type="button" style="margin-left: 15px;" class="btn btn-success"
-                  *ngIf="!sousCompetion.creationDone" (click)="doUpdate()">
-                  <span *ngIf="sousCompetion.waitingResponse"> <img src="../../../../assets/img/loader.gif" alt=""
-                      width="30px"> </span>
-
-                  <span *ngIf="!sousCompetion.waitingResponse">Sauvegarder <i class="fa fa-plus"
-                      aria-hidden="true"></i></span>
+                <button type="button" style="margin-left: 10px" class="btn btn-success" *ngIf="!fetching"
+                  (click)="update()">
+                  <span *ngIf="!loading">Créer <i class="fa fa-plus" aria-hidden="true"></i></span>
+                  <span *ngIf="loading">
+                    <img src="assets/img/loader.gif" alt="" width="30px" />
+                  </span>
                 </button>
               </div>
             </div>

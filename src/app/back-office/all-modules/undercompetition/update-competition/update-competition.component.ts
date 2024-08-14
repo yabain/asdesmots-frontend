@@ -77,7 +77,7 @@ export class UpdateCompetitionComponent implements OnInit {
   getCompetitions() {
     this.loading = true;
     this.sousCompetitionService
-      .getAllCompettions(this.arcadeId)
+      .getArcadeCompetitions(this.arcadeId)
       .then((response: any) => {
         this.competitions = response.data;
         this.loading = false;
@@ -133,7 +133,7 @@ export class UpdateCompetitionComponent implements OnInit {
         this.submitted = false;
         this.fetching = false;
         this.updateForm.reset();
-        this.router.navigate([`/arcarde/details/${this.arcadeId}`]);
+        this.router.navigate([`/undercompetition/competition/details/${this.competitionId}`]);
       })
       .catch((error) => {
         if (error.includes('Competition already exists') || error.errors?.alreadyUsed)

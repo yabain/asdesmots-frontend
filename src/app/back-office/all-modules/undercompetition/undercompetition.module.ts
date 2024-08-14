@@ -18,7 +18,6 @@ import { CreateCompetitionComponent } from './create-competition/create-competit
 import { DataTablesModule } from 'angular-datatables';
 import { SharedModule } from '../../shared/shared.module';
 import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
-import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
     FormatDatePipe,
     ListPartsComponent,
     CreateCompetitionComponent,
-    CompetitionDetailsComponent,
     DeleteModalComponent
   ],
   imports: [

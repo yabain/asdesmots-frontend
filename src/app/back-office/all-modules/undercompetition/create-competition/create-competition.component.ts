@@ -71,7 +71,7 @@ export class CreateCompetitionComponent implements OnInit {
   getCompetitions() {
     this.loading = true;
     this.sousCompetitionService
-      .getAllCompettions(this.arcadeId)
+      .getArcadeCompetitions(this.arcadeId)
       .then((response: any) => {
         this.competitions = response.data;
         this.loading = false;

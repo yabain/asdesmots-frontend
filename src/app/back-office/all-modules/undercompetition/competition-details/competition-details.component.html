@@ -199,77 +199,13 @@
         </div>
       </div>
       <div *ngIf="activeTab === 'subscribers'">
-        <div class="text-center" *ngIf="sousCompetitionService.waitingResponse">
-          <img src="assets/img/loader.gif" height="45px" alt="" />
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Game Users</h4>
-            <p class="card-text">
-              list of users who subscribed to this Game.
-            </p>
-          </div>
-          <div class="card-body">
-            <div *ngFor="let user of subscribers" class="custom-card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="assets/img/user-profile.png" alt="User Image" />
-                    </a>
-                    <a> {{ user.firstName }} {{ user.lastName }}<br /> </a>
-                    <!-- <span class="tag tag-coach ms-2">COACH</span> -->
-                  </div>
-                  <div>
-                    <span>{{ user.email }}</span>
-                  </div>
-                  <div>
-                    <span>{{ user.phoneNumber }}</span>
-                  </div>
-                  <div>
-                    <button class="icon-button" (click)="removeUser(user._id)">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!subscribers.length" class="text-center">
-                  <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                  <br/>{{ "competition.noSubscribers" | translate }}
-            </div>
-            <div *ngFor="let user of subscribers" class="custom-card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="assets/img/user-profile.png" alt="User Image" />
-                    </a>
-                    <a> {{ user.firstName }} {{ user.lastName }}<br /> </a>
-                    <!-- <span class="tag tag-coach ms-2">COACH</span> -->
-                  </div>
-                  <div>
-                    <span>{{ user.email }}</span>
-                  </div>
-                  <div>
-                    <span>{{ user.phoneNumber }}</span>
-                  </div>
-                  <div>
-                    <button class="icon-button" (click)="removeUser(user._id)">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-arcade-suscribers [arcadeId]="2"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'criterias'">
-        <app-game-cretarias-list [competitionID]="competitionData._id"></app-game-cretarias-list>
+        <!-- <app-game-cretarias-list [competitionID]="competitionData._id"></app-game-cretarias-list> -->
       </div>
       <div *ngIf="(activeTab === 'gameParts') && competitionData">
-        <app-game-list-parts [competitionID]="competitionData._id"></app-game-list-parts>
+        <!-- <app-game-list-parts [competitionID]="competitionData._id"></app-game-list-parts> -->
       </div>
     </div>
   </div>

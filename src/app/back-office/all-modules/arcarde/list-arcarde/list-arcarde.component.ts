@@ -36,10 +36,7 @@ export class ListArcardeComponent implements OnInit {
     private activedRouter: ActivatedRoute,
     public dataTableTranslateService: DataTableTranslateService,
     private translationService: TranslationService
-  ) {
-    this.arcadeServ.initFormControl();
-    this.arcadeServ.initFormCreationArcarde();
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getArcades();

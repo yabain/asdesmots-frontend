@@ -17,17 +17,17 @@ export class CompetititonComponent implements OnInit {
 
   constructor(
     private sousCompetitionService: SousCompetitionService,
-    private activatedRoute: ActivatedRoute
   ) {
-    // this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
-    this.getCompetiotions();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if(this.arcadeId)
+      this.getCompetitionsByArcade(); 
+  }
 
-  getCompetiotions() {
+  getCompetitionsByArcade() {
     this.sousCompetitionService
-      .getAllCompettions(this.arcadeId)
+      .getArcadeCompetitions(this.arcadeId)
       .then((response: any) => {
         this.competitions = this.organiseCompetitions(response.data);
         this.fetching = false;

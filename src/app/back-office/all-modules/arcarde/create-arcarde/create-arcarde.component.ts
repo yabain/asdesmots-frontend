@@ -26,11 +26,7 @@ export class CreateArcardeComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private translationService: TranslationService
-  ) {
-    this.translate.use(this.translationService.getCurrentLanguage());
-    this.arcadeServ.initFormControl();
-    this.arcadeServ.initFormCreationArcarde();
-  }
+  ) { }
 
   ngOnInit(): void {
     this.createForm = this.fb.group({

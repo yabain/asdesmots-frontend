@@ -22,16 +22,14 @@ export class ArcadeDetailsComponent implements OnInit {
     public arcardeServ: ArcardeService,
     private translate: TranslateService,
     private translation: TranslationService,
-    private toastr: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.initTranslation();
     this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
+    console.log(this.arcadeId);
   }
 
   ngOnInit(): void {
-    this.arcardeServ.getListUsersOfArcardes(this.arcadeId);
     this.arcardeServ
       .getArcardeById(this.arcadeId)
       .then((resp: any) => {
@@ -55,11 +53,4 @@ export class ArcadeDetailsComponent implements OnInit {
   }
 
   startCompetition() {}
-  
-  removeUser(userId: string) {
-    this.arcardeServ.UnsuscribeUserToAcarde({
-      gameID: this.arcadeId,
-      playerID: userId,
-    });
-  }
 }

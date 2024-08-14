@@ -63,7 +63,7 @@
         </a>
       </div>
       <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" data-bs-target="#addSubscriber" data-bs-toggle="modal">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#subscribe" data-bs-toggle="modal">
           <i class="fa fa-user-plus"></i>
         </a>
       </div>
@@ -220,45 +220,7 @@
         </div>
       </div>
       <div *ngIf="activeTab === 'subscribers'">
-        <div class="text-center" *ngIf="arcardeServ.waitingResponse">
-          <img src="assets/img/loader.gif" height="45px" alt="" />
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Arcarde Users</h4>
-            <p class="card-text">
-              list of users who have subscribed to this Arcarde.
-            </p>
-          </div>
-          <div class="card-body">
-            <div *ngFor="let user of arcardeServ.listUser" class="custom-card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                        src="assets/img/user-profile.png" alt="User Image" />
-                    </a>
-                    <a> {{ user.firstName }} {{ user.lastName }}<br /> </a>
-                  </div>
-                  <div>
-                    <span>{{ user.email }}</span>
-                  </div>
-                  <div>
-                    <span>{{ user.phoneNumber }}</span>
-                  </div>
-                  <div>
-                    <button class="icon-button" (click)="removeUser(user._id)">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!arcardeServ.listUser.length" class="text-center">
-              {{ "arcade.noSubscribers" | translate }}
-            </div>
-          </div>
-        </div>
+        <app-arcade-suscribers [arcadeId]="arcadeId"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'competitions'">
         <app-arcade-competititon [arcadeId]="arcadeId"></app-arcade-competititon>

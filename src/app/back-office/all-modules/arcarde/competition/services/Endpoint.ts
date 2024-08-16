@@ -9,6 +9,8 @@ export enum EndpointSousCompetion{
         GET_ALL_COMPETITION = 'game-competition/',
         GET_ALL_BY_ARCADE = 'game-competition/by-arcade',
         GET_ALL_WITH_CHILDREN_BY_ARCADE = 'game-competition/arcade-competition-and-sub-competitions',
+        GET_LOCATIONS = 'game-competition/arcade-competition-locations',
         DELETE_COMPETITION = 'game-competition',
+        SUBSCRIBE_TO_COMPETITION = 'game-competition/subscribe',
         
 }

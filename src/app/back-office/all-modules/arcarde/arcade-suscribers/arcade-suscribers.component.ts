@@ -8,41 +8,45 @@ import { TranslationService } from 'src/app/shared/services/translation/language
 @Component({
   selector: 'app-arcade-suscribers',
   templateUrl: './arcade-suscribers.component.html',
-  styleUrls: ['./arcade-suscribers.component.css']
+  styleUrls: ['./arcade-suscribers.component.css'],
 })
 export class ArcadeSuscribersComponent implements OnInit {
   @Input() arcadeId: string;
 
-  arcardeData : Arcarde = new Arcarde();
+  arcardeData: Arcarde = new Arcarde();
   subscribers: any[] = [];
   fetching: boolean = true;
 
   constructor(
     public arcadeService: ArcardeService,
-    public userService:  UserService,
-    private arcardeService: ArcardeService,
+    public userService: UserService,
+    private arcardeService: ArcardeService
   ) {
-        this.getSubscribers();
-      }
-    
-      ngOnInit() { }
-    
-      getSubscribers() {
-        this.arcadeService.getArcadeSubscribers(this.arcadeId).then((response: any) => {
-            this.subscribers = response.data?.map(sub => {
-              return sub.player;
-            });
-            this.fetching = false;
-          })
-          .catch((error) => {
-            console.error(error);
-            this.fetching = false;
-          });
-      }
+  }
 
-  loadAllArcarde(){
-    if(this.arcadeService.listAllArcarde.length == 0){
-        this.arcadeService.loadAllArcarde();
+  ngOnInit() {
+    this.getSubscribers();
+  }
+
+  getSubscribers() {
+    this.arcadeService
+      .getArcadeSubscribers(this.arcadeId)
+      .then((response: any) => {
+        this.subscribers = response.data?.map((sub) => {
+          return sub.player;
+        });
+        console.log(this.subscribers)
+        this.fetching = false;
+      })
+      .catch((error) => {
+        console.error(error);
+        this.fetching = false;
+      });
+  }
+
+  loadAllArcarde() {
+    if (this.arcadeService.listAllArcarde.length == 0) {
+      this.arcadeService.loadAllArcarde();
     }
   }
 
@@ -52,5 +56,4 @@ export class ArcadeSuscribersComponent implements OnInit {
       playerID: userId,
     });
   }
-
 }

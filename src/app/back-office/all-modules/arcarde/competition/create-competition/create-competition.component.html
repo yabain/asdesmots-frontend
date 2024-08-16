@@ -375,12 +375,14 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-start justify-content-lg-end">
-                    <button type="button" style="margin-left: 10px" class="btn btn-success" *ngIf="!fetching"
-                      (click)="create()">
-                      <span *ngIf="!loading">Créer <i class="fa fa-plus" aria-hidden="true"></i></span>
-                      <span *ngIf="loading">
-                        <img src="assets/img/loader.gif" alt="" width="30px" />
-                      </span>
+                    <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
+                      {{'close' | translate }}
+                    </button>
+                    <button *ngIf="!fetching" type="button" class="btn btn-success" (click)="create()">
+                      <span> {{'add' | translate }}</span>
+                    </button>
+                    <button type="button" class="btn btn-success" *ngIf="fetching" disabled>
+                      <span><img src="assets/img/loader.gif" alt="" width="30px"></span>
                     </button>
                   </div>
                 </div>

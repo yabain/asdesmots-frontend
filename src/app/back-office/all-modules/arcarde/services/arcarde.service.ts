@@ -223,36 +223,6 @@ export class ArcardeService {
       );
   }
 
-  listCompetitionLocalisations(idArcarde: string) {
-    return new Promise((resolve, reject) => {
-      this.httpClient
-        .post(`${environment.url}/game-arcarde/${idArcarde}/localisation`, {
-          headers: this.headers,
-        })
-        .subscribe(
-      (response) => {
-        return resolve(response);
-      },
-      (error: any) => {
-        if (error.status == 500) {
-          this.toastr.error(
-            this.languageService.transformMessageLanguage('internalError'),
-            this.languageService.transformMessageLanguage('error'),
-            { timeOut: 10000 }
-          );
-        }
-        else
-          this.translate
-            .get('errorResponse.unexpectedError')
-            .subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
-            });
-        return reject(error);
-      }
-    );
-  })
-}
-
   create(formData: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.httpClient
@@ -295,7 +265,7 @@ export class ArcardeService {
   getArcadeSubscribers(id: string) {
     return new Promise((resolve, reject) => {
       this.httpClient
-        .post(
+        .get(
           `${environment.url}/${Endpoint.GET_USERS_ARCARDE + id}/subscription`,
           {
             headers: this.headers,

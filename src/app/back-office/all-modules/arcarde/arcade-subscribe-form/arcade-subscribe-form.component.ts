@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArcardeService } from '../services/arcarde.service';
+import { SousCompetitionService } from '../competition/services/sous-competition.service';
 
 @Component({
   selector: 'app-arcade-subscribe-form',
@@ -9,7 +10,7 @@ import { ArcardeService } from '../services/arcarde.service';
 })
 export class ArcadeSubscribeFormComponent implements OnInit {
 
-  @Input() competitionId : string;
+  @Input() arcadeId : string;
 
   subscribeForm: FormGroup;
   locations: any[] = [];
@@ -18,22 +19,20 @@ export class ArcadeSubscribeFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private arcadeService: ArcardeService
+    private subCompetitionService: SousCompetitionService
   ) { }
 
   ngOnInit(): void {
     this.subscribeForm = this.fb.group({
-      gameID: ['', Validators.required],
-      // playerID: ['', Validators.required],
       location: ['', Validators.required],
     })
-    this.listLocations(this.competitionId);
+    console.log(this.arcadeId);
+    this.listLocations();
   }
 
-  listLocations(competitionId) {
-    this.arcadeService.listCompetitionLocalisations(competitionId)
+  listLocations() {
+    this.subCompetitionService.listCompetitionLocalisations(this.arcadeId)
     .then((resp: any) => {
-      console.log(resp)
       this.locations = resp.data;
     })
     .catch((error) => {
@@ -42,9 +41,26 @@ export class ArcadeSubscribeFormComponent implements OnInit {
   }
   
   subscribe() {
-    this.waitingResponse = true;
     this.submitted = true;
-    this.arcadeService.addUserToAccarde();
+    if (this.subscribeForm.invalid) {
+      return;
+    }
+    this.waitingResponse = true;
+    this.subCompetitionService
+      .subscribePlayer(this.subscribeForm.value)
+      .then(() => {
+        this.submitted = false;
+        this.waitingResponse = false;
+        this.subscribeForm.reset();
+        $('#cancel-btn00').click();
+      })
+      .catch((error) => {
+        if (error.includes('Competition already exists') || error.errors?.alreadyUsed)
+          this.subscribeForm.controls['name'].setErrors({ used: true });
+        this.submitted = false;
+        this.waitingResponse = false;
+      });
+    // this.arcadeService.addUserToAccarde();
   }
 
 }

@@ -103,26 +103,33 @@ export class SousCompetitionService {
 
   deleteCompetition(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.api.delete(`${EndpointSousCompetion.DELETE_COMPETITION}/${id}`, this.headers).subscribe(
-        (response) => {
-          this.translate.get('competition.competition').subscribe((word: string) => {
+      this.api
+        .delete(
+          `${EndpointSousCompetion.DELETE_COMPETITION}/${id}`,
+          this.headers
+        )
+        .subscribe(
+          (response) => {
             this.translate
-              .get('successResponse.deleted')
-              .subscribe((message: string) => {
-                this.toastr.success(`${word} ${message}`, 'Error');
+              .get('competition.competition')
+              .subscribe((word: string) => {
+                this.translate
+                  .get('successResponse.deleted')
+                  .subscribe((message: string) => {
+                    this.toastr.success(`${word} ${message}`, 'Error');
+                  });
               });
-          });
-          resolve(response);
-        },
-        (error) => {
-          this.translate
-            .get('errorResponse.unexpectedError')
-            .subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
-            });
-          reject(error);
-        }
-      );
+            resolve(response);
+          },
+          (error) => {
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+            reject(error);
+          }
+        );
     });
   }
   initUpdatingValues(data: SousCompetion) {
@@ -315,6 +322,68 @@ export class SousCompetitionService {
     });
   }
 
+  listCompetitionLocalisations(arcadeId: string) {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(
+          `${environment.url}/${EndpointSousCompetion.GET_LOCATIONS}/${arcadeId}`,
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe(
+          (response) => {
+            return resolve(response);
+          },
+          (error: any) => {
+            if (error.status == 500) {
+              this.toastr.error(
+                'Internal Server Error. Try again later please.',
+                'Error'
+              );
+            } else if (error.status == 401) {
+              this.toastr.error('Invalid Token', 'error');
+            } else {
+              this.toastr.error(error.message, 'Error');
+            }
+            reject(error);
+          }
+        );
+    });
+  }
+
+  subscribePlayer(data: any) {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .post(
+          `${environment.url}/${EndpointSousCompetion.SUBSCRIBE_TO_COMPETITION}`,
+          data,
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe(
+          (response) => {
+            return resolve(response);
+          },
+          (error: any) => {
+            if (error.status == 500) {
+              this.toastr.error(
+                'Internal Server Error. Try again later please.',
+                'Error'
+              );
+            } else if (error.status == 401) {
+              this.toastr.error('Invalid Token', 'error');
+            } else {
+              console.log(error)
+              this.toastr.error(error.message, 'Error');
+            }
+            reject(error);
+          }
+        );
+    });
+  }
+
   async clientChangeState(idCompet: string, statut: string) {
     //change the compett's state on user client (ui)
 
@@ -413,7 +482,9 @@ export class SousCompetitionService {
     return new Promise((resolve, reject) => {
       this.httpClient
         .put(
-          `${environment.url}/${EndpointSousCompetion.UPDATE_S_C + competitionId}`,
+          `${environment.url}/${
+            EndpointSousCompetion.UPDATE_S_C + competitionId
+          }`,
           competitionData,
           {
             headers: this.headers,

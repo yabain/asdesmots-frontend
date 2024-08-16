@@ -4,7 +4,6 @@ import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { EndpointSousCompetion } from './Endpoint';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { State } from 'src/app/shared/entities/state.enum';
 import { Observable, map } from 'rxjs';
@@ -12,6 +11,7 @@ import { Level } from 'src/app/shared/entities/level';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { ArcardeService } from '../../services/arcarde.service';
 
 @Injectable({
   providedIn: 'root',
@@ -260,6 +260,36 @@ export class SousCompetitionService {
       this.httpClient
         .get(
           `${environment.url}/${EndpointSousCompetion.GET_ALL_BY_ARCADE}/${arcadeId}`,
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error: any) => {
+            if (error.status == 500) {
+              this.toastr.error(
+                'Internal Server Error. Try again later please.',
+                'Error'
+              );
+            } else if (error.status == 401) {
+              this.toastr.error('Invalid Token', 'error');
+            } else {
+              this.toastr.error(error.message, 'Error');
+            }
+            reject(error);
+          }
+        );
+    });
+  }
+
+  getArcadeCompetitionsWithChildren(arcadeId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(
+          `${environment.url}/${EndpointSousCompetion.GET_ALL_WITH_CHILDREN_BY_ARCADE}/${arcadeId}`,
           {
             headers: this.headers,
           }

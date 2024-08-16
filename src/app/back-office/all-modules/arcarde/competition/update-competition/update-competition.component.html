@@ -8,8 +8,8 @@
           <h3 class="page-title">{{ competitionData?.name }}</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }}</a></li>
-            <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/undercompetition/competition/list'">{{ 'competition.competition' | translate }}</a></li>
-            <li class="breadcrumb-item"><a [routerLink]="['/undercompetition/competition/details',competitionData?._id]">{{ competitionData?.name }}</a></li>
+            <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/competition/list'">{{ 'competition.competition' | translate }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/competition/details',competitionData?._id]">{{ competitionData?.name }}</a></li>
             <li class="breadcrumb-item active" style="cursor: pointer;">{{ 'update' | translate }}</li>
           </ul>
         </div>

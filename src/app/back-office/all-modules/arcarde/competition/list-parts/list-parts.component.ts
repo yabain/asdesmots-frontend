@@ -7,10 +7,9 @@ import { Level } from 'src/app/shared/entities/level';
 import { SousCompetitionService } from '../services/sous-competition.service';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { State } from 'src/app/shared/entities/state.enum';
-import { GameplayService } from '../../game-play/service/gameplay.service';
-import { GameManagerService } from '../../game-play/service/game-manager.service';
-import { ArcardeService } from '../../arcarde/services/arcarde.service';
-
+import { GameplayService } from '../../../game-play/service/gameplay.service';
+import { GameManagerService } from '../../../game-play/service/game-manager.service';
+import { ArcardeService } from '../../services/arcarde.service';
 
 @Component({
   selector: 'app-game-list-parts',

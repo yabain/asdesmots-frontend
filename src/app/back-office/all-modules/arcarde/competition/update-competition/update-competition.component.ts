@@ -61,7 +61,7 @@ export class UpdateCompetitionComponent implements OnInit {
           Validators.maxLength(65),
         ],
       ],
-      gameLevel: [this.competitionData.gameLevel, Validators.required],
+      gameLevel: [this.competitionData.gameLevel?._id, Validators.required],
       isSinglePart: [this.competitionData.isSinglePart],
       canRegisterPlayer: [this.competitionData.canRegisterPlayer],
       localisation: [this.competitionData.localisation, Validators.required],
@@ -133,7 +133,7 @@ export class UpdateCompetitionComponent implements OnInit {
         this.submitted = false;
         this.fetching = false;
         this.updateForm.reset();
-        this.router.navigate([`/undercompetition/competition/details/${this.competitionId}`]);
+        // this.router.navigate([`/competition/details/${this.competitionId}`]);
       })
       .catch((error) => {
         if (error.includes('Competition already exists') || error.errors?.alreadyUsed)

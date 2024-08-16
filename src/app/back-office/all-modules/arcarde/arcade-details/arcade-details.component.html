@@ -67,8 +67,8 @@
           <i class="fa fa-user-plus"></i>
         </a>
       </div>
-      <div *ngIf="activeTab === 'competitions'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" [routerLink]="['/arcarde/competition/create',arcadeId]">
+      <div *ngIf="arcadeCompetitionId && (activeTab === 'competitions')" class="text-md-end mt-3 mt-md-0">
+        <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/create',arcadeId,arcadeCompetitionId]">
           <i class="fa fa-plus"></i>
         </a>
       </div>
@@ -223,7 +223,7 @@
         <app-arcade-suscribers [arcadeId]="arcadeId"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'competitions'">
-        <app-arcade-competititon [arcadeId]="arcadeId"></app-arcade-competititon>
+        <app-competititon-list [arcadeId]="arcadeId" (updateArcadeCompetitionId)="updateArcadeCompetitionId($event, arcadeCompetitionId)"></app-competititon-list>
       </div>
     </div>
   </div>

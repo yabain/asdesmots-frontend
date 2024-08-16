@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { LevelService } from 'src/app/shared/services/level/level.service';
-import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
+import { ArcardeService } from '../../services/arcarde.service';
 
 @Component({
   selector: 'app-create-competition',
@@ -71,7 +71,7 @@ export class CreateCompetitionComponent implements OnInit {
   getCompetitions() {
     this.loading = true;
     this.sousCompetitionService
-      .getArcadeCompetitions(this.arcadeId)
+      .getArcadeCompetitionsWithChildren(this.arcadeId)
       .then((response: any) => {
         this.competitions = response.data;
         this.loading = false;

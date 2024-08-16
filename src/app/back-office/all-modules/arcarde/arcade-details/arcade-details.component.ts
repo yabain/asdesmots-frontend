@@ -14,6 +14,7 @@ import { ArcardeService } from '../services/arcarde.service';
 })
 export class ArcadeDetailsComponent implements OnInit {
   arcadeId: string = '';
+  arcadeCompetitionId: string;
   gameState = State;
   activeTab: string = 'overview';
   arcardeData: any = new Arcarde();
@@ -26,7 +27,6 @@ export class ArcadeDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
-    console.log(this.arcadeId);
   }
 
   ngOnInit(): void {
@@ -53,4 +53,8 @@ export class ArcadeDetailsComponent implements OnInit {
   }
 
   startCompetition() {}
+  
+  updateArcadeCompetitionId(newValue: string, control) {
+    this.arcadeCompetitionId = newValue;
+  }
 }

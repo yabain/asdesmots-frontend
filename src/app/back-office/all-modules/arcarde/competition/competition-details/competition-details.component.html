@@ -11,7 +11,7 @@
               <a [routerLink]="'/index'">{{ "dashboard" | translate }}</a>
             </li>
             <li class="breadcrumb-item" style="cursor: pointer">
-              <a [routerLink]="'/undercompetition/competition/list'">{{
+              <a [routerLink]="'/competition/list'">{{
                 "competition.competition" | translate
               }}</a>
             </li>
@@ -39,7 +39,7 @@
           data-toggle="tooltip" data-placement="top">
           <i class="{{ competitionData.gameState === gameState.RUNNING ? 'fa fa-pause' : 'fa fa-play' }}" aria-hidden="true"(click)="startCompetition()" style="cursor: pointer;"></i>
         </a>
-        <a class="btn btn-outline-primary me-2" [routerLink]="['/undercompetition/competition/edit',competitionData._id]"
+        <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/edit',competitionData._id]"
           data-toggle="tooltip" data-placement="top" title="{{ 'competition.edit' | translate}}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </a>
@@ -199,7 +199,7 @@
         </div>
       </div>
       <div *ngIf="activeTab === 'subscribers'">
-        <app-arcade-suscribers [arcadeId]="2"></app-arcade-suscribers>
+        <!-- <app-arcade-suscribers [arcadeId]="2"></app-arcade-suscribers> -->
       </div>
       <div *ngIf="activeTab === 'criterias'">
         <!-- <app-game-cretarias-list [competitionID]="competitionData._id"></app-game-cretarias-list> -->

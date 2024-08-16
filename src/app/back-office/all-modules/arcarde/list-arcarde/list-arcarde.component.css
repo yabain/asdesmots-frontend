@@ -1,0 +1,7 @@
+.description-container {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 0.3rem;
+}
+.dropdown-toggle::after { display: none; }
+.card:hover .dropdown { z-index: 1000; }

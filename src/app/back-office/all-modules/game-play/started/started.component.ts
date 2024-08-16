@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { State } from 'src/app/shared/entities/state.enum';
-import { GamePartsService } from '../../undercompetition/list-parts/service/game-parts.service';
+import { GamePartsService } from '../../arcarde/competition/list-parts/service/game-parts.service';
 
 @Component({
   selector: 'app-started',

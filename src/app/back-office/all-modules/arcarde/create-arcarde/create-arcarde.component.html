@@ -1,109 +1,378 @@
-
 <div class="page-wrapper">
-    <div class="content container-fluid">
-      <!-- Page Header -->
-      <div class="page-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h3 class="page-title"></h3>
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/index'">{{ 'dashboard' | translate }}</a></li>
-              <li class="breadcrumb-item" style="cursor: pointer;"><a [routerLink]="'/arcarde/list-arcarde'">Arcarde</a></li>
-              <li class="breadcrumb-item active">{{ 'creation' | translate }}</li>
-            </ul>
-          </div>
-
-<div class="row">
-    <div class="card card-table">
-        <div class="card-header text-center">
-            <h5> {{ 'createNewCompetition' | translate }} </h5>
+  <div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row align-items-center justify-content-center">
+        <div class="col">
+          <h3 class="page-title">
+            {{ "arcade.new" | translate }} {{ "arcade.arcade" | translate }}
+          </h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item" style="cursor: pointer">
+              <a [routerLink]="'/index'">{{ "dashboard" | translate }}</a>
+            </li>
+            <li class="breadcrumb-item" style="cursor: pointer">
+              <a [routerLink]="'/arcarde/list-arcarde'">{{
+                "arcade.arcade" | translate
+              }}</a>
+            </li>
+            <li class="breadcrumb-item active">
+              {{ "competition.new" | translate }}
+            </li>
+          </ul>
         </div>
-      <div class="card-body">
-                <form [formGroup]="arcadeServ.formControlCreateArcarde">
-                    <div class="row">
 
-                     <div class="col">
-                        <div class="form-group">
-                            <label for="name"> {{ 'name' | translate }} </label>
-                            <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                            [ngClass]="{ 'is-invalid':  arcadeServ.f_Creation['name'].touched &&arcadeServ.f_Creation['name'].invalid}"
-                            >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="desc"> {{ 'description' | translate }} </label>
-                            <input type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                            [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['description'].touched && arcadeServ.f_Creation['description'].invalid}"
-                            >
-                        </div>
-
-                        <!--<div class="form-check form-switch text-center">
-                            <input class="form-check-input" type="checkbox" formControlName="isOnlineGame" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Partie En ligne </label>
-                        </div>-->
-
-                        <div class="form-check form-switch text-center">
-                            <input class="form-check-input" type="checkbox" formControlName="canRegisterPlayer" role="switch" id="flexSwitchCheckChecke">
-                            <label class="form-check-label" for="flexSwitchCheckChecke"> {{ 'registerPlayers' | translate }} ?</label>
-                        </div>
-
-                        <div class="form-check form-switch text-center">
-                            <input class="form-check-input" type="checkbox" formControlName="isFreeRegistrationPlayer" role="switch" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked"> {{'freeRegistration' | translate }} ?</label>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="maxPlayersNumber"> {{'maxPlayers' | translate }} </label>
-                            <input type="number" min="2" name="maxPlayersNumber" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
-                            [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['maxPlayersNumber'].touched && arcadeServ.f_Creation['maxPlayersNumber'].invalid}"
-                            >
-                        </div>
+        <form [formGroup]="createForm">
+          <div class="row g-4 pt-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row px-0">
+                  <div class="col-12 col-md-4" (click)="toggleCheckbox('isOnlineGame')">
+                    <div class="custom-card p-3" [ngClass]="{
+                        active: createForm.get('isOnlineGame')?.value,
+                        invalid:
+                          (createForm.controls['isOnlineGame']?.touched ||
+                            submitted) &&
+                          createForm.controls['isOnlineGame']?.invalid
+                      }">
+                      <div class="card-header">
+                        {{
+                          (createForm.get("isOnlineGame")?.value
+                            ? "arcade.online"
+                            : "arcade.offline"
+                          ) | translate
+                        }}
                       </div>
-
-
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="startDate"> {{'startDate' | translate }} </label>
-                                <input type="datetime-local" name="startDate" class="form-control" formControlName="startDate" id="startDate"
-                                [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startDate'].touched && arcadeServ.f_Creation['startDate'].invalid}"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="endDate"> {{'endDate' | translate }} </label>
-                                <input type="datetime-local" name="endDate" class="form-control" formControlName="endDate" id="endDate"
-                                [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endDate'].touched && arcadeServ.f_Creation['endDate'].invalid}"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                              <label for="startRegistrationDate">{{'recordingStart' | translate }} </label>
-                              <input type="datetime-local" name="startRegistrationDate" class="form-control" formControlName="startRegistrationDate" id="startRegistrationDate"
-                              [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['startRegistrationDate'].touched && arcadeServ.f_Creation['startRegistrationDate'].invalid}"
-                              >
-                          </div>
-
-                          <div class="form-group">
-                              <label for="endRegistrationDate"> {{'registrationEnd' | translate }} </label>
-                              <input type="datetime-local" name="endRegistrationDate" class="form-control" formControlName="endRegistrationDate" id="endRegistrationDate"
-                              [ngClass]="{ 'is-invalid': arcadeServ.f_Creation['endRegistrationDate'].touched && arcadeServ.f_Creation['endRegistrationDate'].invalid}"
-                              >
-                          </div>
-
-                          <button (click)="backClicked()" class="btn btn-primary me-2"
-                          style="color: #035858 !important; background-color: #ffff !important;">
-                          <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
-                          </button>
-                          <button type="button" class="btn btn-success " style="margin-left: 15px;" [disabled]="arcadeServ.formControlCreateArcarde.invalid" *ngIf="!arcadeServ.isCreationDone" (click)="createArcarde()" >
-                            <span *ngIf="!arcadeServ.waitingResponse"> {{ 'create' | translate }} <i class="fa fa-plus" aria-hidden="true"></i> </span>
-                            <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif"  alt="" width="30px"></span>
-                          </button>
-                        </div>
-                     </div>
-
-                    </form>
+                      <div class="card-body text-center pb-0">
+                        <h5 class="card-title">
+                          <p class="badge badge-pill bg-icon rounded-pill p-3">
+                            <i class="fa fa-gamepad"></i>
+                          </p>
+                        </h5>
+                        <h5 class="card-text pt-3">
+                          {{ "arcade.competitionType" | translate }}
+                        </h5>
+                        <span class="text-muted">
+                          {{ "arcade.callToAction" | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <input class="d-none" type="checkbox" formControlName="isOnlineGame" />
+                  </div>
+                  <div class="col-12 col-md-4" (click)="toggleCheckbox('canRegisterPlayer')">
+                    <div class="custom-card p-3" [ngClass]="{
+                        active: createForm.get('canRegisterPlayer')?.value,
+                        invalid:
+                          (createForm.controls['canRegisterPlayer']?.touched ||
+                            submitted) &&
+                          createForm.controls['canRegisterPlayer']?.invalid
+                      }">
+                      <div class="card-header">
+                        {{
+                          (createForm.get("canRegisterPlayer")?.value
+                            ? "arcade.visible"
+                            : "arcade.hidden"
+                          ) | translate
+                        }}
+                      </div>
+                      <div class="card-body text-center pb-0">
+                        <h5 class="card-title">
+                          <p class="badge badge-pill bg-icon rounded-pill p-3">
+                            <i class="fa-solid {{
+                                createForm.get('canRegisterPlayer')?.value
+                                  ? 'fa-eye'
+                                  : 'fa-eye-slash'
+                              }}"></i>
+                          </p>
+                        </h5>
+                        <h5 class="card-text pt-3">
+                          {{ "arcade.visibility" | translate }}
+                        </h5>
+                        <span class="text-muted">
+                          {{ "arcade.callToAction" | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <input class="d-none" type="checkbox" formControlName="canRegisterPlayer" />
+                  </div>
+                  <div class="col-12 col-md-4" (click)="toggleCheckbox('isFreeRegistrationPlayer')">
+                    <div class="custom-card p-3" [ngClass]="{
+                        active: createForm.get('isFreeRegistrationPlayer')
+                          ?.value,
+                        invalid:
+                          (createForm.controls['isFreeRegistrationPlayer']
+                            ?.touched ||
+                            submitted) &&
+                          createForm.controls['isFreeRegistrationPlayer']
+                            ?.invalid
+                      }">
+                      <div class="card-header">
+                        {{
+                          (createForm.get("isFreeRegistrationPlayer")?.value
+                            ? "arcade.free"
+                            : "arcade.paid"
+                          ) | translate
+                        }}
+                      </div>
+                      <div class="card-body text-center pb-0">
+                        <h5 class="card-title">
+                          <p class="badge badge-pill bg-icon rounded-pill p-3">
+                            <i class="fa-solid fa-comments-dollar"></i>
+                          </p>
+                        </h5>
+                        <h5 class="card-text pt-3">
+                          {{ "arcade.registrationType" | translate }}
+                        </h5>
+                        <span class="text-muted">
+                          {{ "arcade.callToAction" | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <input class="d-none" type="checkbox" formControlName="isFreeRegistrationPlayer" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="name"> {{ "name" | translate }} </label>
+                    <input type="text" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{
+                        'is-invalid':
+                          (createForm.controls['name']?.touched || submitted) &&
+                          createForm.controls['name']?.invalid
+                      }" />
+                    <div *ngIf="
+                        (createForm.controls['name'].touched || submitted) &&
+                        createForm.controls['name'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['name'].errors &&
+                          createForm.controls['name'].errors['required']
+                        " style="color: red">
+                        {{ "nameRequired" | translate }}
+                      </div>
+                      <div *ngIf="
+                          createForm.controls['name'].errors &&
+                          createForm.controls['name'].errors['used']
+                        " style="color: red">
+                        {{ "arcade.arcade" | translate }}
+                        {{ "alreadyUsed" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="maxPlayersNumber">
+                      {{ "maxPlayers" | translate }} (2-100)
+                    </label>
+                    <input type="number" min="2" max="100" class="form-control" formControlName="maxPlayersNumber"
+                      id="maxPlayersNumber" [ngClass]="{
+                        'is-invalid':
+                          (createForm.controls['maxPlayersNumber']?.touched ||
+                            submitted) &&
+                          createForm.controls['maxPlayersNumber']?.invalid
+                      }" />
+                    <div *ngIf="
+                        (createForm.controls['maxPlayersNumber'].touched ||
+                          submitted) &&
+                        createForm.controls['maxPlayersNumber'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['maxPlayersNumber'].errors &&
+                          createForm.controls['maxPlayersNumber'].errors[
+                            'required'
+                          ]
+                        " style="color: red">
+                        {{ "maxPlayersNumberRequired" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="desc"> {{ "description" | translate }} </label>
+                    <textarea type="text" name="desc" class="form-control" formControlName="description" id="desc"
+                      [ngClass]="{
+                        'is-invalid':
+                          (createForm.controls['description']?.touched ||
+                            submitted) &&
+                          createForm.controls['description']?.invalid
+                      }"></textarea>
+                    <div *ngIf="
+                        (createForm.controls['description'].touched ||
+                          submitted) &&
+                        createForm.controls['description'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['description'].errors &&
+                          createForm.controls['description'].errors['required']
+                        " style="color: red">
+                        {{ "descriptionRequired" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="startRegistrationDate">
+                      {{ "recordingStart" | translate }}
+                    </label>
+                    <ng-bmis-date-time-picker (dateTimeChange)="
+                        onDateTimeChange($event, 'startRegistrationDate')
+                      ">
+                      <input type="text" name="startRegistrationDate" class="form-control"
+                        formControlName="startRegistrationDate" [ngClass]="{
+                          'is-invalid':
+                            (createForm.controls['startRegistrationDate']
+                              ?.touched ||
+                              submitted) &&
+                            createForm.controls['startRegistrationDate']
+                              ?.invalid
+                        }" />
+                    </ng-bmis-date-time-picker>
+                    <div *ngIf="
+                        (createForm.controls['startRegistrationDate'].touched ||
+                          submitted) &&
+                        createForm.controls['startRegistrationDate'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['startRegistrationDate'].errors &&
+                          createForm.controls['startRegistrationDate'].errors[
+                            'required'
+                          ]
+                        " style="color: red">
+                        {{ "startRegistrationDateRequired" | translate }}
+                      </div>
+                      <div *ngIf="
+                          createForm.controls['startRegistrationDate'].errors &&
+                          createForm.controls['startRegistrationDate'].errors[
+                            'laterThanToday'
+                          ]
+                        " style="color: red">
+                        {{
+                          "arcade.startRegistrationDateRequired" | translate
+                        }}
+                        {{ "arcade.laterThanToday" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="endRegistrationDate">
+                      {{ "registrationEnd" | translate }}
+                    </label>
+                    <ng-bmis-date-time-picker (dateTimeChange)="
+                        onDateTimeChange($event, 'endRegistrationDate')
+                      ">
+                      <input type="text" name="endRegistrationDate" class="form-control"
+                        formControlName="endRegistrationDate" [ngClass]="{
+                          'is-invalid':
+                            (createForm.controls['endRegistrationDate']
+                              ?.touched ||
+                              submitted) &&
+                            createForm.controls['endRegistrationDate']?.invalid
+                        }" />
+                    </ng-bmis-date-time-picker>
+                    <div *ngIf="
+                        (createForm.controls['endRegistrationDate'].touched ||
+                          submitted) &&
+                        createForm.controls['endRegistrationDate'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['endRegistrationDate'].errors &&
+                          createForm.controls['endRegistrationDate'].errors[
+                            'required'
+                          ]
+                        " style="color: red">
+                        {{ "endRegistrationDateRequired" | translate }}
+                      </div>
+                      <div *ngIf="
+                          createForm.controls['endRegistrationDate'].errors &&
+                          createForm.controls['endRegistrationDate'].errors[
+                            'laterThanStartRegistrationDate'
+                          ]
+                        " style="color: red">
+                        {{ "arcade.endRegistrationDate" | translate }}
+                        {{
+                          "arcade.laterThanStartRegistrationDate" | translate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="startDate">
+                      {{ "startDate" | translate }}
+                    </label>
+                    <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'startDate')">
+                      <input type="text" class="form-control" formControlName="startDate" [ngClass]="{
+                          'is-invalid':
+                            (createForm.controls['startDate']?.touched ||
+                              submitted) &&
+                            createForm.controls['startDate']?.invalid
+                        }" />
+                    </ng-bmis-date-time-picker>
+                    <div *ngIf="
+                        (createForm.controls['startDate'].touched ||
+                          submitted) &&
+                        createForm.controls['startDate'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['startDate'].errors &&
+                          createForm.controls['startDate'].errors['required']
+                        " style="color: red">
+                        {{ "startDateRequired" | translate }}
+                      </div>
+                      <div *ngIf="
+                          createForm.controls['startDate'].errors &&
+                          createForm.controls['startDate'].errors[
+                            'laterThanEndRegistrationDate'
+                          ]
+                        " style="color: red">
+                        {{ "arcade.startDate" | translate }}
+                        {{ "arcade.laterThanEndRegistrationDate" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="endDate"> {{ "endDate" | translate }} </label>
+                    <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'endDate')">
+                      <input type="text" class="form-control" formControlName="endDate" [ngClass]="{
+                          'is-invalid':
+                            (createForm.controls['endDate']?.touched ||
+                              submitted) &&
+                            createForm.controls['endDate']?.invalid
+                        }" />
+                    </ng-bmis-date-time-picker>
+                    <div *ngIf="
+                        (createForm.controls['endDate'].touched || submitted) &&
+                        createForm.controls['endDate'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['endDate'].errors &&
+                          createForm.controls['endDate'].errors['required']
+                        " style="color: red">
+                        {{ "endDateRequired" | translate }}
+                      </div>
+                      <div *ngIf="
+                          createForm.controls['endDate'].errors &&
+                          createForm.controls['endDate'].errors[
+                            'laterThanStartDate'
+                          ]
+                        " style="color: red">
+                        {{ "arcade.endDate" | translate }}
+                        {{ "arcade.laterThanStartDate" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" *ngIf="!arcadeServ.isCreationDone"
+                      (click)="createArcarde()">
+                      <span *ngIf="!waitingResponse">{{
+                        "create" | translate
+                      }}</span>
+                      <span *ngIf="waitingResponse">
+                        <img src="assets/img/loader.gif" alt="" width="30px" />
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
+    </div>
+  </div>
+</div>

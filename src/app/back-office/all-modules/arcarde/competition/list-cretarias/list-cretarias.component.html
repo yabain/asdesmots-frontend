@@ -1,0 +1,122 @@
+<div *ngIf="competitionSrv.waitingCriteriasResp" class="d-flex align-items-center justify-content-center vh-50">
+  <img src="assets/img/loader.gif" alt="" width="30px" />
+</div>
+<div *ngIf="!competitionSrv.waitingCriteriasResp" class="card">
+  <div class="card-header">
+    <h4 class="card-title">Criterias list</h4>
+    <p class="card-text">la liste des criteres de cette competition.</p>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="listCriterias.length; else noCriteriaTemplate">
+        <table #dataTable class="table table-striped table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>{{ "Criteria Name" | translate }}</th>
+              <th>{{ "Description" | translate }}</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Lignes de critères si la liste n'est pas vide -->
+            <tr *ngFor="let criteria of listCriterias; let i = index" (click)="criteriaChooseData = criteria">
+              <td>{{ criteria.name }}</td>
+              <td>{{ criteria.description }}</td>
+              <td class="text-end">
+                <a data-bs-toggle="modal" data-bs-target="#delete" class="btn btn-sm btn-white text-danger me-2"
+                  (click)="selectedCriteria(criteria._id)">
+                  <i class="far fa-trash-alt me-1" data-toggle="tooltip" data-placement="top"
+                    title="delete this criteria for this competition"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noCriteriaTemplate>
+        <div class="text-center">
+          <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+          <br />Aucun Critère !
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="addCriteria" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter Critère</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3"></div>
+        <div class="modal-text text-center">
+          <p class="text-center" *ngIf="competitionSrv.waitingResponse">
+            <img src="../../../../../assets/img/loader.gif" alt="" height="30px" />
+          </p>
+          <form [formGroup]="formAddCriteria">
+            <div class="form-group">
+              <label for="idCriteria">Criterias </label>
+              <select name="idCriteria" id="idCriteria" formControlName="idCriteria" class="form-control">
+                <option value="">--choose criteria--</option>
+                <option *ngFor="let criteria of competitionSrv.listWinningCriterias" [value]="criteria._id">
+                  {{ criteria.name }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+          Close
+        </button>
+        <button type="button" class="btn btn-success" [disabled]="formAddCriteria.invalid" (click)="addCriteria()"
+          data-bs-dismiss="modal">
+          <span *ngIf="competitionSrv.waitingCriteriasAdd == false">Ajouter <i class="fa fa-plus"
+              aria-hidden="true"></i>
+          </span>
+          <span *ngIf="competitionSrv.waitingCriteriasAdd == true"><img src="../../../../../assets/img/loader.gif"
+              alt="" width="30px" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="delete" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Supprimer Critère</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3"></div>
+        <div class="modal-text text-center">
+          <p>
+            {{ "wanTo" | translate }} vous supprimer le Critère: << <b>{{ criteriaChooseData.name }}>> </b> à cette
+              competition ?
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
+          Close
+        </button>
+        <button type="button" class="btn btn-danger" (click)="doDelete()" data-bs-dismiss="modal">
+          <span *ngIf="competitionSrv.waitingCreteriaDeletingDone == false">Supprimer <i class="fa fa-trash"
+              aria-hidden="true"></i>
+          </span>
+          <span *ngIf="competitionSrv.waitingCreteriaDeletingDone == true"><img
+              src="../../../../../assets/img/loader.gif" alt="" width="30px" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,30 +1,21 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import {
-  Event,
-  NavigationStart,
-  Router,
-  ActivatedRoute,
-  NavigationEnd,
-} from '@angular/router';
-import { Location } from '@angular/common';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { AllModulesService } from 'src/app/services/all-modules.service';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { WordsService } from 'src/app/shared/services/words/words.service';
-import { LevelService } from 'src/app/shared/services/level/level.service';
 import { Level } from 'src/app/shared/entities/level';
 import { SpeakService } from 'src/app/shared/services/speak/speak.service';
 import { Word } from 'src/app/shared/entities/word';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WordDataService } from '../word-data.service';
+import { DataTableTranslateService } from 'src/app/services/data-table-translate.service';
 
 @Component({
   selector: 'app-words-list',
   templateUrl: './words-list.component.html',
   styleUrls: ['./words-list.component.css']
 })
-export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
+export class WordsListComponent implements OnInit, OnChanges {
   public wordsList: [] = [];
   public levelList: [] = [];
   errorMessage: any;
@@ -41,27 +32,18 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
   wordTypes = [
     {name: "Francais", value: 'fr'},
     {name: "English", value: 'en'}
-  ]
-
+  ];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private translationService: TranslationService,
     private formLog: FormBuilder,
     private wordsService: WordsService,
-    private levelService: LevelService,
     private toastr: ToastrService,
     private wordDataService: WordDataService,
+    public dataTableTranslateService: DataTableTranslateService,
     private speakService: SpeakService) 
-  {
-    this.routerSubscribe = router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.wordsList = undefined;
-      }
-    });
-  }
+  { }
 
   ngOnInit(): void {
 
@@ -80,7 +62,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
     this.translate.use(this.translationService.getCurrentLanguage());
     this.initUpdateForm();
   }
-
   initUpdateForm() {
     this.wordForm = this.formLog.group({
       '_id': [this.wordData._id, Validators.compose([
@@ -104,10 +85,6 @@ export class WordsListComponent implements OnInit, OnChanges, OnDestroy {
       this.wordForm.controls.description.setValue(this.wordData.description);
       this.wordForm.controls.gameLevelId.setValue(this.wordData.gamelevelId);
     }
-  }
-
-  ngOnDestroy() {
-    this.routerSubscribe.unsubscribe();
   }
 
   refreshList(refeshLevelsList: boolean = true) {

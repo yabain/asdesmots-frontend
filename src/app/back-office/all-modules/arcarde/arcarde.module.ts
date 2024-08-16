@@ -3,27 +3,29 @@ import { CommonModule } from '@angular/common';
 
 import { ArcardeRoutingModule } from './arcarde-routing.module';
 import { ArcardeComponent } from './arcarde.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProgressIndeterminateModule } from "../../../shared/elements/progress-indeterminate/progress-indeterminate.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListUserArcardeComponent } from './list-user-arcarde/list-user-arcarde.component';
 import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
-import { ArcadesuscriptionComponent } from './arcadesuscription/arcadesuscription.component';
-import { FormatDatePipe } from './services/format-date.pipe';
+import { ArcadeSuscribersComponent } from './arcade-suscribers/arcade-suscribers.component';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 import { DataTablesModule } from 'angular-datatables';
-import { HttpClient } from '@angular/common/http';
-import { HttpLoaderFactory } from 'src/app/app.module';
-
+import { SharedModule } from '../../shared/shared.module';
+import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
+import { ArcadeDetailsComponent } from './arcade-details/arcade-details.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { ArcadeSubscribeFormComponent } from './arcade-subscribe-form/arcade-subscribe-form.component';
+import { CompetitionModule } from './competition/competition.module';
 
 @NgModule({
     declarations: [
         ArcardeComponent,
-        ListUserArcardeComponent,
         ListArcardeComponent,
-        ArcadesuscriptionComponent,
-        FormatDatePipe,
-        CreateArcardeComponent
+        ArcadeSuscribersComponent,
+        CreateArcardeComponent,
+        ArcadeDetailsComponent,
+        DeleteModalComponent,
+        ArcadeSubscribeFormComponent,
     ],
     imports: [
         CommonModule,
@@ -33,7 +35,11 @@ import { HttpLoaderFactory } from 'src/app/app.module';
         ReactiveFormsModule,
         FormsModule,
         DataTablesModule,
-
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CompetitionModule,
+        NgBmisDateTimePickerModule
     ]
 })
 export class ArcardeModule { }

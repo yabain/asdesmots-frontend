@@ -1,0 +1,231 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">{{ arcardeData.name }}</h3>
+          <ul class="breadcrumb" style="cursor: pointer">
+            <li class="breadcrumb-item" style="cursor: pointer">
+              <a [routerLink]="'/index'">{{ "dashboard" | translate }}</a>
+            </li>
+            <li class="breadcrumb-item" style="cursor: pointer">
+              <a [routerLink]="'/arcarde/list-arcarde'">{{
+                "arcade.arcade" | translate
+              }}</a>
+            </li>
+            <li class="breadcrumb-item active" [class.active]="activeTab === 'overview'">{{ arcardeData.name }}</li>
+            <li *ngIf="activeTab === 'subscribers'" class="breadcrumb-item active" [class.active]="activeTab === 'subscribers'">Subscribers</li>
+            <li *ngIf="activeTab === 'competitions'" class="breadcrumb-item active" [class.active]="activeTab === 'competitions'">Competitions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="d-md-flex justify-content-between">
+      <nav class="nav nav-pills">
+        <a class="nav-item nav-link" [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">
+          Overview
+        </a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'subscribers'" (click)="setActiveTab('subscribers')">
+          Subscribers
+        </a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'competitions'"
+          (click)="setActiveTab('competitions')">
+          Competitions
+        </a>
+      </nav>
+      <div *ngIf="activeTab === 'overview'" class="text-md-end mt-3 mt-md-0">
+        <a class="btn btn-outline-primary me-2
+          {{
+            arcardeData.gameState === gameState.RUNNING
+              ? 'bg-success-light competition-running'
+              : 'bg-primary-light'
+          }}" data-toggle="tooltip" data-placement="top" title="{{
+            (arcardeData.gameState === gameState.RUNNING
+              ? 'arcade.stop'
+              : 'arcade.run'
+            ) | translate
+          }}" (click)="startCompetition()">
+          <i class="{{
+              arcardeData.gameState === gameState.RUNNING
+                ? 'fa fa-pause'
+                : 'fa fa-play'
+            }}" aria-hidden="true" (click)="startCompetition()" style="cursor: pointer"></i>
+        </a>
+        <!-- <a class="btn btn-outline-primary me-2" [routerLink]="['/arcarde/edit', arcardeData._id]" data-toggle="tooltip"
+          data-placement="top" title="{{ 'arcade.edit' | translate }}">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a> -->
+        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete"
+          data-placement="top" title="{{ 'arcade.delete' | translate }}">
+          <i class="fas fa-trash"></i>
+        </a>
+      </div>
+      <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#subscribe" data-bs-toggle="modal">
+          <i class="fa fa-user-plus"></i>
+        </a>
+      </div>
+      <div *ngIf="arcadeCompetitionId && (activeTab === 'competitions')" class="text-md-end mt-3 mt-md-0">
+        <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/create',arcadeId,arcadeCompetitionId]">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <div *ngIf="activeTab === 'overview'">
+        <div class="row">
+          <div class="col-xl-3 col-sm-6 col-12 mb-3">
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-gamepad"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{
+                        (arcardeData?.isOnlineGame
+                          ? "arcade.online"
+                          : "arcade.offline"
+                        ) | translate
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <p class="inovices-all">
+                  {{ "arcade.competitionType" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 mb-3">
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid {{
+                        arcardeData?.canRegisterPlayer
+                          ? 'fa-eye'
+                          : 'fa-eye-slash'
+                      }}"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{
+                        (arcardeData?.canRegisterPlayer
+                          ? "arcade.visible"
+                          : "arcade.hidden"
+                        ) | translate
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <p class="inovices-all">
+                  {{ "arcade.visibility" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 mb-3">
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-users"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{ arcardeData?.maxPlayersNumber ?? 0 }}
+                    </div>
+                  </div>
+                </div>
+                <p class="inovices-all">
+                  {{ "arcade.maxPlayersNumber" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 col-12 mb-3">
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-comments-dollar"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{
+                        (arcardeData?.isFreeRegistrationPlayer
+                          ? "arcade.free"
+                          : "arcade.paid"
+                        ) | translate
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <p class="inovices-all">
+                  {{ "arcade.registrationType" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card px-2 py-3">
+          <div class="card-body">
+            <form class="row">
+              <div class="form-group col-md-4">
+                <label for="name" class="col-form-label input-label"><b> Name </b></label>
+                <input type="text" class="form-control" id="name" placeholder="" [value]="arcardeData?.name" disabled />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="startRegistrationDate" class="col-form-label input-label"><b> Start Registration Date
+                  </b></label>
+                <input type="text" class="form-control" id="startRegistrationDate" placeholder=""
+                  value="{{ arcardeData?.startRegistrationDate | formatDate }}" disabled />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="endRegistrationDate" class="col-form-label input-label"><b> End Registration Date
+                  </b></label>
+                <input type="text" class="form-control" id="endRegistrationDate" placeholder=""
+                  value="{{ arcardeData?.endRegistrationDate | formatDate }}" disabled />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="lang" class="col-form-label input-label"><b>Language</b></label>
+                <input type="text" class="form-control" id="lang" placeholder="" [value]="
+                    (arcardeData?.lang == 'fr' ? 'french' : 'english')
+                      | translate
+                  " disabled />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="startDate" class="col-form-label input-label"><b> Start Date </b></label>
+                <input type="text" class="form-control" id="startDate" placeholder=""
+                  value="{{ arcardeData?.startDate | formatDate }}" disabled />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="endDate" class="col-form-label input-label"><b> End Date </b></label>
+                <input type="text" class="form-control" id="endDate" placeholder=""
+                  value="{{ arcardeData?.endDate | formatDate }}" disabled />
+              </div>
+              <div class="form-group">
+                <label for="desc" class="col-form-label input-label"><b> Description </b></label>
+                <textarea type="text" class="form-control" id="desc" placeholder="" [value]="arcardeData?.description"
+                  disabled>
+                </textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTab === 'subscribers'">
+        <app-arcade-suscribers [arcadeId]="arcadeId"></app-arcade-suscribers>
+      </div>
+      <div *ngIf="activeTab === 'competitions'">
+        <app-competititon-list [arcadeId]="arcadeId" (updateArcadeCompetitionId)="updateArcadeCompetitionId($event, arcadeCompetitionId)"></app-competititon-list>
+      </div>
+    </div>
+  </div>
+</div>
+<app-delete-arcade-modal [arcadeData]="arcardeData"></app-delete-arcade-modal>

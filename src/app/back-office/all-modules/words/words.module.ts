@@ -11,7 +11,7 @@ import { DataTablesModule } from "angular-datatables";
 import { ProgressIndeterminateModule } from 'src/app/shared/elements/progress-indeterminate/progress-indeterminate.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { WordDetailsModule } from '../../shared/word-details/word-details.module';
+import { WordDetailsModule } from '../../shared/elements/word-details/word-details.module';
 import { SidemenuComponent } from "./sidemenu/sidemenu.component";
 
 @NgModule({

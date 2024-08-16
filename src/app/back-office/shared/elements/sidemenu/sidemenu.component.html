@@ -1,0 +1,148 @@
+<!-- Header -->
+<div class="header header-one">
+
+	<!-- Logo -->
+	<div class="header-left header-left-one">
+		<a [routerLink]="'/'" class="logo">
+			<img src="assets/img/logo-white.png" alt="Logo"><img src="assets/img/logo-full-white-adesmots.png"
+				alt="Logo" style="height: 23px;">
+		</a>
+		<a [routerLink]="'/'" class="white-logo">
+			<img src="assets/img/logo-adesmots.png" alt="Logo" style="height: 50px;">
+		</a>
+		<a [routerLink]="'/'" class="logo logo-small">
+			<img src="assets/img/logo-white.png" alt="Logo" width="50" height="30">
+		</a>
+	</div>
+	<!-- /Logo -->
+
+	<!-- Sidebar Toggle -->
+	<!-- <a href="javascript:void(0);" (click)="burgerMenu()" id="toggle_btn">
+		<i class="fas fa-bars"></i>
+	</a> -->
+	<!-- /Sidebar Toggle -->
+
+	<!-- Search -->
+	<div class="top-nav-search">
+		<form>
+			<input type="text" class="form-control" placeholder="Search here">
+			<button class="btn" type="submit"><i class="fas fa-search"></i></button>
+		</form>
+	</div>
+	<!-- /Search -->
+
+	<!-- Mobile Menu Toggle -->
+	<a class="mobile_btn" id="mobile_btn">
+		<i class="fas fa-bars"></i>
+	</a>
+	<!-- /Mobile Menu Toggle -->
+
+	<!-- Header Menu -->
+	<ul class="nav nav-tabs user-menu">
+		<!-- Flag -->
+		<li class="nav-item  flag-nav">
+			<a href="javascript:void(0)" class="nav-link dropdown-toggle"
+				aria-controls="collapseExample3" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+				<img src="{{ currentLang.flagImg }}" alt="" height="20"> <span>{{ currentLang.name }}</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" id="collapseExample3">
+				<a *ngFor="let lang of languages" (click)="setLanguage(lang)" class="dropdown-item">
+					<img src="{{lang.flagImg}}" alt="" height="16"> {{ lang.name }}
+				</a>
+			</div>
+		</li>
+		<!-- /Flag -->
+
+		<!-- Notifications -->
+		<li class="nav-item dropdown">
+			<div class="dropdown-menu notifications" id="collapseExample1">
+				<div class="topnav-dropdown-header">
+					<span class="notification-title">{{'notifications' | translate}}</span>
+					<a href="javascript:void(0)" class="clear-noti"> {{'clearAll' | translate}}</a>
+				</div>
+				<div class="topnav-dropdown-footer">
+					<a href="javascript:void(0)">{{'allNotifs' | translate}}</a>
+				</div>
+			</div>
+		</li>
+		<!-- /Notifications -->
+
+		<!-- User Menu -->
+		<li class="nav-item dropdown has-arrow main-drop" id="dropdown">
+			<a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+				aria-expanded="false">
+				<span class="user-img">
+					<!-- <img src="{{userData.profilePicture}}" alt=""> -->
+					<img src="assets/img/user-profile.png" alt="">
+					<span class="status online"></span>
+				</span>
+				<span>{{userData.lastName}}</span>
+			</a>
+			<div class="dropdown-menu" id="collapseExample2">
+				<a class="dropdown-item" [routerLink]="'/setting/profile'"><i data-feather="user" class="me-1"></i> {{'profile'
+					| translate}}</a>
+				<a class="dropdown-item" [routerLink]="'/setting/settings'"><i data-feather="settings" class="me-1"></i>
+					{{'settings' | translate}}</a>
+				<a class="dropdown-item" (click)="Logout()"><i data-feather="log-out" class="me-1"></i> {{'logOut' |
+					translate}}</a>
+			</div>
+		</li>
+		<!-- /User Menu -->
+	</ul>
+	<!-- /Header Menu -->
+
+</div>
+<!-- /Header -->
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+	<div class="sidebar-inner slimscroll">
+		<div id="sidebar-menu" class="sidebar-menu">
+			<ul>
+				<li class="menu-title"><span>Menu</span></li>
+				<li [class.active]="base === 'index'">
+					<a [routerLink]="'/index'"><i data-feather="home"></i> <span>{{'dashboard' | translate}}</span></a>
+				</li>
+				<li [class.active]="base === 'customers'">
+					<a [routerLink]="'/customers/customers-list'"><i data-feather="users"></i>
+						<span>{{'users' | translate}}</span></a>
+				</li>
+				<li [class.active]="base === 'words'">
+					<a [routerLink]="'/words/words-list'"><i data-feather="file-text"></i>
+						<span>{{'words.word' | translate}}</span></a>
+				</li>
+
+				<li [class.active]="base === 'arcarde'">
+					<a [routerLink]="'/arcarde/list-arcarde'"><i class="fa fa-star-half" aria-hidden="true"></i>
+						<span>{{'Arcarde' | translate}}</span></a>
+				</li>
+
+				<li [class.active]="base === 'game'">
+					<a [routerLink]="'/game/list'"> <i class="fa fa-gamepad" aria-hidden="true"></i>
+						<span> {{'Jeux' | translate}} </span></a>
+				</li>
+
+				<!-- <li [class.active]="base === 'undercompetition'">
+					<a [routerLink]="'/competition/list'"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+						<span>Competitions</span></a>
+				</li> -->
+				
+				<li [class.active]="base === 'role'">
+					<a [routerLink]="'/role/list'"><i class="fa fa-wrench" aria-hidden="true"></i>
+						<span>{{'Role' | translate}}</span></a>
+				</li><br><br>
+
+				<li [class.active]="base === 'setting'">
+					<a [routerLink]="'setting/profile'"><i data-feather="settings"></i> <span>{{'settings' |
+							translate}}</span></a>
+				</li>
+				<li [class.active]="base === 'profile'">
+					<a [routerLink]="'/profile'"><i data-feather="file-text"></i> <span>{{'profile' | translate}}
+							Log</span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- /Sidebar -->

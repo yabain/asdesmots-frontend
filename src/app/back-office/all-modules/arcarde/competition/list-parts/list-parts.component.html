@@ -1,0 +1,241 @@
+<div *ngIf="gamePartSrv.waitingResponse" class="d-flex align-items-center justify-content-center vh-50">
+  <img src="assets/img/loader.gif" alt="" width="30px" />
+</div>
+<div *ngIf="!gamePartSrv.waitingResponse" class="card">
+  <div class="card-header">
+    <h4 class="card-title">Liste des Parties</h4>
+    <p class="card-text">
+      Liste des paties de cette competition.
+    </p>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <ng-container *ngIf="gamePartSrv.listGameParts?.length; else noGameParts">
+        <table datatable class="table table-stripped table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>{{'name' | translate }} </th>
+              <th>Description</th>
+              <th> {{ 'level' | translate }} </th>
+              <th> {{ 'level' | translate }} </th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let part of gamePartSrv.listGameParts" (click)="partChooseData = part">
+              <td>
+                {{ part.name }}
+              </td>
+              <td>{{ part.description }}</td>
+              <td></td>
+              <td>{{ part.gameLevel?.name }}</td>
+              <td class="text-end">
+                <div class="dropdown dropdown-action">
+                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;">
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePart">
+                      <i class="far fa-trash-alt me-2"></i>
+                      <span style="margin-left: 5px;">Delete</span>
+                    </a>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#details">
+                      <i class="far fa-eye me-2"></i>
+                      <span style="margin-left: 5px;">Show more</span>
+                    </a>
+                    <div *ngIf="part.gameState === gameState.NO_START">
+                      <span style="color: green;" class="text-center dropdown-item" (click)="startGame(part._id)">
+                        <i class="fa fa-play" aria-hidden="true"></i> Demarrer partie
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noGameParts>
+        <div class="text-center">
+          <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
+          <br>Aucune Partie !
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div class="modal custom-modal fade" id="deletePart" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+        </div>
+        <div class="modal-text text-center">
+          <h2> Supprimer Partie </h2>
+          <p>Voulez vous vraiment supprimer la partie: << <b>{{ partChooseData.name }}>> </b> à cette competition ? </p>
+        </div>
+      </div>
+
+
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
+          {{ 'close' | translate }}
+
+        </button>
+        <button type="button" class="btn btn-danger" *ngIf="!gamePartSrv.partDeletingDone" (click)="doDelete()">
+          <span *ngIf="!gamePartSrv.waitingResponse">{{ 'delete' | translate }} <i class="fa fa-trash"
+              aria-hidden="true"></i> </span>
+          <span *ngIf="gamePartSrv.waitingResponse"><img src="../../../../../assets/img/loader.gif" alt=""
+              width="30px"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal custom-modal fade" id="addParts" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Ajouter Partie </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+
+
+        </div>
+        <div class="modal-text text-center">
+
+
+          <p class="text-center" *ngIf="gamePartSrv.waitingResponse">
+            <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
+          </p>
+          <form [formGroup]="gamePartSrv.gamePartForm">
+            <div class="row">
+
+              <div class="col">
+                <div class="form-group">
+                  <label for="name"> {{ 'name' | translate }} </label>
+                  <input type="text" class="form-control" formControlName="name" name="name" id="name">
+                </div>
+
+
+
+                <div class="form-group">
+                  <label for="startDate"> {{'startDate' | translate }} </label>
+                  <input type="date" class="form-control" formControlName="startDate" name="startDate" id="startDate">
+                </div>
+
+              </div>
+
+              <div class="col">
+
+
+
+                <div class="form-group">
+                  <label for="numberOfWords"> Nombre de Mots (Par Joueur) </label>
+                  <input type="number" class="form-control" formControlName="numberOfWord" name="numberOfWords"
+                    id="numberOfWords">
+                </div>
+
+
+
+                <div class="form-group">
+                  <label for="endDate"> {{'endDate' | translate }} </label>
+                  <input type="date" class="form-control" formControlName="endDate" name="endDate" id="endDate">
+                </div>
+
+
+
+              </div>
+              <div class="form-group">
+                <label for="description"> Description </label>
+                <textarea type="text" class="form-control" formControlName="description" name="description"
+                  id="description">
+                              </textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
+          {{ 'close' | translate }}
+        </button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+          [disabled]="gamePartSrv.gamePartForm.invalid" *ngIf="!gamePartSrv.partAdded" (click)="addPart()">
+          <span *ngIf="!gamePartSrv.waitingResponse">{{ 'add' | translate }} <i class="fa fa-plus"
+              aria-hidden="true"></i> </span>
+          <span *ngIf="gamePartSrv.waitingResponse"><img src="../../../../../assets/img/loader.gif" alt=""
+              width="30px"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal custom-modal fade" id="details" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> {{ partChooseData.name }} </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon text-center mb-3">
+        </div>
+        <div class="modal-text text-center">
+          <form>
+            <div class="row form-group">
+              <label for="nbrWords" class="col-sm-3 col-form-label input-label"><b>
+                  Nombre de mots
+                  :</b></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="nbrWords" placeholder=""
+                  [value]="partChooseData.numberOfWord" disabled>
+              </div>
+            </div>
+
+
+
+            <div class="row form-group">
+              <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
+                  {{'startDate' | translate }}
+                  :</b></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="endDate" placeholder="" [value]="partChooseData.startDate"
+                  disabled>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
+                  {{'end' | translate }}
+                  :</b></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="endDate" placeholder="" [value]="partChooseData.endDate"
+                  disabled>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reset()" id="cancel-btn2">
+          {{'close' | translate }}
+
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>

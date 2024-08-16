@@ -42,8 +42,8 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard]
       },
       {
-        path: 'undercompetition',
-        loadChildren: ()=> import('./undercompetition/undercompetition.module').then((m)=> m.UndercompetitionModule),
+        path: 'competition',
+        loadChildren: ()=> import('./arcarde/competition/competition.module').then((m)=> m.CompetitionModule),
         canActivate: [AuthenticationGuard]
       },
       {

@@ -12,11 +12,9 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 })
 export class ArcardeComponent implements OnInit {
   arcardeData : Arcarde = new Arcarde();
-  constructor(public arcadeServ: ArcardeService, 
-              private translate: TranslateService,
-              public userServ:  UserService,
-              private translationService: TranslationService,  
-              ) { this.arcadeServ.initFormControl(); this.arcadeServ.initFormCreationArcarde()}
+  constructor(public arcadeService: ArcardeService, 
+              public userService:  UserService,
+              ) { }
 
   ngOnInit(): void {
     this.loadArcardeCurrentUser();
@@ -27,55 +25,54 @@ export class ArcardeComponent implements OnInit {
   }
 
   loadArcardeCurrentUser(){
-      if(this.arcadeServ.listArcardeUser.length == 0){
-            this.arcadeServ.loadArcade();//user arcarde
+      if(this.arcadeService.listArcardeUser.length == 0){
+            this.arcadeService.loadArcade();//user arcarde
       }
   }
 
   loadAllArcarde(){
-      if(this.arcadeServ.listAllArcarde.length == 0){
-          this.arcadeServ.loadAllArcarde();
+      if(this.arcadeService.listAllArcarde.length == 0){
+          this.arcadeService.loadAllArcarde();
       }
   }
 
   async loadAllUser(){
-    if(this.userServ.listUsers.length == 0){
-        this.userServ.getAllUsers();
+    if(this.userService.listUsers.length == 0){
+        this.userService.getAllUsers();
     }
   }
 
   doSuscription(){
-      //this.arcadeServ.addUserToAccarde();
-      console.log(this.arcadeServ.souscriptionParam);
+      //this.arcadeService.addUserToAccarde();
+      console.log(this.arcadeService.souscriptionParam);
   }
 
   doUnsuscription(){
-     this.arcadeServ.UnsuscribeUserToAcarde({ playerID: this.userServ.getLocalStorageUser()._id, gameID: this.arcardeData._id});
+     this.arcadeService.UnsuscribeUserToAcarde({ playerID: this.userService.getLocalStorageUser()._id, gameID: this.arcardeData._id});
    }
 
    createArcarde(){
-    if(this.arcadeServ.formControlCreateArcarde.valid){
-      this.arcadeServ.createNewArcarde()
-
+    if(this.arcadeService.formControlCreateArcarde.valid){
+      // this.arcadeService.createNewArcarde()
     }
    }
 
    doDelete(){
-      this.arcadeServ.deleteArcarde(this.arcardeData._id);
+      this.arcadeService.deleteArcarde(this.arcardeData._id);
    }
 
    resetFormCreation(){
-      this.arcadeServ.formControlCreateArcarde.reset();
-      this.arcadeServ.isCreationDone = false;
+      this.arcadeService.formControlCreateArcarde.reset();
+      this.arcadeService.isCreationDone = false;
    }
 
    resetFormSuscribtion(){
-      this.arcadeServ.formControlSuscription.reset();
-      this.arcadeServ.unsuscriptionDone = false;
+      this.arcadeService.formControlSuscription.reset();
+      this.arcadeService.unsuscriptionDone = false;
    }
 
    refresh(){
-      this.arcadeServ.loadArcade();
+      this.arcadeService.loadArcade();
    }
 
 }

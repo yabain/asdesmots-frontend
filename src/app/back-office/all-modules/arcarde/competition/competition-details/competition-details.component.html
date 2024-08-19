@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="d-md-flex justify-content-between">
+    <div *ngIf="competitionData" class="d-md-flex justify-content-between">
       <nav class="nav nav-pills">
         <a class="nav-item nav-link" [class.active]="activeTab === 'overview'"
           (click)="setActiveTab('overview')">Overview</a>
@@ -47,6 +47,11 @@
           data-toggle="tooltip" data-placement="top" title="{{ 'competition.delete' | translate}}" 
           data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competitionData?._id">
           <i class="fas fa-trash"></i>
+        </a>
+      </div>
+      <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
+        <a class="btn btn-outline-primary me-2" (click)="subscribe()">
+          <i class="fa fa-user-plus"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'criterias'" class="text-md-end mt-3 mt-md-0">
@@ -199,7 +204,7 @@
         </div>
       </div>
       <div *ngIf="activeTab === 'subscribers'">
-        <!-- <app-arcade-suscribers [arcadeId]="2"></app-arcade-suscribers> -->
+        <app-arcade-suscribers [competitionId]="competitionData._id"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'criterias'">
         <!-- <app-game-cretarias-list [competitionID]="competitionData._id"></app-game-cretarias-list> -->
@@ -211,4 +216,4 @@
   </div>
 </div>
 
-<app-delete-competition-modal [competitionData]="competitionData" [index]="competitionData?._id"></app-delete-competition-modal>
+<app-delete-competition-modal *ngIf="competitionData" [competitionData]="competitionData" [index]="competitionData?._id"></app-delete-competition-modal>

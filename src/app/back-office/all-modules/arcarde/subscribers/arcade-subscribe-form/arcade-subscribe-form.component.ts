@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ArcardeService } from '../services/arcarde.service';
-import { SousCompetitionService } from '../competition/services/sous-competition.service';
+import { ArcardeService } from '../../services/arcarde.service';
+import { SousCompetitionService } from '../../competition/services/sous-competition.service';
 
 @Component({
   selector: 'app-arcade-subscribe-form',

@@ -262,11 +262,12 @@ export class ArcardeService {
     });
   }
 
-  getArcadeSubscribers(id: string) {
+  getArcadeSubscribers(arcadeId: string) {
     return new Promise((resolve, reject) => {
       this.httpClient
         .get(
-          `${environment.url}/${Endpoint.GET_USERS_ARCARDE + id}/subscription`,
+          // `${environment.url}/${Endpoint.GET_USERS_ARCARDE + id}/subscription`,
+          `${environment.url}/game-subscriptions/arcade/${arcadeId}`,
           {
             headers: this.headers,
           }

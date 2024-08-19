@@ -23,7 +23,7 @@ export class CompetitionDetailsComponent implements OnInit {
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
 
   constructor(
-    public sousCompetitionService: SousCompetitionService,
+    public subCompetitionService: SousCompetitionService,
     private toastr: ToastrService,
     private router: Router,
     private activedRouter: ActivatedRoute
@@ -32,29 +32,12 @@ export class CompetitionDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sousCompetitionService.getCompetitionById(this.idCompetition).then(
+    this.subCompetitionService.getCompetitionById(this.idCompetition).then(
       (resp: any) => {
         this.competitionData = resp.data;
-        console.log(this.competitionData._id);
       },
       (error: any) => {}
     );
-    this.sousCompetitionService
-      .getCompetionsubscribers(this.idCompetition)
-      .then(
-        (resp: any) => {
-          this.subscribers = resp.data;
-        },
-        (error: any) => {}
-      );
-    this.sousCompetitionService
-      .getCompetionWiningsCriteria(this.idCompetition)
-      .then(
-        (resp: any) => {
-          this.criterias = resp.data;
-        },
-        (error: any) => {}
-      );
   }
 
   setActiveTab(tab: string) {
@@ -65,7 +48,9 @@ export class CompetitionDetailsComponent implements OnInit {
     this.router.navigateByUrl('/competition/suscribe');
   }
 
-  removeUser(subscriberId: any) {}
+  subscribe() {
+    this.subCompetitionService.subscribePlayer({location: this.competitionData.location});
+  }
 
   startCompetition() {
     this.competitionData.changeState({

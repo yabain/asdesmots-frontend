@@ -18,6 +18,9 @@ import { ListPartsComponent } from './list-parts/list-parts.component';
 import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { FormatDatePipe } from '../services/format-date.pipe';
+import { ArcadeSubscribeFormComponent } from '../subscribers/arcade-subscribe-form/arcade-subscribe-form.component';
+import { ArcadeSuscribersComponent } from '../subscribers/arcade-suscribers/arcade-suscribers.component';
+import { UnsubscribeModalComponent } from '../subscribers/unsubscribe-modal/unsubscribe-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { FormatDatePipe } from '../services/format-date.pipe';
     CompetitionItemComponent,
     ListPartsComponent,
     ListCretariasComponent,
+    ArcadeSuscribersComponent,
+    ArcadeSubscribeFormComponent,
+    UnsubscribeModalComponent
   ],
   imports: [
     CompetitionRoutingModule,
@@ -44,6 +50,13 @@ import { FormatDatePipe } from '../services/format-date.pipe';
     DataTablesModule,
     NgBmisDateTimePickerModule,
   ],
-  exports: [CompetitionlistComponent, DeleteModalComponent, FormatDatePipe],
+  exports: [
+    CompetitionlistComponent,
+    DeleteModalComponent,
+    FormatDatePipe,
+    ArcadeSuscribersComponent,
+    ArcadeSubscribeFormComponent,
+    UnsubscribeModalComponent
+  ],
 })
 export class CompetitionModule {}

@@ -10,8 +10,10 @@
             <li class="breadcrumb-item" style="cursor: pointer">
               <a [routerLink]="'/index'">{{ "dashboard" | translate }}</a>
             </li>
+            <li class="breadcrumb-item" style="cursor: pointer;"><a
+                [routerLink]="['/arcarde/details',competitionData?.arcadeId]">{{ 'arcade.arcade' | translate }}</a></li>
             <li class="breadcrumb-item" style="cursor: pointer">
-              <a [routerLink]="'/competition/list'">{{
+              <a>{{
                 "competition.competition" | translate
               }}</a>
             </li>
@@ -29,23 +31,24 @@
           (click)="setActiveTab('subscribers')">Subscribers</a>
         <a class="nav-item nav-link" [class.active]="activeTab === 'criterias'"
           (click)="setActiveTab('criterias')">Winning criterias</a>
-        <a class="nav-item nav-link" [class.active]="activeTab === 'gameParts'"
-          (click)="setActiveTab('gameParts')">Game parts</a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'gameParts'" (click)="setActiveTab('gameParts')">Game
+          parts</a>
       </nav>
       <div *ngIf="activeTab === 'overview'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2
           {{ competitionData.gameState === gameState.RUNNING ? 'bg-success-light competition-running' : 'bg-primary-light' }}"
           title="{{ (competitionData.gameState === gameState.RUNNING? 'competition.stop': 'competition.run') | translate }}"
           data-toggle="tooltip" data-placement="top">
-          <i class="{{ competitionData.gameState === gameState.RUNNING ? 'fa fa-pause' : 'fa fa-play' }}" aria-hidden="true"(click)="startCompetition()" style="cursor: pointer;"></i>
+          <i class="{{ competitionData.gameState === gameState.RUNNING ? 'fa fa-pause' : 'fa fa-play' }}"
+            aria-hidden="true" (click)="startCompetition()" style="cursor: pointer;"></i>
         </a>
         <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/edit',competitionData._id]"
           data-toggle="tooltip" data-placement="top" title="{{ 'competition.edit' | translate}}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </a>
-        <a class="btn btn-outline-danger me-2"
-          data-toggle="tooltip" data-placement="top" title="{{ 'competition.delete' | translate}}" 
-          data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competitionData?._id">
+        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-placement="top"
+          title="{{ 'competition.delete' | translate}}" data-bs-toggle="modal"
+          [attr.data-bs-target]="'#delete-'+competitionData?._id">
           <i class="fas fa-trash"></i>
         </a>
       </div>
@@ -55,104 +58,105 @@
         </a>
       </div>
       <div *ngIf="activeTab === 'criterias'" class="text-md-end mt-3 mt-md-0">
-        <a  class="btn btn-outline-primary me-2" 
-          data-bs-target="#addCriteria"
-          data-bs-toggle="modal">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#addCriteria" data-bs-toggle="modal">
           <i class="fas fa-plus"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'gameParts'" class="text-md-end mt-3 mt-md-0">
-        <a  class="btn btn-outline-primary me-2" 
-          data-bs-target="#addPart"
-          data-bs-toggle="modal">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#addPart" data-bs-toggle="modal">
           <i class="fas fa-plus"></i>
         </a>
       </div>
     </div>
     <div class="mt-4">
       <div *ngIf="activeTab === 'overview'">
-        <div class="row">
+        <div *ngIf="!loading" class="row">
           <div class="col-xl-3 col-sm-6 col-12 mb-3">
-              <div class="card inovices-card h-100">
-                  <div class="card-body">
-                      <div class="inovices-widget-header">
-                          <span class="inovices-widget-icon">
-                            <i class="fa-solid fa-gamepad"></i>
-                          </span>
-                          <div class="inovices-dash-count">
-                              <div class="inovices-amount">{{ competitionData?.maxTimeToPlay }}</div>
-                          </div>
-                      </div>
-                      <p class="inovices-all">{{ 'competition.maxNumberOfRound' | translate }}</p>
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-gamepad"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">{{ competitionData?.maxTimeToPlay }}</div>
                   </div>
+                </div>
+                <p class="inovices-all">{{ 'competition.maxNumberOfRound' | translate }}</p>
               </div>
+            </div>
           </div>
           <div class="col-xl-3 col-sm-6 col-12 mb-3">
-              <div class="card inovices-card h-100">
-                <div class="card-body">
-                  <div class="inovices-widget-header">
-                    <span class="inovices-widget-icon">
-                      <i class="fa-solid {{
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid {{
                           competitionData?.canRegisterPlayer
                             ? 'fa-eye'
                             : 'fa-eye-slash'
                         }}"></i>
-                    </span>
-                    <div class="inovices-dash-count">
-                      <div class="inovices-amount">
-                        {{
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{
                           (competitionData?.canRegisterPlayer
                             ? "arcade.visible"
                             : "arcade.hidden"
                           ) | translate
                         }}
-                      </div>
                     </div>
                   </div>
-                  <p class="inovices-all">
-                    {{ "arcade.visibility" | translate }}
-                  </p>
                 </div>
+                <p class="inovices-all">
+                  {{ "arcade.visibility" | translate }}
+                </p>
               </div>
+            </div>
           </div>
           <div class="col-xl-3 col-sm-6 col-12 mb-3">
-              <div class="card inovices-card h-100">
-                  <div class="card-body">
-                      <div class="inovices-widget-header">
-                          <span class="inovices-widget-icon">
-                            <i class="fa-solid fa-users"></i>
-                          </span>
-                          <div class="inovices-dash-count">
-                            <div class="inovices-amount">
-                              {{ competitionData?.minOfPlayers }} 
-                              {{ 'competition.to' | translate }} 
-                              {{ competitionData?.maxOfWinners }}
-                            </div>
-                          </div>
-                      </div>
-                      <p class="inovices-all">{{ 'competition.possibleNumberOfPlayers' | translate }}</p>
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-users"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">
+                      {{ competitionData?.minOfPlayers }}
+                      {{ 'competition.to' | translate }}
+                      {{ competitionData?.maxOfWinners }}
+                    </div>
                   </div>
+                </div>
+                <p class="inovices-all">{{ 'competition.possibleNumberOfPlayers' | translate }}</p>
               </div>
+            </div>
           </div>
           <div class="col-xl-3 col-sm-6 col-12 mb-3">
-              <div class="card inovices-card h-100">
-                  <div class="card-body">
-                      <div class="inovices-widget-header">
-                          <span class="inovices-widget-icon">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                          </span>
-                          <div class="inovices-dash-count">
-                              <div class="inovices-amount">{{ competitionData?.maxPlayerLife }}</div>
-                          </div>
-                      </div>
-                      <p class="inovices-all">{{ 'competition.numberOfLive' | translate }}</p>
+            <div class="card inovices-card h-100">
+              <div class="card-body">
+                <div class="inovices-widget-header">
+                  <span class="inovices-widget-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                  </span>
+                  <div class="inovices-dash-count">
+                    <div class="inovices-amount">{{ competitionData?.maxPlayerLife }}</div>
                   </div>
+                </div>
+                <p class="inovices-all">{{ 'competition.numberOfLive' | translate }}</p>
               </div>
+            </div>
           </div>
         </div>
         <div class="card px-2 py-3">
           <div class="card-body">
-            <form class="row">
+            <div *ngIf="loading" class="text-center">
+              <span>
+                <img src="assets/img/loader.gif" alt="" width="30px">
+              </span>
+            </div>
+            <form *ngIf="!loading" class="row">
               <div class="form-group col-md-4">
                 <label for="name" class="col-form-label input-label"><b> Name </b></label>
                 <input type="text" class="form-control" id="name" placeholder="" [value]="competitionData?.name"
@@ -167,11 +171,9 @@
                 <label for="lang" class="col-form-label input-label"><b>
                     {{ 'competition.partType' | translate }}
                   </b></label>
-                <input type="text" class="form-control" id="lang" placeholder="" 
-                  [value]="
+                <input type="text" class="form-control" id="lang" placeholder="" [value]="
                    (competitionData?.isSinglePart? 'competition.singlePart':'competition.multiPart') | translate
-                  "
-                  disabled />
+                  " disabled />
               </div>
               <div class="form-group col-md-6">
                 <label for="location" class="col-form-label input-label"><b>Game Level</b></label>
@@ -216,4 +218,5 @@
   </div>
 </div>
 
-<app-delete-competition-modal *ngIf="competitionData" [competitionData]="competitionData" [index]="competitionData?._id"></app-delete-competition-modal>
+<app-delete-competition-modal *ngIf="competitionData" [competitionData]="competitionData"
+  [index]="competitionData?._id" (deletedFeedback)="deletedFeedback($event)"></app-delete-competition-modal>

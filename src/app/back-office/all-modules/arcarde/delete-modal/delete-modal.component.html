@@ -1,4 +1,4 @@
-<div class="modal custom-modal fade" id="delete" role="dialog">
+<div class="modal custom-modal fade" id="delete-{{arcadeData._id}}" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-icon text-center mb-3">
@@ -9,7 +9,7 @@
         {{'confirmDeleteText' | translate }} <b>{{arcadeData.name}} ?</b>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00-{{arcadeData._id}}">
           {{'action.cancel' | translate }}
         </button>
         <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="delete()">

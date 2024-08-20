@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SousCompetitionService } from '../../competition/services/sous-competition.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class UnsubscribeModalComponent implements OnInit {
   @Input() arcadeId: string;
   @Input() competitionId: string;
   @Input() index: Number;
+  @Output() unsubscribedFeedback = new EventEmitter<boolean>();
 
   waiting: boolean = false;
 
@@ -27,7 +28,8 @@ export class UnsubscribeModalComponent implements OnInit {
     };
     this.sousCompetitionService.unsubscribePlayer(data).then(() => {
       this.waiting = false;
-      $('#cancel-btn00').click();
+      this.unsubscribedFeedback.emit(true);
+      $(`#cancel-btn00-${this.index}`).click();
     });
   }
 }

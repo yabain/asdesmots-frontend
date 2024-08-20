@@ -30,11 +30,11 @@
           </div>
         </form>
         <div class="text-center">
-          <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
+          <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00-{{arcadeId}}">
             {{'close' | translate }}
           </button>
           <button *ngIf="!waitingResponse" type="button" class="btn btn-success" (click)="subscribe()">
-            <span> {{'add' | translate }}</span>
+            <span> Subscribe</span>
           </button>
           <button type="button" class="btn btn-success" *ngIf="waitingResponse" disabled>
             <span><img src="assets/img/loader.gif" alt="" width="30px"></span>

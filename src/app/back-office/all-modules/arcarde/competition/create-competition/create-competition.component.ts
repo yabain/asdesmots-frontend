@@ -21,6 +21,8 @@ export class CreateCompetitionComponent implements OnInit {
   competitions: any[] = [];
   gameLevels: any[] = [];
   parentCompetitionId: string = '';
+  MinLength = 4;
+  MaxLength = 64;
 
   constructor(
     public sousCompetitionService: SousCompetitionService,
@@ -43,7 +45,7 @@ export class CreateCompetitionComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(60),
+          Validators.maxLength(65),
         ],
       ],
       description: [
@@ -57,7 +59,13 @@ export class CreateCompetitionComponent implements OnInit {
       gameLevel: ['', Validators.required],
       isSinglePart: [true],
       canRegisterPlayer: [false],
-      localisation: ['', Validators.required],
+      localisation: ['', 
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(65),
+        ],
+      ],
       maxPlayerLife: ['', Validators.required],
       maxTimeToPlay: ['', Validators.required],
       startDate: ['', Validators.required],

@@ -19,6 +19,7 @@ export class CompetitionDetailsComponent implements OnInit {
   subscribers: any = [];
   criterias: any = [];
   gameState = State;
+  loading: boolean = true;
   selectedCriteriaId: string = '';
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
 
@@ -35,8 +36,11 @@ export class CompetitionDetailsComponent implements OnInit {
     this.subCompetitionService.getCompetitionById(this.idCompetition).then(
       (resp: any) => {
         this.competitionData = resp.data;
+        this.loading = false;
       },
-      (error: any) => {}
+      (error: any) => {
+        this.loading = false;
+      }
     );
   }
 
@@ -61,5 +65,10 @@ export class CompetitionDetailsComponent implements OnInit {
 
   selectedCriteria(criteriaId: string) {
     this.selectedCriteriaId = criteriaId;
+  }
+
+  deletedFeedback(newValue: string) {
+    if(newValue)
+      this.router.navigate(['/arcarde/details',this.competitionData.arcadeId]);
   }
 }

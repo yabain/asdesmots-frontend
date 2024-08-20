@@ -42,7 +42,7 @@
             </a>
           </div>
         </div>
-        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id">
+        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id" (deletedFeedback)="deletedSubCompettitionFeedback($event)">
         </app-delete-competition-modal>
         <div *ngIf="!isCollapsed[i]" class="competition-data">
           {{ competition.description }}

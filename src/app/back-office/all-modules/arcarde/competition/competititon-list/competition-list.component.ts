@@ -40,28 +40,12 @@ export class CompetitionlistComponent implements OnInit {
       });
   }
 
-  // organiseCompetitions(competitionList) {
-  //   let tempComps = [];
-  //   competitionList?.forEach((comp) => {
-  //     tempComps.push({ ...comp, children: [] }); // Crée une copie avec une liste de `children` vide
-  //   });
-  //   tempComps.forEach((parent) => {
-  //     tempComps.forEach((child) => {
-  //       if (
-  //         child.parentCompetition &&
-  //         child._id !== parent._id &&
-  //         child.parentCompetition === parent._id
-  //       ) {
-  //         if (!parent.children.some((c) => c._id === child._id)) {
-  //           parent.children.push(child);
-  //         }
-  //       }
-  //     });
-  //   });
-  //   return tempComps;
-  // }
-
   startGame(competitionId: string) {
     // Logique pour démarrer une compétition
+  }
+
+  deletedSubCompettitionFeedback(newValue: string) {
+    if(newValue)
+      this.getCompetitionsByArcade();
   }
 }

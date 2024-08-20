@@ -28,6 +28,10 @@ export class ArcadeSuscribersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initData();
+  }
+
+  initData() {
     if(this.arcadeId)
       this.getArcadeSubscribers();
     else 
@@ -60,16 +64,8 @@ export class ArcadeSuscribersComponent implements OnInit {
       });
   }
 
-  loadAllArcarde() {
-    if (this.arcadeService.listAllArcarde.length == 0) {
-      this.arcadeService.loadAllArcarde();
-    }
-  }
-
-  removeUser(userId: string) {
-    this.arcardeService.UnsuscribeUserToAcarde({
-      gameID: this.arcadeId,
-      playerID: userId,
-    });
+  subscriptionFeedback(newValue: string) {
+    if(newValue)
+      this.initData();
   }
 }

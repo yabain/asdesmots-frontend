@@ -76,7 +76,7 @@
 
     <div class="mt-3">
       <div *ngIf="activeTab === 'overview'">
-        <div class="row">
+        <div *ngIf="!loading" class="row">
           <div class="col-xl-3 col-sm-6 col-12 mb-3">
             <div class="card inovices-card h-100">
               <div class="card-body">
@@ -175,7 +175,12 @@
         </div>
         <div class="card px-2 py-3">
           <div class="card-body">
-            <form class="row">
+            <div *ngIf="loading" class="text-center">
+              <span>
+                <img src="assets/img/loader.gif" alt="" width="30px">
+              </span>
+            </div>
+            <form *ngIf="!loading" class="row">
               <div class="form-group col-md-4">
                 <label for="name" class="col-form-label input-label"><b> Name </b></label>
                 <input type="text" class="form-control" id="name" placeholder="" [value]="arcardeData?.name" disabled />
@@ -228,4 +233,4 @@
     </div>
   </div>
 </div>
-<app-delete-arcade-modal [arcadeData]="arcardeData"></app-delete-arcade-modal>
+<app-delete-arcade-modal [arcadeData]="arcardeData" (deletedFeedback)="deletedFeedback($event)"></app-delete-arcade-modal>

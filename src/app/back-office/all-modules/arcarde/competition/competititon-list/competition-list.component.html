@@ -1,6 +1,6 @@
 <section id="competitions">
   <div *ngIf="!fetching" class="tree">
-    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId">
+    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId" (deletedFeedback)="deletedSubCompettitionFeedback($event)">
     </app-arcade-sub-competition>
   </div>
   <div class="card {{ competitions?.length ? 'mt-5' : '' }}">

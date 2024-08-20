@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { State } from 'src/app/shared/entities/state.enum';
 
 
@@ -17,6 +17,7 @@ export interface Competition{
 export class SubCompetitionComponent implements OnInit {
   @Input() competitions: Competition[];
   @Input() arcadeId: string;
+  @Output() deletedFeedback = new EventEmitter<boolean>();
 
   gameState = State;
 
@@ -36,9 +37,14 @@ export class SubCompetitionComponent implements OnInit {
 
   startCompetition(idCompetition: string){
     
-
   }
+
   startGame(competitionId: string) {
     // Logique pour démarrer une compétition
+  }
+
+  deletedSubCompettitionFeedback(newValue: string) {
+    if(newValue)
+      this.deletedFeedback.emit(true);
   }
 }

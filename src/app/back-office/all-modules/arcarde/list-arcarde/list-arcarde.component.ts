@@ -20,13 +20,14 @@ import { DataTableTranslateService } from 'src/app/services/data-table-translate
   styleUrls: ['./list-arcarde.component.css'],
 })
 export class ListArcardeComponent implements OnInit {
-  arcardeData: Arcarde = new Arcarde();
+  arcadeData: Arcarde = new Arcarde();
   userID: string = '';
   gameState = State;
   arcades: Arcarde[] = [];
   listUnderCompetion: any[] = [];
   listLocationArcarde: any[] = [];
-  waiting: boolean = false;
+  loading: boolean = true;
+  placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
 
   constructor(
     private translate: TranslateService,
@@ -54,10 +55,12 @@ export class ListArcardeComponent implements OnInit {
             }
           });
         }
+        this.loading = false;
       });
     })
     .catch(error => {
       console.error(error);
+      this.loading = false;
     });
   }
 
@@ -68,27 +71,8 @@ export class ListArcardeComponent implements OnInit {
     });
   }
 
-  doSuscription() {
-    this.arcadeServ.addUserToAccarde();
-  }
-
-  doUnsuscription() {
-    this.arcadeServ.UnsuscribeUserToAcarde({
-      playerID: this.userServ.getLocalStorageUser()._id,
-      gameID: this.arcardeData._id,
-    });
-  }
-
-  delete() {
-    this.waiting = true;
-    this.arcadeServ.deleteArcarde(this.arcardeData._id).then(() => {
+  deletedFeedback(newValue: string) {
+    if(newValue)
       this.getArcades();
-      this.waiting = false;
-      $('#cancel-btn00').click();
-    });
-  }
-
-  goToAcradeSuscription() {
-    this.router.navigateByUrl('/arcarde/suscribe');
   }
 }

@@ -16,6 +16,7 @@ import { ArcadeDetailsComponent } from './arcade-details/arcade-details.componen
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { ArcadeSubscribeFormComponent } from './subscribers/arcade-subscribe-form/arcade-subscribe-form.component';
 import { CompetitionModule } from './competition/competition.module';
+import { ArcadeListPlaceholderComponent } from './list-arcarde/arcade-list-placeholder/arcade-list-placeholder.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { CompetitionModule } from './competition/competition.module';
         CreateArcardeComponent,
         ArcadeDetailsComponent,
         DeleteModalComponent,
+        ArcadeListPlaceholderComponent,
     ],
     imports: [
         CommonModule,

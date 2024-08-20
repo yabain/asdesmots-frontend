@@ -8,37 +8,39 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-update-competition',
   templateUrl: './update-competition.component.html',
-  styleUrls: ['./update-competition.component.css']
+  styleUrls: ['./update-competition.component.css'],
 })
 export class UpdateCompetitionComponent implements OnInit {
-  
-  loading: boolean = false;
+  loading: boolean = true;
   submitted: boolean = false;
   fetching: boolean = false;
   updateForm: FormGroup;
-  arcadeId: string;
   competitionId: string = '';
   competitions: any[] = [];
   gameLevels: any[] = [];
   competitionData: any;
 
-  
   constructor(
-    public sousCompetitionService: SousCompetitionService,    
-    private toastr: ToastrService,
-    private router: Router,
+    public sousCompetitionService: SousCompetitionService,
     private levelService: LevelService,
     private fb: FormBuilder,
-    private activedRouter: ActivatedRoute) {
-      this.competitionId = this.activedRouter.snapshot.params['id'];
-      this.sousCompetitionService.getCompetitionById(this.competitionId).then((resp: any) => {
-        this.competitionData = resp.data;
-        this.arcadeId = this.competitionData.arcadeId;
-        this.initForm();
-      }, (error: any) => { })
+    private activedRouter: ActivatedRoute
+  ) {
+    this.competitionId = this.activedRouter.snapshot.params['id'];
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.sousCompetitionService.getCompetitionById(this.competitionId).then(
+      (resp: any) => {
+        this.competitionData = resp.data;
+        this.initForm();
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      }
+    );
     this.getLevelList();
     this.getCompetitions();
   }
@@ -71,20 +73,19 @@ export class UpdateCompetitionComponent implements OnInit {
       endDate: [this.competitionData.endDate, Validators.required],
       maxOfWinners: [this.competitionData.maxOfWinners, Validators.required],
       lang: [this.competitionData.lang, Validators.required],
-      parentCompetition: [this.competitionData.parentCompetitionId],
+      parentCompetition: [this.competitionData.parentCompetition],
     });
   }
   getCompetitions() {
-    this.loading = true;
     this.sousCompetitionService
-      .getArcadeCompetitions(this.arcadeId)
+      .getArcadeCompetitionsByChildCompetition(this.competitionId)
       .then((response: any) => {
-        this.competitions = response.data;
-        this.loading = false;
+        this.competitions = response.data?.filter(competition => {
+          return competition._id !== this.competitionId
+        });
       })
       .catch((error) => {
         console.error(error);
-        this.loading = false;
       });
   }
 
@@ -92,13 +93,15 @@ export class UpdateCompetitionComponent implements OnInit {
     if (JSON.parse(sessionStorage.getItem('levels-list'))) {
       const data = JSON.parse(sessionStorage.getItem('levels-list'));
       this.gameLevels = data.levels;
-    }
-    else {
-      this.levelService.getAllLevels().then(response => {
-        this.gameLevels = response.levels;
-      }, (err: any) => {
-        console.log(err);
-      });
+    } else {
+      this.levelService.getAllLevels().then(
+        (response) => {
+          this.gameLevels = response.levels;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
     }
   }
 
@@ -132,24 +135,25 @@ export class UpdateCompetitionComponent implements OnInit {
       .then(() => {
         this.submitted = false;
         this.fetching = false;
-        this.updateForm.reset();
-        // this.router.navigate([`/competition/details/${this.competitionId}`]);
       })
       .catch((error) => {
-        if (error.includes('Competition already exists') || error.errors?.alreadyUsed)
+        if (
+          error.includes('Competition already exists') ||
+          error.errors?.alreadyUsed
+        )
           this.updateForm.controls['name'].setErrors({ used: true });
         this.submitted = false;
         this.fetching = false;
       });
   }
-  
+
   toggleCheckbox(control: string) {
-    this.updateForm.get(control)?.setValue(!this.updateForm.get(control)?.value);
+    this.updateForm
+      .get(control)
+      ?.setValue(!this.updateForm.get(control)?.value);
   }
 
   onDateTimeChange(newValue: string, control) {
     this.updateForm.get(control).setValue(newValue);
   }
 }
-
-

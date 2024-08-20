@@ -18,6 +18,7 @@ export class ArcadeDetailsComponent implements OnInit {
   gameState = State;
   activeTab: string = 'overview';
   arcardeData: any = new Arcarde();
+  loading: boolean = true;
 
   constructor(
     public arcardeServ: ArcardeService,
@@ -34,27 +35,26 @@ export class ArcadeDetailsComponent implements OnInit {
       .getArcardeById(this.arcadeId)
       .then((resp: any) => {
         this.arcardeData = resp.data;
+        this.loading = false;
       })
       .catch((error) => {
         console.error(error);
+        this.loading = false;
       });
   }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
   }
-
-  initTranslation() {
-    this.translate.use(this.translation.getCurrentLanguage());
-  }
-
-  goToAcradeSuscription() {
-    this.router.navigateByUrl('/arcarde/suscribe');
-  }
-
+  
   startCompetition() {}
   
   updateArcadeCompetitionId(newValue: string, control) {
     this.arcadeCompetitionId = newValue;
+  }
+
+  deletedFeedback(newValue: string) {
+    if(newValue)
+     this.router.navigate(['/arcarde/list-arcarde']);
   }
 }

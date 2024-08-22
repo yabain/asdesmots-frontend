@@ -53,17 +53,20 @@
         </a>
       </div>
       <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" (click)="subscribe()">
+        <a class="btn btn-outline-primary me-2" (click)="subscribe()" data-toggle="tooltip" data-placement="top"
+          title="Subscribe">
           <i class="fa fa-user-plus"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'criterias'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" data-bs-target="#addCriteria" data-bs-toggle="modal">
-          <i class="fas fa-plus"></i>
+        <a class="btn btn-outline-primary me-2" data-bs-target="#addCriteria" data-bs-toggle="modal"
+          data-toggle="tooltip" data-placement="top" title="Set criterias">
+          <i class="fas fa-pencil"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'gameParts'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" data-bs-target="#addPart" data-bs-toggle="modal">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#addPart" data-bs-toggle="modal" data-toggle="tooltip"
+          data-placement="top" title="New part">
           <i class="fas fa-plus"></i>
         </a>
       </div>
@@ -209,14 +212,14 @@
         <app-arcade-suscribers [competitionId]="competitionData._id"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'criterias'">
-        <!-- <app-game-cretarias-list [competitionID]="competitionData._id"></app-game-cretarias-list> -->
+        <app-game-cretarias-list [competitionId]="competitionData._id"></app-game-cretarias-list>
       </div>
       <div *ngIf="(activeTab === 'gameParts') && competitionData">
-        <!-- <app-game-list-parts [competitionID]="competitionData._id"></app-game-list-parts> -->
+        <app-game-list-parts [competitionID]="competitionData._id"></app-game-list-parts>
       </div>
     </div>
   </div>
 </div>
 
-<app-delete-competition-modal *ngIf="competitionData" [competitionData]="competitionData"
-  [index]="competitionData?._id" (deletedFeedback)="deletedFeedback($event)"></app-delete-competition-modal>
+<app-delete-competition-modal *ngIf="competitionData" [competitionData]="competitionData" [index]="competitionData?._id"
+  (deletedFeedback)="deletedFeedback($event)"></app-delete-competition-modal>

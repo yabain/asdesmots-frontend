@@ -1,0 +1,41 @@
+<div class="modal custom-modal fade" id="addCriteria" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-5">
+        <img src="assets/img/logo-white.png" alt="" width="30px">
+        <h4 class="card-title text-center">Application de criteres</h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="align-items-center">
+        <p class="text-center" *ngIf="fetching">
+          <img src="assets/img/loader.gif" alt="" height="30px" />
+        </p>
+        <div class="row mb-3">
+          <div class="col-md-12" *ngFor="let criteria of criterias">
+            <div class="form-check">
+              <input (change)="updateCompetitionCriterias($event, criteria._id)" class="form-check-input" type="checkbox"
+                id="{{criteria._id}}" [checked]="competitionCriteriasInclude(criteria._id) !== -1">
+              <label class="form-check-label" for="{{criteria._id}}">
+                {{ criteria.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="invalid" class="text-center invalid-feedback">Veillez selectionner au minimum un critere</p>
+      <div class="text-center">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal"
+          id="cancel-btn00-{{competitionId}}">
+          {{'close' | translate }}
+        </button>
+        <button *ngIf="!saving" type="button" class="btn btn-success" (click)="saveCriterias()">
+          <span>Apply</span>
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="saving" disabled>
+          <span><img src="assets/img/loader.gif" alt="" width="30px"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

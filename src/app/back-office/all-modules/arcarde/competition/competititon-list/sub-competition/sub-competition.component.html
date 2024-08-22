@@ -23,7 +23,8 @@
             <a [routerLink]="['/competition/create',arcadeId,competition._id]"
               class="badge badge-pill bg-primary-light me-2" data-toggle="tooltip" data-placement="top"
               title="New sub competition under this competition">
-              <i class="fas fa-plus"></i>
+              <!-- <i class="fas fa-plus"></i> -->
+              <i class="fa-solid fa-puzzle-piece"></i>
             </a>
             <a class="badge badge-pill bg-success-light me-2"
               [routerLink]="['/competition/edit',competition._id]" data-toggle="tooltip"
@@ -45,6 +46,7 @@
         <app-delete-competition-modal [competitionData]="competition" [index]="competition._id" (deletedFeedback)="deletedSubCompettitionFeedback($event)">
         </app-delete-competition-modal>
         <div *ngIf="!isCollapsed[i]" class="competition-data">
+          <hr>
           {{ competition.description }}
         </div>
       </div>

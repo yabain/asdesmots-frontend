@@ -62,7 +62,6 @@ export class ArcadeSubscribeFormComponent implements OnInit {
         this.submitted = false;
         this.waitingResponse = false;
       });
-    // this.arcadeService.addUserToAccarde();
   }
 
 }

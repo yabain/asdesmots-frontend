@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
 import { State } from 'src/app/shared/entities/state.enum';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Level } from 'src/app/shared/entities/level';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -17,24 +17,10 @@ import { ArcardeService } from '../../services/arcarde.service';
   providedIn: 'root',
 })
 export class SousCompetitionService {
-  waitingResponse: boolean = false;
-  creationDone: boolean = false;
-  listUnderCompetition: SousCompetion[] = [];
-  listUnderCompetitions: SousCompetion[] = [];
-
-  listCompetionParent: any[] = [];
-
-  newUnderCompetionParam: SousCompetion = new SousCompetion();
-  underCompetiton: SousCompetion = new SousCompetion();
-  listCompetionLocation: string[] = [];
-  tmpIDLevel: string = '';
+  public newSubscriptionDetectedSubject = new BehaviorSubject<boolean>(false);
+  public newSubscriptionDetected$: Observable<boolean> = this.newSubscriptionDetectedSubject.asObservable();
 
   authorization: any;
-
-  listWinningCriterias: WinnigsCriterias[] = [];
-  waitingCriteriasResp: boolean;
-  waitingCriteriasAdd: boolean = false;
-  waitingCreteriaDeletingDone: boolean = false;
   headers = {
     Authorization: 'Bearer ' + this.api.getAccessToken(),
     'Content-Type': 'application/json; charset=UTF-8',
@@ -88,7 +74,6 @@ export class SousCompetitionService {
     gameCompetitionID: string;
     state: string;
   }) {
-    this.waitingResponse = false;
     this.clientChangeState(data.gameArcardeID, State.RUNNING);
 
     console.log('game competiton id :', data.gameCompetitionID);
@@ -100,8 +85,6 @@ export class SousCompetitionService {
             timeOut: 10000,
           });
           this.clientChangeState(data.gameCompetitionID, State.WAITING_PLAYER);
-
-          this.waitingResponse = false;
         },
         (error: any) => {
           if (error.error.statusCode == 500) {
@@ -121,7 +104,6 @@ export class SousCompetitionService {
           } else {
             this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
           }
-          this.waitingResponse = false;
         }
       );
   }
@@ -144,7 +126,6 @@ export class SousCompetitionService {
       .subscribe((response) => {
         console.log('reponse serveur: ', response);
         if (response && response.data > 0) {
-          this.listUnderCompetitions = Array.from(response.data);
         }
       });
   }
@@ -281,6 +262,7 @@ export class SousCompetitionService {
         )
         .subscribe(
           (response) => {
+            this.toastr.success('Subscripttion success', 'success');
             return resolve(response);
           },
           (error: any) => {
@@ -313,7 +295,7 @@ export class SousCompetitionService {
         )
         .subscribe(
           (response) => {
-            this.toastr.success('Unsubscribed successfully', 'error');
+            this.toastr.success('Unsubscribed successfully', 'success');
             return resolve(response);
           },
           (error: any) => {
@@ -471,46 +453,48 @@ export class SousCompetitionService {
     //this.waitingResponse = true;
   }
 
-  loadGameCriterias() {
-    this.waitingCriteriasResp = true;
-    this.api
-      .get(EndpointSousCompetion.WINNINGS_CRITERIAS, this.authorization)
-      .subscribe(
-        (resp) => {
-          this.waitingCriteriasResp = false;
-          this.listWinningCriterias = Array.from(resp.data);
-        },
-        (error: any) => {
-          if (error.status == 500) {
-            this.toastr.error(
-              'Internal Server Error. Try again later please.',
-              'Error',
-              { timeOut: 10000 }
-            );
-          } else if (error.status == 401) {
-            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-          } else {
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+  getCriterias(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(
+          `${environment.url}/${EndpointSousCompetion.WINNINGS_CRITERIAS}`,
+          {
+            headers: this.headers,
           }
-          this.waitingCriteriasResp = false;
-        }
-      );
+        )
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error: any) => {
+            if (error.status == 500) {
+              this.toastr.error(
+                'Internal Server Error. Try again later please.',
+                'Error'
+              );
+            } else if (error.status == 401) {
+              this.toastr.error('Invalid Token', 'error');
+            } else {
+              this.toastr.error(error.message, 'Error');
+            }
+            reject(error);
+          }
+        );
+    });
   }
 
   getCompetionWiningsCriteria(
-    idCompetition: string
+    competitionId: string
   ): Promise<WinnigsCriterias[]> {
-    this.waitingCriteriasResp = true;
     return new Promise((resole, reject) => {
       this.api
         .get(
-          EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS + idCompetition,
+          EndpointSousCompetion.GAME_LIST_WINNINGS_CRITERIAS + competitionId,
           this.authorization
         )
         .subscribe(
           (resp) => {
-            this.waitingCriteriasResp = false;
-            resole(resp.data);
+            resole(resp);
           },
           (error: any) => {
             reject([]);
@@ -525,7 +509,6 @@ export class SousCompetitionService {
             } else {
               this.toastr.error(error.message, 'Error', { timeOut: 7000 });
             }
-            this.waitingCriteriasResp = false;
           }
         );
     });
@@ -557,35 +540,25 @@ export class SousCompetitionService {
             } else {
               this.toastr.error(error.message, 'Error', { timeOut: 7000 });
             }
-            this.waitingCriteriasResp = false;
           }
         );
     });
   }
 
-  addCriteria(gameId: string, gameWinnerCriteriasId: string): Promise<boolean> {
+  applyCriterias(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.waitingCriteriasAdd = true;
-      const requestBody = {
-        gameID: gameId,
-        gammeWinnersID: gameWinnerCriteriasId,
-      };
-      console.log('request', requestBody);
       this.api
         .put(
-          EndpointSousCompetion.ADD_CRITERIAS_GAME,
-          requestBody,
+          EndpointSousCompetion.APPLY_CRITERIAS_GAME,
+          data,
           this.authorization
         )
         .subscribe(
           (resp) => {
-            this.waitingCriteriasAdd = false;
-
             this.toastr.success('Criteria Add', 'SUCCESS', { timeOut: 7100 });
             resolve(true);
           },
           (error: any) => {
-            this.waitingCriteriasAdd = false;
             if (error.status == 500) {
               this.toastr.error(
                 'Internal Server Error. Try again later please.',
@@ -622,7 +595,7 @@ export class SousCompetitionService {
                 { timeOut: 7000 }
               );
             }
-            resolve(false);
+            reject(false);
           }
         );
     });
@@ -630,21 +603,16 @@ export class SousCompetitionService {
 
   removeWinningCriteria(gameId: string, gameWinnerCriteriasId: string) {
     return new Promise<boolean>((resolve, reject) => {
-      this.waitingCreteriaDeletingDone = true;
       const url =
         EndpointSousCompetion.REMOVE_GAME_CRITERIAS +
         `/${gameId}/${gameWinnerCriteriasId}`;
 
-      console.log('GCI : ' + gameWinnerCriteriasId);
-
       this.api.deleteListWinnerCriterias(url, this.authorization).subscribe(
         () => {
-          this.waitingCreteriaDeletingDone = false;
           this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
           resolve(true);
         },
         (error: any) => {
-          this.waitingCreteriaDeletingDone = false;
           if (error.status == 500) {
             this.toastr.error(
               'Internal Server Error. Try again later please.',
@@ -656,41 +624,9 @@ export class SousCompetitionService {
           } else {
             this.toastr.error(error.message, 'Error', { timeOut: 7000 });
           }
-          resolve(false);
+          reject(error);
         }
       );
     });
-  }
-
-  buildListParentCompetition(id_arcarde: number) {
-    const index = this.arcardeService.listArcardeUser.findIndex(
-      (arcarde) => arcarde._id == id_arcarde
-    );
-    if (index != -1) {
-      this.listCompetionParent =
-        this.arcardeService.listArcardeUser[index].competitionGames;
-    }
-  }
-
-  loadListUnderCompetition() {
-    this.listUnderCompetition = Array.from(
-      this.arcardeService.listUnderCompetion
-    );
-  }
-
-  getData(id: any) {
-    const index = this.listUnderCompetition.findIndex(
-      (compet) => compet._id === id
-    );
-    if (index != -1) {
-      return this.listUnderCompetition[index];
-    }
-    return new SousCompetion();
-  }
-
-  getParentCompetitionID(idCompetition: string): string {
-    let parentID;
-    parentID = this.underCompetiton.parentCompetition._id;
-    return parentID;
   }
 }

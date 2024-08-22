@@ -1,21 +1,6 @@
-<div *ngIf="!subscribers.length" class="card">
-  <div class="card-header">
-    <h4 class="card-title">Game Users</h4>
-    <p class="card-text">list of users who subscribed to this Game.</p>
-  </div>
-  <div class="card-body">
-    <div *ngIf="!(subscribers.length || fetching)" class="text-center">
-      <img
-        src="assets/img/no_result.gif"
-        alt="No result"
-        style="max-width: 200px"
-      />
-      <br />{{ "competition.noSubscribers" | translate }}
-    </div>
-    <div class="text-center" *ngIf="fetching">
-      <img src="assets/img/loader.gif" height="45px" alt="" />
-    </div>
-  </div>
+<div *ngIf="!subscribers?.length || fetching" class="d-flex align-items-center text-center justify-content-center vh-50">
+  <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
+    <p *ngIf="!(subscribers?.length || fetching)" class="text-center">{{ "competition.noSubscribers" | translate }}</p>
 </div>
 <div
   class="competition-container"

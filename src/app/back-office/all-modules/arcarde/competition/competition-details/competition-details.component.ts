@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { State } from 'src/app/shared/entities/state.enum';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
 
 @Component({
@@ -13,6 +11,7 @@ import { SousCompetitionService } from '../services/sous-competition.service';
   styleUrls: ['./competition-details.component.css'],
 })
 export class CompetitionDetailsComponent implements OnInit {
+
   idCompetition: string = '';
   activeTab: string = 'overview';
   competitionData: any;
@@ -53,7 +52,9 @@ export class CompetitionDetailsComponent implements OnInit {
   }
 
   subscribe() {
-    this.subCompetitionService.subscribePlayer({location: this.competitionData.location});
+    this.subCompetitionService.subscribePlayer({location: this.competitionData.location}).then(() => {
+      this.subCompetitionService.newSubscriptionDetectedSubject.next(true);
+    });
   }
 
   startCompetition() {

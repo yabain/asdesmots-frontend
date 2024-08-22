@@ -14,7 +14,7 @@ import { SousCompetitionService } from '../../competition/services/sous-competit
 export class ArcadeSuscribersComponent implements OnInit {
   @Input() arcadeId: string;
   @Input() competitionId: string;
-  
+
   arcardeData: Arcarde = new Arcarde();
   subscribers: any[] = [];
   fetching: boolean = true;
@@ -23,19 +23,21 @@ export class ArcadeSuscribersComponent implements OnInit {
     public arcadeService: ArcardeService,
     public userService: UserService,
     private arcardeService: ArcardeService,
-    private subCompetitionService: SousCompetitionService,
-  ) {
-  }
+    private subCompetitionService: SousCompetitionService
+  ) {}
 
   ngOnInit() {
     this.initData();
+    this.subCompetitionService.newSubscriptionDetected$.subscribe(
+      (subscription) => {
+        this.initData();
+      }
+    );
   }
 
   initData() {
-    if(this.arcadeId)
-      this.getArcadeSubscribers();
-    else 
-      this.getCompetitionSubscribers()
+    if (this.arcadeId) this.getArcadeSubscribers();
+    else this.getCompetitionSubscribers();
   }
 
   getArcadeSubscribers() {
@@ -65,7 +67,6 @@ export class ArcadeSuscribersComponent implements OnInit {
   }
 
   subscriptionFeedback(newValue: string) {
-    if(newValue)
-      this.initData();
+    if (newValue) this.initData();
   }
 }

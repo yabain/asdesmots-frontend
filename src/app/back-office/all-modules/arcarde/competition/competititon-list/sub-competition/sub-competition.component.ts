@@ -39,10 +39,6 @@ export class SubCompetitionComponent implements OnInit {
     
   }
 
-  startGame(competitionId: string) {
-    // Logique pour démarrer une compétition
-  }
-
   deletedSubCompettitionFeedback(newValue: string) {
     if(newValue)
       this.deletedFeedback.emit(true);

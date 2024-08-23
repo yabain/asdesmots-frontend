@@ -357,6 +357,9 @@
                     </div>
                   </div>
                   <div class="col-12 d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-3">
+                      <a class="text-light" [routerLink]="['/arcarde/list-arcarde']">Retour</a>
+                    </button>
                     <button type="button" class="btn btn-primary" *ngIf="!arcadeServ.isCreationDone"
                       (click)="createArcarde()">
                       <span *ngIf="!waitingResponse">{{

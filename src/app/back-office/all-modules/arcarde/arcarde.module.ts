@@ -14,7 +14,6 @@ import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date
 import { ArcadeDetailsComponent } from './arcade-details/arcade-details.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { CompetitionModule } from './competition/competition.module';
-import { ArcadeListPlaceholderComponent } from './list-arcarde/arcade-list-placeholder/arcade-list-placeholder.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +22,6 @@ import { ArcadeListPlaceholderComponent } from './list-arcarde/arcade-list-place
         CreateArcardeComponent,
         ArcadeDetailsComponent,
         DeleteModalComponent,
-        ArcadeListPlaceholderComponent,
     ],
     imports: [
         CommonModule,

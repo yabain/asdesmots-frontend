@@ -25,6 +25,8 @@ import { DeletePartModalComponent } from './gane-parts/delete-part-modal/delete-
 import { CreatePartModalComponent } from './gane-parts/create-part-modal/create-part-modal.component';
 import { ListPartsComponent } from './gane-parts/list-parts/list-parts.component';
 import { SharedModule } from 'src/app/back-office/shared/shared.module';
+import { ArcadeListPlaceholderComponent } from '../list-arcarde/arcade-list-placeholder/arcade-list-placeholder.component';
+import { PartDetailsModalComponent } from './gane-parts/part-details-modal/part-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { SharedModule } from 'src/app/back-office/shared/shared.module';
     ApplyCiteriaModalComponent,
     DeleteCriteriaComponent,
     DeletePartModalComponent,
-    CreatePartModalComponent
+    CreatePartModalComponent,
+    ArcadeListPlaceholderComponent,
+    PartDetailsModalComponent
   ],
   imports: [
     CompetitionRoutingModule,
@@ -64,7 +68,8 @@ import { SharedModule } from 'src/app/back-office/shared/shared.module';
     FormatDatePipe,
     ArcadeSuscribersComponent,
     ArcadeSubscribeFormComponent,
-    UnsubscribeModalComponent
+    UnsubscribeModalComponent,
+    ArcadeListPlaceholderComponent
   ],
 })
 export class CompetitionModule {}

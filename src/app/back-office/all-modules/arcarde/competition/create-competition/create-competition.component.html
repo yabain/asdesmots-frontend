@@ -381,8 +381,8 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-start justify-content-lg-end">
-                    <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
-                      {{'close' | translate }}
+                    <button type="button" class="btn btn-secondary me-3">
+                      <a class="text-light" [routerLink]="['/arcarde/details',arcadeId]">Retour</a>
                     </button>
                     <button *ngIf="!fetching" type="button" class="btn btn-success" (click)="create()">
                       <span> {{'add' | translate }}</span>

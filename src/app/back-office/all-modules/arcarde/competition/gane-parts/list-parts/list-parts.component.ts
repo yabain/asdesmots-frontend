@@ -17,9 +17,15 @@ import { ArcardeService } from '../../../services/arcarde.service';
 })
 export class ListPartsComponent implements OnInit {
   @Input() competitionID: string;
+
+
+  loading: boolean = true;
+  parts = [];
+  placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
+
   competitionData: SousCompetion = new SousCompetion();
 
-  partChooseData: GamePart = new GamePart();
+  gamePartData: GamePart = new GamePart();
   listLevel: Level[] = [];
   sousCompetion: SousCompetion = new SousCompetion();
   gameState = State;
@@ -35,33 +41,23 @@ export class ListPartsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.competitionID);
-    this.gamePartSrv.dateNow = new Date();
-    this.gamePartSrv.initForm();
+    this.partService.partListChanged$.subscribe(
+      (subscription) => {
+        this.getListParts();
+      }
+    );
     this.getListParts();
     this.getLevel();
   }
 
   getListParts() {
-    // this.competitionData = this.SousCompetSrv.getData(this.competitionID);
-    this.gamePartSrv.f['gameCompetitionID'].setValue(this.competitionID);
-    this.gamePartSrv.getListGamePart(this.competitionID);
-  }
-
-  addPart() {
-    this.gamePartSrv.checkDateGamePartAndAddGamePart();
-  }
-
-  reset() {
-    this.gamePartSrv.gamePartForm.reset();
-    this.gamePartSrv.partDeletingDone = false;
-    this.gamePartSrv.partAdded = false;
-  }
-
-  doDelete() {
-    this.gamePartSrv.deleteGamePart({
-      competitionID: this.competitionID,
-      gamePartID: this.partChooseData._id,
+    this.gamePartSrv.getListGamePart(this.competitionID).then((response: any) => {
+      this.parts = response.data;
+      this.loading = false;
+    })
+    .catch(error => {
+      console.error(error);
+      this.loading = false;
     });
   }
 

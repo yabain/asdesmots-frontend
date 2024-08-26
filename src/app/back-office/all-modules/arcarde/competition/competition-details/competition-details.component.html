@@ -46,18 +46,18 @@
           data-toggle="tooltip" data-placement="top" title="{{ 'competition.edit' | translate}}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </a>
-        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-placement="top"
+        <a *ngIf="competitionData.parentCompetition" class="btn btn-outline-danger me-2" data-toggle="tooltip" data-placement="top"
           title="{{ 'competition.delete' | translate}}" data-bs-toggle="modal"
           [attr.data-bs-target]="'#delete-'+competitionData?._id">
           <i class="fas fa-trash"></i>
         </a>
       </div>
-      <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
+      <!-- <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2" (click)="subscribe()" data-toggle="tooltip" data-placement="top"
           title="Subscribe">
           <i class="fa fa-user-plus"></i>
         </a>
-      </div>
+      </div> -->
       <div *ngIf="activeTab === 'criterias'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2" data-bs-target="#addCriteria" data-bs-toggle="modal"
           data-toggle="tooltip" data-placement="top" title="Set criterias">

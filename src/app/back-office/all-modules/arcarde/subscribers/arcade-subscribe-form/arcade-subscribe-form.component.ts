@@ -14,7 +14,7 @@ export class ArcadeSubscribeFormComponent implements OnInit {
   @Output() subscribedFeedback = new EventEmitter<boolean>();
 
   subscribeForm: FormGroup;
-  locations: any[] = [];
+  competitions: any[] = [];
   waitingResponse:  boolean = false;
   submitted:  boolean = false;
 
@@ -25,16 +25,16 @@ export class ArcadeSubscribeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeForm = this.fb.group({
-      location: ['', Validators.required],
+      gameId: ['', Validators.required]
     })
     console.log(this.arcadeId);
-    this.listLocations();
+    this.listCompetitions();
   }
 
-  listLocations() {
+  listCompetitions() {
     this.subCompetitionService.listCompetitionLocalisations(this.arcadeId)
     .then((resp: any) => {
-      this.locations = resp.data;
+      this.competitions = resp.data;
     })
     .catch((error) => {
       console.error(error);

@@ -1,5 +1,5 @@
-<div class="d-flex align-items-center text-center justify-content-center vh-50">
-  <p *ngIf="!(parts?.length || loading)" class="text-center">No part available</p>
+<div *ngIf="!loading" class="d-flex align-items-center text-center justify-content-center {{ !(loading || parts?.length) ? 'vh-50': '' }}">
+  <p *ngIf="!parts?.length" class="text-center">No part available</p>
 </div>
 <div class="row">
   <div *ngIf="!loading" class="row">
@@ -126,4 +126,3 @@
     </div>
   </div>
 </div>
-<!-- <app-delete-part-modal *ngIf="gamePartData" [gamePart]="gamePartData"></app-delete-part-modal> -->

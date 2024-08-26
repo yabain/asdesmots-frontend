@@ -57,7 +57,7 @@
           data-placement="top" title="{{ 'arcade.edit' | translate }}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </a> -->
-        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete"
+        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+arcardeData._id"
           data-placement="top" title="{{ 'arcade.delete' | translate }}">
           <i class="fas fa-trash"></i>
         </a>

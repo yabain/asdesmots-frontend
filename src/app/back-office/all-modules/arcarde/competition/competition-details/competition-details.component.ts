@@ -52,7 +52,7 @@ export class CompetitionDetailsComponent implements OnInit {
   }
 
   subscribe() {
-    this.subCompetitionService.subscribePlayer({location: this.competitionData.location}).then(() => {
+    this.subCompetitionService.subscribePlayer({gameId: this.competitionData._id}).then(() => {
       this.subCompetitionService.newSubscriptionDetectedSubject.next(true);
     });
   }

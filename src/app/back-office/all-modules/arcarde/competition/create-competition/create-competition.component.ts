@@ -53,7 +53,6 @@ export class CreateCompetitionComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(65),
         ],
       ],
       gameLevel: ['', Validators.required],
@@ -62,7 +61,6 @@ export class CreateCompetitionComponent implements OnInit {
       localisation: ['', 
         [
           Validators.required,
-          Validators.minLength(4),
           Validators.maxLength(65),
         ],
       ],

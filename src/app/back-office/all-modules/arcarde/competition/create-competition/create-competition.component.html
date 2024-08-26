@@ -149,7 +149,6 @@
                           " style="color: red">
                         {{ "localisationRequired" | translate }}
                       </div>
-                      <p class="invalid-feedback" *ngIf="createForm.get('localisation').errors?.minlength">Au moins  {{ MinLength }} caractères</p>
                       <p class="invalid-feedback" *ngIf="createForm.get('localisation').errors?.maxlength">Au maximum  {{ MaxLength }} caractères</p>
                     </div>
                   </div>
@@ -377,7 +376,6 @@
                         {{ "descriptionRequired" | translate }}
                       </div>
                       <p class="invalid-feedback" *ngIf="createForm.get('description').errors?.minlength">Au moins  {{ MinLength }} caractères</p>
-                      <p class="invalid-feedback" *ngIf="createForm.get('description').errors?.maxlength">Au maximum  {{ MaxLength }} caractères</p>
                     </div>
                   </div>
                   <div class="d-flex justify-content-start justify-content-lg-end">

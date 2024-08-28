@@ -1,5 +1,6 @@
-<div *ngIf="!loading" class="d-flex align-items-center text-center justify-content-center {{ !(loading || parts?.length) ? 'vh-50': '' }}">
-  <p *ngIf="!parts?.length" class="text-center">No part available</p>
+<div *ngIf="!loading"
+  class="d-flex align-items-center text-center justify-content-center {{ !(loading || parts?.length) ? 'vh-50': '' }}">
+  <p *ngIf="!parts?.length" class="text-center">{{ 'competition.noPart' | translate }}</p>
 </div>
 <div class="row">
   <div *ngIf="!loading" class="row">
@@ -40,28 +41,19 @@
           </div>
         </div>
         <div class="card-footer bg-transparent border-top-0 text-end">
-          <p
-            class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-primary-light' }}">
+          <p class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-primary-light' }}"
+            data-toggle="tooltip" data-placement="top" title="{{
+              (sousCompetion.gameState === gameState.RUNNING
+                ? 'competition.stopPart'
+                : 'competition.runPart'
+              ) | translate
+            }}">
             <a *ngIf="sousCompetion.gameState !== gameState.RUNNING" style="cursor: pointer;">
               <i class="fa fa-play" aria-hidden="true"></i>
             </a>
             <i *ngIf="sousCompetion.gameState === gameState.RUNNING" class="fa fa-pause" aria-hidden="true"></i>
           </p>
         </div>
-        <ng-template #process_running_gameStarted>
-          <p style="color: green;" class="text-center dropdown-item">
-            Starting Competition...
-          </p>
-        </ng-template>
-
-        <ng-template #process_running_down>
-          <a class="dropdown-item" *ngIf="sousCompetion.gameState !== gameState.WAITING_PLAYER"
-            style="cursor: pointer;">
-
-            <i class="fa fa-play" aria-hidden="true"></i>
-            <p style="margin-left: 5px;"> Start Competition </p>
-          </a>
-        </ng-template>
       </div>
       <app-delete-part-modal [competitionId]="competitionID" [gamePart]="part"></app-delete-part-modal>
       <app-part-details-modal [gamePart]="part"></app-part-details-modal>
@@ -75,54 +67,3 @@
   </div>
 </div>
 <app-create-part-modal [competitionId]="competitionID"></app-create-part-modal>
-<div class="modal custom-modal fade" id="details-{{gamePartData._id}}" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> {{ gamePartData.name }} </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-        </div>
-        <div class="modal-text text-center">
-          <form>
-            <div class="row form-group">
-              <label for="nbrWords" class="col-sm-3 col-form-label input-label"><b>
-                  Nombre de mots
-                  :</b></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="nbrWords" placeholder="" [value]="gamePartData.numberOfWord"
-                  disabled>
-              </div>
-            </div>
-            <div class="row form-group">
-              <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
-                  {{'startDate' | translate }}
-                  :</b></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="endDate" placeholder="" [value]="gamePartData.startDate"
-                  disabled>
-              </div>
-            </div>
-
-            <div class="row form-group">
-              <label for="endDate" class="col-sm-3 col-form-label input-label"><b>
-                  {{'end' | translate }}
-                  :</b></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="endDate" placeholder="" [value]="gamePartData.endDate"
-                  disabled>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-          {{'close' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-</div>

@@ -9,13 +9,13 @@ export class GetParentNamePipe implements PipeTransform {
   {}
 
    transform(idParentCompet: string): string {    
-    if(idParentCompet){
-        const index = this.arcardeService.listUnderCompetion.findIndex((under)=> under._id === idParentCompet);
-        if(index != -1){
-            return this.arcardeService.listUnderCompetion[index].name;
-        }
-        return '';
-      }
+    // if(idParentCompet){
+    //     const index = this.arcardeService.listUnderCompetion.findIndex((under)=> under._id === idParentCompet);
+    //     if(index != -1){
+    //         return this.arcardeService.listUnderCompetion[index].name;
+    //     }
+    //     return '';
+    //   }
 
     return '';
   }

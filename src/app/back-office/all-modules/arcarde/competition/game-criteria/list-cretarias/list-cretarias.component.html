@@ -1,6 +1,6 @@
 <div *ngIf="!listCriterias?.length || fetching" class="d-flex align-items-center text-center justify-content-center vh-50">
   <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
-    <p *ngIf="!(listCriterias?.length || fetching)" class="text-center">Aucun critere n'est associe a cette competition</p>
+    <p *ngIf="!(listCriterias?.length || fetching)" class="text-center">{{ 'competition.noCriteria' | translate }}</p>
 </div>
 <div class="competition-container" *ngFor="let criteria of listCriterias; let i = index">
   <div class="competition-collapse" [ngClass]="{

@@ -56,7 +56,6 @@ export class ListPartsComponent implements OnInit {
       this.loading = false;
     })
     .catch(error => {
-      console.error(error);
       this.loading = false;
     });
   }
@@ -68,7 +67,6 @@ export class ListPartsComponent implements OnInit {
   }
 
   startGame(partID: any) {
-    console.log(partID);
     this.gameManager.startGame({
       competitionID: this.competitionID,
       gamePartID: partID,

@@ -5,7 +5,7 @@
       <div class="row align-items-center justify-content-center">
         <div class="col">
           <h3 class="page-title">
-            {{ "arcade.new" | translate }} {{ "arcade.arcade" | translate }}
+            {{ "arcade.new" | translate }}
           </h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor: pointer">
@@ -17,7 +17,7 @@
               }}</a>
             </li>
             <li class="breadcrumb-item active">
-              {{ "competition.new" | translate }}
+              {{ "arcade.new" | translate }}
             </li>
           </ul>
         </div>
@@ -149,20 +149,21 @@
                         " style="color: red">
                         {{ "nameRequired" | translate }}
                       </div>
-                      <div *ngIf="
-                          createForm.controls['name'].errors &&
-                          createForm.controls['name'].errors['used']
-                        " style="color: red">
-                        {{ "arcade.arcade" | translate }}
-                        {{ "alreadyUsed" | translate }}
+                      <div *ngIf="createForm.controls['name']?.errors['used']" style="color: red">
+                        {{ "competition.competition" | translate }}
+                        {{ "errorResponse.alreadyExists" | translate }}
                       </div>
+                      <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.minLength"
+                        [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
+                      <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.maxlength"
+                        [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65}"></p>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="maxPlayersNumber">
-                      {{ "maxPlayers" | translate }} (2-100)
+                      {{ "maxPlayersNumber" | translate }} (2-100)
                     </label>
-                    <input type="number" min="2" max="100" class="form-control" formControlName="maxPlayersNumber"
+                    <input type="number" class="form-control" formControlName="maxPlayersNumber"
                       id="maxPlayersNumber" [ngClass]="{
                         'is-invalid':
                           (createForm.controls['maxPlayersNumber']?.touched ||
@@ -182,33 +183,15 @@
                         " style="color: red">
                         {{ "maxPlayersNumberRequired" | translate }}
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="desc"> {{ "description" | translate }} </label>
-                    <textarea type="text" name="desc" class="form-control" formControlName="description" id="desc"
-                      [ngClass]="{
-                        'is-invalid':
-                          (createForm.controls['description']?.touched ||
-                            submitted) &&
-                          createForm.controls['description']?.invalid
-                      }"></textarea>
-                    <div *ngIf="
-                        (createForm.controls['description'].touched ||
-                          submitted) &&
-                        createForm.controls['description'].invalid
-                      " class="invalid-feedback">
-                      <div *ngIf="
-                          createForm.controls['description'].errors &&
-                          createForm.controls['description'].errors['required']
-                        " style="color: red">
-                        {{ "descriptionRequired" | translate }}
-                      </div>
+                      <p class="invalid-feedback" *ngIf="createForm.get('maxPlayersNumber').errors?.min"
+                        [translate]="'requiredMinNumberOfPlayer'" [translateParams]="{ min: 2 }"></p>
+                      <p class="invalid-feedback" *ngIf="createForm.get('maxPlayersNumber').errors?.max"
+                        [translate]="'requiredMaxNumberOfPlayer'" [translateParams]="{ max: 100 }"></p>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="startRegistrationDate">
-                      {{ "recordingStart" | translate }}
+                      {{ "registrationStart" | translate }}
                     </label>
                     <ng-bmis-date-time-picker (dateTimeChange)="
                         onDateTimeChange($event, 'startRegistrationDate')
@@ -242,10 +225,7 @@
                             'laterThanToday'
                           ]
                         " style="color: red">
-                        {{
-                          "arcade.startRegistrationDateRequired" | translate
-                        }}
-                        {{ "arcade.laterThanToday" | translate }}
+                        {{ 'laterThanToday' | translate }}
                       </div>
                     </div>
                   </div>
@@ -284,10 +264,7 @@
                             'laterThanStartRegistrationDate'
                           ]
                         " style="color: red">
-                        {{ "arcade.endRegistrationDate" | translate }}
-                        {{
-                          "arcade.laterThanStartRegistrationDate" | translate
-                        }}
+                        {{ 'laterThanStartRegistrationDate' | translate }}
                       </div>
                     </div>
                   </div>
@@ -320,8 +297,8 @@
                             'laterThanEndRegistrationDate'
                           ]
                         " style="color: red">
-                        {{ "arcade.startDate" | translate }}
-                        {{ "arcade.laterThanEndRegistrationDate" | translate }}
+                        {{ "startDate" | translate }}
+                        {{ 'laterThanEndRegistrationDate' | translate }}
                       </div>
                     </div>
                   </div>
@@ -351,23 +328,41 @@
                             'laterThanStartDate'
                           ]
                         " style="color: red">
-                        {{ "arcade.endDate" | translate }}
-                        {{ "arcade.laterThanStartDate" | translate }}
+                        {{ 'laterThanStartDate' | translate }}
                       </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="desc"> {{ "description" | translate }} </label>
+                    <textarea type="text" name="desc" class="form-control" formControlName="description" id="desc"
+                      [ngClass]="{
+                        'is-invalid':
+                          (createForm.controls['description']?.touched ||
+                            submitted) &&
+                          createForm.controls['description']?.invalid
+                      }"></textarea>
+                    <div *ngIf="
+                        (createForm.controls['description'].touched ||
+                          submitted) &&
+                        createForm.controls['description'].invalid
+                      " class="invalid-feedback">
+                      <div *ngIf="
+                          createForm.controls['description'].errors &&
+                          createForm.controls['description'].errors['required']
+                        " style="color: red">
+                        {{ "descriptionRequired" | translate }}
+                      </div>
+                      <p class="invalid-feedback" *ngIf="createForm.get('description').errors?.minlength"
+                        [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
                     </div>
                   </div>
                   <div class="col-12 d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary me-3">
-                      <a class="text-light" [routerLink]="['/arcarde/list-arcarde']">Retour</a>
+                      <a class="text-light" [routerLink]="['/arcarde/list-arcarde']">{{ 'back' | translate }}</a>
                     </button>
-                    <button type="button" class="btn btn-primary" *ngIf="!arcadeServ.isCreationDone"
-                      (click)="createArcarde()">
-                      <span *ngIf="!waitingResponse">{{
-                        "create" | translate
-                      }}</span>
-                      <span *ngIf="waitingResponse">
-                        <img src="assets/img/loader.gif" alt="" width="30px" />
-                      </span>
+                    <button type="button" class="btn btn-success" [disabled]="waitingResponse" (click)="createArcarde()">
+                      <span *ngIf="!waitingResponse">{{ 'action.create' | translate }}</span>
+                      <span *ngIf="waitingResponse"><img src="assets/img/loader.gif" alt="" width="30px" /></span>
                     </button>
                   </div>
                 </div>

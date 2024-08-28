@@ -21,7 +21,7 @@
             {{'action.cancel' | translate }}
           </button>
           <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="unsubscribe()">
-            Unsubscribe
+            {{ 'action.unsubscribe' | translate }}
           </button>
           <button type="button" *ngIf="waiting" class="btn btn-danger" disabled>
             <img src="assets/img/loader.gif" alt="" width="30px">

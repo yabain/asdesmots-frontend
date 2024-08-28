@@ -35,12 +35,15 @@ export class CreateArcardeComponent implements OnInit {
       isOnlineGame: [false, Validators.requiredTrue],
       canRegisterPlayer: [true],
       isFreeRegistrationPlayer: [false],
-      maxPlayersNumber: ['', Validators.required],
+      maxPlayersNumber: ['', [
+        Validators.min(2),
+        Validators.max(100),
+        Validators.required
+      ]],
       startRegistrationDate: ['', Validators.required],
       endRegistrationDate: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      // type: [''],
     });
   }
 

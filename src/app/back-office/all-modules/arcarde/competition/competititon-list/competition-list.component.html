@@ -2,7 +2,7 @@
   <div *ngIf="!competitions?.length || fetching"
     class="d-flex align-items-center text-center justify-content-center vh-50">
     <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
-    <p *ngIf="!(competitions?.length || fetching)" class="text-center">Aucune competition liee a cette arcade</p>
+    <p *ngIf="!(competitions?.length || fetching)" class="text-center">{{ 'arcade.noSubCompetitions' | translate }}</p>
   </div>
   <div *ngIf="fetching" class="d-flex align-items-center justify-content-center vh-50">
     <img src="assets/img/loader.gif" alt="" width="30px" />
@@ -14,10 +14,10 @@
   </div>
   <div *ngIf="competitions?.length && !fetching" class="card {{ competitions?.length ? 'mt-5' : '' }}">
     <div class="card-header">
-      <h4 class="card-title">Competitions tree</h4>
-      <p class="card-text">
+      <h4 class="card-title">{{ 'competition.tree' | translate }}</h4>
+      <!-- <p class="card-text">
         Tree of competitions linked to this arcade.
-      </p>
+      </p> -->
     </div>
     <div class="card-body">
       <ul class="tree list-unstyled">

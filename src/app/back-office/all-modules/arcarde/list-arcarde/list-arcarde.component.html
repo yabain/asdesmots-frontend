@@ -14,20 +14,12 @@
         <div class="col-auto">
           <a class="btn btn-primary me-2" [routerLink]="'/arcarde/create'"
             style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip"
-            data-placement="top" title="Create new Arcarde">
+            data-placement="top" title="{{ 'arcade.new' | translate }}">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
         </div>
       </div>
     </div>
-
-
-    <div class="row" *ngIf="arcadeServ.waitingResponse">
-      <div class="col-sm-12">
-        <app-progress-indeterminate></app-progress-indeterminate>
-      </div>
-    </div>
-
     <div *ngIf="!loading" class="row">
       <!-- Bloc pour afficher les arcades -->
       <div *ngIf="arcades && arcades.length > 0; else emptyBlock" class="row">
@@ -76,7 +68,7 @@
       <!-- Bloc vide -->
       <ng-template #emptyBlock>
         <div class="col-12 text-center vh-50">
-          <p>No arcades available !</p>
+          <p>{{ 'arcade.emptyList' | translate }}</p>
         </div>
       </ng-template>
     </div>
@@ -86,6 +78,5 @@
         <app-arcade-list-placeholder></app-arcade-list-placeholder>
       </div>
     </div>
-    
   </div>
 </div>

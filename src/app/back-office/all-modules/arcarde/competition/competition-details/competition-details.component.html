@@ -26,13 +26,14 @@
     <div *ngIf="competitionData" class="d-md-flex justify-content-between">
       <nav class="nav nav-pills">
         <a class="nav-item nav-link" [class.active]="activeTab === 'overview'"
-          (click)="setActiveTab('overview')">Overview</a>
+          (click)="setActiveTab('overview')">{{ "overview" | translate }}</a>
         <a class="nav-item nav-link" [class.active]="activeTab === 'subscribers'"
-          (click)="setActiveTab('subscribers')">Subscribers</a>
+          (click)="setActiveTab('subscribers')">{{ "arcade.subscribers" | translate }}</a>
         <a class="nav-item nav-link" [class.active]="activeTab === 'criterias'"
-          (click)="setActiveTab('criterias')">Winning criterias</a>
-        <a class="nav-item nav-link" [class.active]="activeTab === 'gameParts'" (click)="setActiveTab('gameParts')">Game
-          parts</a>
+          (click)="setActiveTab('criterias')">{{ "competition.winningCriterias" | translate }}</a>
+        <a class="nav-item nav-link" [class.active]="activeTab === 'gameParts'" (click)="setActiveTab('gameParts')">
+          {{ "competition.gameParts" | translate }}
+        </a>
       </nav>
       <div *ngIf="activeTab === 'overview'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2
@@ -54,19 +55,19 @@
       </div>
       <!-- <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2" (click)="subscribe()" data-toggle="tooltip" data-placement="top"
-          title="Subscribe">
+          title="{{ 'arcade.subscribe' | translate }}">
           <i class="fa fa-user-plus"></i>
         </a>
       </div> -->
       <div *ngIf="activeTab === 'criterias'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2" data-bs-target="#addCriteria" data-bs-toggle="modal"
-          data-toggle="tooltip" data-placement="top" title="Set criterias">
+          data-toggle="tooltip" data-placement="top" title="{{ 'competition.manageCriterias' | translate}}">
           <i class="fas fa-pencil"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'gameParts'" class="text-md-end mt-3 mt-md-0">
         <a class="btn btn-outline-primary me-2" data-bs-target="#addPart" data-bs-toggle="modal" data-toggle="tooltip"
-          data-placement="top" title="New part">
+          data-placement="top" title="{{ 'competition.createPart' | translate}}">
           <i class="fas fa-plus"></i>
         </a>
       </div>
@@ -161,12 +162,12 @@
             </div>
             <form *ngIf="!loading" class="row">
               <div class="form-group col-md-4">
-                <label for="name" class="col-form-label input-label"><b> Name </b></label>
+                <label for="name" class="col-form-label input-label"><b> {{ 'name' | translate }} </b></label>
                 <input type="text" class="form-control" id="name" placeholder="" [value]="competitionData?.name"
                   disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="location" class="col-form-label input-label"><b> Location </b></label>
+                <label for="location" class="col-form-label input-label"><b> {{ 'location' | translate }} </b></label>
                 <input type="text" class="form-control" id="location" placeholder=""
                   [value]="competitionData?.localisation" disabled />
               </div>
@@ -179,27 +180,27 @@
                   " disabled />
               </div>
               <div class="form-group col-md-6">
-                <label for="location" class="col-form-label input-label"><b>Game Level</b></label>
+                <label for="location" class="col-form-label input-label"><b>{{ 'level' | translate }}</b></label>
                 <input type="text" class="form-control" id="game_level" placeholder=""
                   [value]="competitionData?.gameLevel?.name" disabled />
               </div>
               <div class="form-group col-md-6">
-                <label for="language" class="col-form-label input-label"><b>Language</b></label>
+                <label for="language" class="col-form-label input-label"><b>{{ 'language' | translate }}</b></label>
                 <input type="text" class="form-control" id="language" placeholder=""
                   value="{{ (competitionData?.lang == 'fr' ? 'french' : 'english') | translate }}" disabled />
               </div>
               <div class="form-group col-md-6">
-                <label for="startDate" class="col-form-label input-label"><b> Start Date </b></label>
+                <label for="startDate" class="col-form-label input-label"><b>  {{ 'startDate' | translate }} </b></label>
                 <input type="text" class="form-control" id="startDate" placeholder=""
                   value="{{ competitionData?.startDate | formatDate }}" disabled />
               </div>
               <div class="form-group col-md-6">
-                <label for="endDate" class="col-form-label input-label"><b> End Date </b></label>
+                <label for="endDate" class="col-form-label input-label"><b> {{ 'endDate' | translate }} </b></label>
                 <input type="text" class="form-control" id="endDate" placeholder=""
                   value="{{ competitionData?.endDate | formatDate }}" disabled />
               </div>
               <div class="form-group">
-                <label for="desc" class="col-form-label input-label"><b> Description </b></label>
+                <label for="desc" class="col-form-label input-label"><b> {{ 'description' | translate }} </b></label>
                 <textarea type="text" class="form-control" id="desc" placeholder=""
                   [value]="competitionData?.description" disabled>
                 </textarea>

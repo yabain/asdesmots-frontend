@@ -14,7 +14,7 @@
             {{'action.cancel' | translate }}
           </button>
           <button type="button" *ngIf="!fetching" class="btn btn-danger" (click)="delete()">
-            Delete
+            {{'action.delete' | translate }}
           </button>
           <button type="button" *ngIf="fetching" class="btn btn-danger" disabled>
             <img src="assets/img/loader.gif" alt="" width="30px">

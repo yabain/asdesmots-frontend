@@ -16,8 +16,10 @@
               }}</a>
             </li>
             <li class="breadcrumb-item active" [class.active]="activeTab === 'overview'">{{ arcardeData.name }}</li>
-            <li *ngIf="activeTab === 'subscribers'" class="breadcrumb-item active" [class.active]="activeTab === 'subscribers'">Subscribers</li>
-            <li *ngIf="activeTab === 'competitions'" class="breadcrumb-item active" [class.active]="activeTab === 'competitions'">Competitions</li>
+            <li *ngIf="activeTab === 'subscribers'" class="breadcrumb-item active"
+              [class.active]="activeTab === 'subscribers'">{{ "arcade.subscribers" | translate }}</li>
+            <li *ngIf="activeTab === 'competitions'" class="breadcrumb-item active"
+              [class.active]="activeTab === 'competitions'">{{ "competition.competitions" | translate }}</li>
           </ul>
         </div>
       </div>
@@ -25,14 +27,14 @@
     <div class="d-md-flex justify-content-between">
       <nav class="nav nav-pills">
         <a class="nav-item nav-link" [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">
-          Overview
+          {{ "overview" | translate }}
         </a>
         <a class="nav-item nav-link" [class.active]="activeTab === 'subscribers'" (click)="setActiveTab('subscribers')">
-          Subscribers
+          {{ "arcade.subscribers" | translate }}
         </a>
         <a class="nav-item nav-link" [class.active]="activeTab === 'competitions'"
           (click)="setActiveTab('competitions')">
-          Competitions
+          {{ "competition.competitions" | translate }}
         </a>
       </nav>
       <div *ngIf="activeTab === 'overview'" class="text-md-end mt-3 mt-md-0">
@@ -57,18 +59,21 @@
           data-placement="top" title="{{ 'arcade.edit' | translate }}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </a> -->
-        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+arcardeData._id"
-          data-placement="top" title="{{ 'arcade.delete' | translate }}">
+        <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal"
+          [attr.data-bs-target]="'#delete-'+arcardeData._id" data-placement="top"
+          title="{{ 'arcade.delete' | translate }}">
           <i class="fas fa-trash"></i>
         </a>
       </div>
       <div *ngIf="activeTab === 'subscribers'" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" data-bs-target="#subscribe" data-bs-toggle="modal">
+        <a class="btn btn-outline-primary me-2" data-bs-target="#subscribe" data-bs-toggle="modal" data-placement="top"
+          title="{{ 'arcade.subscribe' | translate }}">
           <i class="fa fa-user-plus"></i>
         </a>
       </div>
       <div *ngIf="arcadeCompetitionId && (activeTab === 'competitions')" class="text-md-end mt-3 mt-md-0">
-        <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/create',arcadeId,arcadeCompetitionId]">
+        <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/create',arcadeId,arcadeCompetitionId]"
+          data-placement="top" title="{{ 'competition.new' | translate }}">
           <i class="fa-solid fa-gamepad"></i>
           <!-- <i class="fa-solid fa-dice"></i> -->
           <!-- <i class="fa-solid fa-puzzle-piece"></i> -->
@@ -184,40 +189,41 @@
             </div>
             <form *ngIf="!loading" class="row">
               <div class="form-group col-md-4">
-                <label for="name" class="col-form-label input-label"><b> Name </b></label>
+                <label for="name" class="col-form-label input-label"><b> {{ 'name' | translate }} </b></label>
                 <input type="text" class="form-control" id="name" placeholder="" [value]="arcardeData?.name" disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="startRegistrationDate" class="col-form-label input-label"><b> Start Registration Date
+                <label for="startRegistrationDate" class="col-form-label input-label"><b>
+                    {{ 'startRegistrationDate' | translate }}
                   </b></label>
                 <input type="text" class="form-control" id="startRegistrationDate" placeholder=""
                   value="{{ arcardeData?.startRegistrationDate | formatDate }}" disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="endRegistrationDate" class="col-form-label input-label"><b> End Registration Date
+                <label for="endRegistrationDate" class="col-form-label input-label"><b> {{ 'endRegistrationDate' | translate }}
                   </b></label>
                 <input type="text" class="form-control" id="endRegistrationDate" placeholder=""
                   value="{{ arcardeData?.endRegistrationDate | formatDate }}" disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="lang" class="col-form-label input-label"><b>Language</b></label>
+                <label for="lang" class="col-form-label input-label"><b>{{ 'language' | translate }}</b></label>
                 <input type="text" class="form-control" id="lang" placeholder="" [value]="
                     (arcardeData?.lang == 'fr' ? 'french' : 'english')
                       | translate
                   " disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="startDate" class="col-form-label input-label"><b> Start Date </b></label>
+                <label for="startDate" class="col-form-label input-label"><b> {{ 'startDate' | translate }} </b></label>
                 <input type="text" class="form-control" id="startDate" placeholder=""
                   value="{{ arcardeData?.startDate | formatDate }}" disabled />
               </div>
               <div class="form-group col-md-4">
-                <label for="endDate" class="col-form-label input-label"><b> End Date </b></label>
+                <label for="endDate" class="col-form-label input-label"><b> {{ 'endDate' | translate }} </b></label>
                 <input type="text" class="form-control" id="endDate" placeholder=""
                   value="{{ arcardeData?.endDate | formatDate }}" disabled />
               </div>
               <div class="form-group">
-                <label for="desc" class="col-form-label input-label"><b> Description </b></label>
+                <label for="desc" class="col-form-label input-label"><b> {{ 'description' | translate }} </b></label>
                 <textarea type="text" class="form-control" id="desc" placeholder="" [value]="arcardeData?.description"
                   disabled>
                 </textarea>
@@ -230,9 +236,11 @@
         <app-arcade-suscribers [arcadeId]="arcadeId"></app-arcade-suscribers>
       </div>
       <div *ngIf="activeTab === 'competitions'">
-        <app-competititon-list [arcadeId]="arcadeId" (updateArcadeCompetitionId)="updateArcadeCompetitionId($event, arcadeCompetitionId)"></app-competititon-list>
+        <app-competititon-list [arcadeId]="arcadeId"
+          (updateArcadeCompetitionId)="updateArcadeCompetitionId($event, arcadeCompetitionId)"></app-competititon-list>
       </div>
     </div>
   </div>
 </div>
-<app-delete-arcade-modal [arcadeData]="arcardeData" (deletedFeedback)="deletedFeedback($event)"></app-delete-arcade-modal>
+<app-delete-arcade-modal [arcadeData]="arcardeData" (deletedFeedback)="deletedFeedback($event)">
+</app-delete-arcade-modal>

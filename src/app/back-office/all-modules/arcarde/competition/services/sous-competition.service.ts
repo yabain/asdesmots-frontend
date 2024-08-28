@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/api/api.service';
-import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
 import { EndpointSousCompetion } from './Endpoint';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
-import { State } from 'src/app/shared/entities/state.enum';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Level } from 'src/app/shared/entities/level';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +14,8 @@ import { ArcardeService } from '../../services/arcarde.service';
 })
 export class SousCompetitionService {
   public newSubscriptionDetectedSubject = new BehaviorSubject<boolean>(false);
-  public newSubscriptionDetected$: Observable<boolean> = this.newSubscriptionDetectedSubject.asObservable();
+  public newSubscriptionDetected$: Observable<boolean> =
+    this.newSubscriptionDetectedSubject.asObservable();
 
   authorization: any;
   headers = {
@@ -57,7 +54,7 @@ export class SousCompetitionService {
               });
             resolve(response);
           },
-          (error) => {
+          (error: any) => {
             this.translate
               .get('errorResponse.unexpectedError')
               .subscribe((res: string) => {
@@ -74,8 +71,6 @@ export class SousCompetitionService {
     gameCompetitionID: string;
     state: string;
   }) {
-    this.clientChangeState(data.gameArcardeID, State.RUNNING);
-
     console.log('game competiton id :', data.gameCompetitionID);
     this.api
       .put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization)
@@ -84,7 +79,6 @@ export class SousCompetitionService {
           this.toastr.success('Competition Started', 'Success', {
             timeOut: 10000,
           });
-          this.clientChangeState(data.gameCompetitionID, State.WAITING_PLAYER);
         },
         (error: any) => {
           if (error.error.statusCode == 500) {
@@ -109,25 +103,26 @@ export class SousCompetitionService {
   }
 
   getCompetitionById(CompetitionId: any): Promise<any> {
-    return this.api
-      .get(
-        EndpointSousCompetion.GET_ALL_COMPETITION + CompetitionId,
-        this.authorization
-      )
-      .toPromise();
-  }
-
-  loadListCompetition(idCompetition: string) {
-    this.api
-      .get(
-        EndpointSousCompetion.GET_ALL_COMPETITION + idCompetition,
-        this.authorization
-      )
-      .subscribe((response) => {
-        console.log('reponse serveur: ', response);
-        if (response && response.data > 0) {
-        }
-      });
+    return new Promise((resolve, reject) => {
+      this.api
+        .get(
+          EndpointSousCompetion.GET_ALL_COMPETITION + CompetitionId,
+          this.authorization
+        )
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error: any) => {
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+            reject(error);
+          }
+        );
+    });
   }
 
   getArcadeCompetitions(arcadeId: string): Promise<any> {
@@ -144,16 +139,22 @@ export class SousCompetitionService {
             resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+            if (error.statusCode === 404)
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -174,16 +175,24 @@ export class SousCompetitionService {
             resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+            if (error.statusCode === 404)
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -204,16 +213,24 @@ export class SousCompetitionService {
             resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+            if (error.statusCode === 404)
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -234,16 +251,22 @@ export class SousCompetitionService {
             return resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+            if (error.statusCode === 404)
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -253,30 +276,99 @@ export class SousCompetitionService {
   subscribePlayer(data: any) {
     return new Promise((resolve, reject) => {
       this.httpClient
-        .post(
-          `${environment.url}/game-subscriptions`,
-          data,
-          {
-            headers: this.headers,
-          }
-        )
+        .post(`${environment.url}/game-subscriptions`, data, {
+          headers: this.headers,
+        })
         .subscribe(
           (response) => {
-            this.toastr.success('Subscripttion success', 'success');
             return resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              console.log(error)
-              this.toastr.error(error.message, 'Error');
-            }
+            console.log('Error: ',error);
+            if (error.error === 'NotFound/GameCompetition-subscription')
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'NotFound/GameArcarde-subscription')
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: arcade,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'UnableSubscription/GameArcarde-subscription')
+              this.translate
+                .get('arcade.cantRegisterPlayer')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            if (error.error === 'ServiceNotFound/GameArcarde-subscription')
+              this.translate
+                .get('arcade.feesRequired')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            if (error.error === 'MaxPlayer/GameArcarde-subscription')
+              this.translate
+                .get('arcade.fullRegistrationSession')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            if (error.error === 'NotFound/PlayerGame-subscription')
+              this.translate
+                .get('arcade.player')
+                .subscribe((player: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: player,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'AlreadyExists/GameArcarde-subscription')
+              this.translate
+                .get('arcade.player')
+                .subscribe((player: string) => {
+                  this.translate
+                    .get('errorResponse.alreadyExists', {
+                      entity: player,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'AlreadyExists/GameArcarde-subscription')
+              this.translate
+                .get('arcade.playerSubscribed')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            if (error.error === 'DateRegistration/GameArcarde-subscription')
+              this.translate
+                .get('arcade.subscriptionDatesNotAllowed')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -286,45 +378,65 @@ export class SousCompetitionService {
   unsubscribePlayer(data: any) {
     return new Promise((resolve, reject) => {
       this.httpClient
-        .post(
-          `${environment.url}/game-subscriptions/unsubscribe`,
-          data,
-          {
-            headers: this.headers,
-          }
-        )
+        .post(`${environment.url}/game-subscriptions/unsubscribe`, data, {
+          headers: this.headers,
+        })
         .subscribe(
           (response) => {
-            this.toastr.success('Unsubscribed successfully', 'success');
+            this.translate
+              .get('arcade.unsubscribed')
+              .subscribe((res: string) => {
+                this.toastr.success(res, 'Success');
+              });
             return resolve(response);
           },
           (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              console.log(error)
-              this.toastr.error(error.message, 'Error');
-            }
+            if (error.error === 'NotFound/GameCompetition-subscription')
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'NotFound/GameArcarde-subscription')
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: arcade,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            if (error.error === 'NotFound/PlayerGame-subscription')
+              this.translate
+                .get('arcade.player')
+                .subscribe((player: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: player,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
     });
-  }
-
-  async clientChangeState(idCompet: string, statut: string) {
-    //change the compett's state on user client (ui)
-
-    const index = this.arcardeService.listUnderCompetion.findIndex(
-      (compet) => compet._id === idCompet
-    );
-    if (index != -1) {
-      this.arcardeService.listUnderCompetion[index].gameState = statut;
-    }
   }
 
   create(formData: any, arcadeId): Promise<any> {
@@ -366,49 +478,11 @@ export class SousCompetitionService {
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            console.log(error);
             return reject(error);
           }
         );
     });
   }
-
-  // update(idCompetition: string) {
-  //   this.waitingResponse = true;
-  //   this.api
-  //     .put(
-  //       EndpointSousCompetion.UPDATE_S_C + idCompetition,
-  //       this.newUnderCompetionParam,
-  //       this.authorization
-  //     )
-  //     .subscribe(
-  //       (resp) => {
-  //         console.log('update response', resp);
-  //         console.log(
-  //           'new under competition data',
-  //           this.newUnderCompetionParam
-  //         );
-  //         this.toastr.success('Update Done ', 'SUCCESS', { timeOut: 7000 });
-  //         this.waitingResponse = false;
-  //         this.arcardeService.loadArcade();
-  //       },
-  //       (error: any) => {
-  //         if (error.status == 500) {
-  //           this.toastr.error(
-  //             'Internal Server Error. Try again later please.',
-  //             'Error',
-  //             { timeOut: 10000 }
-  //           );
-  //         } else if (error.status == 401) {
-  //           this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-  //         } else {
-  //           this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-  //         }
-  //         this.waitingResponse = false;
-  //       }
-  //     );
-  //   console.log(this.formUpdate.value);
-  // }
 
   update(competitionData: any, competitionId: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -424,8 +498,16 @@ export class SousCompetitionService {
         )
         .subscribe(
           (resp: any) => {
+            this.translate
+              .get('competition.competition')
+              .subscribe((competition: string) => {
+                this.translate
+                  .get('successResponse.updated')
+                  .subscribe((message: string) => {
+                    this.toastr.success(`${competition} ${message}`, 'Error');
+                  });
+              });
             resolve(resp.data);
-            this.toastr.success('Update Done ', 'SUCCESS', { timeOut: 7000 });
           },
           (error) => {
             if (
@@ -449,34 +531,22 @@ export class SousCompetitionService {
     });
   }
 
-  loadAllCompetition() {
-    //this.waitingResponse = true;
-  }
-
   getCriterias(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.httpClient
-        .get(
-          `${environment.url}/${EndpointSousCompetion.WINNINGS_CRITERIAS}`,
-          {
-            headers: this.headers,
-          }
-        )
+        .get(`${environment.url}/${EndpointSousCompetion.WINNINGS_CRITERIAS}`, {
+          headers: this.headers,
+        })
         .subscribe(
           (response) => {
             resolve(response);
           },
-          (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error'
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error');
-            } else {
-              this.toastr.error(error.message, 'Error');
-            }
+          (error) => {
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
             reject(error);
           }
         );
@@ -496,25 +566,34 @@ export class SousCompetitionService {
           (resp) => {
             resole(resp);
           },
-          (error: any) => {
-            reject([]);
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error',
-                { timeOut: 10000 }
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-            } else {
-              this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-            }
+          (error) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            reject(error);
           }
         );
     });
   }
 
-  getCompetitionSubscribers(competitionId: string): Promise<WinnigsCriterias[]> {
+  getCompetitionSubscribers(
+    competitionId: string
+  ): Promise<WinnigsCriterias[]> {
     return new Promise((resole, reject) => {
       this.httpClient
         .get(
@@ -527,19 +606,26 @@ export class SousCompetitionService {
           (resp: any) => {
             resole(resp);
           },
-          (error: any) => {
-            reject([]);
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error',
-                { timeOut: 10000 }
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-            } else {
-              this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-            }
+          (error) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            reject(error);
           }
         );
     });
@@ -555,47 +641,37 @@ export class SousCompetitionService {
         )
         .subscribe(
           (resp) => {
-            this.toastr.success('Criteria Add', 'SUCCESS', { timeOut: 7100 });
-            resolve(true);
+            this.translate
+              .get('competition.criteria')
+              .subscribe((arcade: string) => {
+                this.translate
+                  .get('successResponse.applied')
+                  .subscribe((message: string) => {
+                    this.toastr.success(`${arcade} ${message}`, 'Error');
+                  });
+              });
+            resolve(resp);
           },
-          (error: any) => {
-            if (error.status == 500) {
-              this.toastr.error(
-                'Internal Server Error. Try again later please.',
-                'Error',
-                { timeOut: 10000 }
-              );
-            } else if (error.status == 401) {
-              this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-            } else if (
-              error.status == 404 &&
-              error.message == 'Game competition not found'
-            ) {
-              this.toastr.error('Game Competition not found', 'error', {
-                timeOut: 10000,
-              });
-            } else if (
-              error.status == 404 &&
-              error.message == 'Game criteria already exist'
-            ) {
-              this.toastr.error('Game criteria already exist', 'error', {
-                timeOut: 10000,
-              });
-            } else if (
-              error.status == 404 &&
-              error.message == 'Game criteria not found'
-            ) {
-              this.toastr.error('Game criteria not found', 'error', {
-                timeOut: 10000,
-              });
-            } else {
-              this.toastr.error(
-                "Une erreur est survenue lors de l'ajout de ce critère",
-                'Error',
-                { timeOut: 7000 }
-              );
-            }
-            reject(false);
+          (error) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            reject(error);
           }
         );
     });
@@ -608,22 +684,37 @@ export class SousCompetitionService {
         `/${gameId}/${gameWinnerCriteriasId}`;
 
       this.api.deleteListWinnerCriterias(url, this.authorization).subscribe(
-        () => {
-          this.toastr.success('Delete Done', 'SUCCESS', { timeOut: 7000 });
-          resolve(true);
+        (resp) => {
+          this.translate
+            .get('competition.criteria')
+            .subscribe((arcade: string) => {
+              this.translate
+                .get('successResponse.removed')
+                .subscribe((message: string) => {
+                  this.toastr.success(`${arcade} ${message}`, 'Error');
+                });
+            });
+          resolve(resp);
         },
-        (error: any) => {
-          if (error.status == 500) {
-            this.toastr.error(
-              'Internal Server Error. Try again later please.',
-              'Error',
-              { timeOut: 10000 }
-            );
-          } else if (error.status == 401) {
-            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-          } else {
-            this.toastr.error(error.message, 'Error', { timeOut: 7000 });
-          }
+        (error) => {
+          if (error.statusCode === 404)
+            this.translate
+              .get('competition.competition')
+              .subscribe((competition: string) => {
+                this.translate
+                  .get('errorResponse.entityNotFound', {
+                    entity: competition,
+                  })
+                  .subscribe((res: string) => {
+                    this.toastr.error(res, 'Error');
+                  });
+              });
+          else
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
           reject(error);
         }
       );

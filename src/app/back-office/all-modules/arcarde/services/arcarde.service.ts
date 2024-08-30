@@ -11,13 +11,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ArcardeService {
-
   authorization: any;
   headers = {
     Authorization: 'Bearer ' + this.api.getAccessToken(),
     'Content-Type': 'application/json; charset=UTF-8',
   };
-  
+
   constructor(
     private api: ApiService,
     private toastr: ToastrService,
@@ -37,10 +36,13 @@ export class ArcardeService {
         .subscribe(
           (response) => {
             resolve(response);
-          },(error) => {
-            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
-            });
+          },
+          (error) => {
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
             reject(error);
           }
         );
@@ -63,15 +65,23 @@ export class ArcardeService {
                 });
             });
             return resolve(response);
-          }, (error) => {
-            if(error.includes('Arcade already exists') || error.errors?.alreadyUsed) 
-              this.translate.get('errorResponse.duplicatedEntry').subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
-              });
-            else 
-              this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
-              });
+          },
+          (error) => {
+            if (
+              error.includes('Arcade already exists') ||
+              error.errors?.alreadyUsed
+            )
+              this.translate
+                .get('errorResponse.duplicatedEntry')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             reject(error);
           }
         );
@@ -81,27 +91,30 @@ export class ArcardeService {
   getArcadeSubscribers(arcadeId: string) {
     return new Promise((resolve, reject) => {
       this.httpClient
-        .get(
-          `${environment.url}/game-subscriptions/arcade/${arcadeId}`,
-          {
-            headers: this.headers,
-          }
-        )
+        .get(`${environment.url}/game-subscriptions/arcade/${arcadeId}`, {
+          headers: this.headers,
+        })
         .subscribe(
           (response) => {
             return resolve(response);
           },
           (error: any) => {
-            if(error.statusCode === 404) 
-              this.translate.get('arcade.arcade').subscribe((arcade: string) => {
-                this.translate.get('errorResponse.entityNotFound', { entity: arcade }).subscribe((res: string) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-              });
-            else 
-            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
-            });
             reject(error);
           }
         );
@@ -109,52 +122,44 @@ export class ArcardeService {
   }
 
   changeState(data: { gameArcardeID: string; state: any }) {
-    // this.waitingResponse = false;
-
-    // console.log('game arcarde id :', data.gameArcardeID);
-    // this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe(
-    //   (response: any) => {
-    //     this.toastr.success('Arcarde Started', 'Success', { timeOut: 10000 });
-    //     this.clientChangeState(data.gameArcardeID, State.WAITING_PLAYER);
-
-    //     this.waitingResponse = false;
-    //   },
-    //   (error: any) => {
-    //     console.log('error ', error);
-    //     if (error.error.statusCode == 500) {
-    //       this.toastr.error(
-    //         this.languageService.transformMessageLanguage('internalError'),
-    //         this.languageService.transformMessageLanguage('error'),
-    //         { timeOut: 10000 }
-    //       );
-    //     } else if (error.error.statusCode == 401) {
-    //       this.toastr.error(
-    //         this.languageService.transformMessageLanguage('refreshPage'),
-    //         this.languageService.transformMessageLanguage('offSession'),
-    //         { timeOut: 10000 }
-    //       );
-    //     } else if (error.error.statusCode == 403) {
-    //       this.toastr.error(
-    //         this.languageService.transformMessageLanguage(error.error.message),
-    //         this.languageService.transformMessageLanguage('error'),
-    //         { timeOut: 10000 }
-    //       );
-    //     } else if (error.error.statusCode == 404) {
-    //       this.toastr.error(
-    //         this.languageService.transformMessageLanguage('arcardenotFound'),
-    //         this.languageService.transformMessageLanguage('error'),
-    //         { timeOut: 10000 }
-    //       );
-    //     } else {
-    //       this.toastr.error(
-    //         this.languageService.transformMessageLanguage('noInternet'),
-    //         this.languageService.transformMessageLanguage('error'),
-    //         { timeOut: 7000 }
-    //       );
-    //     }
-    //     this.waitingResponse = false;
-    //   }
-    // );
+    return new Promise((resolve, reject) => {
+      this.api.put(Endpoint.CHANGE_STATE, data, this.authorization).subscribe(
+        (response: any) => {
+          resolve(response);
+        },
+        (error: any) => {
+          // if (error.error == 'NotFound/GameArcarde-changestate')
+          if (error.includes('Game arcarde not found'))
+            this.translate.get('arcade.arcade').subscribe((arcade: string) => {
+              this.translate
+                .get('errorResponse.entityNotFound', { entity: arcade })
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            });
+          // else if (
+          //   error.error === 'Forbidden/GameCompetition-changestate-end' ||
+          //   error.error === 'Forbidden/GameArcarde-changestate-end'
+          // )
+          else if (
+            error.includes('The competition is over! it is no longer possible to start it') ||
+            error.includes('The current date does not correspond to the start and end date of the game')
+          )
+            this.translate
+              .get('arcade.startNotAllowed')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+          else
+            this.translate
+              .get('errorResponse.unexpectedError')
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+          reject(error);
+        }
+      );
+    });
   }
 
   deleteArcarde(id: string): Promise<any> {
@@ -171,9 +176,11 @@ export class ArcardeService {
           resolve(response);
         },
         (error: any) => {
-          this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-            this.toastr.error(res, 'Error');
-          });
+          this.translate
+            .get('errorResponse.unexpectedError')
+            .subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
           reject(error);
         }
       );
@@ -189,16 +196,22 @@ export class ArcardeService {
             resolve(response);
           },
           (error: any) => {
-            if(error.statusCode === 404) 
-              this.translate.get('arcade.arcade').subscribe((arcade: string) => {
-                this.translate.get('errorResponse.entityNotFound', { entity: arcade }).subscribe((res: string) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-              });
-            else 
-            this.translate.get('errorResponse.unexpectedError').subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
-            });
             reject(error);
           }
         );

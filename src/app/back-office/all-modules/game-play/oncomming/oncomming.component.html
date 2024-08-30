@@ -1,43 +1,35 @@
-<div class="card">
-    <div class="card-header">
-        <h4 class="card-title">Oncoming Competitions</h4>
-        <p class="card-text">
-            this list represents the list of all your oncoming competitions.
-        </p>
-    </div>
-    <div class="card-body">
-
-        <div class="table-responsive">
-            <table class="datatable table table-stripped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                </thead>
-                <tbody *ngIf="gamePlay.listCompetitionOnComming.length != 0" >
-                    <tr *ngFor="let competition of gamePlay.listCompetitionOnComming">
-                        <td> {{ competition.name }} </td>
-                        <td> {{ competition.description }} </td>
-                        <td> {{ competition.startDate }} </td>
-                        <td> {{ competition.endDate }} </td>
-                    </tr>
-                </tbody>
-                <tbody *ngIf="gamePlay.listCompetitionOnComming.length == 0" >
-                    <tr>
-                        <td></td>
-                        <td class="text-center">
-                  <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-                  <!-- <img src="../../../../../assets/img/loader.gif" alt="" width="30px"> -->
-                          <p>Vous n'avez souscris a aucune arcade</p>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-
-            </table>
+<div *ngIf="!loading">
+  <!-- Bloc pour afficher les arcades -->
+  <div *ngIf="gamePlay.listCompetitionOnComming.length && !loading; else emptyBlock" class="row">
+    <div *ngFor="let competition of gamePlay.listCompetitionOnComming" class="col-12 col-md-2 col-lg-4 col-xl-3">
+      <div class="custom-card">
+        <div class="card-body pb-0">
+          <div class="mb-0">
+            <h5 class="card-title text-primary">{{ competition.name }}</h5>
+            <p class="card-text">{{ competition.description | truncate:200 }}</p>
+          </div>
         </div>
+        <div class="card-footer bg-transparent border-top-0">
+          <p class="mb-0">
+            Du <b>{{ competition.startDate | formatDate }} </b>
+          </p>
+          <p>
+            Au <b>{{ competition.endDate | formatDate }}</b>
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
+  <!-- Bloc vide -->
+  <ng-template #emptyBlock>
+    <div class="row col-12 text-center vh-50">
+      <p>{{ 'competition.emptyList' | translate }}</p>
+    </div>
+  </ng-template>
+</div>
+<!-- Bloc de chargement -->
+<div *ngIf="loading" class="row">
+  <div *ngFor="let plh of placeholders; let i = index" class="col-12 col-md-2 col-lg-4 col-xl-3">
+    <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
+  </div>
 </div>

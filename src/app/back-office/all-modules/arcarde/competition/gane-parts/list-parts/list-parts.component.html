@@ -41,17 +41,25 @@
           </div>
         </div>
         <div class="card-footer bg-transparent border-top-0 text-end">
-          <p class="btn btn-sm bottom-0 {{ sousCompetion.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-primary-light' }}"
+          <p class="btn btn-sm bottom-0 {{ part.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light competition-running' : 'badge badge-pill bg-primary-light' }}"
             data-toggle="tooltip" data-placement="top" title="{{
-              (sousCompetion.gameState === gameState.RUNNING
-                ? 'competition.stopPart'
-                : 'competition.runPart'
+              (part.gameState === gameState.NO_START
+                ? 'competition.runPart'
+                : 'competition.stopPart'
               ) | translate
-            }}">
-            <a *ngIf="sousCompetion.gameState !== gameState.RUNNING" style="cursor: pointer;">
-              <i class="fa fa-play" aria-hidden="true"></i>
+            }}" (click)="startGame(part)" [ngClass]="{
+              'cursor-wait': (part?.updatingState === true)
+            }">
+            <a>
+              <i *ngIf="part.gameState !== gameState.WAITING_PLAYER" [ngClass]="{
+                'fa fa-play': part.gameState === gameState.NO_START,
+                'fa fa-pause': part.gameState === gameState.RUNNING,
+                'fas fa-stop': part.gameState === gameState.END
+              }" aria-hidden="true">
+              </i>
+              <i *ngIf="part.gameState === gameState.WAITING_PLAYER" class="fas fa-spinner"></i>
             </a>
-            <i *ngIf="sousCompetion.gameState === gameState.RUNNING" class="fa fa-pause" aria-hidden="true"></i>
+            <!-- <i *ngIf="part.gameState === gameState.RUNNING" class="fa " aria-hidden="true"></i> -->
           </p>
         </div>
       </div>

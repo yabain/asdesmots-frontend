@@ -25,6 +25,10 @@ export class CreatePartModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm(): void {
     this.createForm = this.fb.group({
       name: [
         '',
@@ -51,12 +55,12 @@ export class CreatePartModalComponent implements OnInit {
       endDate: ['', Validators.required],
     });
   }
+  nameChanged() {
+    delete this.createForm.controls['name'].errors?.['used'];
+  }
+
   addPart() {
     this.submitted = true;
-    if (this.createForm.invalid) {
-      return;
-    }
-
     const date = new Date();
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mois commence à 0, donc ajoutez 1
@@ -78,6 +82,8 @@ export class CreatePartModalComponent implements OnInit {
       });
 
     if (this.createForm.invalid) {
+      console.log(this.createForm.controls);
+      console.log(this.createForm.value);
       return;
     }
     this.fetching = true;
@@ -87,12 +93,12 @@ export class CreatePartModalComponent implements OnInit {
         this.submitted = false;
         this.fetching = false;
         this.gamePartService.partListChangedSubject.next(true);
-        this.createForm.reset();
+        this.initForm();
         $(`#cancel-btn00-${this.competitionId}`).click();
       })
       .catch((error) => {
         if (
-          error.includes('Part already exists') ||
+          error.includes('The given name is already used') ||
           error.errors?.alreadyUsed
         )
           this.createForm.controls['name'].setErrors({ used: true });

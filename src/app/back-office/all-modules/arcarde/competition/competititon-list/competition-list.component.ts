@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SousCompetitionService } from '../services/sous-competition.service';
+import { State } from 'src/app/shared/entities/state.enum';
 
 @Component({
   selector: 'app-competititon-list',
@@ -31,17 +32,13 @@ export class CompetitionlistComponent implements OnInit {
       .getArcadeCompetitions(this.arcadeId)
       .then((response: any) => {
         this.updateArcadeCompetitionId.emit(response.data._id);
-        this.competitions = response.data.children;
+        this.competitions.push(response.data);
         this.fetching = false;
       })
       .catch((error) => {
         console.error(error);
         this.fetching = false;
       });
-  }
-
-  startGame(competitionId: string) {
-    // Logique pour démarrer une compétition
   }
 
   deletedSubCompettitionFeedback(newValue: string) {

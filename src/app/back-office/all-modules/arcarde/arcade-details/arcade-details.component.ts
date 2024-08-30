@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
@@ -31,6 +30,10 @@ export class ArcadeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  getData(){
     this.arcardeServ
       .getArcardeById(this.arcadeId)
       .then((resp: any) => {
@@ -47,7 +50,18 @@ export class ArcadeDetailsComponent implements OnInit {
     this.activeTab = tab;
   }
   
-  startCompetition() {}
+  changeState() {
+    this.arcardeData.updatingState = true;
+    this.arcardeServ.changeState({
+      gameArcardeID: this.arcardeData._id,
+      state: (this.arcardeData.gameState == State.NO_START) ? State.RUNNING: State.END,
+    }).then(() => {
+      this.arcardeData.updatingState = false;
+      this.arcardeData.gameState = (this.arcardeData.gameState == State.NO_START) ? State.RUNNING: State.END;
+    }, (err) => {
+      this.arcardeData.updatingState = false;
+    });
+  }
   
   updateArcadeCompetitionId(newValue: string, control) {
     this.arcadeCompetitionId = newValue;

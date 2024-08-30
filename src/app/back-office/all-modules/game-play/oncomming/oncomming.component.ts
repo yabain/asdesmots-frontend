@@ -7,6 +7,9 @@ import { GameplayService } from '../service/gameplay.service';
   styleUrls: ['./oncomming.component.css']
 })
 export class OncommingComponent implements OnInit {
+  
+  loading: boolean = !true;
+  placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
 
   constructor( public gamePlay: GameplayService) { }
 

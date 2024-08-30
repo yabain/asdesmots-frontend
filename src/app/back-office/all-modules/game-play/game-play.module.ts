@@ -7,20 +7,30 @@ import { ListComponent } from './list/list.component';
 import { OncommingComponent } from './oncomming/oncomming.component';
 import { StartedComponent } from './started/started.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
+import { GamePlaceHolderComponent } from './started/game-place-holder/game-place-holder.component';
+import { SharedModule } from '../../shared/shared.module';
+import { OncommingListPlaceholderComponent } from './oncomming/oncomming-list-placeholder/oncomming-list-placeholder.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
     OncommingComponent,
-    StartedComponent
+    StartedComponent,
+    AvatarPhotoComponent,
+    GamePlaceHolderComponent,
+    OncommingListPlaceholderComponent
   ],
   imports: [
     CommonModule,
     GamePlayRoutingModule,
+    TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    SharedModule
 
   ]
 })

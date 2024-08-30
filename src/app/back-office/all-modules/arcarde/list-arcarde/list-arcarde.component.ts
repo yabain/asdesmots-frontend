@@ -30,13 +30,9 @@ export class ListArcardeComponent implements OnInit {
   placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
 
   constructor(
-    private translate: TranslateService,
     public userServ: UserService,
     public arcadeServ: ArcardeService,
-    private router: Router,
-    private activedRouter: ActivatedRoute,
     public dataTableTranslateService: DataTableTranslateService,
-    private translationService: TranslationService
   ) { }
 
   ngOnInit(): void {
@@ -61,13 +57,6 @@ export class ListArcardeComponent implements OnInit {
     .catch(error => {
       console.error(error);
       this.loading = false;
-    });
-  }
-
-  startArcarde(arcardeID: any) {
-    this.arcadeServ.changeState({
-      gameArcardeID: arcardeID,
-      state: State.RUNNING,
     });
   }
 

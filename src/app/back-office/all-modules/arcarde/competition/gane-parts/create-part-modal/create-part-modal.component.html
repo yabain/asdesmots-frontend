@@ -13,7 +13,7 @@
           <div class="row">
             <div class="form-group col-md-6">
               <label for="name"> {{ "name" | translate }} </label>
-              <input type="text" class="form-control" formControlName="name" name="name" id="name" [ngClass]="{
+              <input type="text"  (change)="nameChanged()" class="form-control" formControlName="name" name="name" id="name" [ngClass]="{
                   'is-invalid':
                     (createForm.controls['name']?.touched || submitted) &&
                     createForm.controls['name']?.invalid

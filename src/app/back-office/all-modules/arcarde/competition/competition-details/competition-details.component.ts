@@ -57,10 +57,16 @@ export class CompetitionDetailsComponent implements OnInit {
     });
   }
 
-  startCompetition() {
-    this.competitionData.changeState({
+  changeCompetitionState() {
+    this.competitionData.updatingState = true;
+    this.subCompetitionService.changeState({
       gameCompetitionID: this.competitionData._id,
-      state: State.RUNNING,
+      state: (this.competitionData.gameState == State.NO_START) ? State.RUNNING: State.END,
+    }).then(() => {
+      this.competitionData.updatingState = false;
+      this.competitionData.gameState = (this.competitionData.gameState == State.NO_START) ? State.RUNNING: State.END;
+    }, (err) => {
+      this.competitionData.updatingState = false;
     });
   }
 

@@ -66,40 +66,63 @@ export class SousCompetitionService {
     });
   }
 
-  changeState(data: {
-    gameArcardeID: string;
-    gameCompetitionID: string;
-    state: string;
-  }) {
-    console.log('game competiton id :', data.gameCompetitionID);
-    this.api
-      .put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization)
-      .subscribe(
-        (response: any) => {
-          this.toastr.success('Competition Started', 'Success', {
-            timeOut: 10000,
-          });
-        },
-        (error: any) => {
-          if (error.error.statusCode == 500) {
-            this.toastr.error(
-              'Internal Server Error. Try again later please.',
-              'Error',
-              { timeOut: 10000 }
-            );
-          } else if (error.error.statusCode == 401) {
-            this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
-          } else if (error.error.statusCode == 403) {
-            this.toastr.error(error.error.message, 'Error', { timeOut: 10000 });
-          } else if (error.error.statusCode == 404) {
-            this.toastr.error('Game Arcarde not found', 'Error', {
-              timeOut: 10000,
-            });
-          } else {
-            this.toastr.error(error.error.message, 'Error1', { timeOut: 7000 });
+  changeState(data: { gameCompetitionID: string; state: string }) {
+    return new Promise((resolve, reject) => {
+      this.api
+        .put(EndpointSousCompetion.COMPETITION_STATE, data, this.authorization)
+        .subscribe(
+          (response: any) => {
+            resolve(response);
+          },
+          (error: any) => {
+            // if (error.error == 'NotFound/GameCompetition-changestate-start')
+            if (error.includes('The competition was not found'))
+              this.translate
+                .get('competition.competition')
+                .subscribe((competition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', {
+                      entity: competition,
+                    })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            // else if (error.error == 'NotFound/GameCompetition-changestate-arcade')
+            else if (error.includes('Game arcarde not found'))
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            // else if ( error.error === 'Forbidden/GameCompetition-changestate-start')
+            else if (error.includes('The state of the arcade must be in "In Progress" state for the competition to start'))
+              this.translate
+                .get('competition.startNotAllowed')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            // else if (error.error === 'Forbidden/GameCompetition-changestate-end')
+            else if (error.includes('The competition is over! it is no longer possible to start it'))
+              this.translate
+                .get('competition.competitionEnded')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            reject(error);
           }
-        }
-      );
+        );
+    });
   }
 
   getCompetitionById(CompetitionId: any): Promise<any> {
@@ -284,8 +307,8 @@ export class SousCompetitionService {
             return resolve(response);
           },
           (error: any) => {
-            console.log('Error: ',error);
-            if (error.error === 'NotFound/GameCompetition-subscription')
+            // if (error.error === 'NotFound/GameCompetition-subscription')
+            if (error.includes('Game Competition not found'))
               this.translate
                 .get('competition.competition')
                 .subscribe((competition: string) => {
@@ -297,7 +320,8 @@ export class SousCompetitionService {
                       this.toastr.error(res, 'Error');
                     });
                 });
-            if (error.error === 'NotFound/GameArcarde-subscription')
+            // if (error.error === 'NotFound/GameArcarde-subscription')
+            if (error.includes('Game arcarde not found'))
               this.translate
                 .get('arcade.arcade')
                 .subscribe((arcade: string) => {
@@ -309,25 +333,21 @@ export class SousCompetitionService {
                       this.toastr.error(res, 'Error');
                     });
                 });
-            if (error.error === 'UnableSubscription/GameArcarde-subscription')
+            // if (error.error === 'UnableSubscription/GameArcarde-subscription')
+            if (error.includes('Unable to subscribe the player to the game'))
               this.translate
                 .get('arcade.cantRegisterPlayer')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            if (error.error === 'ServiceNotFound/GameArcarde-subscription')
-              this.translate
-                .get('arcade.feesRequired')
-                .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
-                });
-            if (error.error === 'MaxPlayer/GameArcarde-subscription')
+            // if (error.error === 'MaxPlayer/GameArcarde-subscription')
+            if (error.includes('Maximum number of players already reached'))
               this.translate
                 .get('arcade.fullRegistrationSession')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            if (error.error === 'NotFound/PlayerGame-subscription')
+            if (error.includes('Player not found'))
               this.translate
                 .get('arcade.player')
                 .subscribe((player: string) => {
@@ -339,27 +359,23 @@ export class SousCompetitionService {
                       this.toastr.error(res, 'Error');
                     });
                 });
-            if (error.error === 'AlreadyExists/GameArcarde-subscription')
-              this.translate
-                .get('arcade.player')
-                .subscribe((player: string) => {
-                  this.translate
-                    .get('errorResponse.alreadyExists', {
-                      entity: player,
-                    })
-                    .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
-                    });
-                });
-            if (error.error === 'AlreadyExists/GameArcarde-subscription')
+              // if (error.error === 'AlreadyExists/GameArcarde-subscription')
+              if (error.includes('Player already subscribed to the game'))
               this.translate
                 .get('arcade.playerSubscribed')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            if (error.error === 'DateRegistration/GameArcarde-subscription')
+            // if (error.error === 'DateRegistration/GameArcarde-subscription')
+            if (error.includes('Unable to register player for this game because player registration date is not allowed for this game'))
               this.translate
                 .get('arcade.subscriptionDatesNotAllowed')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            if (error.includes('Paid games not yet supported.'))
+              this.translate
+                .get('competition.subscriptionToPaidGameNotAllowed')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });

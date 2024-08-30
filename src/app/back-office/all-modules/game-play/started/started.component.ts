@@ -13,144 +13,161 @@ import { GamePartsService } from '../../arcarde/competition/gane-parts/list-part
 @Component({
   selector: 'app-started',
   templateUrl: './started.component.html',
-  styleUrls: ['./started.component.css']
+  styleUrls: ['./started.component.css'],
 })
 export class StartedComponent implements OnInit {
   competitionChoose: SousCompetion = new SousCompetion();
   Life: number[] = [];
   restTime: number = 0;
-  errorMsg : string = '';
+  errorMsg: string = '';
   interval: any;
   wordEntry: string = '';
   showBadMsg: boolean = false;
   showGoodMsg: boolean = false;
   formword: FormGroup;
   state = State;
-  isWaitingPlayer: boolean ;
+  isWaitingPlayer: boolean;
+  loading: boolean = !true;
+  placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
+  gameState = State;
 
-  constructor( public gamePlay: GameplayService,
-               private translate: TranslateService,
-               private translation: TranslationService,
-               private speakService: SpeakService,
-               private fb: FormBuilder,
-               private userService: UserService,
-               public gameManager: GameManagerService,
-               public partService: GamePartsService
-       ) {
-        this.initForm();
-        this.gamePlay.isWaitingPlayer$.subscribe((value) => {
-          this.isWaitingPlayer = value;
-        });
-      }
+  constructor(
+    public gamePlay: GameplayService,
+    private translate: TranslateService,
+    private translation: TranslationService,
+    private speakService: SpeakService,
+    private fb: FormBuilder,
+    private userService: UserService,
+    public gameManager: GameManagerService,
+    public partService: GamePartsService
+  ) {
+    this.initForm();
+    this.gamePlay.isWaitingPlayer$.subscribe((value) => {
+      this.isWaitingPlayer = value;
+    });
+  }
 
   ngOnInit(): void {
     // this.gameManager.loadArcardeRunnig();
   }
-
-  speak(word: string){
-      this.speakService.speak(word, 'fr');
+  getIconClass(competition: any): string {
+    if (competition.gameState === this.gameState.NO_START) {
+      return 'fa fa-play';
+    } else if (competition.gameState === this.gameState.RUNNING) {
+      return 'fa fa-pause';
+    } else if (competition.gameState === this.gameState.WAITING_PLAYER) {
+      return 'fas fa-clock';
+    } else if (competition.gameState === this.gameState.END) {
+      return 'fas fa-stop';
+    } else {
+      return ''; // Classe par défaut si nécessaire
+    }
   }
 
-  initForm(){
+  speak(word: string) {
+    this.speakService.speak(word, 'fr');
+  }
 
+  initForm() {
     this.translate.use(this.translation.getCurrentLanguage());
 
     this.formword = this.fb.group({
       word: ['', Validators.required],
     });
 
-    this.formword.valueChanges.subscribe((data)=>{
-        this.wordEntry = data.word;
+    this.formword.valueChanges.subscribe((data) => {
+      this.wordEntry = data.word;
     });
-
   }
 
-  buildLifeList(maxPlayerLife: number, maxTimeToPlay: number){
+  buildLifeList(maxPlayerLife: number, maxTimeToPlay: number) {
     let init = 0;
     this.Life.length = maxPlayerLife;
-      this.Life.map((val)=> val = init++)
+    this.Life.map((val) => (val = init++));
 
-      this.restTime = maxTimeToPlay;
-      this.startTimer();
+    this.restTime = maxTimeToPlay;
+    this.startTimer();
   }
 
   startTimer() {
     this.interval = setInterval(() => {
-      if(this.restTime > 0) {
+      if (this.restTime > 0) {
         this.restTime--;
       } else {
-          if(this.wordEntry === '' && this.wordEntry.length == 0){
-            this.showMessage('Time Out !! Echec.', true);
-            this.onBadWord();
-            this.pauseTimer();
-          }else{
-            this.checkWord();
-          }
+        if (this.wordEntry === '' && this.wordEntry.length == 0) {
+          this.showMessage('Time Out !! Echec.', true);
+          this.onBadWord();
+          this.pauseTimer();
+        } else {
+          this.checkWord();
+        }
       }
-    },1000)
+    }, 1000);
   }
   pauseTimer() {
     clearInterval(this.interval);
   }
 
-  checkWord(){
+  checkWord() {
     this.pauseTimer();
     console.log('wordentry', this.wordEntry);
-      if(this.wordEntry !== '' && this.wordEntry.length !== 0){
-            if(this.wordEntry === 'exemple'){
-              this.showMessage('Bonne reponse !', false);
-            }else{
-              this.showMessage('Echec mauvaise Reponse!', true);
-              this.onBadWord();
-            }
-      }else{
-            this.showMessage('Echec Aucune entree ! ', true);
+    if (this.wordEntry !== '' && this.wordEntry.length !== 0) {
+      if (this.wordEntry === 'exemple') {
+        this.showMessage('Bonne reponse !', false);
+      } else {
+        this.showMessage('Echec mauvaise Reponse!', true);
+        this.onBadWord();
       }
+    } else {
+      this.showMessage('Echec Aucune entree ! ', true);
+    }
   }
 
   onBadWord() {
     this.Life.pop();
   }
 
-  showMessage(msg: string, bad?: boolean){
+  showMessage(msg: string, bad?: boolean) {
     this.errorMsg = msg;
-    if(bad){
+    if (bad) {
       this.showBadMsg = true;
       this.showGoodMsg = false;
-    }else{
+    } else {
       this.showGoodMsg = true;
       this.showBadMsg = false;
     }
 
-    setTimeout(()=> {
-        this.showBadMsg = false;
-        this.showGoodMsg = false;
-    }, 2500)
+    setTimeout(() => {
+      this.showBadMsg = false;
+      this.showGoodMsg = false;
+    }, 2500);
   }
 
-  reset(){
+  reset() {
     this.formword.reset();
     this.wordEntry = '';
   }
 
-  joinGame(competitionID: string, localisation: string){
+  joinGame(competitionID: string, localisation: string) {
+    if (this.isWaitingPlayer) {
+      console.log('joining...')
       const userID = this.userService.getLocalStorageUser()._id;
       this.gameManager.joinGame({
-          competitionID: competitionID,
-          playerID: userID,
-          localisation: localisation
+        competitionID: competitionID,
+        playerID: userID,
+        localisation: localisation,
       });
+    }
   }
 
-  sendWord(){
+  sendWord() {
     this.gameManager.sendWord({
-        word: this.wordEntry,
-        playerID: this.userService.getLocalStorageUser()._id
+      word: this.wordEntry,
+      playerID: this.userService.getLocalStorageUser()._id,
     });
   }
 
   joinGameResponseListener() {
     this.gameManager.joinGameResponseListener();
   }
-
 }

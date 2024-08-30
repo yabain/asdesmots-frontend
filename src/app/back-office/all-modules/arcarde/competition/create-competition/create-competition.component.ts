@@ -87,7 +87,9 @@ export class CreateCompetitionComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  nameChanged() {
+    delete this.createForm.controls['name'].errors?.['used'];
+  }
   getLevelList() {
     if (JSON.parse(sessionStorage.getItem('levels-list'))) {
       const data = JSON.parse(sessionStorage.getItem('levels-list'));

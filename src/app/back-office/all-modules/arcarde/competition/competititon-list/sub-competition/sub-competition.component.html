@@ -33,7 +33,11 @@
             </a>
             <a class="{{ competition.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-info-light' }} me-2"
               data-toggle="tooltip" data-placement="top"
-              title="{{ (competition.gameState === gameState.RUNNING ? 'competition.stop': 'competition.run') | translate }}">
+              title="{{ (competition.gameState === gameState.RUNNING ? 'competition.stop': 'competition.run') | translate }}"
+              (click)="changeCompetitionState(competition)"
+              [ngClass]="{
+                'cursor-wait': (competition?.updatingState === true)
+              }">
               <i class="{{ competition.gameState === gameState.RUNNING? 'fa fa-pause':  'fa fa-play' }}"
                 aria-hidden="true"></i>
             </a>

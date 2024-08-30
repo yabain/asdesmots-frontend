@@ -39,9 +39,12 @@
         <a class="btn btn-outline-primary me-2
           {{ competitionData.gameState === gameState.RUNNING ? 'bg-success-light competition-running' : 'bg-primary-light' }}"
           title="{{ (competitionData.gameState === gameState.RUNNING? 'competition.stop': 'competition.run') | translate }}"
-          data-toggle="tooltip" data-placement="top">
+          data-toggle="tooltip" data-placement="top" (click)="changeCompetitionState()"
+          [ngClass]="{
+            'cursor-wait': (competitionData?.updatingState === true)
+          }">
           <i class="{{ competitionData.gameState === gameState.RUNNING ? 'fa fa-pause' : 'fa fa-play' }}"
-            aria-hidden="true" (click)="startCompetition()" style="cursor: pointer;"></i>
+            aria-hidden="true"></i>
         </a>
         <a class="btn btn-outline-primary me-2" [routerLink]="['/competition/edit',competitionData._id]"
           data-toggle="tooltip" data-placement="top" title="{{ 'competition.edit' | translate}}">

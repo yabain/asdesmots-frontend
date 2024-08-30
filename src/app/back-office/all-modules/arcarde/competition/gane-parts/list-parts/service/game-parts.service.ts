@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +26,36 @@ export class GamePartsService {
     private api: ApiService,
     private toastr: ToastrService,
     private translate: TranslateService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private socket: Socket,
   ) {
     this.authorization = {
       Authorization: 'Bearer ' + this.api.getAccessToken(),
     };
+    this.socket.on("start-game-part-error", (error)=>{
+      if (error.error == 'NotFound/GamePart')
+        this.translate.get('competition.part').subscribe((arcade: string) => {
+          this.translate
+            .get('errorResponse.entityNotFound', { entity: arcade })
+            .subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
+        });
+      else if (
+        error.error === 'Forbidden/GameCompetition-joingame'
+      )
+        this.translate
+          .get('competition.mustBeRunning')
+          .subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+      else
+        this.translate
+          .get('errorResponse.unexpectedError')
+          .subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+    })
   }
 
   AddGamePart(formData: any): Promise<any> {
@@ -51,7 +77,7 @@ export class GamePartsService {
           },
           (error) => {
             if (
-              error.includes('Part already exists') ||
+              error.includes('The given name is already used') ||
               error.errors?.alreadyUsed
             )
               this.translate

@@ -7,7 +7,8 @@ import { GameplayService } from '../service/gameplay.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  currentRoute: string =' On coming';
+  
+  activeTab: string = 'oncomming';
 
   constructor(
       private gameplayService: GameplayService
@@ -19,14 +20,9 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setCurrentRoute(current: string ){
-    this.currentRoute = current;
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
   }
-
-  refresh(){
-      this.gameplayService.loadUserCompetition();
-  }
-
   loadListCompetition(){
       if(this.gameplayService.listCompetitionOnComming.length == 0 || this.gameplayService.listCompetitionStart.length == 0){
           this.gameplayService.loadUserCompetition();

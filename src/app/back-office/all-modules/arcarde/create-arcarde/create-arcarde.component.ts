@@ -47,6 +47,9 @@ export class CreateArcardeComponent implements OnInit {
     });
   }
 
+  nameChanged() {
+    delete this.createForm.controls['name'].errors?.['used'];
+  }
   createArcarde() {
     this.submitted = true;
     if (this.createForm.invalid) {

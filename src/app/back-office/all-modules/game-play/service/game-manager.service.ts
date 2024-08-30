@@ -54,7 +54,6 @@ export class GameManagerService {
   }
 
   startGame(requestBody:{competitionID: string,gamePartID: string}) {
-    console.log(requestBody)
     this.socket.emit("start-game-part", requestBody);
     this.socket.on("start-game-part", (data)=>{
       console.log("message reçu du serveur ", data)

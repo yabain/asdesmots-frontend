@@ -91,12 +91,12 @@ export class GameplayService {
     this.listCompetitionStart = [];
     if(listCompetition.length > 0){
          listCompetition.forEach((compet)=>{
-            if(compet.gameState === State.RUNNING) {
-                this.listCompetitionStart.push(compet);
-                console.log("liste des compétitions en cours :", this.listCompetitionStart)
-            }else {
-                this.listCompetitionOnComming.push(compet);
-            }
+            // if(compet.gameState === State.RUNNING) {
+              this.listCompetitionStart.push(compet);
+              console.log("liste des compétitions en cours :", this.listCompetitionStart)
+            // }else {
+              this.listCompetitionOnComming.push(compet);
+            // }
          });
     }
     this.filterPartIsWaitingPlayer().then((result) => {

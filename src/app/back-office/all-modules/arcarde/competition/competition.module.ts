@@ -15,7 +15,6 @@ import { CompetitionlistComponent } from './competititon-list/competition-list.c
 import { ListCretariasComponent } from './game-criteria/list-cretarias/list-cretarias.component';
 import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
-import { FormatDatePipe } from '../services/format-date.pipe';
 import { ArcadeSubscribeFormComponent } from '../subscribers/arcade-subscribe-form/arcade-subscribe-form.component';
 import { ArcadeSuscribersComponent } from '../subscribers/arcade-suscribers/arcade-suscribers.component';
 import { UnsubscribeModalComponent } from '../subscribers/unsubscribe-modal/unsubscribe-modal.component';
@@ -34,7 +33,6 @@ import { PartDetailsModalComponent } from './gane-parts/part-details-modal/part-
     CompetitionDetailsComponent,
     UpdateCompetitionComponent,
     GetParentNamePipe,
-    FormatDatePipe,
     DeleteModalComponent,
     CompetitionlistComponent,
     SubCompetitionComponent,
@@ -49,7 +47,7 @@ import { PartDetailsModalComponent } from './gane-parts/part-details-modal/part-
     DeletePartModalComponent,
     CreatePartModalComponent,
     ArcadeListPlaceholderComponent,
-    PartDetailsModalComponent
+    PartDetailsModalComponent,
   ],
   imports: [
     CompetitionRoutingModule,
@@ -65,7 +63,6 @@ import { PartDetailsModalComponent } from './gane-parts/part-details-modal/part-
   exports: [
     CompetitionlistComponent,
     DeleteModalComponent,
-    FormatDatePipe,
     ArcadeSuscribersComponent,
     ArcadeSubscribeFormComponent,
     UnsubscribeModalComponent,

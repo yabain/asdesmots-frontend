@@ -10335,3 +10335,6 @@ ul {
 .vh-50 {
   height: 50vh;
 }
+.cursor-wait {
+  cursor: wait;
+}

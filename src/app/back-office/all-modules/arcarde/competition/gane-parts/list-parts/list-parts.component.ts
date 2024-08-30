@@ -9,6 +9,9 @@ import { State } from 'src/app/shared/entities/state.enum';
 import { GameplayService } from '../../../../game-play/service/gameplay.service';
 import { GameManagerService } from '../../../../game-play/service/game-manager.service';
 import { ArcardeService } from '../../../services/arcarde.service';
+import { Socket } from 'ngx-socket-io';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-game-list-parts',
@@ -18,7 +21,6 @@ import { ArcardeService } from '../../../services/arcarde.service';
 export class ListPartsComponent implements OnInit {
   @Input() competitionID: string;
 
-
   loading: boolean = true;
   parts = [];
   placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
@@ -27,37 +29,68 @@ export class ListPartsComponent implements OnInit {
 
   gamePartData: GamePart = new GamePart();
   listLevel: Level[] = [];
-  sousCompetion: SousCompetion = new SousCompetion();
   gameState = State;
 
   constructor(
     public gamePartSrv: GamePartsService,
-    private subCompetitionService: SousCompetitionService,
     public level: LevelService,
     public gamePlay: GameplayService,
     public gameManager: GameManagerService,
     public partService: GamePartsService,
-    public arcardeSrv: ArcardeService
+    private socket: Socket,
+    public arcardeSrv: ArcardeService,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.partService.partListChanged$.subscribe(
-      (subscription) => {
-        this.getListParts();
-      }
-    );
+    this.partService.partListChanged$.subscribe(() => {
+      this.getListParts();
+    });
     this.getListParts();
     this.getLevel();
+    this.socket.on('start-game-part', (data) => {
+      this.parts.map((part) => {
+        part.updatingState = false;
+        part.gameState =
+          part._id == data.gameId ? State.RUNNING : part.gameState;
+      });
+    });
+    this.socket.on('start-game-part-error', (error) => {
+      if (error.includes('Game part not found'))
+        this.translate.get('competition.part').subscribe((part: string) => {
+          this.translate
+            .get('errorResponse.entityNotFound', { entity: part })
+            .subscribe((res: string) => {
+              this.toastr.error(res, 'Error');
+            });
+        });
+      else if (
+        error.includes(
+          'The state of the competition must be in "In Progress" state for the competition to start'
+        )
+      )
+        this.translate
+          .get('competition.mustBeRinning')
+          .subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+      this.parts.map((part) => {
+        part.updatingState = false;
+      });
+    });
   }
 
   getListParts() {
-    this.gamePartSrv.getListGamePart(this.competitionID).then((response: any) => {
-      this.parts = response.data;
-      this.loading = false;
-    })
-    .catch(error => {
-      this.loading = false;
-    });
+    this.gamePartSrv
+      .getListGamePart(this.competitionID)
+      .then((response: any) => {
+        this.parts = response.data;
+        this.loading = false;
+      })
+      .catch((error) => {
+        this.loading = false;
+      });
   }
 
   getLevel() {
@@ -66,10 +99,11 @@ export class ListPartsComponent implements OnInit {
     }
   }
 
-  startGame(partID: any) {
+  startGame(part: any) {
+    part.updatingState = true;
     this.gameManager.startGame({
       competitionID: this.competitionID,
-      gamePartID: partID,
+      gamePartID: part._id,
     });
   }
 }

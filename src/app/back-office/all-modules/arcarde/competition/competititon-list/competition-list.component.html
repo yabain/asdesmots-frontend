@@ -4,9 +4,6 @@
     <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
     <p *ngIf="!(competitions?.length || fetching)" class="text-center">{{ 'arcade.noSubCompetitions' | translate }}</p>
   </div>
-  <div *ngIf="fetching" class="d-flex align-items-center justify-content-center vh-50">
-    <img src="assets/img/loader.gif" alt="" width="30px" />
-  </div>
   <div *ngIf="!fetching" class="tree">
     <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId"
       (deletedFeedback)="deletedSubCompettitionFeedback($event)">

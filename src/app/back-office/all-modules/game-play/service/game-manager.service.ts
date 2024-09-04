@@ -7,6 +7,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { ArcardeService } from '../../arcarde/services/arcarde.service';
 import { State } from 'src/app/shared/entities/state.enum';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -32,19 +33,49 @@ export class GameManagerService {
       private toastr: ToastrService,
       private userData: UserService,
       private socket:Socket,
-      public arcardServ: ArcardeService
+      public arcardServ: ArcardeService,
+      private translate: TranslateService
 
   ) {
-      this.loadUserData();
+    this.currentUserData = this.userData.getLocalStorageUser();
+    this.socket.on("join-game-error", (error) => {
+      console.log('join-game-error', error);
+      if (error.response?.message == 'Unable to subscribe in this location')
+        this.translate
+          .get('arcade.player')
+          .subscribe((player: string) => {
+            this.translate
+              .get('errorResponse.entityNotFound', {
+                entity: player,
+              })
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+          });
+      else if(error.response?.message == 'Competition not found')
+        this.translate
+          .get('competition.competition')
+          .subscribe((competition: string) => {
+            this.translate
+              .get('errorResponse.entityNotFound', {
+                entity: competition,
+              })
+              .subscribe((res: string) => {
+                this.toastr.error(res, 'Error');
+              });
+          });
+      else
+        this.translate
+          .get('errorResponse.unexpectedError')
+          .subscribe((res: string) => {
+            this.toastr.error(res, 'Error');
+          });
+    })
   }
 
   setGamerLife(){
-    this.playerLife.length = this.competitionLaunched.maxPlayerLife;
-    this.playerLife.map((life)=> life++)
-  }
-
-  loadUserData(){
-      this.currentUserData = this.userData.getLocalStorageUser();
+    // this.playerLife.length = this.competitionLaunched.maxPlayerLife;
+    // this.playerLife.map((life)=> life++)
   }
 
   joinGame(requestBody: {competitionID: string, playerID: string, localisation: string}){
@@ -61,16 +92,8 @@ export class GameManagerService {
   }
 
   initSocketListener(){
-    this.joinGameResponseListener();
     this.gameStateChange();
     this.selectWordAndPlayerListener();
-  }
-
-  joinGameResponseListener(){
-    console.log(112);
-    this.socket.on('join-game', (data)=>{
-        console.log('response join game', data);
-    });
   }
 
   gameStateChange(){

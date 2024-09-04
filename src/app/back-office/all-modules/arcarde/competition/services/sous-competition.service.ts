@@ -113,6 +113,12 @@ export class SousCompetitionService {
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
+            else if (error.includes('The competition is not over! it is no longer possible to stop it'))
+              this.translate
+                .get('competition.competitionNotEnded')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
             else
               this.translate
                 .get('errorResponse.unexpectedError')
@@ -321,7 +327,7 @@ export class SousCompetitionService {
                     });
                 });
             // if (error.error === 'NotFound/GameArcarde-subscription')
-            if (error.includes('Game arcarde not found'))
+            else if (error.includes('Game arcarde not found'))
               this.translate
                 .get('arcade.arcade')
                 .subscribe((arcade: string) => {
@@ -334,20 +340,20 @@ export class SousCompetitionService {
                     });
                 });
             // if (error.error === 'UnableSubscription/GameArcarde-subscription')
-            if (error.includes('Unable to subscribe the player to the game'))
+            else if (error.includes('Unable to subscribe the player to the game'))
               this.translate
                 .get('arcade.cantRegisterPlayer')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
             // if (error.error === 'MaxPlayer/GameArcarde-subscription')
-            if (error.includes('Maximum number of players already reached'))
+            else if (error.includes('Maximum number of players already reached'))
               this.translate
                 .get('arcade.fullRegistrationSession')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            if (error.includes('Player not found'))
+            else if (error.includes('Player not found'))
               this.translate
                 .get('arcade.player')
                 .subscribe((player: string) => {
@@ -360,20 +366,20 @@ export class SousCompetitionService {
                     });
                 });
               // if (error.error === 'AlreadyExists/GameArcarde-subscription')
-              if (error.includes('Player already subscribed to the game'))
+              else if (error.includes('Player already subscribed to the game'))
               this.translate
                 .get('arcade.playerSubscribed')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
             // if (error.error === 'DateRegistration/GameArcarde-subscription')
-            if (error.includes('Unable to register player for this game because player registration date is not allowed for this game'))
+            else if (error.includes('Unable to register player for this game because player registration date is not allowed for this game'))
               this.translate
                 .get('arcade.subscriptionDatesNotAllowed')
                 .subscribe((res: string) => {
                   this.toastr.error(res, 'Error');
                 });
-            if (error.includes('Paid games not yet supported.'))
+            else if (error.includes('Paid games not yet supported.'))
               this.translate
                 .get('competition.subscriptionToPaidGameNotAllowed')
                 .subscribe((res: string) => {
@@ -419,7 +425,7 @@ export class SousCompetitionService {
                       this.toastr.error(res, 'Error');
                     });
                 });
-            if (error.error === 'NotFound/GameArcarde-subscription')
+            else if (error.error === 'NotFound/GameArcarde-subscription')
               this.translate
                 .get('arcade.arcade')
                 .subscribe((arcade: string) => {
@@ -431,7 +437,7 @@ export class SousCompetitionService {
                       this.toastr.error(res, 'Error');
                     });
                 });
-            if (error.error === 'NotFound/PlayerGame-subscription')
+            else if (error.error === 'NotFound/PlayerGame-subscription')
               this.translate
                 .get('arcade.player')
                 .subscribe((player: string) => {

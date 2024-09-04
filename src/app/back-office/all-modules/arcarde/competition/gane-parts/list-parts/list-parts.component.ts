@@ -52,8 +52,8 @@ export class ListPartsComponent implements OnInit {
     this.socket.on('start-game-part', (data) => {
       this.parts.map((part) => {
         part.updatingState = false;
-        part.gameState =
-          part._id == data.gameId ? State.RUNNING : part.gameState;
+        // part.gameState = part._id == data.gameId ? State.WAITING_PLAYER : part.gameState;
+        this.getListParts();
       });
     });
     this.socket.on('start-game-part-error', (error) => {
@@ -98,7 +98,19 @@ export class ListPartsComponent implements OnInit {
       this.level.getAllLevels();
     }
   }
-
+  getIconClass(competition: any): string {
+    if (competition.gameState === this.gameState.NO_START) {
+      return 'fa fa-play';
+    } else if (competition.gameState === this.gameState.RUNNING) {
+      return 'fas fa-clock';
+    } else if (competition.gameState === this.gameState.WAITING_PLAYER) {
+      return 'fas fa-user-plus';
+    } else if (competition.gameState === this.gameState.END) {
+      return 'fas fa-stop';
+    } else {
+      return ''; // Classe par défaut si nécessaire
+    }
+  }
   startGame(part: any) {
     part.updatingState = true;
     this.gameManager.startGame({

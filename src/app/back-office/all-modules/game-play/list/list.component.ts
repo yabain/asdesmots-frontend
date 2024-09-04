@@ -10,22 +10,12 @@ export class ListComponent implements OnInit {
   
   activeTab: string = 'oncomming';
 
-  constructor(
-      private gameplayService: GameplayService
-  ) { 
-
-    this.loadListCompetition();
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-  }
-  loadListCompetition(){
-      if(this.gameplayService.listCompetitionOnComming.length == 0 || this.gameplayService.listCompetitionStart.length == 0){
-          this.gameplayService.loadUserCompetition();
-      }
   }
 }

@@ -1,8 +1,8 @@
-<div *ngIf="!loading" class="row">
+<div *ngIf="!fetching" class="row">
   <!-- Bloc pour afficher les arcades -->
-  <div *ngIf="gamePlay.listCompetitionStart.length && !loading; else emptyBlock">
+  <div *ngIf="competitions.length && !fetching; else emptyBlock">
     <div class="fake-card-container">
-      <div *ngFor="let competition of gamePlay.listCompetitionStart" class="fake-card mb-3">
+      <div *ngFor="let competition of competitions" class="fake-card mb-3">
         <div class="w-100 text-start d-flex align-items-center">
           <app-avatar-photo [name]="competition.name"></app-avatar-photo>
           <div class="me-3 mb-0">
@@ -21,11 +21,12 @@
             }}" [ngClass]="{
               'cursor-wait': competition?.updatingState === true
             }">
-            <a data-bs-toggle="modal" [attr.data-bs-target]="isWaitingPlayer ? '#gameInterface' : ''"
-              (click)="joinGame(competition._id, competition.localisation)">
+            <a data-bs-toggle="modal" [attr.data-bs-target]="waitingPlayersOrRunning(competition) ? '#gameInterface-'+competition._id : ''"
+              (click)="joinGame(competition)">
               <i [attr.class]="getIconClass(competition)" aria-hidden="true"></i>
             </a>
           </p>
+          <app-competition-playing [competition]="competition"></app-competition-playing>
         </div>
       </div>
     </div>
@@ -38,109 +39,9 @@
   </ng-template>
 </div>
 <!-- Bloc de chargement -->
-<div *ngIf="loading" class="fake-card-container">
+<div *ngIf="fetching" class="fake-card-container">
   <div *ngFor="let plh of placeholders; let i = index" class="fake-card mb-3"  aria-hidden="true">
     <app-game-place-holder></app-game-place-holder>
-  </div>
-</div>
-
-<div class="modal custom-modal fade" id="gameInterface" role="dialog">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ gameManager.competitionLaunched.name }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <hr class="hr" />
-      <br />
-
-      <div *ngIf="gameManager.competitionLaunched.gameState !== state.RUNNING">
-        <div class="text-center">
-          <img src="assets/img/loader.gif" alt="waiting_player" height="80" width="100" />
-        </div>
-      </div>
-
-      <div class="modal-body" style="background-color: #f7f8f9"
-        *ngIf="gameManager.competitionLaunched.gameState === state.RUNNING">
-        <div class="row text-center">
-          <div class="col-auto me-auto">
-            <div class="card flex-fill bg-white">
-              <div class="card-header">
-                <h5 class="card-title mb-0">Word information</h5>
-              </div>
-              <div class="card-body text-center">
-                <span style="font-size: 25px; cursor: pointer" (click)="speak('mais')">
-                  <i class="fas fa-volume-up"></i>
-                </span>
-                <br />
-                <span style="font-size: 17px; margin-top: 12px">
-                  {{ "word desscription" }}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-auto">
-            <div class="card flex-fill bg-white">
-              <div class="card-header">
-                <h5 class="card-title mb-0">Informations</h5>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  Difficulte:
-                  {{ gameManager.competitionLaunched.gameLevel.name }}
-                </li>
-                <li class="list-group-item">Joueurs inscrits: 8 joueur(s)</li>
-                <li class="list-group-item">Joueurs restants: 5 joueur(s)</li>
-                <li class="list-group-item">Joueurs connectes: 6 joueur(s)</li>
-                <li class="list-group-item">
-                  <div class="text-center">
-                    Vie Restantes :
-                    <span *ngFor="let i of Life" style="color: red">
-                      <i class="fa fa-heart" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <br />
-          </div>
-        </div>
-
-        <div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4">Temps restant : {{ restTime }}s</div>
-              <div class="col-md-4 ms-auto">
-                <span *ngIf="showBadMsg" style="color: red">
-                  {{ errorMsg }}
-                </span>
-                <span *ngIf="showGoodMsg" style="color: greenyellow">
-                  {{ errorMsg }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <form [formGroup]="formword">
-            <div class="input-group mb-3">
-              <span class="input-group-text">Entrer le mot</span>
-              <input type="text" class="form-control" placeholder="" [disabled]="!gameManager.itsToThisUserToPlay"
-                formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()" [disabled]="
-                  formword.invalid && !gameManager.itsToThisUserToPlay
-                ">
-                Valider
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()">
-          Quitter la partie
-        </button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -155,7 +56,7 @@
         <p>{{ "WanTo" }} de quitter cette partie ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="reset()" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
           Quitter la partie
         </button>
         <button type="button" class="btn btn-primary">Rester</button>

@@ -420,7 +420,8 @@
     "fullRegistrationSession": "La session d'inscription est complète",
     "playerSubscribed": "Le joueur est déjà abonné à cette arcade",
     "subscriptionDatesNotAllowed": "Les abonnements ne sont pas autorisés à ce moment",
-    "maxOfWinnersRequired": "Le nombre maximum de gagnants est requis"
+    "maxOfWinnersRequired": "Le nombre maximum de gagnants est requis",
+    "startNotAllowed": "Vous n'êtes pas autorisé à démarrer cette arcade maintenant"
   },
   "competition": {
     "competition": "Compétition",
@@ -448,6 +449,15 @@
     "partDetails": "Détails de la partie",
     "countdownTime": "Temps de compte à rebours",
     "numberOfWord": "Nombre de mots (par joueur)",
+    "numberOfLive": "Nombre de vies",
+    "maxNumberOfRound": "Nombre maximum de tours",
+    "possibleNumberOfPlayers": "Nombre possible de joueurs",
+    "partType": "Type de partie",
+    "multiPart": "Partie unique",
+    "edit": "Modifier la compétition",
+    "delete": "Supprimer la compétition",
+    "run": "Lancer la compétition",
+    "stop": "Arrêter la compétition",
     "runPart": "Lancer la partie",
     "stopPart": "Arrêter la partie",
     "noSubscribers": "Cette compétition n'a pas d'abonnés !",
@@ -457,15 +467,13 @@
     "unsubscribe2": "de cette compétition",
     "deleteChildren": "ainsi que toutes les sous-compétitions qui y sont liées",
     "minWord": "Minimum {{min}} mots.",
-    "numberOfLive": "Nombre de vies",
-    "maxNumberOfRound": "Nombre maximum de tours",
-    "possibleNumberOfPlayers": "Nombre possible de joueurs",
-    "partType": "Type de partie",
-    "multiPart": "Partie unique",
-    "edit": "Modifier la compétition",
-    "delete": "Supprimer la compétition",
-    "run": "Lancer la compétition",
-    "stop": "Arrêter la compétition"
+    "startNotAllowed": "Vous n'êtes pas autorisé à démarrer cette compétition maintenant",
+    "competitionEnded": "La compétition est terminée ! Il n'est plus possible de la démarrer",
+    "competitionNotEnded":"La compétition n'est encore terminée ! Il est impossible de la stopper maintenant",
+    "mustBeRunning": "La compétition doit être en cours",
+    "emptyList": "La liste des compétitions est vide !",
+    "subscriptionToPaidGameNotAllowed": "Vous n'êtes pas autorisé à vous inscrire à des compétitions payantes pour l'instant",
+    "mustBeRinning": "La compétition doit être en cours"
   },
   "form": {
     "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",

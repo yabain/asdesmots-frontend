@@ -10338,3 +10338,7 @@ ul {
 .cursor-wait {
   cursor: wait;
 }
+.player-list-item {
+  font-size: medium;
+  font-weight: 200;
+}

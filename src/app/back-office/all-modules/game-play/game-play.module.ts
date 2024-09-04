@@ -12,6 +12,7 @@ import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
 import { GamePlaceHolderComponent } from './started/game-place-holder/game-place-holder.component';
 import { SharedModule } from '../../shared/shared.module';
 import { OncommingListPlaceholderComponent } from './oncomming/oncomming-list-placeholder/oncomming-list-placeholder.component';
+import { CompetitionPlayingComponent } from './started/competition-playing/competition-playing.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { OncommingListPlaceholderComponent } from './oncomming/oncomming-list-pl
     StartedComponent,
     AvatarPhotoComponent,
     GamePlaceHolderComponent,
-    OncommingListPlaceholderComponent
+    OncommingListPlaceholderComponent,
+    CompetitionPlayingComponent
   ],
   imports: [
     CommonModule,

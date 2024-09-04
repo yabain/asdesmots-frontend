@@ -1,7 +1,7 @@
-<div *ngIf="!loading">
+<div *ngIf="!fetching">
   <!-- Bloc pour afficher les arcades -->
-  <div *ngIf="gamePlay.listCompetitionOnComming.length && !loading; else emptyBlock" class="row">
-    <div *ngFor="let competition of gamePlay.listCompetitionOnComming" class="col-12 col-md-2 col-lg-4 col-xl-3">
+  <div *ngIf="competitions.length && !fetching; else emptyBlock" class="row">
+    <div *ngFor="let competition of competitions" class="col-12 col-md-2 col-lg-4 col-xl-3">
       <div class="custom-card">
         <div class="card-body pb-0">
           <div class="mb-0">
@@ -28,7 +28,7 @@
   </ng-template>
 </div>
 <!-- Bloc de chargement -->
-<div *ngIf="loading" class="row">
+<div *ngIf="fetching" class="row">
   <div *ngFor="let plh of placeholders; let i = index" class="col-12 col-md-2 col-lg-4 col-xl-3">
     <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
   </div>

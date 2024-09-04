@@ -52,9 +52,9 @@ export class AvatarPhotoComponent implements OnInit {
   private createInititals(): void {
     const nameParts = this.name.split(' ');
     this.initials =
-      nameParts[0].charAt(0).toUpperCase() +
-      (nameParts[1].charAt(0).toUpperCase() ?? '') +
-      (nameParts[2].charAt(0).toUpperCase() ?? '');
+      nameParts[0]?.charAt(0).toUpperCase() +
+      (nameParts[1]?.charAt(0).toUpperCase() ?? '') +
+      (nameParts[2]?.charAt(0).toUpperCase() ?? '');
   }
 
   verifyImageUrl(): Observable<boolean> {

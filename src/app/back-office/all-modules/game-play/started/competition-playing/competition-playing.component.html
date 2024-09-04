@@ -1,0 +1,111 @@
+<div class="modal custom-modal fade" id="{{'gameInterface-'+competition._id}}" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center justify-content-between p-4 mb-3">
+        <img src="assets/img/logo-white.png" alt="" width="30px" />
+        <h4 class="card-title text-center">{{ competition.name }}</h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="modal-body" style="background-color: #f7f8f9">
+        <div class="d-block d-md-flex justify-content-between h-100">
+          <div class="col-md-auto text-center order-md-3">
+            <div class="card flex-fill bg-white">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Informations</h5>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <span class="me-2">Difficulte :</span>
+                  <span>{{ competition.gameLevel.name }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span class="me-2">Competiteurs inscrits :</span>
+                  <span>{{ competition.playerGameRegistrations?.length }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span class="me-2">Effectif requis :</span>
+                  <span>{{ competition.minOfPlayers }}</span> 
+                </li>
+                <li class="list-group-item">
+                  <span class="me-2">Competiteurs connectes:</span>
+                  <span>{{ players.length }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span class="me-2">Vie Restantes :</span>
+                  <span *ngFor="let i of Life" class="text-danger life-heart">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <br />
+          </div>
+          <div class="col-md-auto order-md-1">
+            <div class="card flex-fill bg-white">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Participants</h5>
+              </div>
+              <ul class="list-group list-group-flush text-start">
+                <li *ngFor="let player of players" class="list-group-item player-list-item">
+                  <div class="d-flex align-items-center">
+                    <app-avatar-photo [name]="player"></app-avatar-photo>
+                    {{ player }}
+                  </div>
+                </li>
+                <li  *ngIf="!players?.length" class="list-group-item player-list-item">
+                  <div class="text-center p-3">
+                    Aucun participant !
+                  </div>
+                </li>
+                <li *ngIf="gameState === state.WAITING_PLAYER" class="list-group-item">
+                  <div class="text-center">
+                    <button class="btn btn-primary" type="button" disabled>
+                      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                      En attente des joueurs...
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <br />
+          </div>
+          <div *ngIf="gameState === state.RUNNING" class="col-md-auto text-center order-md-2">
+            <div class="card flex-fill bg-white">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Word information</h5>
+              </div>
+              <div class="card-body text-center">
+                <span style="font-size: 25px; cursor: pointer" (click)="speak('mais')">
+                  <i class="fas fa-volume-up"></i>
+                </span>
+                <br />
+                <span style="font-size: 17px; margin-top: 12px">
+                  {{ "word desscription" }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="">Temps restant : {{ restTime }}s</div>
+          <form [formGroup]="formword">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Saisissez le mot" [disabled]="!gameManager.itsToThisUserToPlay"
+                formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2" />
+              <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()" [disabled]="
+                    formword.invalid && !gameManager.itsToThisUserToPlay
+                  ">
+                Valider
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer p-0 my-3">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()">
+          Quitter la partie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.list-group-flush .list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+.life-heart {
+    margin-right: 1px;
+}
+.input-group .form-control, .input-group .input-group-text {
+    width: fit-content;
+}
+.input-group .input-group-text {
+    border-left:  1px;
+}

@@ -17,46 +17,58 @@ import { GamePartsService } from '../../arcarde/competition/gane-parts/list-part
 })
 export class StartedComponent implements OnInit {
   competitionChoose: SousCompetion = new SousCompetion();
-  Life: number[] = [];
-  restTime: number = 0;
-  errorMsg: string = '';
-  interval: any;
-  wordEntry: string = '';
-  showBadMsg: boolean = false;
-  showGoodMsg: boolean = false;
-  formword: FormGroup;
-  state = State;
-  isWaitingPlayer: boolean;
-  loading: boolean = !true;
+  fetching: boolean = true;
   placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
   gameState = State;
+  competitions: SousCompetion[] = [];
 
   constructor(
-    public gamePlay: GameplayService,
-    private translate: TranslateService,
-    private translation: TranslationService,
-    private speakService: SpeakService,
-    private fb: FormBuilder,
-    private userService: UserService,
     public gameManager: GameManagerService,
-    public partService: GamePartsService
-  ) {
-    this.initForm();
-    this.gamePlay.isWaitingPlayer$.subscribe((value) => {
-      this.isWaitingPlayer = value;
-    });
-  }
+    public gamePlay: GameplayService,
+    public partService: GamePartsService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
-    // this.gameManager.loadArcardeRunnig();
+    this.geCompetitions();
+  }
+
+  
+  geCompetitions() {
+    this.gamePlay
+      .getPlayersRunningCompetitions()
+      .then((response: any) => {
+        // response.data?.forEach((competition) => {
+        //   const parts = competition.gameParts.filter((part) => {
+        //     return part.gameState === State.RUNNING || part.gameState === State.WAITING_PLAYER;
+        //   });
+        //   if (parts.length) {
+        //     parts.forEach(part => {
+        //       this.competitions.push({
+        //         localisation: competition.localisation,
+        //         competitionID: competition._id,
+        //         ...part
+        //       });
+        //     });
+        //   } else {
+        //     this.competitions.push(competition);
+        //   }
+        // });
+        this.competitions = response.data;
+        this.fetching = false;
+      })
+      .catch((error) => {
+        console.error(error);
+        this.fetching = false;
+      });
   }
   getIconClass(competition: any): string {
     if (competition.gameState === this.gameState.NO_START) {
       return 'fa fa-play';
     } else if (competition.gameState === this.gameState.RUNNING) {
-      return 'fa fa-pause';
-    } else if (competition.gameState === this.gameState.WAITING_PLAYER) {
       return 'fas fa-clock';
+    } else if (competition.gameState === this.gameState.WAITING_PLAYER) {
+      return 'fas fa-user-plus';
     } else if (competition.gameState === this.gameState.END) {
       return 'fas fa-stop';
     } else {
@@ -64,110 +76,18 @@ export class StartedComponent implements OnInit {
     }
   }
 
-  speak(word: string) {
-    this.speakService.speak(word, 'fr');
+  waitingPlayersOrRunning(competition: SousCompetion) {
+    return ((competition.gameState === this.gameState.WAITING_PLAYER) || (competition.gameState === this.gameState.RUNNING))
   }
 
-  initForm() {
-    this.translate.use(this.translation.getCurrentLanguage());
-
-    this.formword = this.fb.group({
-      word: ['', Validators.required],
-    });
-
-    this.formword.valueChanges.subscribe((data) => {
-      this.wordEntry = data.word;
-    });
-  }
-
-  buildLifeList(maxPlayerLife: number, maxTimeToPlay: number) {
-    let init = 0;
-    this.Life.length = maxPlayerLife;
-    this.Life.map((val) => (val = init++));
-
-    this.restTime = maxTimeToPlay;
-    this.startTimer();
-  }
-
-  startTimer() {
-    this.interval = setInterval(() => {
-      if (this.restTime > 0) {
-        this.restTime--;
-      } else {
-        if (this.wordEntry === '' && this.wordEntry.length == 0) {
-          this.showMessage('Time Out !! Echec.', true);
-          this.onBadWord();
-          this.pauseTimer();
-        } else {
-          this.checkWord();
-        }
-      }
-    }, 1000);
-  }
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
-
-  checkWord() {
-    this.pauseTimer();
-    console.log('wordentry', this.wordEntry);
-    if (this.wordEntry !== '' && this.wordEntry.length !== 0) {
-      if (this.wordEntry === 'exemple') {
-        this.showMessage('Bonne reponse !', false);
-      } else {
-        this.showMessage('Echec mauvaise Reponse!', true);
-        this.onBadWord();
-      }
-    } else {
-      this.showMessage('Echec Aucune entree ! ', true);
-    }
-  }
-
-  onBadWord() {
-    this.Life.pop();
-  }
-
-  showMessage(msg: string, bad?: boolean) {
-    this.errorMsg = msg;
-    if (bad) {
-      this.showBadMsg = true;
-      this.showGoodMsg = false;
-    } else {
-      this.showGoodMsg = true;
-      this.showBadMsg = false;
-    }
-
-    setTimeout(() => {
-      this.showBadMsg = false;
-      this.showGoodMsg = false;
-    }, 2500);
-  }
-
-  reset() {
-    this.formword.reset();
-    this.wordEntry = '';
-  }
-
-  joinGame(competitionID: string, localisation: string) {
-    if (this.isWaitingPlayer) {
-      console.log('joining...')
+  joinGame(competition: SousCompetion) {
+    // if (competition.gameState === this.gameState.WAITING_PLAYER) {
       const userID = this.userService.getLocalStorageUser()._id;
       this.gameManager.joinGame({
-        competitionID: competitionID,
+        competitionID: competition._id,
+        localisation: competition.localisation,
         playerID: userID,
-        localisation: localisation,
       });
-    }
-  }
-
-  sendWord() {
-    this.gameManager.sendWord({
-      word: this.wordEntry,
-      playerID: this.userService.getLocalStorageUser()._id,
-    });
-  }
-
-  joinGameResponseListener() {
-    this.gameManager.joinGameResponseListener();
+    // }
   }
 }

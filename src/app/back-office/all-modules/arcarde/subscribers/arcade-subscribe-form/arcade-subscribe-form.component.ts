@@ -27,7 +27,6 @@ export class ArcadeSubscribeFormComponent implements OnInit {
     this.subscribeForm = this.fb.group({
       gameId: ['', Validators.required]
     })
-    console.log(this.arcadeId);
     this.listCompetitions();
   }
 
@@ -37,7 +36,6 @@ export class ArcadeSubscribeFormComponent implements OnInit {
       this.competitions = resp.data;
     })
     .catch((error) => {
-      console.error(error);
     }); 
   }
   

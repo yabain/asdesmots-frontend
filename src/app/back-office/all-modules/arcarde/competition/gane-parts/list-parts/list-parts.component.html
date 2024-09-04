@@ -51,13 +51,7 @@
               'cursor-wait': (part?.updatingState === true)
             }">
             <a>
-              <i *ngIf="part.gameState !== gameState.WAITING_PLAYER" [ngClass]="{
-                'fa fa-play': part.gameState === gameState.NO_START,
-                'fa fa-pause': part.gameState === gameState.RUNNING,
-                'fas fa-stop': part.gameState === gameState.END
-              }" aria-hidden="true">
-              </i>
-              <i *ngIf="part.gameState === gameState.WAITING_PLAYER" class="fas fa-spinner"></i>
+              <i [ngClass]="getIconClass(part)" aria-hidden="true"></i>
             </a>
             <!-- <i *ngIf="part.gameState === gameState.RUNNING" class="fa " aria-hidden="true"></i> -->
           </p>

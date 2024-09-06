@@ -457,7 +457,11 @@
     "edit": "Modifier la compétition",
     "delete": "Supprimer la compétition",
     "run": "Lancer la compétition",
+    "join":"Rejoindre la partie",
+    "running":"En cours",
+    "participate": "Participer",
     "stop": "Arrêter la compétition",
+    "stoped": "La compétition est terminée",
     "runPart": "Lancer la partie",
     "stopPart": "Arrêter la partie",
     "noSubscribers": "Cette compétition n'a pas d'abonnés !",
@@ -471,9 +475,20 @@
     "competitionEnded": "La compétition est terminée ! Il n'est plus possible de la démarrer",
     "competitionNotEnded":"La compétition n'est encore terminée ! Il est impossible de la stopper maintenant",
     "mustBeRunning": "La compétition doit être en cours",
-    "emptyList": "La liste des compétitions est vide !",
+    "emptyList": "Aucune compétition !",
     "subscriptionToPaidGameNotAllowed": "Vous n'êtes pas autorisé à vous inscrire à des compétitions payantes pour l'instant",
-    "mustBeRinning": "La compétition doit être en cours"
+    "mustBeRinning": "La compétition doit être en cours",
+    "waitingPlayers":"En attente des joueurs",
+    "noParts":"La compétition ne comprte aucune manche",
+    "anotherRoundAlredyRunning":"Vous ne pouvez pas démarrer plusieurs parties d'une même compétition simultanément.",
+    "noPartFound":"La competition ne comporte aucune partie",
+    "minNumberOfPlayersNotReached":"Le nombre minimum de joueurs n'est pas atteint ! il n'est plus possible de lancer la compétition"
+  },
+  "game": {
+    "game": "Jeu",
+    "games": "Jeux",
+    "oncomming": "À venir",
+    "processing": "En cours"
   },
   "form": {
     "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",

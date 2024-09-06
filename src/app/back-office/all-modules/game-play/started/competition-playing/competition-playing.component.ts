@@ -26,7 +26,6 @@ export class CompetitionPlayingComponent implements OnInit {
   state = State;
   isWaitingPlayer: boolean;
   players: any[] = [];
-  gameState;
   playerId: string;
 
   constructor(
@@ -39,21 +38,21 @@ export class CompetitionPlayingComponent implements OnInit {
 
   ngOnInit(): void {
     this.playerId = this.userService.getLocalStorageUser()._id;
-    this.gameState = State.WAITING_PLAYER;
     this.initForm();
     this.socket.on('join-game', (data)=>{
       this.players = (data.filter((game) => {
         return (game.competition._id == this.competition._id)
       })).map((game) => { 
           if(game.player._id == this.playerId)
-            this.Life = new Array(game.player.lifeGame);;
+            this.Life = new Array(game.player.lifeGame);
           return `${game.player.firstName} ${game.player.lastName}`
       })
     });
     this.socket.on('game-statechange', (data)=>{
-      this.gameState = data.gameState;
+      console.log(this.competition._id, data.competitionID)
+      if((this.competition._id == data.competitionID) && (data.gamePart.gameState == this.state.RUNNING))
+        this.competition.gameState = data.gameState;
     });
-    
   }
   speak(word: string) {
     this.speakService.speak(word, 'fr');

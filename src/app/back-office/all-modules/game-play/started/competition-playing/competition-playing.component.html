@@ -7,8 +7,8 @@
         <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
       </div>
       <div class="modal-body" style="background-color: #f7f8f9">
-        <div class="d-block d-md-flex justify-content-between h-100">
-          <div class="col-md-auto text-center order-md-3">
+        <div class="d-block d-lg-flex justify-content-between h-100">
+          <div class="col-md-12 col-lg-auto text-center order-lg-3">
             <div class="card flex-fill bg-white">
               <div class="card-header">
                 <h5 class="card-title mb-0">Informations</h5>
@@ -32,15 +32,17 @@
                 </li>
                 <li class="list-group-item">
                   <span class="me-2">Vie Restantes :</span>
-                  <span *ngFor="let i of Life" class="text-danger life-heart">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
-                  </span>
+                  <div class="life-heart">
+                    <span *ngFor="let i of Life" class="text-danger">
+                      <i class="fa fa-heart" aria-hidden="true"></i>
+                    </span>  
+                  </div>
                 </li>
               </ul>
             </div>
             <br />
           </div>
-          <div class="col-md-auto order-md-1">
+          <div class="col-md-12 me-lg-2 col-lg-auto order-lg-1">
             <div class="card flex-fill bg-white">
               <div class="card-header">
                 <h5 class="card-title mb-0">Participants</h5>
@@ -69,7 +71,7 @@
             </div>
             <br />
           </div>
-          <div *ngIf="gameState === state.RUNNING" class="col-md-auto text-center order-md-2">
+          <div *ngIf="competition.gameState === state.RUNNING" class="col-md-12 me-lg-2 col-lg-auto text-center order-lg-2">
             <div class="card flex-fill bg-white">
               <div class="card-header">
                 <h5 class="card-title mb-0">Word information</h5>

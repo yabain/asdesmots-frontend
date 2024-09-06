@@ -454,7 +454,11 @@
     "edit": "Edit the competition",
     "delete": "Delete the competition",
     "run": "Run the competition",
+    "join":"Join the game",
+    "running":"Processing",
+    "participate": "Participate",
     "stop": "Stop the competition",
+    "stoped": "The competition is over",
     "runPart": "Run the part",
     "stopPart": "Stop the part",
     "noSubscribers": "This competition has no subscribers!",
@@ -470,7 +474,12 @@
     "mustBeRunning":"The competition must be running",
     "emptyList": "The competition list is empty!",
     "subscriptionToPaidGameNotAllowed":"You are not allowed to subscribe to paid competitions for now",
-    "mustBeRinning":"The competition must be running"
+    "mustBeRinning":"The competition must be running",
+    "waitingPlayers":"Waiting players",
+    "noParts":"The competition does not include any rounds",
+    "anotherRoundAlredyRunning":"You cannot start multiple games of the same competition simultaneously.",
+    "noPartFound":"The competition does not have any part",
+    "minNumberOfPlayersNotReached":"The minimum number of players is not reached! it is no longer possible to run the competition"
   },
   "game": {
     "game": "Game",

@@ -88,6 +88,53 @@ export class ArcardeService {
     });
   }
 
+  update(formData: any, arcadeID: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .post(`${environment.url}/${Endpoint.CREATE_ARCARDE}/${arcadeID}`, formData, {
+          headers: this.headers,
+        })
+        .subscribe(
+          (response: any) => {
+            this.translate.get('arcade.arcade').subscribe((arcade: string) => {
+              this.translate
+                .get('successResponse.created')
+                .subscribe((message: string) => {
+                  this.toastr.success(`${arcade} ${message}`, 'Error');
+                });
+            });
+            return resolve(response);
+          },
+          (error) => {
+            if (error.includes('Game arcarde not found'))
+              this.translate.get('arcade.arcade').subscribe((arcade: string) => {
+                this.translate
+                  .get('errorResponse.entityNotFound', { entity: arcade })
+                  .subscribe((res: string) => {
+                    this.toastr.error(res, 'Error');
+                  });
+              });
+            else if (
+              error.includes('Arcade already exists') ||
+              error.errors?.alreadyUsed
+            )
+              this.translate
+                .get('errorResponse.duplicatedEntry')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            else
+              this.translate
+                .get('errorResponse.unexpectedError')
+                .subscribe((res: string) => {
+                  this.toastr.error(res, 'Error');
+                });
+            reject(error);
+          }
+        );
+    });
+  }
+
   getArcadeSubscribers(arcadeId: string) {
     return new Promise((resolve, reject) => {
       this.httpClient
@@ -99,7 +146,7 @@ export class ArcardeService {
             return resolve(response);
           },
           (error: any) => {
-            if (error.statusCode === 404)
+            if (error.includes('Game arcarde not found'))
               this.translate
                 .get('arcade.arcade')
                 .subscribe((arcade: string) => {

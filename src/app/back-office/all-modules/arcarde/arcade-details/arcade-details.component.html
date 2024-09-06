@@ -58,10 +58,10 @@
                 : 'fa fa-play'
             }}" aria-hidden="true"></i>
         </a>
-        <!-- <a class="btn btn-outline-primary me-2" [routerLink]="['/arcarde/edit', arcardeData._id]" data-toggle="tooltip"
+        <a class="btn btn-outline-primary me-2" [routerLink]="['/arcarde/update', arcardeData._id]" data-toggle="tooltip"
           data-placement="top" title="{{ 'arcade.edit' | translate }}">
           <i class="fa fa-pencil" aria-hidden="true"></i>
-        </a> -->
+        </a>
         <a class="btn btn-outline-danger me-2" data-toggle="tooltip" data-bs-toggle="modal"
           [attr.data-bs-target]="'#delete-'+arcardeData._id" data-placement="top"
           title="{{ 'arcade.delete' | translate }}">

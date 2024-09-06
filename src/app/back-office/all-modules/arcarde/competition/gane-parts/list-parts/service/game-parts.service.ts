@@ -32,30 +32,40 @@ export class GamePartsService {
     this.authorization = {
       Authorization: 'Bearer ' + this.api.getAccessToken(),
     };
-    this.socket.on("start-game-part-error", (error)=>{
-      if (error.error == 'NotFound/GamePart')
-        this.translate.get('competition.part').subscribe((arcade: string) => {
+    this.socket.on("start-game-part-error", (error) => {
+      if (error.response?.message == "Game part not found")
+        this.translate.get("competition.part").subscribe((part: string) => {
           this.translate
-            .get('errorResponse.entityNotFound', { entity: arcade })
+            .get("errorResponse.entityNotFound", { entity: part })
             .subscribe((res: string) => {
-              this.toastr.error(res, 'Error');
+              this.toastr.error(res, "Error");
             });
         });
       else if (
-        error.error === 'Forbidden/GameCompetition-joingame'
+        error.response?.message ==
+        "You cannot start multiple games of the same competition simultaneously"
       )
         this.translate
-          .get('competition.mustBeRunning')
+          .get("competition.anotherRoundAlredyRunning")
           .subscribe((res: string) => {
-            this.toastr.error(res, 'Error');
+            this.toastr.error(res, "Error");
+          });
+      else if (
+        error.response?.message ==
+        'The state of the competition must be in "In Progress" state for the competition to start'
+      )
+        this.translate
+          .get("competition.mustBeRinning")
+          .subscribe((res: string) => {
+            this.toastr.error(res, "Error");
           });
       else
         this.translate
-          .get('errorResponse.unexpectedError')
+          .get("errorResponse.unexpectedError")
           .subscribe((res: string) => {
-            this.toastr.error(res, 'Error');
+            this.toastr.error(res, "Error");
           });
-    })
+    });
   }
 
   AddGamePart(formData: any): Promise<any> {

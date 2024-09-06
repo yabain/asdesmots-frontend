@@ -9,19 +9,15 @@
             <h5>{{ competition.name }}</h5>
             <!-- <span class="text-muted">{{ competition.description }}</span> -->
           </div>
-          <p class="status-btn btn btn-sm bottom-0 {{
+          <p class="status-btn btn btn-sm mb-0 {{
               competition.gameState === gameState.RUNNING
                 ? 'badge badge-pill bg-success-light competition-running'
                 : 'badge badge-pill bg-primary-light'
-            }}" data-toggle="tooltip" data-placement="top" title="{{
-              (competition.gameState === gameState.NO_START
-                ? 'competition.runPart'
-                : 'competition.stopPart'
-              ) | translate
-            }}" [ngClass]="{
+            }}" data-toggle="tooltip" data-placement="top" title="{{ getActionStatus(competition) | translate }}" [ngClass]="{
               'cursor-wait': competition?.updatingState === true
             }">
-            <a data-bs-toggle="modal" [attr.data-bs-target]="waitingPlayersOrRunning(competition) ? '#gameInterface-'+competition._id : ''"
+            <a data-bs-toggle="modal"
+              [attr.data-bs-target]="waitingPlayersOrRunning(competition) ? '#gameInterface-'+competition._id : ''"
               (click)="joinGame(competition)">
               <i [attr.class]="getIconClass(competition)" aria-hidden="true"></i>
             </a>
@@ -40,7 +36,7 @@
 </div>
 <!-- Bloc de chargement -->
 <div *ngIf="fetching" class="fake-card-container">
-  <div *ngFor="let plh of placeholders; let i = index" class="fake-card mb-3"  aria-hidden="true">
+  <div *ngFor="let plh of placeholders; let i = index" class="fake-card mb-3" aria-hidden="true">
     <app-game-place-holder></app-game-place-holder>
   </div>
 </div>

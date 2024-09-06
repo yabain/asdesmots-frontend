@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { State } from 'src/app/shared/entities/state.enum';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { ArcardeService } from '../services/arcarde.service';
 
 @Component({
@@ -21,8 +19,6 @@ export class ArcadeDetailsComponent implements OnInit {
 
   constructor(
     public arcardeServ: ArcardeService,
-    private translate: TranslateService,
-    private translation: TranslationService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {

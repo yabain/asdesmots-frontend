@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from 'src/app/shared/api/api.service';
-import { EndpointSousCompetion } from './Endpoint';
-import { ToastrService } from 'ngx-toastr';
-import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
-import { ArcardeService } from '../../services/arcarde.service';
+import { Injectable } from "@angular/core";
+import { ApiService } from "src/app/shared/api/api.service";
+import { EndpointSousCompetion } from "./Endpoint";
+import { ToastrService } from "ngx-toastr";
+import { WinnigsCriterias } from "src/app/shared/entities/winnigCriterias";
+import { BehaviorSubject, Observable, map } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { TranslateService } from "@ngx-translate/core";
+import { ArcardeService } from "../../services/arcarde.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SousCompetitionService {
   public newSubscriptionDetectedSubject = new BehaviorSubject<boolean>(false);
@@ -19,8 +19,8 @@ export class SousCompetitionService {
 
   authorization: any;
   headers = {
-    Authorization: 'Bearer ' + this.api.getAccessToken(),
-    'Content-Type': 'application/json; charset=UTF-8',
+    Authorization: "Bearer " + this.api.getAccessToken(),
+    "Content-Type": "application/json; charset=UTF-8",
   };
 
   constructor(
@@ -31,7 +31,7 @@ export class SousCompetitionService {
     private httpClient: HttpClient
   ) {
     this.authorization = {
-      Authorization: 'Bearer ' + this.api.getAccessToken(),
+      Authorization: "Bearer " + this.api.getAccessToken(),
     };
   }
   deleteCompetition(id: string): Promise<any> {
@@ -44,21 +44,21 @@ export class SousCompetitionService {
         .subscribe(
           (response) => {
             this.translate
-              .get('competition.competition')
+              .get("competition.competition")
               .subscribe((word: string) => {
                 this.translate
-                  .get('successResponse.deleted')
+                  .get("successResponse.deleted")
                   .subscribe((message: string) => {
-                    this.toastr.success(`${word} ${message}`, 'Error');
+                    this.toastr.success(`${word} ${message}`, "Error");
                   });
               });
             resolve(response);
           },
           (error: any) => {
             this.translate
-              .get('errorResponse.unexpectedError')
+              .get("errorResponse.unexpectedError")
               .subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
+                this.toastr.error(res, "Error");
               });
             reject(error);
           }
@@ -76,54 +76,87 @@ export class SousCompetitionService {
           },
           (error: any) => {
             // if (error.error == 'NotFound/GameCompetition-changestate-start')
-            if (error.includes('The competition was not found'))
+            if (error.includes("The competition was not found"))
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             // else if (error.error == 'NotFound/GameCompetition-changestate-arcade')
-            else if (error.includes('Game arcarde not found'))
+            else if (error.includes("Game arcarde not found"))
               this.translate
-                .get('arcade.arcade')
+                .get("arcade.arcade")
                 .subscribe((arcade: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .get("errorResponse.entityNotFound", { entity: arcade })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             // else if ( error.error === 'Forbidden/GameCompetition-changestate-start')
-            else if (error.includes('The state of the arcade must be in "In Progress" state for the competition to start'))
+            else if (
+              error.includes(
+                'The state of the arcade must be in "In Progress" state for the competition to start'
+              )
+            )
               this.translate
-                .get('competition.startNotAllowed')
+                .get("competition.startNotAllowed")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
+                });
+            else if (
+              error.includes(
+                'The minimum number of players is not reached'
+              )
+            )
+              this.translate
+                .get("competition.minNumberOfPlayersNotReached")
+                .subscribe((res: string) => {
+                  this.toastr.error(res, "Error");
                 });
             // else if (error.error === 'Forbidden/GameCompetition-changestate-end')
-            else if (error.includes('The competition is over! it is no longer possible to start it'))
+            else if (
+              error.includes(
+                "The competition is over! it is no longer possible to start it"
+              ) ||
+              error.includes(
+                "The current date does not correspond to the start and end date of the game"
+              )
+            )
               this.translate
-                .get('competition.competitionEnded')
+                .get("competition.competitionEnded")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
-            else if (error.includes('The competition is not over! it is no longer possible to stop it'))
+            else if (
+              error.includes("The competition does not include any rounds")
+            )
               this.translate
-                .get('competition.competitionNotEnded')
+                .get("competition.noParts")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
+                });
+            else if (
+              error.includes(
+                "The competition is not over! it is no longer possible to stop it"
+              )
+            )
+              this.translate
+                .get("competition.competitionNotEnded")
+                .subscribe((res: string) => {
+                  this.toastr.error(res, "Error");
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -144,9 +177,9 @@ export class SousCompetitionService {
           },
           (error: any) => {
             this.translate
-              .get('errorResponse.unexpectedError')
+              .get("errorResponse.unexpectedError")
               .subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
+                this.toastr.error(res, "Error");
               });
             reject(error);
           }
@@ -170,19 +203,19 @@ export class SousCompetitionService {
           (error: any) => {
             if (error.statusCode === 404)
               this.translate
-                .get('arcade.arcade')
+                .get("arcade.arcade")
                 .subscribe((arcade: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .get("errorResponse.entityNotFound", { entity: arcade })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -206,21 +239,21 @@ export class SousCompetitionService {
           (error: any) => {
             if (error.statusCode === 404)
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -244,21 +277,21 @@ export class SousCompetitionService {
           (error: any) => {
             if (error.statusCode === 404)
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -282,19 +315,19 @@ export class SousCompetitionService {
           (error: any) => {
             if (error.statusCode === 404)
               this.translate
-                .get('arcade.arcade')
+                .get("arcade.arcade")
                 .subscribe((arcade: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .get("errorResponse.entityNotFound", { entity: arcade })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -314,82 +347,90 @@ export class SousCompetitionService {
           },
           (error: any) => {
             // if (error.error === 'NotFound/GameCompetition-subscription')
-            if (error.includes('Game Competition not found'))
+            if (error.includes("Game Competition not found"))
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             // if (error.error === 'NotFound/GameArcarde-subscription')
-            else if (error.includes('Game arcarde not found'))
+            else if (error.includes("Game arcarde not found"))
               this.translate
-                .get('arcade.arcade')
+                .get("arcade.arcade")
                 .subscribe((arcade: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: arcade,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             // if (error.error === 'UnableSubscription/GameArcarde-subscription')
-            else if (error.includes('Unable to subscribe the player to the game'))
+            else if (
+              error.includes("Unable to subscribe the player to the game")
+            )
               this.translate
-                .get('arcade.cantRegisterPlayer')
+                .get("arcade.cantRegisterPlayer")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             // if (error.error === 'MaxPlayer/GameArcarde-subscription')
-            else if (error.includes('Maximum number of players already reached'))
+            else if (
+              error.includes("Maximum number of players already reached")
+            )
               this.translate
-                .get('arcade.fullRegistrationSession')
+                .get("arcade.fullRegistrationSession")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
-            else if (error.includes('Player not found'))
+            else if (error.includes("Player not found"))
               this.translate
-                .get('arcade.player')
+                .get("arcade.player")
                 .subscribe((player: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: player,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
-              // if (error.error === 'AlreadyExists/GameArcarde-subscription')
-              else if (error.includes('Player already subscribed to the game'))
+            // if (error.error === 'AlreadyExists/GameArcarde-subscription')
+            else if (error.includes("Player already subscribed to the game"))
               this.translate
-                .get('arcade.playerSubscribed')
+                .get("arcade.playerSubscribed")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             // if (error.error === 'DateRegistration/GameArcarde-subscription')
-            else if (error.includes('Unable to register player for this game because player registration date is not allowed for this game'))
+            else if (
+              error.includes(
+                "Unable to register player for this game because player registration date is not allowed for this game"
+              )
+            )
               this.translate
-                .get('arcade.subscriptionDatesNotAllowed')
+                .get("arcade.subscriptionDatesNotAllowed")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
-            else if (error.includes('Paid games not yet supported.'))
+            else if (error.includes("Paid games not yet supported."))
               this.translate
-                .get('competition.subscriptionToPaidGameNotAllowed')
+                .get("competition.subscriptionToPaidGameNotAllowed")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -406,54 +447,54 @@ export class SousCompetitionService {
         .subscribe(
           (response) => {
             this.translate
-              .get('arcade.unsubscribed')
+              .get("arcade.unsubscribed")
               .subscribe((res: string) => {
-                this.toastr.success(res, 'Success');
+                this.toastr.success(res, "Success");
               });
             return resolve(response);
           },
           (error: any) => {
-            if (error.error === 'NotFound/GameCompetition-subscription')
+            if (error.error === "NotFound/GameCompetition-subscription")
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
-            else if (error.error === 'NotFound/GameArcarde-subscription')
+            else if (error.error === "NotFound/GameArcarde-subscription")
               this.translate
-                .get('arcade.arcade')
+                .get("arcade.arcade")
                 .subscribe((arcade: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: arcade,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
-            else if (error.error === 'NotFound/PlayerGame-subscription')
+            else if (error.error === "NotFound/PlayerGame-subscription")
               this.translate
-                .get('arcade.player')
+                .get("arcade.player")
                 .subscribe((player: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: player,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -474,31 +515,31 @@ export class SousCompetitionService {
         .subscribe(
           (response: any) => {
             this.translate
-              .get('competition.competition')
+              .get("competition.competition")
               .subscribe((competition: string) => {
                 this.translate
-                  .get('successResponse.created')
+                  .get("successResponse.created")
                   .subscribe((message: string) => {
-                    this.toastr.success(`${competition} ${message}`, 'Error');
+                    this.toastr.success(`${competition} ${message}`, "Error");
                   });
               });
             return resolve(response);
           },
           (error) => {
             if (
-              error.includes('Competition already exists') ||
+              error.includes("Competition already exists") ||
               error.errors?.alreadyUsed
             )
               this.translate
-                .get('errorResponse.duplicatedEntry')
+                .get("errorResponse.duplicatedEntry")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             return reject(error);
           }
@@ -521,31 +562,31 @@ export class SousCompetitionService {
         .subscribe(
           (resp: any) => {
             this.translate
-              .get('competition.competition')
+              .get("competition.competition")
               .subscribe((competition: string) => {
                 this.translate
-                  .get('successResponse.updated')
+                  .get("successResponse.updated")
                   .subscribe((message: string) => {
-                    this.toastr.success(`${competition} ${message}`, 'Error');
+                    this.toastr.success(`${competition} ${message}`, "Error");
                   });
               });
             resolve(resp.data);
           },
           (error) => {
             if (
-              error.includes('Competition already exists') ||
+              error.includes("Competition already exists") ||
               error.errors?.alreadyUsed
             )
               this.translate
-                .get('errorResponse.duplicatedEntry')
+                .get("errorResponse.duplicatedEntry")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             return reject(error);
           }
@@ -565,9 +606,9 @@ export class SousCompetitionService {
           },
           (error) => {
             this.translate
-              .get('errorResponse.unexpectedError')
+              .get("errorResponse.unexpectedError")
               .subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
+                this.toastr.error(res, "Error");
               });
             reject(error);
           }
@@ -591,21 +632,21 @@ export class SousCompetitionService {
           (error) => {
             if (error.statusCode === 404)
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -631,21 +672,21 @@ export class SousCompetitionService {
           (error) => {
             if (error.statusCode === 404)
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -664,12 +705,12 @@ export class SousCompetitionService {
         .subscribe(
           (resp) => {
             this.translate
-              .get('competition.criteria')
+              .get("competition.criteria")
               .subscribe((arcade: string) => {
                 this.translate
-                  .get('successResponse.applied')
+                  .get("successResponse.applied")
                   .subscribe((message: string) => {
-                    this.toastr.success(`${arcade} ${message}`, 'Error');
+                    this.toastr.success(`${arcade} ${message}`, "Error");
                   });
               });
             resolve(resp);
@@ -677,21 +718,21 @@ export class SousCompetitionService {
           (error) => {
             if (error.statusCode === 404)
               this.translate
-                .get('competition.competition')
+                .get("competition.competition")
                 .subscribe((competition: string) => {
                   this.translate
-                    .get('errorResponse.entityNotFound', {
+                    .get("errorResponse.entityNotFound", {
                       entity: competition,
                     })
                     .subscribe((res: string) => {
-                      this.toastr.error(res, 'Error');
+                      this.toastr.error(res, "Error");
                     });
                 });
             else
               this.translate
-                .get('errorResponse.unexpectedError')
+                .get("errorResponse.unexpectedError")
                 .subscribe((res: string) => {
-                  this.toastr.error(res, 'Error');
+                  this.toastr.error(res, "Error");
                 });
             reject(error);
           }
@@ -708,12 +749,12 @@ export class SousCompetitionService {
       this.api.deleteListWinnerCriterias(url, this.authorization).subscribe(
         (resp) => {
           this.translate
-            .get('competition.criteria')
+            .get("competition.criteria")
             .subscribe((arcade: string) => {
               this.translate
-                .get('successResponse.removed')
+                .get("successResponse.removed")
                 .subscribe((message: string) => {
-                  this.toastr.success(`${arcade} ${message}`, 'Error');
+                  this.toastr.success(`${arcade} ${message}`, "Error");
                 });
             });
           resolve(resp);
@@ -721,21 +762,21 @@ export class SousCompetitionService {
         (error) => {
           if (error.statusCode === 404)
             this.translate
-              .get('competition.competition')
+              .get("competition.competition")
               .subscribe((competition: string) => {
                 this.translate
-                  .get('errorResponse.entityNotFound', {
+                  .get("errorResponse.entityNotFound", {
                     entity: competition,
                   })
                   .subscribe((res: string) => {
-                    this.toastr.error(res, 'Error');
+                    this.toastr.error(res, "Error");
                   });
               });
           else
             this.translate
-              .get('errorResponse.unexpectedError')
+              .get("errorResponse.unexpectedError")
               .subscribe((res: string) => {
-                this.toastr.error(res, 'Error');
+                this.toastr.error(res, "Error");
               });
           reject(error);
         }

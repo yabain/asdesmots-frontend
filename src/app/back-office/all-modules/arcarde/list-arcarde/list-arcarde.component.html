@@ -45,6 +45,12 @@
                       </a>
                     </li>
                     <li>
+                      <a class="dropdown-item" [routerLink]="['/arcarde/update', arcade._id]" style="cursor: pointer;">
+                        <i class="fa fa-pencil"></i>
+                        <span style="margin-left: 5px;">{{ 'edit' | translate }}</span>
+                      </a>
+                    </li>
+                    <li>
                       <a class="dropdown-item" style="cursor: pointer;"
                         data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+arcade._id">
                         <i class="fa fa-trash" aria-hidden="true"></i>

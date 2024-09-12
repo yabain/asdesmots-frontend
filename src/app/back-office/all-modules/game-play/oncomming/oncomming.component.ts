@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameplayService } from '../service/gameplay.service';
 import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-oncomming',
@@ -13,9 +14,15 @@ export class OncommingComponent implements OnInit {
   competitions: SousCompetion[] = [];
   placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
 
-  constructor(public gamePlay: GameplayService) { }
+  constructor(
+    public gamePlay: GameplayService,
+    private socket: Socket
+  ) { }
 
   ngOnInit(): void {
+    this.socket.on("game-statechange", (data) => {
+      this.geCompetitions();
+    });
     this.geCompetitions();
   }
   geCompetitions() {

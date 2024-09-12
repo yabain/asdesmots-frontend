@@ -1,12 +1,10 @@
-<div class="modal custom-modal fade" id="{{'gameInterface-'+competition._id}}" role="dialog">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header d-flex align-items-center justify-content-between p-4 mb-3">
-        <img src="assets/img/logo-white.png" alt="" width="30px" />
-        <h4 class="card-title text-center">{{ competition.name }}</h4>
-        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
-      </div>
-      <div class="modal-body" style="background-color: #f7f8f9">
+    <div class="modal-header d-flex justify-content-between p-4 mb-3">
+      <img src="assets/img/logo-white.png" alt="" width="30px" />
+      <h4 class="card-title text-center">{{ competition.name }}</h4>
+      <span (click)="closeModal()"><i class="fas fa-times-circle"></i></span>
+    </div>
+    <div class="modal-body" style="background-color: #f7f8f9">
+      <ng-container *ngIf="(!((competition.gameState === state.END) || hasLostGame)); else gameOver">
         <div class="d-block d-lg-flex justify-content-between h-100">
           <div class="col-md-12 col-lg-auto text-center order-lg-3">
             <div class="card flex-fill bg-white">
@@ -24,7 +22,7 @@
                 </li>
                 <li class="list-group-item">
                   <span class="me-2">Effectif requis :</span>
-                  <span>{{ competition.minOfPlayers }}</span> 
+                  <span>{{ competition.minOfPlayers }}</span>
                 </li>
                 <li class="list-group-item">
                   <span class="me-2">Competiteurs connectes:</span>
@@ -32,11 +30,12 @@
                 </li>
                 <li class="list-group-item">
                   <span class="me-2">Vie Restantes :</span>
-                  <div class="life-heart">
-                    <span *ngFor="let i of Life" class="text-danger">
-                      <i class="fa fa-heart" aria-hidden="true"></i>
-                    </span>  
-                  </div>
+                  <ng-container *ngIf="this.lifesLength.length; else noHeart" class="life-heart">
+                    <span *ngFor="let i of lifesLength" class="text-danger">
+                      <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+                    </span>
+                  </ng-container>
+                  <ng-template #noHeart>0</ng-template>
                 </li>
               </ul>
             </div>
@@ -50,18 +49,18 @@
               <ul class="list-group list-group-flush text-start">
                 <li *ngFor="let player of players" class="list-group-item player-list-item">
                   <div class="d-flex align-items-center">
-                    <app-avatar-photo [name]="player"></app-avatar-photo>
-                    {{ player }}
+                    <app-avatar-photo [name]="player.name"></app-avatar-photo>
+                    {{ player.name }}
                   </div>
                 </li>
-                <li  *ngIf="!players?.length" class="list-group-item player-list-item">
+                <li *ngIf="!players?.length" class="list-group-item player-list-item">
                   <div class="text-center p-3">
                     Aucun participant !
                   </div>
                 </li>
                 <li *ngIf="competition.gameState === state.WAITING_PLAYER" class="list-group-item">
                   <div class="text-center">
-                    <button class="btn btn-primary" type="button" disabled>
+                    <button class="btn btn-primary" type="button">
                       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                       En attente des joueurs...
                     </button>
@@ -71,43 +70,67 @@
             </div>
             <br />
           </div>
-          <div *ngIf="competition.gameState === state.RUNNING" class="col-md-12 me-lg-2 col-lg-auto text-center order-lg-2">
+          <div *ngIf="eligibleToPlay == true" class="col-md-12 me-lg-2 col-lg-auto text-center order-lg-2">
             <div class="card flex-fill bg-white">
               <div class="card-header">
                 <h5 class="card-title mb-0">Word information</h5>
               </div>
               <div class="card-body text-center">
-                <span style="font-size: 25px; cursor: pointer" (click)="speak('mais')">
+                <span style="font-size: 25px; cursor: pointer" (click)="pronounceWord()">
                   <i class="fas fa-volume-up"></i>
                 </span>
                 <br />
                 <span style="font-size: 17px; margin-top: 12px">
-                  {{ "word desscription" }}
+                  {{ expectedWord.description }}
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <div class="">Temps restant : {{ restTime }}s</div>
+        <div *ngIf="eligibleToPlay == true">
+          <ng-container *ngIf="!timeOver; else timeOverTemplate">
+            Temps restant : {{ timeLeft }} s
+          </ng-container>
+          <ng-template #timeOverTemplate>
+            <span class="invalid-feedback">Le delai de saisie est depasse</span>
+          </ng-template>
           <form [formGroup]="formword">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Saisissez le mot" [disabled]="!gameManager.itsToThisUserToPlay"
-                formControlName="word" aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()" [disabled]="
-                    formword.invalid && !gameManager.itsToThisUserToPlay
-                  ">
-                Valider
-              </button>
+            <div class="form-group mb-3">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Saisissez le mot" formControlName="word"
+                  (input)="checkEntry()" [ngClass]="{
+                  'is-invalid': !(validEntry || timeOver)
+                }">
+                <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()"
+                  [disabled]="fetching || timeOver">
+                  <span *ngIf="!fetching">Soumettre</span>
+                  <span *ngIf="fetching"><img src="assets/img/loader.gif" alt="Fetching" height="25px" /></span>
+                </button>
+              </div>
+              <div *ngIf="!timeOver" class="invalid-feedback">
+                <div *ngIf="!validEntry">
+                  Le mot saisi est incorrect
+                </div>
+              </div>
             </div>
           </form>
         </div>
-      </div>
-      <div class="modal-footer p-0 my-3">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="reset()">
-          Quitter la partie
-        </button>
-      </div>
+      </ng-container>
+      <ng-template #gameOver>
+        <ng-container *ngIf="!hasLostGame; else lostGame">
+          <div class="d-flex justify-content-center align-items-ccenter text-center h-100">
+            <p>Felicitation, vous avez termine la partie !</p>
+          </div>
+        </ng-container>
+        <ng-template #lostGame>
+          <div class="d-flex justify-content-center align-items-ccenter text-center h-100">
+            <p>Vous avez perdu la partie !</p>
+          </div>
+        </ng-template>
+      </ng-template>
     </div>
-  </div>
-</div>
+    <div *ngIf="(!((competition.gameState === state.END) || hasLostGame))" class="modal-footer text-center p-0 my-3">
+      <button type="button" class="btn btn-danger" (click)="leaveGame()">
+        Quitter la partie
+      </button>
+    </div>

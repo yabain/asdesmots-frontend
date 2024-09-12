@@ -13,6 +13,7 @@ import { GamePlaceHolderComponent } from './started/game-place-holder/game-place
 import { SharedModule } from '../../shared/shared.module';
 import { OncommingListPlaceholderComponent } from './oncomming/oncomming-list-placeholder/oncomming-list-placeholder.component';
 import { CompetitionPlayingComponent } from './started/competition-playing/competition-playing.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -32,8 +33,8 @@ import { CompetitionPlayingComponent } from './started/competition-playing/compe
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule
-
+    SharedModule,
+    NgbModule
   ]
 })
 export class GamePlayModule { }

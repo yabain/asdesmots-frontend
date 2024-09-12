@@ -16,13 +16,10 @@
             }}" data-toggle="tooltip" data-placement="top" title="{{ getActionStatus(competition) | translate }}" [ngClass]="{
               'cursor-wait': competition?.updatingState === true
             }">
-            <a data-bs-toggle="modal"
-              [attr.data-bs-target]="waitingPlayersOrRunning(competition) ? '#gameInterface-'+competition._id : ''"
-              (click)="joinGame(competition)">
+            <a (click)="openModal(competition)">
               <i [attr.class]="getIconClass(competition)" aria-hidden="true"></i>
             </a>
           </p>
-          <app-competition-playing [competition]="competition"></app-competition-playing>
         </div>
       </div>
     </div>

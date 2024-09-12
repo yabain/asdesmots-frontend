@@ -1,10 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { State } from 'src/app/shared/entities/state.enum';
 import { SpeakService } from 'src/app/shared/services/speak/speak.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { GameManagerService } from '../../service/game-manager.service';
 import { Socket } from 'ngx-socket-io';
+import { Word } from 'src/app/shared/entities/word';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SousCompetion } from 'src/app/shared/entities/scompetion.model';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Competition } from '../../../arcarde/competition/competititon-list/sub-competition/sub-competition.component';
 
 @Component({
   selector: 'app-competition-playing',
@@ -13,12 +18,10 @@ import { Socket } from 'ngx-socket-io';
 })
 export class CompetitionPlayingComponent implements OnInit {
 
-  @Input() competition : any;
+  @Input() competition : SousCompetion;
 
-  Life: number[] = [];
-  restTime: number = 0;
+  lifesLength: number[] = [];
   errorMsg: string = '';
-  interval: any;
   wordEntry: string = '';
   showBadMsg: boolean = false;
   showGoodMsg: boolean = false;
@@ -27,6 +30,20 @@ export class CompetitionPlayingComponent implements OnInit {
   isWaitingPlayer: boolean;
   players: any[] = [];
   playerId: string;
+  eligibleToPlay: boolean = false;
+  fetching: boolean = false;
+  submitted: boolean = false;
+  expectedWord: Word;
+  modalElement: Element;
+  timer: any;
+  timeLeft: number = 0; // Compte à rebours de 20 secondes
+  validEntry: boolean = true;
+  timeOver: boolean = false;
+  hasLostGame: boolean = false;
+
+  
+  playerEligibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  playerEligible$: Observable<boolean> = this.playerEligibleSubject.asObservable();
 
   constructor(
     public gameManager: GameManagerService,
@@ -34,28 +51,70 @@ export class CompetitionPlayingComponent implements OnInit {
     private fb: FormBuilder,
     private socket:Socket,
     private userService: UserService,
-  ) { }
-
-  ngOnInit(): void {
-    this.playerId = this.userService.getLocalStorageUser()._id;
-    this.initForm();
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal,
+    @Inject('competitionData') competitionData: Competition
+  ) {
+    this.competition = competitionData;  
+    this.playerEligible$.subscribe((eligible: boolean) => {
+      this.eligibleToPlay = eligible;
+      if(eligible) {
+        this.startTimer();
+      }
+    });
     this.socket.on('join-game', (data)=>{
       this.players = (data.filter((game) => {
         return (game.competition._id == this.competition._id)
       })).map((game) => { 
           if(game.player._id == this.playerId)
-            this.Life = new Array(game.player.lifeGame);
-          return `${game.player.firstName} ${game.player.lastName}`
+            this.lifesLength = new Array(game.player.lifeGame);
+          return {_id: game.player._id, name:`${game.player.firstName} ${game.player.lastName}`}
       })
     });
-    this.socket.on('game-statechange', (data)=>{
-      console.log(this.competition._id, data.competitionID)
-      if((this.competition._id == data.competitionID) && (data.gamePart.gameState == this.state.RUNNING))
+    this.socket.on('new-player', (data)=>{
+      this.playerEligibleSubject.next(this.playerId === data.player);
+      // this.timeLeft = data.timeLeft
+    });
+    this.socket.on("game-play", (data: { gameRound: any; gameWord: Word; player: string }) => {
+      this.playerEligibleSubject.next(this.playerId === data.player);
+      this.expectedWord = data.gameWord
+      this.resetFormData();
+    });
+    this.socket.on('game-play-error', () => {
+      this.resetFormData();
+    })
+    this.socket.on("game-player-lifegame",(data: any) => {
+      if(data.competitionID == this.competition._id) {
+        if (data.lifeGame == 0) 
+          this.lostGame(data.player);
+        else if(this.playerId === data.player)  
+          this.lifesLength = new Array(data.lifeGame);
+      }
+    });
+    this.socket.on('game-statechange', (data)=> {
+      this.resetFormData();
+      if((this.competition._id == data.competitionID))
         this.competition.gameState = data.gameState;
     });
   }
-  speak(word: string) {
-    this.speakService.speak(word, 'fr');
+  lostGame(playerId: string) {
+    this.players = this.players.filter(p => p._id !== playerId);
+    if(this.playerId === playerId) 
+      this.hasLostGame = true;
+
+  }
+  resetFormData(){
+    this.fetching = false;
+    this.submitted = false;
+    this.formword.reset();
+    this.checkTimer();
+  }
+  ngOnInit(): void {
+    this.playerId = this.userService.getLocalStorageUser()._id;
+    this.initForm();
+  }
+  pronounceWord() {
+    this.speakService.speak(this.expectedWord.name, this.expectedWord.type);
   }
 
   initForm() {
@@ -67,79 +126,45 @@ export class CompetitionPlayingComponent implements OnInit {
       this.wordEntry = data.word;
     });
   }
-  
-  buildLifeList(maxPlayerLife: number, maxTimeToPlay: number) {
-    let init = 0;
-    this.Life.length = maxPlayerLife;
-    this.Life.map((val) => (val = init++));
-
-    this.restTime = maxTimeToPlay;
-    this.startTimer();
-  }
 
   startTimer() {
-    this.interval = setInterval(() => {
-      if (this.restTime > 0) {
-        this.restTime--;
-      } else {
-        if (this.wordEntry === '' && this.wordEntry.length == 0) {
-          this.showMessage('Time Out !! Echec.', true);
-          this.onBadWord();
-          this.pauseTimer();
-        } else {
-          this.checkWord();
-        }
+    clearInterval(this.timer);
+    this.timeLeft = this.competition.maxTimeToPlay;
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;  
+        return;
+      } 
+      else if (!this.validEntry) {
+        this.lifesLength.pop();
       }
-    }, 1000);
-  }
-  pauseTimer() {
-    clearInterval(this.interval);
+      this.checkTimer();
+    }, 1000);  // Chaque seconde (1000 ms)
   }
 
-  checkWord() {
-    this.pauseTimer();
-    console.log('wordentry', this.wordEntry);
-    if (this.wordEntry !== '' && this.wordEntry.length !== 0) {
-      if (this.wordEntry === 'exemple') {
-        this.showMessage('Bonne reponse !', false);
-      } else {
-        this.showMessage('Echec mauvaise Reponse!', true);
-        this.onBadWord();
-      }
-    } else {
-      this.showMessage('Echec Aucune entree ! ', true);
-    }
+  checkEntry() {
+    this.validEntry = this.formword.get('word')?.value.toLowerCase() === this.expectedWord.name?.toLowerCase();
+  }
+  
+  checkTimer() {
+    this.timeOver = this.timeLeft <= 0;
   }
 
-  onBadWord() {
-    this.Life.pop();
-  }
-
-  showMessage(msg: string, bad?: boolean) {
-    this.errorMsg = msg;
-    if (bad) {
-      this.showBadMsg = true;
-      this.showGoodMsg = false;
-    } else {
-      this.showGoodMsg = true;
-      this.showBadMsg = false;
-    }
-
-    setTimeout(() => {
-      this.showBadMsg = false;
-      this.showGoodMsg = false;
-    }, 2500);
-  }
-
-  reset() {
+  leaveGame() {
     this.formword.reset();
-    this.wordEntry = '';
   }
 
   sendWord() {
+    this.fetching = true;
+    this.submitted = true;
     this.gameManager.sendWord({
       word: this.wordEntry,
       playerID: this.playerId,
+      competitionID: this.competition._id
     });
+  }
+  closeModal() {
+    this.modalService.dismissAll();
+    this.gameManager.modalOpenSubject.next(false);
   }
 }

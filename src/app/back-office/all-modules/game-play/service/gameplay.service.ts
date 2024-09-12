@@ -37,7 +37,6 @@ export class GameplayService {
       Authorization: 'Bearer ' + this.api.getAccessToken(),
     };
   }
-  private _isWaitingPlayerSubject = new BehaviorSubject<boolean>(false);
 
   getPlayersRunningCompetitions() {
     return new Promise((resole, reject) => {

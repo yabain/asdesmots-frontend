@@ -1,15 +1,13 @@
+import { Component, Injector, OnInit, StaticProvider } from "@angular/core";
 import { GameManagerService } from "./../service/game-manager.service";
-import { TranslationService } from "./../../../../shared/services/translation/language.service";
-import { Component, OnInit } from "@angular/core";
 import { GameplayService } from "../service/gameplay.service";
 import { SousCompetion } from "src/app/shared/entities/scompetion.model";
-import { SpeakService } from "src/app/shared/services/speak/speak.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "src/app/shared/services/user/user.service";
 import { State } from "src/app/shared/entities/state.enum";
 import { GamePartsService } from "../../arcarde/competition/gane-parts/list-parts/service/game-parts.service";
 import { Socket } from "ngx-socket-io";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CompetitionPlayingComponent } from "./competition-playing/competition-playing.component";
 
 @Component({
   selector: "app-started",
@@ -22,23 +20,32 @@ export class StartedComponent implements OnInit {
   placeholders = Array.from({ length: 12 }); // Crée un tableau de 8 éléments
   gameState = State;
   competitions: SousCompetion[] = [];
+  refreshable: boolean = true;
 
   constructor(
     public gameManager: GameManagerService,
     public gamePlay: GameplayService,
     public partService: GamePartsService,
     private userService: UserService,
-    private socket: Socket
+    private socket: Socket,
+    private modalService: NgbModal, 
+    private injector: Injector
   ) {}
 
   ngOnInit(): void {
-    this.geCompetitions();
+    this.gameManager.modalOpen$.subscribe((isOpen: boolean) => {
+      this.refreshable = !isOpen;
+      if(this.refreshable) {
+        this.geCompetitions();
+      }
+    });
+    // this.geCompetitions();
     this.socket.on("game-statechange", (data) => {
-      this.setCompetitionsStates(this.competitions);
+      this.geCompetitions();
     });
   }
 
-  geCompetitions() {
+  geCompetitions(): void {
     this.gamePlay
       .getPlayersRunningCompetitions()
       .then((response: any) => {
@@ -46,7 +53,6 @@ export class StartedComponent implements OnInit {
         this.fetching = false;
       })
       .catch((error) => {
-        console.error(error);
         this.fetching = false;
       });
   }
@@ -78,16 +84,29 @@ export class StartedComponent implements OnInit {
   }
   setCompetitionsStates(competitions: SousCompetion[]): void {
     this.competitions = competitions.map((comp) => {
-      if (
-        comp.gameParts.find(
-          (p) => p.gameState === this.gameState.WAITING_PLAYER
-        )
-      )
+      if (comp.gameParts.find((p) => p.gameState === this.gameState.WAITING_PLAYER))
         comp.gameState = this.gameState.WAITING_PLAYER;
-        return comp;
+      return comp
     });
   }
+  openModal(competition: SousCompetion) {
+    this.gameManager.modalOpenSubject.next(true);
+    this.joinGame(competition);
+    const providers: StaticProvider[] = [
+      { provide: 'competitionData', useValue: competition }
+    ];
 
+    const customInjector = Injector.create({
+      providers: providers,
+      parent: this.injector
+    });
+
+    const modalRef = this.modalService.open(CompetitionPlayingComponent, { injector: customInjector, centered: true, size: 'lg', });
+    modalRef.result.then(
+      () => { this.gameManager.modalOpenSubject.next(false); },
+      () => { this.gameManager.modalOpenSubject.next(false); }
+    );
+  }
   waitingPlayersOrRunning(competition: SousCompetion) {
     return (
       competition.gameState === this.gameState.WAITING_PLAYER ||

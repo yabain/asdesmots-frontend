@@ -47,7 +47,7 @@ export class ListPartsComponent implements OnInit {
     });
     this.getListParts();
     this.getLevel();
-    this.socket.on("start-game-part", (data) => {
+    this.socket.on("change-game-part-state", (data) => {
       this.parts.map((part) => {
         part.updatingState = false;
         // part.gameState = part._id == data.gameId ? State.WAITING_PLAYER : part.gameState;
@@ -55,13 +55,10 @@ export class ListPartsComponent implements OnInit {
       });
     });
     this.socket.on('game-statechange', (data)=>{
-      this.parts.map((part) => {
-        console.log(part.name,part.gameState);
-      });
       if(this.competitionID == data.competitionID)
         this.getListParts();
     });
-    this.socket.on("start-game-part-error", (error) => {
+    this.socket.on("change-game-part-state-error", (error) => {
       this.parts.map((part) => {
         part.updatingState = false;
       });
@@ -99,11 +96,21 @@ export class ListPartsComponent implements OnInit {
       return ""; // Classe par défaut si nécessaire
     }
   }
-  startGame(part: any) {
+  changeState(part: any) {
     part.updatingState = true;
-    this.gameManager.startGame({
+    let gameState = null;
+    if(part.gameState === State.NO_START)
+      gameState = State.WAITING_PLAYER
+    else if(part.gameState === State.WAITING_PLAYER)
+      gameState = State.RUNNING
+    else if(part.gameState === State.RUNNING)
+      gameState = State.END
+    if(part.gameState === State.END)
+      gameState = State.WAITING_PLAYER
+    this.gameManager.changeState({
       competitionID: this.competitionID,
       gamePartID: part._id,
+      gameState: gameState,
     });
   }
 }

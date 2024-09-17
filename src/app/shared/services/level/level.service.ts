@@ -50,8 +50,8 @@ export class LevelService {
         (response: any) => {
           this.getAllLevels();
           this.translate.get('words.level').subscribe((word: string) => {
-            this.translate.get('successResponse.created').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('successResponse.created', { entity: word }).subscribe((message: string) => {
+              this.toastr.success(message, 'Error');
             });
           });
           resolve(response); 
@@ -81,8 +81,8 @@ export class LevelService {
         (response: any) => {
           this.getAllLevels();
           this.translate.get('words.level').subscribe((word: string) => {
-            this.translate.get('successResponse.deleted').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('successResponse.deleted', { entity: word }).subscribe((message: string) => {
+              this.toastr.success(message, 'Error');
             });
           });
           resolve(response);
@@ -102,8 +102,8 @@ export class LevelService {
       this.api.delete(`gamelevel/${levelDataId}`, this.headers).subscribe(
         (response) => {
           this.translate.get('words.level').subscribe((word: string) => {
-            this.translate.get('successResponse.deleted').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('successResponse.deleted', { entity: word }).subscribe((message: string) => {
+              this.toastr.success(message, 'Error');
             });
           });
           resolve(response);
@@ -157,8 +157,8 @@ export class LevelService {
           (response: any) => {
             this.getAllLevels();
             this.translate.get('words.level').subscribe((word: string) => {
-              this.translate.get('successResponse.updated').subscribe((message: string) => {
-                this.toastr.success(`${word} ${message}`, 'Error');
+              this.translate.get('successResponse.updated', { entity: word }).subscribe((message: string) => {
+                this.toastr.success(message, 'Error');
               });
             });
             resolve(response);

@@ -32,7 +32,7 @@ export class GamePartsService {
     this.authorization = {
       Authorization: 'Bearer ' + this.api.getAccessToken(),
     };
-    this.socket.on("start-game-part-error", (error) => {
+    this.socket.on("change-game-part-state-error", (error) => {
       if (error.response?.message == "Game part not found")
         this.translate.get("competition.part").subscribe((part: string) => {
           this.translate
@@ -78,9 +78,9 @@ export class GamePartsService {
           (response: any) => {
             this.translate.get('competition.part').subscribe((part: string) => {
               this.translate
-                .get('successResponse.created')
+                .get('successResponse.created', { entity: part })
                 .subscribe((message: string) => {
-                  this.toastr.success(`${part} ${message}`, 'Error');
+                  this.toastr.success(message, 'Error');
                 });
             });
             return resolve(response);
@@ -118,9 +118,9 @@ export class GamePartsService {
           (response) => {
             this.translate.get('competition.part').subscribe((part: string) => {
               this.translate
-                .get('successResponse.deleted')
+                .get('successResponse.deleted', { entity: part })
                 .subscribe((message: string) => {
-                  this.toastr.success(`${part} ${message}`, 'Error');
+                  this.toastr.success(message, 'Error');
                 });
             });
             resolve(response);

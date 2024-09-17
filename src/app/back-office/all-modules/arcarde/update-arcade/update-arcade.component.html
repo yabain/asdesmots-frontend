@@ -149,14 +149,14 @@
                           " style="color: red">
                         {{ "nameRequired" | translate }}
                       </div>
-                      <div *ngIf="updateForm.controls['name']?.errors['used']" style="color: red">
-                        {{ "competition.competition" | translate }}
-                        {{ "errorResponse.alreadyExists" | translate }}
-                      </div>
                       <p class="invalid-feedback" *ngIf="updateForm.get('name').errors?.minLength"
                         [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
                       <p class="invalid-feedback" *ngIf="updateForm.get('name').errors?.maxlength"
                         [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65}"></p>
+                      <p class="invalid-feedback" *ngIf="updateForm.controls['name']?.errors['used']"
+                        [translate]="'errorResponse.alreadyExists'"
+                        [translateParams]="{ entity: ( 'arcade.arcade' | translate ) }">
+                     </p>
                     </div>
                   </div>
                   <div class="form-group col-md-6">

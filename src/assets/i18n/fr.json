@@ -482,7 +482,8 @@
     "noParts":"La compétition ne comprte aucune manche",
     "anotherRoundAlredyRunning":"Vous ne pouvez pas démarrer plusieurs parties d'une même compétition simultanément.",
     "noPartFound":"La competition ne comporte aucune partie",
-    "minNumberOfPlayersNotReached":"Le nombre minimum de joueurs n'est pas atteint ! il n'est plus possible de lancer la compétition"
+    "minNumberOfPlayersNotReached":"Le nombre minimum de joueurs n'est pas atteint ! il n'est plus possible de lancer la compétition",
+    "subscribeErrorAlreadyPlaying":"Vous ne pouvez plus rejoindre cette partie, elle a déjà commencé."
   },
   "game": {
     "game": "Jeu",

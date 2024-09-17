@@ -134,7 +134,8 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="name"> {{ "name" | translate }} </label>
-                    <input type="text" (change)="nameChanged()" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{
+                    <input type="text" (change)="nameChanged()" name="name" class="form-control" formControlName="name"
+                      id="name" [ngClass]="{
                         'is-invalid':
                           (createForm.controls['name']?.touched || submitted) &&
                           createForm.controls['name']?.invalid
@@ -149,22 +150,21 @@
                         " style="color: red">
                         {{ "nameRequired" | translate }}
                       </div>
-                      <div *ngIf="createForm.controls['name']?.errors['used']" style="color: red">
-                        {{ "competition.competition" | translate }}
-                        {{ "errorResponse.alreadyExists" | translate }}
-                      </div>
                       <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.minLength"
                         [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
                       <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.maxlength"
                         [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65}"></p>
+                      <p class="invalid-feedback" *ngIf="createForm.controls['name']?.errors['used']"
+                        [translate]="'errorResponse.alreadyExists'"
+                        [translateParams]="{ entity: ( 'arcade.arcade' | translate ) }">
                     </div>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="maxPlayersNumber">
                       {{ "maxPlayersNumber" | translate }} (2-100)
                     </label>
-                    <input type="number" class="form-control" formControlName="maxPlayersNumber"
-                      id="maxPlayersNumber" [ngClass]="{
+                    <input type="number" class="form-control" formControlName="maxPlayersNumber" id="maxPlayersNumber"
+                      [ngClass]="{
                         'is-invalid':
                           (createForm.controls['maxPlayersNumber']?.touched ||
                             submitted) &&
@@ -360,7 +360,8 @@
                     <button type="button" class="btn btn-secondary me-3">
                       <a class="text-light" [routerLink]="['/arcarde/list-arcarde']">{{ 'back' | translate }}</a>
                     </button>
-                    <button type="button" class="btn btn-success" [disabled]="waitingResponse" (click)="createArcarde()">
+                    <button type="button" class="btn btn-success" [disabled]="waitingResponse"
+                      (click)="createArcarde()">
                       <span *ngIf="!waitingResponse">{{ 'action.create' | translate }}</span>
                       <span *ngIf="waitingResponse"><img src="assets/img/loader.gif" alt="" width="30px" /></span>
                     </button>

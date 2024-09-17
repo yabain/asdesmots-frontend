@@ -47,9 +47,9 @@ export class SousCompetitionService {
               .get("competition.competition")
               .subscribe((word: string) => {
                 this.translate
-                  .get("successResponse.deleted")
+                  .get("successResponse.deleted", { entity: word })
                   .subscribe((message: string) => {
-                    this.toastr.success(`${word} ${message}`, "Error");
+                    this.toastr.success(message, "Error");
                   });
               });
             resolve(response);
@@ -111,9 +111,7 @@ export class SousCompetitionService {
                   this.toastr.error(res, "Error");
                 });
             else if (
-              error.includes(
-                'The minimum number of players is not reached'
-              )
+              error.includes("The minimum number of players is not reached")
             )
               this.translate
                 .get("competition.minNumberOfPlayersNotReached")
@@ -518,9 +516,9 @@ export class SousCompetitionService {
               .get("competition.competition")
               .subscribe((competition: string) => {
                 this.translate
-                  .get("successResponse.created")
+                  .get("successResponse.created", { entity: competition })
                   .subscribe((message: string) => {
-                    this.toastr.success(`${competition} ${message}`, "Error");
+                    this.toastr.success(message, "Error");
                   });
               });
             return resolve(response);
@@ -565,9 +563,9 @@ export class SousCompetitionService {
               .get("competition.competition")
               .subscribe((competition: string) => {
                 this.translate
-                  .get("successResponse.updated")
+                  .get("successResponse.updated", { entity: competition })
                   .subscribe((message: string) => {
-                    this.toastr.success(`${competition} ${message}`, "Error");
+                    this.toastr.success(message, "Error");
                   });
               });
             resolve(resp.data);
@@ -581,6 +579,26 @@ export class SousCompetitionService {
                 .get("errorResponse.duplicatedEntry")
                 .subscribe((res: string) => {
                   this.toastr.error(res, "Error");
+                });
+            else if (error.includes('Game arcarde not found'))
+              this.translate
+                .get('arcade.arcade')
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
+                });
+            else if (error.includes('Parent competition not found'))
+              this.translate
+                .get('parentCompetiton')
+                .subscribe((parentCompetition: string) => {
+                  this.translate
+                    .get('errorResponse.entityNotFound', { entity: parentCompetition })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, 'Error');
+                    });
                 });
             else
               this.translate
@@ -752,9 +770,9 @@ export class SousCompetitionService {
             .get("competition.criteria")
             .subscribe((arcade: string) => {
               this.translate
-                .get("successResponse.removed")
+                .get("successResponse.removed", { entity: arcade })
                 .subscribe((message: string) => {
-                  this.toastr.success(`${arcade} ${message}`, "Error");
+                  this.toastr.success(message, "Error");
                 });
             });
           resolve(resp);

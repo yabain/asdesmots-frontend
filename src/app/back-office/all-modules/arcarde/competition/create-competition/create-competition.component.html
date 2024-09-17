@@ -123,10 +123,9 @@
                         " style="color: red">
                         {{ "nameRequired" | translate }}
                       </div>
-                      <div *ngIf="createForm.controls['name']?.errors['used']" style="color: red">
-                        {{ "competition.competition" | translate }}
-                        {{ "errorResponse.alreadyExists" | translate }}
-                      </div>
+                      <p class="invalid-feedback" *ngIf="createForm.controls['name']?.errors['used']"
+                        [translate]="'errorResponse.alreadyExists'"
+                        [translateParams]="{ entity: ( 'competition.competition' | translate ) }">
                       <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.minLength"
                         [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
                       <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.maxlength"

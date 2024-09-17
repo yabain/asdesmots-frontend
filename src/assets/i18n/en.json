@@ -479,7 +479,8 @@
     "noParts":"The competition does not include any rounds",
     "anotherRoundAlredyRunning":"You cannot start multiple games of the same competition simultaneously.",
     "noPartFound":"The competition does not have any part",
-    "minNumberOfPlayersNotReached":"The minimum number of players is not reached! it is no longer possible to run the competition"
+    "minNumberOfPlayersNotReached":"The minimum number of players is not reached! it is no longer possible to run the competition",
+    "subscribeErrorAlreadyPlaying":"You can no longer join this game as it has already started."
   },
   "game": {
     "game": "Game",

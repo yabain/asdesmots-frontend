@@ -47,7 +47,7 @@
                 ? 'competition.runPart'
                 : 'competition.stopPart'
               ) | translate
-            }}" (click)="startGame(part)" [ngClass]="{
+            }}" (click)="changeState(part)" [ngClass]="{
               'cursor-wait': (part?.updatingState === true)
             }">
             <a>

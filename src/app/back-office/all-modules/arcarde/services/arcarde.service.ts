@@ -59,9 +59,9 @@ export class ArcardeService {
           (response: any) => {
             this.translate.get('arcade.arcade').subscribe((arcade: string) => {
               this.translate
-                .get('successResponse.created')
+                .get('successResponse.created', { entity: arcade })
                 .subscribe((message: string) => {
-                  this.toastr.success(`${arcade} ${message}`, 'Error');
+                  this.toastr.success(message, 'Error');
                 });
             });
             return resolve(response);
@@ -98,9 +98,9 @@ export class ArcardeService {
           (response: any) => {
             this.translate.get('arcade.arcade').subscribe((arcade: string) => {
               this.translate
-                .get('successResponse.created')
+                .get('successResponse.updated', { entity: arcade })
                 .subscribe((message: string) => {
-                  this.toastr.success(`${arcade} ${message}`, 'Error');
+                  this.toastr.success(message, 'Error');
                 });
             });
             return resolve(response);
@@ -215,9 +215,9 @@ export class ArcardeService {
         (response) => {
           this.translate.get('arcade.arcade').subscribe((word: string) => {
             this.translate
-              .get('successResponse.deleted')
+              .get('successResponse.deleted', { entity: word })
               .subscribe((message: string) => {
-                this.toastr.success(`${word} ${message}`, 'Error');
+                this.toastr.success(message, 'Error');
               });
           });
           resolve(response);

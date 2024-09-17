@@ -35,11 +35,15 @@ export class CompetitionPlayingComponent implements OnInit {
   submitted: boolean = false;
   expectedWord: Word;
   modalElement: Element;
+  currentPart: any;
+  gameRoundStep: number;
+  gamePartID: string;
   timer: any;
   timeLeft: number = 0; // Compte à rebours de 20 secondes
   validEntry: boolean = true;
   timeOver: boolean = false;
   hasLostGame: boolean = false;
+  currentPlayerId: string;
 
   
   playerEligibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -73,12 +77,14 @@ export class CompetitionPlayingComponent implements OnInit {
     });
     this.socket.on('new-player', (data)=>{
       this.playerEligibleSubject.next(this.playerId === data.player);
-      // this.timeLeft = data.timeLeft
     });
-    this.socket.on("game-play", (data: { gameRound: any; gameWord: Word; player: string }) => {
+    this.socket.on("game-play", (data: { gameRound: any; gameWord: Word; player: string; gameRoundStep: number; gamePartID: string; }) => {
       this.playerEligibleSubject.next(this.playerId === data.player);
-      this.expectedWord = data.gameWord
+      this.currentPlayerId = data.player;
+      this.expectedWord = data.gameWord;
+      this.gameRoundStep = data.gameRoundStep;
       this.resetFormData();
+      this.currentPart = this.competition.gameParts.find(p => p.gameState === (this.state.RUNNING || this.state.WAITING_PLAYER));
     });
     this.socket.on('game-play-error', () => {
       this.resetFormData();
@@ -95,6 +101,11 @@ export class CompetitionPlayingComponent implements OnInit {
       this.resetFormData();
       if((this.competition._id == data.competitionID))
         this.competition.gameState = data.gameState;
+    });
+    this.socket.on('leave-game', ()=> {
+      this.fetching = false;
+      this.submitted = false;
+      $(`#cancel-btn`).click();
     });
   }
   lostGame(playerId: string) {
@@ -129,18 +140,46 @@ export class CompetitionPlayingComponent implements OnInit {
 
   startTimer() {
     clearInterval(this.timer);
-    this.timeLeft = this.competition.maxTimeToPlay;
+  
+    const storedEndTime = localStorage.getItem('endTime');
+    
+    if (storedEndTime) {
+      // Calculer le temps restant en comparant l'heure actuelle et l'heure de fin stockée
+      const now = new Date().getTime();
+      const endTime = parseInt(storedEndTime, 10);
+      const timeDifference = Math.floor((endTime - now) / 1000); // Différence en secondes
+  
+      if (timeDifference > 0) {
+        this.timeLeft = timeDifference; // Temps restant basé sur la différence
+      } else {
+        this.timeLeft = 0; // Si la différence est négative, le temps est écoulé
+        localStorage.removeItem('endTime'); // Nettoyer le stockage si terminé
+      }
+    } else {
+      // Nouveau compte à rebours
+      this.timeLeft = this.competition.maxTimeToPlay;
+      const endTime = new Date().getTime() + this.timeLeft * 1000; // Calculer le timestamp de fin
+      localStorage.setItem('endTime', endTime.toString()); // Stocker l'heure de fin
+    }
+  
+    // Initialiser le timer
     this.timer = setInterval(() => {
       if (this.timeLeft > 0) {
-        this.timeLeft--;  
+        this.timeLeft--;
         return;
       } 
       else if (!this.validEntry) {
-        this.lifesLength.pop();
+        // Gestion des vies ou d'autres éléments si nécessaire
+        // this.lifesLength.pop();
       }
+      // Appeler la méthode pour vérifier l'état du compte à rebours
       this.checkTimer();
+      // Si le temps est écoulé, effacer la valeur du localStorage
+      clearInterval(this.timer);
+      localStorage.removeItem('endTime');
     }, 1000);  // Chaque seconde (1000 ms)
   }
+  
 
   checkEntry() {
     this.validEntry = this.formword.get('word')?.value.toLowerCase() === this.expectedWord.name?.toLowerCase();
@@ -151,17 +190,26 @@ export class CompetitionPlayingComponent implements OnInit {
   }
 
   leaveGame() {
-    this.formword.reset();
-  }
-
-  sendWord() {
     this.fetching = true;
     this.submitted = true;
-    this.gameManager.sendWord({
-      word: this.wordEntry,
+    this.gameManager.leaveGame({
       playerID: this.playerId,
       competitionID: this.competition._id
     });
+  }
+
+  sendWord() {
+    if(this.currentPart) {
+      this.fetching = true;
+      this.submitted = true;
+      this.gameManager.sendWord({
+        word: this.wordEntry,
+        playerID: this.playerId,
+        competitionID: this.competition._id,
+        gameRoundStep: this.gameRoundStep,
+        gamePartID: this.currentPart._id,
+      });
+    }
   }
   closeModal() {
     this.modalService.dismissAll();

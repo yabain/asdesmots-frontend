@@ -64,6 +64,12 @@ export class GameManagerService {
           .get("competition.noPartFound")
           .subscribe((res: string) => {
             this.toastr.error(res, "Error");
+          }) 
+      else if (error.response?.message == "game already playing")
+        this.translate
+          .get("competition.subscribeErrorAlreadyPlaying")
+          .subscribe((res: string) => {
+            this.toastr.error(res, "Error");
           })
       else
         this.translate
@@ -88,14 +94,23 @@ export class GameManagerService {
     this.socket.emit("join-game", requestBody);
   }
 
-  startGame(requestBody: { competitionID: string; gamePartID: string }) {
-    this.socket.emit("start-game-part", requestBody);
+  leaveGame(requestBody: {
+    competitionID: string;
+    playerID: string;
+  }) {
+    this.socket.emit("leave-game", requestBody);
+  }
+
+  changeState(requestBody: { competitionID: string; gamePartID: string, gameState: string }) {
+    this.socket.emit("change-game-part-state", requestBody);
   }
 
   sendWord(requestBody: {
     competitionID: string;
     playerID: string;
     word: string;
+    gameRoundStep: number; 
+    gamePartID: string
   }) {
     this.socket.emit("game-play", requestBody);
   }

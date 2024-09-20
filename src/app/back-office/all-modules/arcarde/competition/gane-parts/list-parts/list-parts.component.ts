@@ -96,6 +96,12 @@ export class ListPartsComponent implements OnInit {
       return ""; // Classe par défaut si nécessaire
     }
   }
+  getActionStatus(competition: any): string {
+    if ((competition.gameState === this.gameState.RUNNING))
+      return "competition.stopPart";
+    else 
+      return "competition.runPart";
+  }
   changeState(part: any) {
     part.updatingState = true;
     let gameState = null;

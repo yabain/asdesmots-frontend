@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { State } from 'src/app/shared/entities/state.enum';
 import { SpeakService } from 'src/app/shared/services/speak/speak.service';
@@ -17,15 +17,15 @@ import { Competition } from '../../../arcarde/competition/competititon-list/sub-
   styleUrls: ['./competition-playing.component.css']
 })
 export class CompetitionPlayingComponent implements OnInit {
-
+  @ViewChild('circularProgress') circularProgress: ElementRef;
   @Input() competition : SousCompetion;
 
   lifesLength: number[] = [];
   errorMsg: string = '';
-  wordEntry: string = '';
+  // wordEntry: string = '';
   showBadMsg: boolean = false;
   showGoodMsg: boolean = false;
-  formword: FormGroup;
+  wordForm: FormGroup;
   state = State;
   isWaitingPlayer: boolean;
   players: any[] = [];
@@ -35,16 +35,21 @@ export class CompetitionPlayingComponent implements OnInit {
   submitted: boolean = false;
   expectedWord: Word;
   modalElement: Element;
-  currentPart: any;
-  gameRoundStep: number;
+  gameRoundStep: number = 0;
   gamePartID: string;
   timer: any;
-  timeLeft: number = 0; // Compte à rebours de 20 secondes
+  startingTimer: any;
+  timeLeft: number = 0;
+  timeLeftToStart: number = 0;
   validEntry: boolean = true;
   timeOver: boolean = false;
   hasLostGame: boolean = false;
+  starting: boolean = false;
+  playing: boolean = false;
   currentPlayerId: string;
-
+  currentPartID: string;
+  currentPart: any;
+  
   
   playerEligibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   playerEligible$: Observable<boolean> = this.playerEligibleSubject.asObservable();
@@ -62,8 +67,11 @@ export class CompetitionPlayingComponent implements OnInit {
     this.competition = competitionData;  
     this.playerEligible$.subscribe((eligible: boolean) => {
       this.eligibleToPlay = eligible;
+      // this.eligibleToPlay = !eligible;
+      // this.starting = true;
+      // this.playing = true;
       if(eligible) {
-        this.startTimer();
+        this.startTimer(true);
       }
     });
     this.socket.on('join-game', (data)=>{
@@ -84,7 +92,11 @@ export class CompetitionPlayingComponent implements OnInit {
       this.expectedWord = data.gameWord;
       this.gameRoundStep = data.gameRoundStep;
       this.resetFormData();
-      this.currentPart = this.competition.gameParts.find(p => p.gameState === (this.state.RUNNING || this.state.WAITING_PLAYER));
+      this.starting = false;
+      this.playing = true;
+      this.startingGame();
+      if(this.playerId === data.player) 
+        this.pronounceWord()
     });
     this.socket.on('game-play-error', () => {
       this.resetFormData();
@@ -94,19 +106,58 @@ export class CompetitionPlayingComponent implements OnInit {
         if (data.lifeGame == 0) 
           this.lostGame(data.player);
         else if(this.playerId === data.player)  
-          this.lifesLength = new Array(data.lifeGame);
+          this.lifesLength.shift();
       }
     });
     this.socket.on('game-statechange', (data)=> {
       this.resetFormData();
+      this.currentPartID = data.partID;
+      this.currentPart = this.competition.gameParts.find(p => p._id == data.partID);
       if((this.competition._id == data.competitionID))
         this.competition.gameState = data.gameState;
+      if(data.gameState === this.state.RUNNING) 
+        this.startingGame();
+      else if(data.gameState === this.state.END) {
+        this.playerEligibleSubject.next(false);
+        clearInterval(this.startingTimer);
+        this.playing = false;
+      }
+      else if(data.gameState === this.state.WAITING_PLAYER)
+        this.playerEligibleSubject.next(false);
     });
     this.socket.on('leave-game', ()=> {
       this.fetching = false;
       this.submitted = false;
       $(`#cancel-btn`).click();
     });
+  }
+  ngOnInit(): void {
+    this.playerId = this.userService.getLocalStorageUser()._id;
+    this.initForm();
+    // this.startingGame();
+    this.currentPart = this.competition.gameParts.find(p => p.gameState == this.state.RUNNING ||  p.gameState == this.state.WAITING_PLAYER);
+    this.currentPartID = this.currentPart._id; 
+  }
+
+  startingGame() {
+    this.starting = true;
+    clearInterval(this.startingTimer);
+    this.timeLeftToStart = this.competition.maxTimeToPlay;
+    this.startingTimer = setInterval(() => {
+      if (this.timeLeftToStart > 0) {
+        this.timeLeftToStart--;
+        this.updateCircularProgress();
+        return;
+      } else {
+        this.starting = false;
+        this.playing = true;
+        clearInterval(this.startingTimer);
+      }
+    }, 1000);
+  }
+  updateCircularProgress() {
+    const progressAngle = (this.timeLeftToStart / this.competition.maxTimeToPlay) * 360;
+    this.circularProgress.nativeElement.style.background = `conic-gradient(#3063AD ${progressAngle}deg, #ededed 0deg)`;
   }
   lostGame(playerId: string) {
     this.players = this.players.filter(p => p._id !== playerId);
@@ -117,33 +168,28 @@ export class CompetitionPlayingComponent implements OnInit {
   resetFormData(){
     this.fetching = false;
     this.submitted = false;
-    this.formword.reset();
+    this.wordForm.reset();
     this.checkTimer();
-  }
-  ngOnInit(): void {
-    this.playerId = this.userService.getLocalStorageUser()._id;
-    this.initForm();
   }
   pronounceWord() {
     this.speakService.speak(this.expectedWord.name, this.expectedWord.type);
   }
 
   initForm() {
-    this.formword = this.fb.group({
+    this.wordForm = this.fb.group({
       word: ['', Validators.required],
     });
 
-    this.formword.valueChanges.subscribe((data) => {
-      this.wordEntry = data.word;
-    });
+    // this.wordForm.valueChanges.subscribe((data) => {
+    //   this.wordEntry = data.word;
+    // });
   }
 
-  startTimer() {
+  startTimer(init: boolean = false) {
     clearInterval(this.timer);
-  
     const storedEndTime = localStorage.getItem('endTime');
     
-    if (storedEndTime) {
+    if (storedEndTime && !init) {
       // Calculer le temps restant en comparant l'heure actuelle et l'heure de fin stockée
       const now = new Date().getTime();
       const endTime = parseInt(storedEndTime, 10);
@@ -182,7 +228,8 @@ export class CompetitionPlayingComponent implements OnInit {
   
 
   checkEntry() {
-    this.validEntry = this.formword.get('word')?.value.toLowerCase() === this.expectedWord.name?.toLowerCase();
+    const enteredWord = this.wordForm.get('word')?.value
+    this.validEntry = !enteredWord.length ? true : (enteredWord.toLowerCase() === this.expectedWord.name?.toLowerCase());
   }
   
   checkTimer() {
@@ -199,15 +246,16 @@ export class CompetitionPlayingComponent implements OnInit {
   }
 
   sendWord() {
-    if(this.currentPart) {
+    if(this.wordForm.valid) {
       this.fetching = true;
       this.submitted = true;
+      clearInterval(this.timer);
       this.gameManager.sendWord({
-        word: this.wordEntry,
+        word: this.wordForm.get('word')?.value,
         playerID: this.playerId,
         competitionID: this.competition._id,
         gameRoundStep: this.gameRoundStep,
-        gamePartID: this.currentPart._id,
+        gamePartID: this.currentPartID,
       });
     }
   }

@@ -42,12 +42,7 @@
         </div>
         <div class="card-footer bg-transparent border-top-0 text-end">
           <p class="btn btn-sm bottom-0 {{ part.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light competition-running' : 'badge badge-pill bg-primary-light' }}"
-            data-toggle="tooltip" data-placement="top" title="{{
-              (part.gameState === gameState.NO_START
-                ? 'competition.runPart'
-                : 'competition.stopPart'
-              ) | translate
-            }}" (click)="changeState(part)" [ngClass]="{
+            data-toggle="tooltip" data-placement="top" title="{{ getActionStatus(part) | translate }}" (click)="changeState(part)" [ngClass]="{
               'cursor-wait': (part?.updatingState === true)
             }">
             <a>

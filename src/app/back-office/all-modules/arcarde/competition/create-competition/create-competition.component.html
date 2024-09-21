@@ -5,8 +5,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="page-title">
-            {{ "arcade.new" | translate }}
-            {{ "competition.competition" | translate }}
+            {{ "competition.new" | translate }}
           </h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item" style="cursor: pointer">
@@ -109,7 +108,7 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="name"> {{ "name" | translate }} </label>
-                    <input type="text" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{
+                    <input type="text" name="name" class="form-control" (change)="nameChanged()" formControlName="name" id="name" [ngClass]="{
                         'is-invalid':
                           (createForm.controls['name']?.touched || submitted) &&
                           createForm.controls['name']?.invalid
@@ -124,14 +123,17 @@
                         " style="color: red">
                         {{ "nameRequired" | translate }}
                       </div>
-                      <div *ngIf="createForm.controls['name']?.errors['used']" style="color: red">
-                        {{ "competition.competition" | translate }}
-                        {{ "alreadyUsed" | translate }}
-                      </div>
+                      <p class="invalid-feedback" *ngIf="createForm.controls['name']?.errors['used']"
+                        [translate]="'errorResponse.alreadyExists'"
+                        [translateParams]="{ entity: ( 'competition.competition' | translate ) }">
+                      <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.minLength"
+                        [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
+                      <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.maxlength"
+                        [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65}"></p>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="localisation"> Localisation </label>
+                    <label for="localisation"> {{ 'location' | translate }} </label>
                     <input type="text" name="localisation" class="form-control" formControlName="localisation"
                       id="localisation" [ngClass]="{
                         'is-invalid':
@@ -145,14 +147,16 @@
                             createForm.controls['localisation'].errors &&
                             createForm.controls['localisation'].errors['required']
                           " style="color: red">
-                        {{ "localisationRequired" | translate }}
+                        {{ "locationRequired" | translate }}
                       </div>
+                      <p class="invalid-feedback" *ngIf="createForm.get('localisation').errors?.maxlength"
+                        [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65}"></p>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="level" class="form-control-label">Niveau</label>
+                    <label for="level" class="form-control-label">{{ 'level' | translate }}</label>
                     <select name="level" formControlName="gameLevel" id="level" class="form-control">
-                      <option value="">--choisir un niveau--</option>
+                      <option value="">{{ 'competition.chooseLevel' |  translate }}</option>
                       <option *ngFor="let item of gameLevels" [value]="item._id">
                         {{ item.name }}
                       </option>
@@ -170,13 +174,13 @@
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="lang">Language </label>
+                    <label for="lang">{{ 'language' | translate }} </label>
                     <select type="num" name="lang" class="form-control" formControlName="lang" id="lang" [ngClass]="{
                         'is-invalid': createForm.get('lang')?.touched && createForm.get('lang')?.invalid
                       }">
-                      <option value="">--choisir une langue--</option>
-                      <option value="fr">Français</option>
-                      <option value="en">Anglais</option>
+                      <option value="">{{ 'competition.chooseLanguage' | translate }} </option>
+                      <option value="fr">{{ 'french' | translate }}</option>
+                      <option value="en">{{ 'english' | translate }}</option>
                     </select>
                     <div *ngIf="
                         (createForm.controls['lang'].touched || submitted) &&
@@ -186,12 +190,12 @@
                           createForm.controls['lang'].errors &&
                           createForm.controls['lang'].errors['required']
                         " style="color: red">
-                        {{ "langRequired" | translate }}
+                        {{ "languageRequired" | translate }}
                       </div>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="parentCompetition">Parent Competition*</label>
+                    <label for="parentCompetition">{{ 'parentCompetiton' | translate }}</label>
                     <select type="text" name="parentCompetition" class="form-control"
                       formControlName="parentCompetition" id="customSelect" [ngClass]="{
                         'is-invalid':
@@ -199,7 +203,7 @@
                           createForm.get('parentCompetition')?.invalid
                       }" [attr.disabled]="(parentCompetitionId?.length > 0)">
                       <option [value]="''">
-                        --choisir une competition parent--
+                        {{ 'competition.chooseParentCompetition' | translate}}
                       </option>
                       <option *ngFor="let location of competitions" [value]="location._id">
                         {{ location.name }}
@@ -218,7 +222,7 @@
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="maxPlayerLife"> Nombre de vie max </label>
+                    <label for="maxPlayerLife"> {{ 'competition.numberOfLive' | translate}} </label>
                     <input type="number" name="maxPlayerLife" min="0" class="form-control"
                       formControlName="maxPlayerLife" id="maxPlayerLife" [ngClass]="{
                         'is-invalid':
@@ -238,7 +242,7 @@
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="maxTimeToPlay"> Temps de Decompte (s) </label>
+                    <label for="maxTimeToPlay"> {{ 'competition.countdownTime' | translate }} </label>
                     <input type="number" min="0" name="maxTimeToPlay" class="form-control"
                       formControlName="maxTimeToPlay" id="maxTimeToPlay" [ngClass]="{
                         'is-invalid':
@@ -253,12 +257,12 @@
                             createForm.controls['maxTimeToPlay'].errors &&
                             createForm.controls['maxTimeToPlay'].errors['required']
                           " style="color: red">
-                        {{ "maxTimeToPlayRequired" | translate }}
+                        {{ "countdownTimeRequired" | translate }}
                       </div>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="maxOfWinners">Nombre max de Gagnants </label>
+                    <label for="maxOfWinners">{{  'competition.nomberOfWinners' | translate }}</label>
                     <input type="number" min="0" name="maxOfWinners" class="form-control" formControlName="maxOfWinners"
                       id="maxOfWinners" [ngClass]="{
                         'is-invalid':
@@ -305,8 +309,7 @@
                             'laterThanEndRegistrationDate'
                           ]
                         " style="color: red">
-                        {{ "arcade.startDate" | translate }}
-                        {{ "arcade.laterThanEndDate" | translate }}
+                        {{ 'laterThanEndRegistrationDate' | translate }}
                       </div>
                       <div *ngIf="
                           createForm.controls['startDate'].errors &&
@@ -314,10 +317,7 @@
                             'laterThanToday'
                           ]
                         " style="color: red">
-                        {{
-                          "arcade.startDateRequired" | translate
-                        }}
-                        {{ "arcade.laterThanToday" | translate }}
+                        {{ 'laterThanToday' | translate }}
                       </div>
                     </div>
                   </div>
@@ -347,8 +347,7 @@
                             'laterThanStartDate'
                           ]
                         " style="color: red">
-                        {{ "arcade.endDate" | translate }}
-                        {{ "arcade.laterThanStartDate" | translate }}
+                        {{ 'laterThanStartDate' | translate }}
                       </div>
                     </div>
                   </div>
@@ -372,11 +371,13 @@
                         " style="color: red">
                         {{ "descriptionRequired" | translate }}
                       </div>
+                      <p class="invalid-feedback" *ngIf="createForm.get('description').errors?.minlength"
+                        [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4}"></p>
                     </div>
                   </div>
                   <div class="d-flex justify-content-start justify-content-lg-end">
-                    <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn1">
-                      {{'close' | translate }}
+                    <button type="button" class="btn btn-secondary me-3">
+                      <a class="text-light" [routerLink]="['/arcarde/details',arcadeId]">{{ 'back' | translate }}</a>
                     </button>
                     <button *ngIf="!fetching" type="button" class="btn btn-success" (click)="create()">
                       <span> {{'add' | translate }}</span>

@@ -1,0 +1,10 @@
+.competition-container {
+    /* border-left: 2px solid #ddd; */
+    position: relative;
+  }
+  .competition-collapse {
+    padding: 1rem;
+    background-color: #FFFFFF;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+  }

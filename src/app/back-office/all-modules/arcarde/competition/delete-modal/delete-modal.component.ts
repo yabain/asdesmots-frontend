@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SousCompetitionService } from '../services/sous-competition.service';
 
 @Component({
@@ -10,6 +10,7 @@ export class DeleteModalComponent implements OnInit {
 
   @Input() competitionData: any;
   @Input() index: Number;
+  @Output() deletedFeedback = new EventEmitter<boolean>();
 
   waiting: boolean = false;
 
@@ -23,7 +24,8 @@ export class DeleteModalComponent implements OnInit {
     this.waiting = true;
     this.sousCompetitionService.deleteCompetition(this.competitionData._id).then(() => {
       this.waiting = false;
-      $('#cancel-btn00').click();
+      this.deletedFeedback.emit(true);
+      $(`#cancel-btn00-${this.competitionData._id}`).click();
     });
   }
 }

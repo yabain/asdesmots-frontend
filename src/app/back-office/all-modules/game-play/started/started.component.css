@@ -1,0 +1,57 @@
+.btn-light {
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.pagination .page-link {
+    color: #3063AD;
+}
+
+.pagination .page-link:hover {
+    background-color: #3063AD;
+    color: #fff;
+}
+.fake-card-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex;
+}
+
+.fake-card {
+    background-color: #FFFFFF;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+.status-btn {
+    margin-left: auto !important;
+}
+/* Réglages pour les petits écrans */
+.fake-card {
+    width: calc(100%); /* Prend en compte la marge des deux côtés */
+}
+
+/* Réglages pour les écrans moyens (équivalent à col-md-6) */
+@media (min-width: 768px) {
+    .fake-card {
+        margin: 5px;
+        width: calc(46% - 10px); /* 46% de largeur avec 15px de marge de chaque côté */
+    }
+}
+
+/* Réglages pour les écrans larges (équivalent à col-lg-4) */
+@media (min-width: 992px) {
+    .fake-card {
+        margin: 5px;
+        width: calc(33.3333% - 10px); /* 33.33% de largeur avec 15px de marge de chaque côté */
+    }
+}
+
+/* Réglages pour les très grands écrans (équivalent à col-xl-3) */
+@media (min-width: 1200px) {
+    .fake-card {
+        margin: 5px;
+        width: calc(25% - 10px); /* 25% de largeur avec 15px de marge de chaque côté */
+    }
+}

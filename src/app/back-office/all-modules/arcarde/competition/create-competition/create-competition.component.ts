@@ -21,6 +21,8 @@ export class CreateCompetitionComponent implements OnInit {
   competitions: any[] = [];
   gameLevels: any[] = [];
   parentCompetitionId: string = '';
+  MinLength = 4;
+  MaxLength = 64;
 
   constructor(
     public sousCompetitionService: SousCompetitionService,
@@ -43,7 +45,7 @@ export class CreateCompetitionComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(60),
+          Validators.maxLength(65),
         ],
       ],
       description: [
@@ -51,13 +53,17 @@ export class CreateCompetitionComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(65),
         ],
       ],
       gameLevel: ['', Validators.required],
       isSinglePart: [true],
       canRegisterPlayer: [false],
-      localisation: ['', Validators.required],
+      localisation: ['', 
+        [
+          Validators.required,
+          Validators.maxLength(65),
+        ],
+      ],
       maxPlayerLife: ['', Validators.required],
       maxTimeToPlay: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -81,7 +87,9 @@ export class CreateCompetitionComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  nameChanged() {
+    delete this.createForm.controls['name'].errors?.['used'];
+  }
   getLevelList() {
     if (JSON.parse(sessionStorage.getItem('levels-list'))) {
       const data = JSON.parse(sessionStorage.getItem('levels-list'));

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { ArcardeService } from '../services/arcarde.service';
@@ -11,6 +11,7 @@ import { ArcardeService } from '../services/arcarde.service';
 export class DeleteModalComponent implements OnInit {
 
   @Input() arcadeData: Arcarde;
+  @Output() deletedFeedback = new EventEmitter<boolean>();
   waiting: boolean = false;
 
   constructor(
@@ -25,7 +26,8 @@ export class DeleteModalComponent implements OnInit {
     this.waiting = true;
     this.arcadeServ.deleteArcarde(this.arcadeData._id).then(() => {
       this.waiting = false;
-      $('#cancel-btn00').click();
+      this.deletedFeedback.emit(true);
+      $(`#cancel-btn00-${this.arcadeData._id}`).click();
     });
   }
 }

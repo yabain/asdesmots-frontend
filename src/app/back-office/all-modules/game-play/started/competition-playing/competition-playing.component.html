@@ -1,0 +1,192 @@
+<div class="modal-header d-flex justify-content-between p-4 mb-3">
+  <img src="assets/img/logo-white.png" alt="" width="30px" />
+  <h4 class="card-title text-center">{{ competition.name }} - {{ currentPart.name }}</h4>
+  <span (click)="closeModal()"><i class="fas fa-times-circle"></i></span>
+</div>
+<div class="modal-body" style="background-color: #f7f8f9">
+  <div class="d-block d-lg-flex justify-content-between h-100 data-container">
+    <div class="col-md-12 col-lg-auto text-center order-lg-3">
+      <div class="card flex-fill bg-white">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Donnees</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <span class="me-2">Difficulte :</span>
+            <span>{{ competition.gameLevel.name }}</span>
+          </li>
+          <li class="list-group-item">
+            <span class="me-2">Competiteurs inscrits :</span>
+            <span>{{ competition.playerGameRegistrations?.length }}</span>
+          </li>
+          <li class="list-group-item">
+            <span class="me-2">Effectif requis :</span>
+            <span>{{ competition.minOfPlayers }}</span>
+          </li>
+          <li class="list-group-item">
+            <span class="me-2">Competiteurs connectes:</span>
+            <span>{{ players.length }}</span>
+          </li>
+          <li class="list-group-item">
+            <span class="me-2">Round:</span>
+            <span>{{gameRoundStep}}/{{ currentPart.numberOfWord }}</span>
+          </li>
+          <li class="list-group-item">
+            <span class="me-2">Vie Restantes :</span>
+            <ng-container *ngIf="this.lifesLength.length; else noHeart" class="life-heart">
+              <div class="lifes-container">
+                <span *ngFor="let i of lifesLength" class="text-danger">
+                  <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+                </span>
+              </div>
+            </ng-container>
+          <ng-template #noHeart>0</ng-template>
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+    <div class="col-md-12 me-lg-2 col-lg-auto order-lg-1">
+      <div class="card flex-fill bg-white">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Participants</h5>
+        </div>
+        <ul class="list-group list-group-flush text-start">
+          <li *ngFor="let player of players" class="list-group-item player-list-item">
+            <div class="d-flex align-items-center current-player-timer w-100">
+              <app-avatar-photo [name]="player.name"></app-avatar-photo>
+              <p class="mb-0 me-3">{{ player.name }} 
+                <span *ngIf="player._id === playerId">(Vous) </span>
+                <!-- <span class="text-success" *ngIf="player._id === currentPlayerId"><i class="fas fa-clock"></i></span> -->
+              </p> 
+              <div #circularProgress *ngIf="playing && (player._id === currentPlayerId)" class="circular-progress">
+                <span class="progress-value"></span>
+              </div>
+            </div>
+          </li>
+          <li *ngIf="!players?.length" class="list-group-item player-list-item">
+            <div class="text-center p-3">
+              Aucun participant !
+            </div>
+          </li>
+          <li *ngIf="(!((competition.gameState === state.END) || hasLostGame))" class="list-group-item">
+            <div class="text-center w-100">
+              <button type="button" class="btn btn-danger">
+                <a data-bs-toggle="modal" [attr.data-bs-target]="'#leave-game'">
+                  Quitter la partie
+                </a>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+    <div *ngIf="(competition.gameState === state.WAITING_PLAYER) || starting || (playing && (playerId === currentPlayerId))" class="col-md-12 me-lg-2 col-lg-auto text-center order-lg-2">
+      <div class="card flex-fill bg-white">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            {{ eligibleToPlay ? 'Word Description' : 'Etat' }}
+          </h5>
+        </div>
+        <div class="card-body text-center">
+          <!-- <span *ngIf="eligibleToPlay" style="font-size: 25px; cursor: pointer" (click)="pronounceWord()">
+            <i class="fas fa-volume-up"></i>
+          </span> -->
+          <span *ngIf="!(starting || playing) && (competition.gameState === state.WAITING_PLAYER)" class="spinner-grow spinner-grow-lg" role="status" aria-hidden="true"></span>
+          <div *ngIf="starting && !playing && (competition.gameState !== state.END)" class="d-flex justify-content-center w-100">
+            <div #circularProgress class="circular-progress">
+              <span class="progress-value">{{ timeLeftToStart }}s</span>
+            </div>
+          </div>
+          <img *ngIf="hasLostGame" src="assets/img/no_result.gif" alt="Game Over" style="max-width: 100px;">
+          <br />
+          <span *ngIf="eligibleToPlay" class="message">
+            {{ expectedWord.description }}
+          </span>
+          <span *ngIf="!starting && (competition.gameState === state.WAITING_PLAYER)" class="message">
+            En attente des joueurs...
+          </span>
+          <span *ngIf="starting && !playing && (competition.gameState !== state.END)">Pour que la partie commence !</span>
+          <span *ngIf="hasLostGame" class="text-warning">Vous avez perdu la partie !</span>
+          <span *ngIf="competition.gameState === state.END" class="text-success">La partie est terminee !</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="eligibleToPlay">
+    <ng-container *ngIf="!timeOver; else timeOverTemplate">
+      Temps restant : {{ timeLeft }} s
+    </ng-container>
+    <ng-template #timeOverTemplate>
+      <span class="invalid-feedback">Le delai de saisie est depasse</span>
+    </ng-template>
+    <form [formGroup]="wordForm">
+      <div class="form-group mb-3">
+        <!-- <div class="d-flex align-items-center">
+          <span *ngIf="eligibleToPlay" class="speaker-btn me-3" (click)="pronounceWord()">
+            <i class="fas fa-volume-up"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="Saisissez le mot" formControlName="word"
+            (input)="checkEntry()" [ngClass]="{
+            'is-invalid': !(validEntry || timeOver),
+            'is-valid': validEntry && wordForm.valid
+          }">
+        </div> -->
+        <div class="input-group d-flex align-items-center">
+          <button class="btn btn-outline-secondary">
+            <span *ngIf="eligibleToPlay" class="speaker-icon" (click)="pronounceWord()">
+              <i class="fas fa-volume-up"></i>
+            </span>
+          </button>
+          <input type="text" class="form-control" placeholder="Saisissez le mot" formControlName="word"
+            (input)="checkEntry()" [ngClass]="{
+            'is-invalid': !(validEntry || timeOver)
+          }">
+          <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="sendWord()"
+            [disabled]="fetching || timeOver">
+            <span *ngIf="!fetching">Soumettre</span>
+            <span *ngIf="fetching"><img src="assets/img/loader.gif" alt="Fetching" height="25px" /></span>
+          </button>
+        </div>
+        <!-- <div *ngIf="!timeOver" class="invalid-feedback">
+          <div *ngIf="!validEntry">
+            Le mot saisi est incorrect
+          </div>
+        </div> -->
+      </div>
+    </form>
+  </div>
+</div>
+<!-- <div *ngIf="(eligibleToPlay) && (competition.gameState !== state.END)" class="modal-footer text-center p-0 my-3">
+  <button class="btn btn-outline-primary" type="submit" id="button-addon2" (keydown.enter)="sendWord()" (click)="sendWord()"
+    [disabled]="fetching || timeOver || wordForm.get('word').invalid">
+    <span *ngIf="!fetching">Soumettre</span>
+    <span *ngIf="fetching"><img src="assets/img/loader.gif" alt="Fetching" height="25px" /></span>
+  </button>
+</div> -->
+
+<div class="modal custom-modal fade" id="leave-game" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-icon text-center mb-3">
+        <i class="fas fa-user-slash text-danger"></i>
+        <h2 class="pt-2">{{ 'confirmDeleteTitle' | translate }}</h2>
+      </div>
+      <div class="modal-text text-center pb-3">
+        Etes vous sur de vouloir quitter la partie ? vous ne pourez pas y revenir
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn">
+          {{'action.cancel' | translate }}
+        </button>
+        <button type="button" *ngIf="!fetching" class="btn btn-danger" (click)="leaveGame()">
+          {{'action.delete' | translate }}
+        </button>
+        <button type="button" *ngIf="fetching" class="btn btn-danger" disabled>
+          <img src="assets/img/loader.gif" alt="" width="30px">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

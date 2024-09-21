@@ -34,8 +34,8 @@ export class WordsService {
       this.httpClient.post(`${environment.url}/gamelevel/word`, wordForm, { headers: this.headers})
       .subscribe((response: any) => { 
         this.translate.get('words.word').subscribe((word: string) => {
-          this.translate.get('successResponse.created').subscribe((message: string) => {
-            this.toastr.success(`${word} ${message}`, 'Error');
+          this.translate.get('successResponse.created', { entity: word }).subscribe((message: string) => {
+            this.toastr.success(message, 'Error');
           });
         });
         resolve(response);
@@ -66,8 +66,8 @@ export class WordsService {
       this.api.put(`gamelevel/${wordData.gameLevelId}/word/${wordData._id}`, params, this.headers)
         .subscribe((response: any) => {
           this.translate.get('words.word').subscribe((word: string) => {
-            this.translate.get('successResponse.created').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('successResponse.created', { entity: word }).subscribe((message: string) => {
+              this.toastr.success(message, 'Error');
             });
           });
           resolve(response);
@@ -189,8 +189,8 @@ export class WordsService {
       this.api.delete(`gamelevel/${gameLevelId}/words/${word._id}`, this.headers)
         .subscribe(response => {
           this.translate.get('words.word').subscribe((word: string) => {
-            this.translate.get('successResponse.deleted').subscribe((message: string) => {
-              this.toastr.success(`${word} ${message}`, 'Error');
+            this.translate.get('successResponse.deleted', { entity: word }).subscribe((message: string) => {
+              this.toastr.success(message, 'Error');
             });
           });
           resolve(response);

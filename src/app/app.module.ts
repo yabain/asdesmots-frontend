@@ -22,13 +22,14 @@ import { CommonModule } from '@angular/common';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { EmailVerificationModule } from './front-office/authentication/email-verification/email-verification.module';
 import { ErrorInterceptor } from './shared/interceptor/error.interceptor';
+import { environment } from 'src/environments/environment';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-const config: SocketIoConfig = { url: 'http://127.0.0.1:3000', options: {}};
+const config: SocketIoConfig = { url: environment.socketIoUrl, options: {}};
 @NgModule({
   declarations: [AppComponent],
   imports: [

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CountryISO } from 'ngx-intl-tel-input';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
-  constructor() { }
+  constructor() {}
   countries() {
     return [
       {
@@ -37,476 +36,474 @@ export class LocationService {
       //Cameroun
       {
         id: 1,
-        name: 'Bafang'
+        name: 'Bafang',
       },
       {
         id: 1,
-        name: 'Bafia'
+        name: 'Bafia',
       },
       {
         id: 1,
-        name: 'Bafoussam'
+        name: 'Bafoussam',
       },
       {
         id: 1,
-        name: 'Bamenda'
+        name: 'Bamenda',
       },
       {
         id: 1,
-        name: 'Bangangté'
+        name: 'Bangangté',
       },
       {
         id: 1,
-        name: 'Buéa'
+        name: 'Buéa',
       },
       {
         id: 1,
-        name: 'Douala'
+        name: 'Douala',
       },
       {
         id: 1,
-        name: 'Dschang'
+        name: 'Dschang',
       },
       {
         id: 1,
-        name: 'Ebolowa'
+        name: 'Ebolowa',
       },
       {
         id: 1,
-        name: 'Foumban'
+        name: 'Foumban',
       },
       {
         id: 1,
-        name: 'Garoua'
+        name: 'Garoua',
       },
       {
         id: 1,
-        name: 'Kaélé'
+        name: 'Kaélé',
       },
       {
         id: 1,
-        name: 'Koussérie'
+        name: 'Koussérie',
       },
       {
         id: 1,
-        name: 'Kribi'
+        name: 'Kribi',
       },
       {
         id: 1,
-        name: 'Mbalmayo'
+        name: 'Mbalmayo',
       },
       {
         id: 1,
-        name: 'Mbanga'
+        name: 'Mbanga',
       },
       {
         id: 1,
-        name: 'Nagoundéré'
+        name: 'Nagoundéré',
       },
       {
         id: 1,
-        name: 'Sangmélima'
+        name: 'Sangmélima',
       },
       {
         id: 1,
-        name: 'Yagoua'
+        name: 'Yagoua',
       },
       {
         id: 1,
-        name: 'Yaoundé'
+        name: 'Yaoundé',
       },
-
 
       //Congo
       {
         id: 2,
-        name: 'Bandundu'
+        name: 'Bandundu',
       },
       {
         id: 2,
-        name: 'Baraka'
+        name: 'Baraka',
       },
       {
         id: 2,
-        name: 'Beni'
+        name: 'Beni',
       },
       {
         id: 2,
-        name: 'Boende'
+        name: 'Boende',
       },
       {
         id: 2,
-        name: 'Boma'
+        name: 'Boma',
       },
       {
         id: 2,
-        name: 'Bukavu'
+        name: 'Bukavu',
       },
       {
         id: 2,
-        name: 'Bunia'
+        name: 'Bunia',
       },
       {
         id: 2,
-        name: 'Buta'
+        name: 'Buta',
       },
       {
         id: 2,
-        name: 'Butembo'
+        name: 'Butembo',
       },
       {
         id: 2,
-        name: 'Gbadolite'
+        name: 'Gbadolite',
       },
       {
         id: 2,
-        name: 'Gemena'
+        name: 'Gemena',
       },
       {
         id: 2,
-        name: 'Goma'
+        name: 'Goma',
       },
       {
         id: 2,
-        name: 'Inongo'
+        name: 'Inongo',
       },
       {
         id: 2,
-        name: 'Isiro'
+        name: 'Isiro',
       },
       {
         id: 2,
-        name: 'Kabinda'
+        name: 'Kabinda',
       },
       {
         id: 2,
-        name: 'Kalemie'
+        name: 'Kalemie',
       },
       {
         id: 2,
-        name: 'Kamina'
+        name: 'Kamina',
       },
       {
         id: 2,
-        name: 'Kananga'
+        name: 'Kananga',
       },
       {
         id: 2,
-        name: 'Kenge'
+        name: 'Kenge',
       },
       {
         id: 2,
-        name: 'Kikwit'
+        name: 'Kikwit',
       },
       {
         id: 2,
-        name: 'Kindu'
+        name: 'Kindu',
       },
       {
         id: 2,
-        name: 'Kisangani'
+        name: 'Kisangani',
       },
       {
         id: 2,
-        name: 'Kinshasa'
+        name: 'Kinshasa',
       },
       {
         id: 2,
-        name: 'Kolwezi'
+        name: 'Kolwezi',
       },
       {
         id: 2,
-        name: 'Likasi'
+        name: 'Likasi',
       },
       {
         id: 2,
-        name: 'Lisala'
+        name: 'Lisala',
       },
       {
         id: 2,
-        name: 'Lubumbashi'
+        name: 'Lubumbashi',
       },
       {
         id: 2,
-        name: 'Lusambo'
+        name: 'Lusambo',
       },
       {
         id: 2,
-        name: 'Matadi'
+        name: 'Matadi',
       },
       {
         id: 2,
-        name: 'Mbandaka'
+        name: 'Mbandaka',
       },
       {
         id: 2,
-        name: 'Mbujimayi'
+        name: 'Mbujimayi',
       },
       {
         id: 2,
-        name: 'Muene-Ditu'
+        name: 'Muene-Ditu',
       },
       {
         id: 2,
-        name: 'Tshikapa'
+        name: 'Tshikapa',
       },
       {
         id: 2,
-        name: 'Uvira'
+        name: 'Uvira',
       },
       {
         id: 2,
-        name: 'Zongo'
+        name: 'Zongo',
       },
-
 
       //Gabon
       {
         id: 3,
-        name: 'Libreville'
+        name: 'Libreville',
       },
       {
         id: 3,
-        name: 'Moanda'
+        name: 'Moanda',
       },
       {
         id: 3,
-        name: 'Bitam'
+        name: 'Bitam',
       },
       {
         id: 3,
-        name: 'Booué'
+        name: 'Booué',
       },
       {
         id: 3,
-        name: 'Cocobeach'
+        name: 'Cocobeach',
       },
       {
         id: 3,
-        name: 'Fougamou'
+        name: 'Fougamou',
       },
       {
         id: 3,
-        name: 'Franceville'
+        name: 'Franceville',
       },
       {
         id: 3,
-        name: 'Gamba'
+        name: 'Gamba',
       },
       {
         id: 3,
-        name: 'Kango'
+        name: 'Kango',
       },
       {
         id: 3,
-        name: 'Koulamoutou'
+        name: 'Koulamoutou',
       },
       {
         id: 3,
-        name: 'Lambaréné'
+        name: 'Lambaréné',
       },
       {
         id: 3,
-        name: 'Lastourville'
+        name: 'Lastourville',
       },
       {
         id: 3,
-        name: 'Lékoni'
+        name: 'Lékoni',
       },
       {
         id: 3,
-        name: 'Libreville'
+        name: 'Libreville',
       },
       {
         id: 3,
-        name: 'Makokou'
+        name: 'Makokou',
       },
       {
         id: 3,
-        name: 'Mayumba'
+        name: 'Mayumba',
       },
       {
         id: 3,
-        name: 'Mbigou'
+        name: 'Mbigou',
       },
       {
         id: 3,
-        name: 'Medouneu'
+        name: 'Medouneu',
       },
       {
         id: 3,
-        name: 'Mékambo'
+        name: 'Mékambo',
       },
       {
         id: 3,
-        name: 'Mitzic'
+        name: 'Mitzic',
       },
       {
         id: 3,
-        name: 'Mimongo'
+        name: 'Mimongo',
       },
       {
         id: 3,
-        name: 'Minvoul'
+        name: 'Minvoul',
       },
       {
         id: 3,
-        name: 'Mounana'
+        name: 'Mounana',
       },
       {
         id: 3,
-        name: 'Moanda'
+        name: 'Moanda',
       },
       {
         id: 3,
-        name: 'Mouila'
+        name: 'Mouila',
       },
       {
         id: 3,
-        name: 'Ndendé'
+        name: 'Ndendé',
       },
       {
         id: 3,
-        name: 'Ndjolé'
+        name: 'Ndjolé',
       },
       {
         id: 3,
-        name: 'Nkan'
+        name: 'Nkan',
       },
       {
         id: 3,
-        name: 'Ntoum'
+        name: 'Ntoum',
       },
       {
         id: 3,
-        name: 'Okondja'
+        name: 'Okondja',
       },
       {
         id: 3,
-        name: 'Omboué'
+        name: 'Omboué',
       },
       {
         id: 3,
-        name: 'Oyem'
+        name: 'Oyem',
       },
       {
         id: 3,
-        name: 'Port-Gentil'
+        name: 'Port-Gentil',
       },
       {
         id: 3,
-        name: 'Tchibanga'
+        name: 'Tchibanga',
       },
       {
         id: 3,
-        name: 'Tsogni'
+        name: 'Tsogni',
       },
 
       //Gunée équatoriale'
       {
         id: 4,
-        name: 'Bata'
+        name: 'Bata',
       },
       {
         id: 4,
-        name: 'Malabo'
+        name: 'Malabo',
       },
       {
         id: 4,
-        name: 'Ebebiyín'
+        name: 'Ebebiyín',
       },
       {
         id: 4,
-        name: 'Aconibe'
+        name: 'Aconibe',
       },
       {
         id: 4,
-        name: 'Añisoc'
+        name: 'Añisoc',
       },
       {
         id: 4,
-        name: 'Luba'
+        name: 'Luba',
       },
       {
         id: 4,
-        name: 'Evinayong'
+        name: 'Evinayong',
       },
       {
         id: 4,
-        name: 'Mongomo'
+        name: 'Mongomo',
       },
       {
         id: 4,
-        name: 'Mengomeyén'
+        name: 'Mengomeyén',
       },
       {
         id: 4,
-        name: 'Mikomeseng'
+        name: 'Mikomeseng',
       },
       {
         id: 4,
-        name: 'Rebola'
+        name: 'Rebola',
       },
       {
         id: 4,
-        name: 'Bidjabidjan'
+        name: 'Bidjabidjan',
       },
       {
         id: 4,
-        name: 'Niefang'
+        name: 'Niefang',
       },
       {
         id: 4,
-        name: 'Cogo'
+        name: 'Cogo',
       },
       {
         id: 4,
-        name: 'Nsok'
+        name: 'Nsok',
       },
       {
         id: 4,
-        name: 'SAP'
+        name: 'SAP',
       },
       {
         id: 4,
-        name: 'Mbini'
+        name: 'Mbini',
       },
       {
         id: 4,
-        name: 'Nsork'
+        name: 'Nsork',
       },
       {
         id: 4,
-        name: 'Ayene'
+        name: 'Ayene',
       },
       {
         id: 4,
-        name: 'Nkimi'
+        name: 'Nkimi',
       },
       {
         id: 4,
-        name: 'Machinda'
+        name: 'Machinda',
       },
       {
         id: 4,
-        name: 'Acurenam'
+        name: 'Acurenam',
       },
       {
         id: 4,
-        name: 'Corisco'
+        name: 'Corisco',
       },
       {
         id: 4,
-        name: 'Baney'
+        name: 'Baney',
       },
       {
         id: 4,
-        name: 'Bicurga'
+        name: 'Bicurga',
       },
       {
         id: 4,
-        name: 'Nsang'
-      }
+        name: 'Nsang',
+      },
     ];
   }
 }

@@ -1,0 +1,167 @@
+<div class="modal custom-modal fade" id="addPart" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center justify-content-between mb-3">
+        <img src="assets/img/logo-white.png" alt="" width="30px" />
+        <h4 class="card-title text-center">
+          {{ "competition.createPart" | translate }}
+        </h4>
+        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
+      </div>
+      <div class="modal-body pb-0">
+        <form [formGroup]="createForm">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="name"> {{ "name" | translate }} </label>
+              <input type="text"  (change)="nameChanged()" class="form-control" formControlName="name" name="name" id="name" [ngClass]="{
+                  'is-invalid':
+                    (createForm.controls['name']?.touched || submitted) &&
+                    createForm.controls['name']?.invalid
+                }" />
+              <div *ngIf="
+                  (createForm.controls['name'].touched || submitted) &&
+                  createForm.controls['name'].invalid
+                " class="invalid-feedback">
+                <div *ngIf="
+                    createForm.controls['name'].errors &&
+                    createForm.controls['name'].errors['required']
+                  " style="color: red">
+                  {{ "nameRequired" | translate }}
+                </div>
+                <div *ngIf="createForm.controls['name']?.errors['used']" style="color: red">
+                  {{ "competition.part" | translate }}
+                  {{ "alreadyUsed" | translate }}
+                </div>
+                <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.minLength"
+                  [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4 }"></p>
+                <p class="invalid-feedback" *ngIf="createForm.get('name').errors?.maxlength"
+                  [translate]="'form.validator.maxLength'" [translateParams]="{ maxLength: 65 }"></p>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="numberOfWords">
+                {{ "competition.numberOfWord" | translate }}
+              </label>
+              <input type="number" class="form-control" min="2" formControlName="numberOfWord" name="numberOfWords"
+                id="numberOfWords" [ngClass]="{
+                  'is-invalid':
+                    (createForm.controls['numberOfWord']?.touched ||
+                      submitted) &&
+                    createForm.controls['numberOfWord']?.invalid
+                }" />
+              <div *ngIf="
+                  (createForm.controls['numberOfWord'].touched || submitted) &&
+                  createForm.controls['numberOfWord'].invalid
+                " class="invalid-feedback">
+                <div *ngIf="
+                    createForm.controls['numberOfWord'].errors &&
+                    createForm.controls['numberOfWord'].errors['required']
+                  " style="color: red">
+                  {{ "numberOfWordRequired" | translate }}
+                </div>
+                <p class="invalid-feedback" *ngIf="createForm.get('numberOfWord').errors?.min"
+                  [translate]="'competition.minWord'" [translateParams]="{ min: 2 }"></p>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="startDate">
+                {{ "startDate" | translate }}
+              </label>
+              <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'startDate')">
+                <input type="text" class="form-control" formControlName="startDate" [ngClass]="{
+                    'is-invalid':
+                      (createForm.controls['startDate']?.touched ||
+                        submitted) &&
+                      createForm.controls['startDate']?.invalid
+                  }" />
+              </ng-bmis-date-time-picker>
+              <div *ngIf="
+                  (createForm.controls['startDate'].touched || submitted) &&
+                  createForm.controls['startDate'].invalid
+                " class="invalid-feedback">
+                <div *ngIf="
+                    createForm.controls['startDate'].errors &&
+                    createForm.controls['startDate'].errors['required']
+                  " style="color: red">
+                  {{ "startDateRequired" | translate }}
+                </div>
+                <div *ngIf="
+                    createForm.controls['startDate'].errors &&
+                    createForm.controls['startDate'].errors[
+                      'laterThanEndRegistrationDate'
+                    ]
+                  " style="color: red">
+                  {{ "laterThanEndRegistrationDate" | translate }}
+                </div>
+                <div *ngIf="
+                    createForm.controls['startDate'].errors &&
+                    createForm.controls['startDate'].errors['laterThanToday']
+                  " style="color: red">
+                  {{ "laterThanToday" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="endDate"> {{ "endDate" | translate }} </label>
+              <ng-bmis-date-time-picker (dateTimeChange)="onDateTimeChange($event, 'endDate')">
+                <input type="text" class="form-control" formControlName="endDate" [ngClass]="{
+                    'is-invalid':
+                      (createForm.controls['endDate']?.touched || submitted) &&
+                      createForm.controls['endDate']?.invalid
+                  }" />
+              </ng-bmis-date-time-picker>
+              <div *ngIf="
+                  (createForm.controls['endDate'].touched || submitted) &&
+                  createForm.controls['endDate'].invalid
+                " class="invalid-feedback">
+                <div *ngIf="
+                    createForm.controls['endDate'].errors &&
+                    createForm.controls['endDate'].errors['required']
+                  " style="color: red">
+                  {{ "endDateRequired" | translate }}
+                </div>
+                <div *ngIf="
+                    createForm.controls['endDate'].errors &&
+                    createForm.controls['endDate'].errors['laterThanStartDate']
+                  " style="color: red">
+                  {{ "laterThanStartDate" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="desc"> {{ "description" | translate }} </label>
+              <textarea type="text" class="form-control" formControlName="description" [ngClass]="{
+                  'is-invalid':
+                    (createForm.controls['description']?.touched ||
+                      submitted) &&
+                    createForm.controls['description']?.invalid
+                }"></textarea>
+              <div *ngIf="
+                  (createForm.controls['description'].touched || submitted) &&
+                  createForm.controls['description'].invalid
+                " class="invalid-feedback">
+                <div *ngIf="
+                    createForm.controls['description'].errors &&
+                    createForm.controls['description'].errors['required']
+                  " style="color: red">
+                  {{ "descriptionRequired" | translate }}
+                </div>
+                <p class="invalid-feedback" *ngIf="createForm.get('description').errors?.minlength"
+                  [translate]="'form.validator.minLength'" [translateParams]="{ minLength: 4 }"></p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn00-{{ competitionId }}">
+          {{ "close" | translate }}
+        </button>
+        <button type="button" class="btn btn-success" (click)="addPart()">
+          <span *ngIf="!fetching">{{ "add" | translate }} </span>
+          <span *ngIf="fetching"><img src="assets/img/loader.gif" alt="" width="30px" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

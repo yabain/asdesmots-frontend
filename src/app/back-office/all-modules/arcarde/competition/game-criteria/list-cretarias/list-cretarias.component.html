@@ -1,0 +1,32 @@
+<div *ngIf="!listCriterias?.length || fetching" class="d-flex align-items-center text-center justify-content-center vh-50">
+  <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
+    <p *ngIf="!(listCriterias?.length || fetching)" class="text-center">{{ 'competition.noCriteria' | translate }}</p>
+</div>
+<div class="competition-container" *ngFor="let criteria of listCriterias; let i = index">
+  <div class="competition-collapse" [ngClass]="{
+      'collapsed': isCollapsed[i]
+    }" (click)="toggleCollapse(i)">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="c-pointer">
+        <i class="fas" [ngClass]="
+            isCollapsed[i] ? 'fa-caret-right' : 'fa-caret-down'
+          "></i>
+        {{ criteria.name }}
+      </div>
+      <app-delete-criteria [competitionId]="competitionId" [choosenCriteria]="criteria" (deletedCriteriasFeedback)="updateList($event)"></app-delete-criteria>
+      <div class="col-auto c-pointer">
+        <a class="badge badge-pill bg-danger-light me-2" data-toggle="tooltip" data-placement="top"
+          title="Remove the criteria" data-bs-toggle="modal"
+          [attr.data-bs-target]="'#delete-'+criteria._id">
+          <i class="fas fa-trash"></i>
+        </a>
+      </div>
+    </div>
+    <div *ngIf="!isCollapsed[i]" class="competition-data">
+      <hr>
+      {{ criteria.description }}
+    </div>
+  </div>
+</div>
+<app-apply-citeria-modal *ngIf="!fetching" [competitionId]="competitionId" [competitionCriterias]="listCriterias"
+  (appliedCriteriasFeedback)="updateList($event)"></app-apply-citeria-modal>

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { State } from 'src/app/shared/entities/state.enum';
+import { SousCompetitionService } from '../../services/sous-competition.service';
 
 
 export interface Competition{
@@ -17,10 +18,15 @@ export interface Competition{
 export class SubCompetitionComponent implements OnInit {
   @Input() competitions: Competition[];
   @Input() arcadeId: string;
+  @Output() deletedFeedback = new EventEmitter<boolean>();
 
   gameState = State;
 
   isCollapsed: { [key: number]: boolean } = {};
+
+  constructor(private subCompetitionService: SousCompetitionService) {
+
+  }
 
   ngOnInit() {
     if (this.competitions) {
@@ -34,11 +40,22 @@ export class SubCompetitionComponent implements OnInit {
     this.isCollapsed[index] = !this.isCollapsed[index];
   }
 
-  startCompetition(idCompetition: string){
-    
-
+ 
+  changeCompetitionState(gameCompetition: any) {
+    gameCompetition.updatingState = true;
+    this.subCompetitionService.changeState({
+      gameCompetitionID: gameCompetition._id,
+      state: (gameCompetition.gameState == State.NO_START) ? State.RUNNING: State.END,
+    }).then(() => {
+      gameCompetition.updatingState = false;
+      gameCompetition.gameState = (gameCompetition.gameState == State.NO_START) ? State.RUNNING: State.END;
+    }, (err) => {
+      gameCompetition.updatingState = false;
+    });
   }
-  startGame(competitionId: string) {
-    // Logique pour démarrer une compétition
+
+  deletedSubCompettitionFeedback(newValue: string) {
+    if(newValue)
+      this.deletedFeedback.emit(true);
   }
 }

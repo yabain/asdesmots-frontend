@@ -1,0 +1,74 @@
+.data-container {
+    max-width: 100%;
+    overflow-x: inherit;
+}
+.list-group-flush .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.list-group-flush .list-group-item span.ml-auto {
+    width: 100%;
+    text-align: right;
+    margin-left: auto;
+}
+.life-heart {
+    max-width: 20px;
+    overflow-y: hidden;
+}
+.lifes-container {
+    max-width: 100px !important;
+}
+.life-heart span {
+    margin-right: 5px;
+}
+.input-group .form-control, .input-group .input-group-text {
+    width: fit-content;
+}
+.input-group .input-group-text {
+    border-left:  1px;
+}
+.message {
+    font-size: 17px;
+}
+.circular-progress{
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: conic-gradient(#3063AD 360deg, #ededed 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.circular-progress::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.progress-value{
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3063AD;
+}
+.text{
+    font-size: 30px;
+    font-weight: 500;
+    color: #606060;
+}
+.current-player-timer .circular-progress{
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+}
+.current-player-timer .circular-progress::before{
+    width: 15px;
+    height: 15px;
+}
+.input-group .btn {
+    height: 39.8px;
+}

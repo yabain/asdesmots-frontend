@@ -12,247 +12,77 @@
           </ul>
         </div>
         <div class="col-auto">
-          <!-- <a [routerLink]="'/customers/add-customer'" class="btn btn-primary me-2"
-              style="color: #035858 !important; background-color: #ffff !important;">
-              <i class="fas fa-plus"></i>
-            </a> -->
           <a class="btn btn-primary me-2" [routerLink]="'/arcarde/create'"
             style="color: #035858 !important; background-color: #ffff !important;" data-toggle="tooltip"
-            data-placement="top" title="Create new Arcarde">
+            data-placement="top" title="{{ 'arcade.new' | translate }}">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
         </div>
       </div>
     </div>
-
-
-    <div class="row" *ngIf="arcadeServ.waitingResponse">
-      <div class="col-sm-12">
-        <app-progress-indeterminate></app-progress-indeterminate>
-      </div>
-    </div>
-
-    <div class="row">
-      <div *ngFor="let arcarde of arcades" class="col-12 col-md-4 col-lg-3">
-        <div class="custom-card">
-          <div class="card-body pb-0">
-            <div class="d-flex justify-content-between align-items-start">
-              <a class="text-decoration-none" [routerLink]="['/arcarde/details',arcarde._id]" style="color: inherit">
-                <div class="mb-0">
-                  <h5 class="card-title text-primary">{{ arcarde.name }}</h5>
-                  <p></p>
-                  <p class="card-text">{{ arcarde.description | truncate:200 }}</p>
-                </div>
-              </a>
-              <div class="dropdown">
-                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-ellipsis-h"></i>
+    <div *ngIf="!loading" class="row">
+      <!-- Bloc pour afficher les arcades -->
+      <div *ngIf="arcades && arcades.length > 0; else emptyBlock" class="row">
+        <div *ngFor="let arcade of arcades" class="col-12 col-md-4 col-lg-3">
+          <div class="custom-card">
+            <div class="card-body pb-0">
+              <div class="d-flex justify-content-between align-items-start">
+                <a class="text-decoration-none" [routerLink]="['/arcarde/details', arcade._id]" style="color: inherit">
+                  <div class="mb-0">
+                    <h5 class="card-title text-primary">{{ arcade.name }}</h5>
+                    <p class="card-text">{{ arcade.description | truncate:200 }}</p>
+                  </div>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li>
-                    <a class="dropdown-item" [routerLink]="['/arcarde/details',arcarde._id]" style="cursor: pointer;">
-                      <i class="fa fa-eye"></i>
-                      <span style="margin-left: 5px;"> {{ 'showmore' | translate }} </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" style="cursor: pointer;" (click)="arcardeData = arcarde"
-                      data-bs-toggle="modal" data-bs-target="#delete">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                      <span style="margin-left: 5px;"> {{'delete' | translate}} </span>
-                    </a>
-                  </li>
-                </ul>
+                <div class="dropdown">
+                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" [routerLink]="['/arcarde/details', arcade._id]" style="cursor: pointer;">
+                        <i class="fa fa-eye"></i>
+                        <span style="margin-left: 5px;">{{ 'showmore' | translate }}</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" [routerLink]="['/arcarde/update', arcade._id]" style="cursor: pointer;">
+                        <i class="fa fa-pencil"></i>
+                        <span style="margin-left: 5px;">{{ 'edit' | translate }}</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" style="cursor: pointer;"
+                        data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+arcade._id">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <span style="margin-left: 5px;">{{ 'delete' | translate }}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="card-footer bg-transparent border-top-0 text-end">
+              <p
+                class="btn btn-sm {{ arcade.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' }}">
+                {{ (arcade.isOnlineGame ? 'arcade.online' : 'arcade.offline') | translate }}
+              </p>
+            </div>
           </div>
-          <div class="card-footer bg-transparent border-top-0 text-end">
-            <p
-              class="btn btn-sm bottom-0 {{ arcarde.isOnlineGame ? 'badge badge-pill bg-success-light' : 'badge badge-pill bg-warning-light' }}">
-              {{ (arcarde.isOnlineGame ? 'arcade.online': 'arcade.offline') | translate }}
-            </p>
-          </div>
+          <app-delete-arcade-modal [arcadeData]="arcade" (deletedFeedback)="deletedFeedback($event)"></app-delete-arcade-modal>
         </div>
+      </div>
+      <!-- Bloc vide -->
+      <ng-template #emptyBlock>
+        <div class="col-12 text-center vh-50">
+          <p>{{ 'arcade.emptyList' | translate }}</p>
+        </div>
+      </ng-template>
+    </div>
+    <!-- Bloc de chargement -->
+    <div *ngIf="loading" class="row">
+      <div *ngFor="let plh of placeholders; let i = index" class="col-12 col-md-4 col-lg-3">
+        <app-arcade-list-placeholder></app-arcade-list-placeholder>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="modal custom-modal fade" id="details" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-header d-flex align-items-center justify-content-between p-0 mb-5">
-        <img src="assets/img/logo-white.png" alt="" width="30px">
-        <h4 class="card-title text-center">{{ arcardeData.name }}</h4>
-        <span data-bs-dismiss="modal"><i class="fas fa-times-circle"></i></span>
-      </div>
-      <div class="align-items-center">
-        <div class="row form-group">
-          <label for="description" class="col-sm-3 col-form-label input-label">
-            {{'description' | translate}}
-          </label>
-          <div class="col-sm-9">
-            <p class="description-container" style="min-width: 100%">{{arcardeData.description}}</p>
-          </div>
-        </div>
-        <div class="row form-group">
-          <label for="startDate" class="col-sm-3 col-form-label input-label">
-            {{'start' | translate}}
-          </label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" value="{{arcardeData.startDate | formatDate}}" name="startDate"
-              id="startDate" disabled>
-          </div>
-        </div>
-        <div class="row form-group">
-          <label for="endDate" class="col-sm-3 col-form-label input-label">
-            {{ 'end' | translate }}
-          </label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control" value="{{arcardeData.endDate | formatDate}}" name="endDate"
-              id="endDate" disabled>
-          </div>
-
-        </div>
-
-        <div class="row form-group">
-          <label for="endDate" class="col-sm-3 col-form-label input-label">
-            {{ 'start Registration Date' | translate }}
-          </label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control" value="{{arcardeData.startRegistrationDate| formatDate}}"
-              name="endDate" id="endDate" disabled>
-          </div>
-
-        </div>
-
-        <div class="row form-group">
-          <label for="endDate" class="col-sm-3 col-form-label input-label">
-            {{ 'end Registration Date' | translate }}
-          </label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control" value="{{arcardeData.endRegistrationDate| formatDate}}"
-              name="endDate" id="endDate" disabled>
-          </div>
-
-        </div>
-
-        <div class="row form-group">
-          <label for="maxPlayersNumber" class="col-sm-3 col-form-label input-label">
-            {{'maxPlayers' | translate}}
-          </label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" [value]="arcardeData.maxPlayersNumber" id="maxPlayersNumber"
-              name="maxPlayersNumber" disabled>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal custom-modal fade" id="unsuscribe_arcarde" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> Desinscription Competition </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-        </div>
-        <div class="modal-text text-center">
-          <p>{{'wanTo' | translate }} <b>{{ arcardeData.name }} </b>? </p>
-        </div>
-      </div>
-
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2"
-          (click)="arcadeServ.unsuscriptionDone = false">
-          {{'close' | translate }}
-        </button>
-        <button type="button" class="btn btn-danger" *ngIf="!arcadeServ.unsuscriptionDone" (click)="doUnsuscription()">
-          <span *ngIf="!arcadeServ.waitingResponse">Desinscrire </span>
-          <span *ngIf="arcadeServ.waitingResponse"><img src="../../../../../assets/img/loader.gif" alt=""
-              width="30px"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal custom-modal fade" id="suscribe_arcarde" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> Inscription Arcade</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-icon text-center mb-3">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </div>
-        <div class="modal-text">
-          <h2 class="text-center"></h2>
-
-          <div class="row">
-            <form [formGroup]="arcadeServ.formControlSuscription">
-              <div class="form-group">
-                <label for="playerID">Utilisateur</label>
-                <select class="form-control" formControlName="playerID" id="playerID" [ngClass]="{
-                    'is-invalid': arcadeServ.f['playerID'].touched && arcadeServ.f['playerID'].invalid
-                  }">
-                  <option value="">--choisir un utilisateur--</option>
-                  <option value="" *ngIf="userServ.listUsers.length == 0">
-                    <span class="text-center"><img src="../../../../assets/img/loader.gif" alt="" width="30px"></span>
-                  </option>
-                  <option *ngFor="let user of userServ.listUsers" [value]="user._id"> {{ user.firstName }}
-                    {{ user.lastName }} </option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="gameID">Arcarde</label>
-                <select name="gameID" id="gameID" formControlName="gameID" class="form-control" [ngClass]="
-                    {'is-invalid': arcadeServ.f['gameID'].touched && arcadeServ.f['gameID'].invalid }
-                  ">
-                  <option value="">--choisir une arcarde--</option>
-                  <option *ngFor="let arcarde of arcadeServ.listArcardeUser" [value]="arcarde._id"> {{ arcarde.name }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="location">Location <img src="../../../../assets/img/loader.gif"
-                    *ngIf="arcadeServ.waitingResponse" alt="" class="text-center" width="30px" height="25px"> </label>
-                <select name="location" id="location" formControlName="location" class="form-control"
-                  [ngClass]="{'is-invalid': arcadeServ.f['location'].touched && arcadeServ.f['location'].invalid}">
-                  <option value="">--choisir une location--</option>
-                  <option *ngFor="let location of arcadeServ.listLocationArcarde" [value]="location"> {{ location }}
-                  </option>
-                </select>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-btn2">
-          {{'close' | translate }}
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-          [disabled]="!arcadeServ.formControlSuscription.valid" *ngIf="!arcadeServ.suscriptionDone"
-          (click)="doSuscription()">
-          <span *ngIf="!arcadeServ.waitingResponseSuscrib">Inscrire <i class="fa fa-plus" aria-hidden="true"></i>
-          </span>
-          <span *ngIf="arcadeServ.waitingResponseSuscrib"><img src="../../../../assets/img/loader.gif" alt=""
-              width="30px"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->
-<app-delete-arcade-modal [arcadeData]="arcardeData"></app-delete-arcade-modal>

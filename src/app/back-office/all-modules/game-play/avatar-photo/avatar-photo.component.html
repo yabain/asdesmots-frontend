@@ -1,0 +1,10 @@
+<div class="circle me-2" [ngStyle]="{'background-color': circleColor}">
+  <ng-container *ngIf="!showInitials; else init">
+    <img [src]="photoUrl" alt="User Photo">
+  </ng-container>
+  <ng-template #init>
+    <div class="initials">
+      {{ initials }}
+    </div>
+  </ng-template>
+</div>

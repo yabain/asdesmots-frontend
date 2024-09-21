@@ -1,0 +1,4 @@
+.dropdown-toggle::after { display: none; }
+.custom-card .card-footer {
+    padding-top: 0rem !important;
+}

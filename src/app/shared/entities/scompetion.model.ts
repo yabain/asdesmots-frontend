@@ -14,6 +14,7 @@ export class SousCompetion{
             public startDate?: any,
             public endDate?: any,
             public maxOfWinners?: any,
+            public minOfPlayers?: number,
             public lang?: any,
             public parentCompetition?: any,
             public gameWinnerCriterias?: WinnigsCriterias[],

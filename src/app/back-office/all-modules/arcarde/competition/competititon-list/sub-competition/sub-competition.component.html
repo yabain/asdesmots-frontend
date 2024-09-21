@@ -17,34 +17,40 @@
           <div class="col-auto">
             <a class="badge badge-pill bg-info-light me-2"
               [routerLink]="['/competition/details',competition._id]" data-toggle="tooltip"
-              data-placement="top" title="View details">
+              data-placement="top" title="{{ 'competition.details' | translate }}">
               <i class="fas fa-eye"></i>
             </a>
             <a [routerLink]="['/competition/create',arcadeId,competition._id]"
               class="badge badge-pill bg-primary-light me-2" data-toggle="tooltip" data-placement="top"
-              title="New sub competition under this competition">
-              <i class="fas fa-plus"></i>
+              title="{{ 'competition.subUnder' | translate }}">
+              <!-- <i class="fas fa-plus"></i> -->
+              <i class="fa-solid fa-puzzle-piece"></i>
             </a>
             <a class="badge badge-pill bg-success-light me-2"
               [routerLink]="['/competition/edit',competition._id]" data-toggle="tooltip"
-              data-placement="top" title="Edit the competition">
+              data-placement="top" title="{{ 'competition.edit' | translate }}">
               <i class="fa fa-pencil"></i>
             </a>
             <a class="{{ competition.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-info-light' }} me-2"
               data-toggle="tooltip" data-placement="top"
-              title="{{ competition.gameState === gameState.RUNNING ? 'Stop the competition': 'Start  the competition' }}">
+              title="{{ (competition.gameState === gameState.RUNNING ? 'competition.stop': 'competition.run') | translate }}"
+              (click)="changeCompetitionState(competition)"
+              [ngClass]="{
+                'cursor-wait': (competition?.updatingState === true)
+              }">
               <i class="{{ competition.gameState === gameState.RUNNING? 'fa fa-pause':  'fa fa-play' }}"
                 aria-hidden="true"></i>
             </a>
             <a class="badge badge-pill bg-danger-light me-2" data-toggle="tooltip" data-placement="top"
-              title="Delete the competition" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competition._id">
+              title="{{ 'competition.delete' | translate }}" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competition._id">
               <i class="fas fa-trash"></i>
             </a>
           </div>
         </div>
-        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id">
+        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id" (deletedFeedback)="deletedSubCompettitionFeedback($event)">
         </app-delete-competition-modal>
         <div *ngIf="!isCollapsed[i]" class="competition-data">
+          <hr>
           {{ competition.description }}
         </div>
       </div>

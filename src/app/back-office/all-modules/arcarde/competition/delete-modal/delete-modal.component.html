@@ -9,11 +9,11 @@
         {{'confirmDeleteText' | translate }} 
         <b>{{competitionData.name}}</b>
         <span *ngIf="competitionData.children?.length > 0">
-            ainsi que toutes les sous-compétitions qui lui sont liées
+            {{ 'competition.deleteChildren' | translate }}
         </span> ?
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00">
+        <button type="button" class="btn btn-secondary mx-3" data-bs-dismiss="modal" id="cancel-btn00-{{competitionData._id}}">
           {{'action.cancel' | translate }}
         </button>
         <button type="button" *ngIf="!waiting" class="btn btn-danger" (click)="delete()">

@@ -1,34 +1,27 @@
 <section id="competitions">
+  <div *ngIf="!competitions?.length || fetching"
+    class="d-flex align-items-center text-center justify-content-center vh-50">
+    <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
+    <p *ngIf="!(competitions?.length || fetching)" class="text-center">{{ 'arcade.noSubCompetitions' | translate }}</p>
+  </div>
   <div *ngIf="!fetching" class="tree">
-    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId">
+    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId"
+      (deletedFeedback)="deletedSubCompettitionFeedback($event)">
     </app-arcade-sub-competition>
   </div>
-  <div class="card {{ competitions?.length ? 'mt-5' : '' }}">
+  <div *ngIf="competitions?.length && !fetching" class="card {{ competitions?.length ? 'mt-5' : '' }}">
     <div class="card-header">
-      <h4 class="card-title">Competitions tree</h4>
-      <p class="card-text">
+      <h4 class="card-title">{{ 'competition.tree' | translate }}</h4>
+      <!-- <p class="card-text">
         Tree of competitions linked to this arcade.
-      </p>
+      </p> -->
     </div>
     <div class="card-body">
-      <div class="row" *ngIf="fetching">
-        <div class="col-sm-12">
-            <div class="text-center">
-                <span>
-                  <img src="assets/img/loader.gif" alt="" width="30px">
-                </span>
-            </div>
-        </div>
-      </div>
-      <ul *ngIf="competitions?.length && !fetching" class="tree list-unstyled">
+      <ul class="tree list-unstyled">
         <li *ngFor="let competition of competitions">
           <app-competition-item [competition]="competition"></app-competition-item>
         </li>
       </ul>
-      <div *ngIf="!competitions?.length && !fetching" class="text-center">
-        <img src="assets/img/no_result.gif" alt="No result" style="max-width: 200px;">
-        <br>Aucune Competition !
-      </div>
     </div>
   </div>
 </section>

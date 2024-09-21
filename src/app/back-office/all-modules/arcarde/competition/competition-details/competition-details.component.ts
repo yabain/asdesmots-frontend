@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { State } from 'src/app/shared/entities/state.enum';
 import { WinnigsCriterias } from 'src/app/shared/entities/winnigCriterias';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { SousCompetitionService } from '../services/sous-competition.service';
 
 @Component({
@@ -13,17 +11,19 @@ import { SousCompetitionService } from '../services/sous-competition.service';
   styleUrls: ['./competition-details.component.css'],
 })
 export class CompetitionDetailsComponent implements OnInit {
+
   idCompetition: string = '';
   activeTab: string = 'overview';
   competitionData: any;
   subscribers: any = [];
   criterias: any = [];
   gameState = State;
+  loading: boolean = true;
   selectedCriteriaId: string = '';
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
 
   constructor(
-    public sousCompetitionService: SousCompetitionService,
+    public subCompetitionService: SousCompetitionService,
     private toastr: ToastrService,
     private router: Router,
     private activedRouter: ActivatedRoute
@@ -32,29 +32,15 @@ export class CompetitionDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sousCompetitionService.getCompetitionById(this.idCompetition).then(
+    this.subCompetitionService.getCompetitionById(this.idCompetition).then(
       (resp: any) => {
         this.competitionData = resp.data;
-        console.log(this.competitionData._id);
+        this.loading = false;
       },
-      (error: any) => {}
+      (error: any) => {
+        this.loading = false;
+      }
     );
-    this.sousCompetitionService
-      .getCompetionsubscribers(this.idCompetition)
-      .then(
-        (resp: any) => {
-          this.subscribers = resp.data;
-        },
-        (error: any) => {}
-      );
-    this.sousCompetitionService
-      .getCompetionWiningsCriteria(this.idCompetition)
-      .then(
-        (resp: any) => {
-          this.criterias = resp.data;
-        },
-        (error: any) => {}
-      );
   }
 
   setActiveTab(tab: string) {
@@ -65,16 +51,31 @@ export class CompetitionDetailsComponent implements OnInit {
     this.router.navigateByUrl('/competition/suscribe');
   }
 
-  removeUser(subscriberId: any) {}
+  subscribe() {
+    this.subCompetitionService.subscribePlayer({gameId: this.competitionData._id}).then(() => {
+      this.subCompetitionService.newSubscriptionDetectedSubject.next(true);
+    });
+  }
 
-  startCompetition() {
-    this.competitionData.changeState({
+  changeCompetitionState() {
+    this.competitionData.updatingState = true;
+    this.subCompetitionService.changeState({
       gameCompetitionID: this.competitionData._id,
-      state: State.RUNNING,
+      state: (this.competitionData.gameState == State.NO_START) ? State.RUNNING: State.END,
+    }).then(() => {
+      this.competitionData.updatingState = false;
+      this.competitionData.gameState = (this.competitionData.gameState == State.NO_START) ? State.RUNNING: State.END;
+    }, (err) => {
+      this.competitionData.updatingState = false;
     });
   }
 
   selectedCriteria(criteriaId: string) {
     this.selectedCriteriaId = criteriaId;
+  }
+
+  deletedFeedback(newValue: string) {
+    if(newValue)
+      this.router.navigate(['/arcarde/details',this.competitionData.arcadeId]);
   }
 }

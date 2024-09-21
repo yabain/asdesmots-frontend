@@ -1,0 +1,66 @@
+<div *ngIf="!loading"
+  class="d-flex align-items-center text-center justify-content-center {{ !(loading || parts?.length) ? 'vh-50': '' }}">
+  <p *ngIf="!parts?.length" class="text-center">{{ 'competition.noPart' | translate }}</p>
+</div>
+<div class="row">
+  <div *ngIf="!loading" class="row">
+    <!-- Bloc pour afficher les parties -->
+    <div *ngFor="let part of parts" class="col-12 col-md-4 col-lg-3">
+      <div class="custom-card">
+        <div class="card-body pb-0">
+          <div class="d-flex justify-content-between align-items-start">
+            <a class="text-decoration-none" style="color: inherit">
+              <div class="mb-4">
+                <h5 class="card-title">{{ part.name }}</h5>
+                <p class="card-text text-primary">
+                </p>
+                <p class="card-text">{{ part.description | truncate:200 }}</p>
+              </div>
+            </a>
+            <div class="dropdown">
+              <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-ellipsis-h"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <a (click)="gamePartData = part" class="dropdown-item" data-bs-toggle="modal"
+                    [attr.data-bs-target]="'#details-'+part._id">
+                    <i class="far fa-eye me-2"></i>
+                    <span style="margin-left: 5px;">Show more</span>
+                  </a>
+                </li>
+                <li>
+                  <a (click)="gamePartData = part" class="dropdown-item" data-bs-toggle="modal"
+                    [attr.data-bs-target]="'#delete-'+part._id">
+                    <i class="far fa-trash-alt me-2"></i>
+                    <span style="margin-left: 5px;">Delete</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-top-0 text-end">
+          <p class="btn btn-sm bottom-0 {{ part.gameState === gameState.RUNNING ? 'badge badge-pill bg-success-light competition-running' : 'badge badge-pill bg-primary-light' }}"
+            data-toggle="tooltip" data-placement="top" title="{{ getActionStatus(part) | translate }}" (click)="changeState(part)" [ngClass]="{
+              'cursor-wait': (part?.updatingState === true)
+            }">
+            <a>
+              <i [ngClass]="getIconClass(part)" aria-hidden="true"></i>
+            </a>
+            <!-- <i *ngIf="part.gameState === gameState.RUNNING" class="fa " aria-hidden="true"></i> -->
+          </p>
+        </div>
+      </div>
+      <app-delete-part-modal [competitionId]="competitionID" [gamePart]="part"></app-delete-part-modal>
+      <app-part-details-modal [gamePart]="part"></app-part-details-modal>
+    </div>
+  </div>
+  <!-- Bloc de chargement -->
+  <div *ngIf="loading" class="row">
+    <div *ngFor="let plh of placeholders; let i = index" class="col-12 col-md-4 col-lg-3">
+      <app-arcade-list-placeholder></app-arcade-list-placeholder>
+    </div>
+  </div>
+</div>
+<app-create-part-modal [competitionId]="competitionID"></app-create-part-modal>

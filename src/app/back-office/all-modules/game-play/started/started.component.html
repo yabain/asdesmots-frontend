@@ -17,7 +17,12 @@
               'cursor-wait': competition?.updatingState === true
             }">
             <a (click)="openModal(competition)">
-              <i [attr.class]="getIconClass(competition)" aria-hidden="true"></i>
+              <ng-container *ngIf="competition?.updatingState !== true; else fetching">
+                <i [ngClass]="getIconClass(competition)" aria-hidden="true"></i>
+              </ng-container>
+              <ng-template #fetching>
+                <img src="assets/img/loader.gif" class="loader_img" style="width: 12px;">
+              </ng-template>
             </a>
           </p>
         </div>

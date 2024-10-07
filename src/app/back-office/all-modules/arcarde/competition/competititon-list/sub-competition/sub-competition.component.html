@@ -1,6 +1,6 @@
 <section id="competitions">
   <ng-container>
-    <div class="competition-container" *ngFor="let competition of competitions; let i = index">
+    <div class="competition-container ms-0 ms-md-3" *ngFor="let competition of competitions; let i = index">
       <div *ngIf="!competition.parentCompetition" class="tree">
       </div>
       <div class="competition-collapse" [ngClass]="{
@@ -15,9 +15,8 @@
             {{ competition.name }}
           </div>
           <div class="col-auto">
-            <a class="badge badge-pill bg-info-light me-2"
-              [routerLink]="['/competition/details',competition._id]" data-toggle="tooltip"
-              data-placement="top" title="{{ 'competition.details' | translate }}">
+            <a class="badge badge-pill bg-info-light me-2" [routerLink]="['/competition/details',competition._id]"
+              data-toggle="tooltip" data-placement="top" title="{{ 'competition.details' | translate }}">
               <i class="fas fa-eye"></i>
             </a>
             <a [routerLink]="['/competition/create',arcadeId,competition._id]"
@@ -26,28 +25,33 @@
               <!-- <i class="fas fa-plus"></i> -->
               <i class="fa-solid fa-puzzle-piece"></i>
             </a>
-            <a class="badge badge-pill bg-success-light me-2"
-              [routerLink]="['/competition/edit',competition._id]" data-toggle="tooltip"
-              data-placement="top" title="{{ 'competition.edit' | translate }}">
+            <a class="badge badge-pill bg-success-light me-2" [routerLink]="['/competition/edit',competition._id]"
+              data-toggle="tooltip" data-placement="top" title="{{ 'competition.edit' | translate }}">
               <i class="fa fa-pencil"></i>
             </a>
             <a class="{{ competition.gameState === gameState.RUNNING ? 'badge badge-pill bg-warning-light competition-running' : 'badge badge-pill bg-info-light' }} me-2"
               data-toggle="tooltip" data-placement="top"
               title="{{ (competition.gameState === gameState.RUNNING ? 'competition.stop': 'competition.run') | translate }}"
-              (click)="changeCompetitionState(competition)"
-              [ngClass]="{
+              (click)="changeCompetitionState(competition)" [ngClass]="{
                 'cursor-wait': (competition?.updatingState === true)
               }">
-              <i class="{{ competition.gameState === gameState.RUNNING? 'fa fa-pause':  'fa fa-play' }}"
-                aria-hidden="true"></i>
+              <ng-container *ngIf="competition?.updatingState !== true; else fetching">
+                <i class="{{ competition.gameState === gameState.RUNNING? 'fa fa-pause':  'fa fa-play' }}"
+                  aria-hidden="true"></i>
+              </ng-container>
+              <ng-template #fetching>
+                <img src="assets/img/loader.gif" class="loader_img" style="width: 12px;">
+              </ng-template>
             </a>
             <a class="badge badge-pill bg-danger-light me-2" data-toggle="tooltip" data-placement="top"
-              title="{{ 'competition.delete' | translate }}" data-bs-toggle="modal" [attr.data-bs-target]="'#delete-'+competition._id">
+              title="{{ 'competition.delete' | translate }}" data-bs-toggle="modal"
+              [attr.data-bs-target]="'#delete-'+competition._id">
               <i class="fas fa-trash"></i>
             </a>
           </div>
         </div>
-        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id" (deletedFeedback)="deletedSubCompettitionFeedback($event)">
+        <app-delete-competition-modal [competitionData]="competition" [index]="competition._id"
+          (deletedFeedback)="deletedSubCompettitionFeedback($event)">
         </app-delete-competition-modal>
         <div *ngIf="!isCollapsed[i]" class="competition-data">
           <hr>

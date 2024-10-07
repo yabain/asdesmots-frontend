@@ -93,8 +93,20 @@ export class CreateArcardeComponent implements OnInit {
     if (this.createForm.invalid) {
       return;
     }
+    // Convertir les dates du formulaire en localDateTime
+    const startRegistrationDate = new Date(this.createForm.get('startRegistrationDate')?.value).toISOString();
+    const endRegistrationDate = new Date(this.createForm.get('endRegistrationDate')?.value).toISOString();
+    const startDate = new Date(this.createForm.get('startDate')?.value).toISOString();
+    const endDate = new Date(this.createForm.get('endDate')?.value).toISOString();
+    const formData = {
+      ...this.createForm.value,
+      startRegistrationDate,
+      endRegistrationDate,
+      startDate,
+      endDate
+    };
     this.waitingResponse = true;
-    this.arcadeServ.create(this.createForm.value)
+    this.arcadeServ.create(formData)
     .then(() => {
       this.submitted = false;
       this.waitingResponse = false;

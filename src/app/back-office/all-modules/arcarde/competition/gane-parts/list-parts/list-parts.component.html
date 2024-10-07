@@ -46,9 +46,13 @@
               'cursor-wait': (part?.updatingState === true)
             }">
             <a>
-              <i [ngClass]="getIconClass(part)" aria-hidden="true"></i>
+              <ng-container *ngIf="part?.updatingState !== true; else fetching">
+                <i [ngClass]="getIconClass(part)" aria-hidden="true"></i>
+              </ng-container>
+              <ng-template #fetching>
+                <img src="assets/img/loader.gif" class="loader_img" style="width: 12px;">
+              </ng-template>
             </a>
-            <!-- <i *ngIf="part.gameState === gameState.RUNNING" class="fa " aria-hidden="true"></i> -->
           </p>
         </div>
       </div>

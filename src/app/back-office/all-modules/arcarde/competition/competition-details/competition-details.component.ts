@@ -17,8 +17,10 @@ export class CompetitionDetailsComponent implements OnInit {
   competitionData: any;
   subscribers: any = [];
   criterias: any = [];
+  competitions: any[] = [];
   gameState = State;
   loading: boolean = true;
+  fetching: boolean = true;
   selectedCriteriaId: string = '';
   criteriaChooseData: WinnigsCriterias = new WinnigsCriterias();
 

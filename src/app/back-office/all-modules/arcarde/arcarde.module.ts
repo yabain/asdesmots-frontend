@@ -10,11 +10,12 @@ import { ListArcardeComponent } from './list-arcarde/list-arcarde.component';
 import { CreateArcardeComponent } from './create-arcarde/create-arcarde.component';
 import { DataTablesModule } from 'angular-datatables';
 import { SharedModule } from '../../shared/shared.module';
-import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
 import { ArcadeDetailsComponent } from './arcade-details/arcade-details.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { CompetitionModule } from './competition/competition.module';
 import { UpdateArcadeComponent } from './update-arcade/update-arcade.component';
+import { NgBmisDateTimePickerModule } from 'src/app/shared/elements/ng-bmis-date-time-picker/ng-bmis-date-time-picker.module';
+// import { NgBmisDateTimePickerModule } from 'ng-bmis-date-time-picker';
 
 @NgModule({
     declarations: [

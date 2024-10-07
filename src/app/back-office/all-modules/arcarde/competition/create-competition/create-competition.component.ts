@@ -123,13 +123,6 @@ export class CreateCompetitionComponent implements OnInit {
         laterThanToday: true,
       });
     if (
-      this.createForm.get('startDate')?.value <
-      this.createForm.get('endRegistrationDate')?.value
-    )
-      this.createForm.controls['startDate'].setErrors({
-        laterThanEndRegistrationDate: true,
-      });
-    if (
       this.createForm.get('endDate')?.value <
       this.createForm.get('startDate')?.value
     )
@@ -138,11 +131,19 @@ export class CreateCompetitionComponent implements OnInit {
       });
 
     if (this.createForm.invalid) {
+      console.log(this.createForm.controls)
       return;
     }
+    const startDate = new Date(this.createForm.get('startDate')?.value).toISOString();
+    const endDate = new Date(this.createForm.get('endDate')?.value).toISOString();
+    const formData = {
+      ...this.createForm.value,
+      startDate,
+      endDate
+    };
     this.fetching = true;
     this.sousCompetitionService
-      .create(this.createForm.value, this.arcadeId)
+      .create(formData, this.arcadeId)
       .then(() => {
         this.submitted = false;
         this.fetching = false;

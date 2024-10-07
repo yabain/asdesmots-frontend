@@ -9,19 +9,4 @@
       (deletedFeedback)="deletedSubCompettitionFeedback($event)">
     </app-arcade-sub-competition>
   </div>
-  <div *ngIf="competitions?.length && !fetching" class="card {{ competitions?.length ? 'mt-5' : '' }}">
-    <div class="card-header">
-      <h4 class="card-title">{{ 'competition.tree' | translate }}</h4>
-      <!-- <p class="card-text">
-        Tree of competitions linked to this arcade.
-      </p> -->
-    </div>
-    <div class="card-body">
-      <ul class="tree list-unstyled">
-        <li *ngFor="let competition of competitions">
-          <app-competition-item [competition]="competition"></app-competition-item>
-        </li>
-      </ul>
-    </div>
-  </div>
 </section>

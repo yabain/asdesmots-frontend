@@ -1,13 +1,13 @@
 .page-wrapper2 {
     margin-left: 240px;
-    padding-top: 60px;
+    padding-top: 0;
     position: relative;
     transition: all 0.4s ease;
 }
 @media (max-width: 991.98px) {
     .page-wrapper2 {
         margin-left: 0px;
-        padding-top: 60px;
+        padding-top: 0;
         position: relative;
         transition: all 0.4s ease;
     }

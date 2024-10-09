@@ -14,6 +14,7 @@ import { SidemenuroleComponent } from './sidemenurole/sidemenurole.component';
 import { RolepermissionlistComponent } from './rolepermissionlist/rolepermissionlist.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { DataTablesModule } from 'angular-datatables';
+import { PermissionsCardComponent } from './role-create/permissions-card/permissions-card.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { DataTablesModule } from 'angular-datatables';
     SidemenuroleComponent,
     RolepermissionlistComponent,
     ListUsersComponent,
+    PermissionsCardComponent,
 
   ],
   imports: [

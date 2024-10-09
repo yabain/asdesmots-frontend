@@ -1,4 +1,100 @@
- /* .modal {
+   .rating-bar {
+            height: 5px;
+            background-color: #e0e0e0; /* Couleur de fond grise */
+            border-radius: 5px; /* Arrondi */
+        }
+        .rating-fill {
+            height: 100%;
+            background-color: #17a2b8; /* Couleur de la barre remplie (teinte info) */
+            border-radius: 5px; /* Arrondi */
+            width: 0; /* Largeur initiale */
+            transition: width 0.3s; /* Animation pour le chargement */
+        }
+
+
+/* style="width: 80%;" : Définissez la largeur de la barre remplie en fonction de la note. Par exemple,
+ pour une note de 4 sur 5, vous pouvez définir la largeur à 80% (4/5 * 100). */
+
+
+
+ .dropdown-toggle::after {
+    
+    margin-left: 1.255em;
+}
+
+th {
+    width: 20% !important;
+}
+
+.table>tbody>tr>td { 
+    font-size: 13px;
+}
+
+table.table td, table.table th {
+    border: none;
+}
+
+.table-responsive { 
+    border: 1px solid #00000017;
+    border-radius: 21px;
+    padding-top: 20px;
+}
+
+
+ .btn:hover { 
+    background-color: hsl(120 40% 40% / 1);
+    color: white;
+}
+
+
+.custom-modal .modal-content
+{
+     
+    border-radius: 30px; 
+
+}
+
+
+.custom-modal .modal-body
+{
+
+    padding: 10px 30px !important;
+
+}
+
+
+.custom-modal .modal-footer
+{
+    
+    padding-bottom: 0.75rem !important;
+
+}
+
+.modal .card
+{
+
+  margin-bottom: 10px !important;
+
+}
+
+
+.form-check-input[type=checkbox]
+{
+
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid;
+
+}
+
+
+
+
+
+
+
+
+/* .modal {
   position: fixed;
   top: 0;
   left: 0;

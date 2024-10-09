@@ -7,9 +7,9 @@ export const environment = {
     // url:  'http://localhost:3000',
     // urlProd:  'http://localhost:3000'
     // socketIoUrl:  'http://127.0.0.1:3000',
-    url:  'http://192.168.1.59:3000',
-    urlProd:  'http://192.168.1.59:3000',
-    socketIoUrl:  'http://192.168.1.59:3000',
+    url:  'http://192.168.1.122:3000',
+    urlProd:  'http://192.168.1.122:3000',
+    socketIoUrl:  'http://192.168.1.122:3000',
     // url:  'http://192.168.1.125:3000',
     // urlProd:  'http://192.168.1.125:3000',
     // socketIoUrl:  'http://192.168.1.125:3000',

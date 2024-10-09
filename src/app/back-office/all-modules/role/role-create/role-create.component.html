@@ -1,30 +1,84 @@
-
+<!-- 
 <p>
     <button (click)="backClicked()" class="btn btn-primary me-2"
                           style="color: #035858 !important; background-color: #ffff !important;">
                           <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
     </button>
-</p>
-<div class="row">
-            
-    <div class="card card-table">
-        
-        <div class="card-body">
-            <div class="col-auto">
+</p> -->
+<div class="row mt-4 h-100">
+               
+            <div class="col-12">
                 <form [formGroup]="roleService.formCreateRole">
                     <div class="form-group">
-                        <div class="form-group">
-                            <label for="name">Role Name</label>
-                            <input type="text" name="name" class="form-control" formControlName="name" id="name"
-                            [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}"
-                            >
+                      <div class="row justify-content-between">
+                        <div class="col-8">
+                            <div class="row " >
+                              <h3 style="margin-bottom: 35px;font-weight: bold;" >New Role</h3>
+                              <div class="col-auto">
+                                <div class="form-group was-validated">
+                                  <label for="name">Role Name</label>
+                                  <input required type="text" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}">
+                                </div>
+                            
+                              </div>
+                            
+                              <div class="col-auto">
+                            
+                            
+                                <div class="form-group was-validated">
+                                  <label for="description">Role Description</label>
+                                  <input required type="text" name="description" class="form-control" formControlName="description" id="description" [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}">
+                                </div>
+                              </div>
+
+                              <div class="col-12" style="margin-top: 15px;">
+                                <div class="col-10" style="border-bottom: 1px solid #3063AD;">
+
+                                </div>
+                              </div>
+                            </div>
+                            
+                            
+                            <div class="row" style="margin-top: 65px;">
+                              <h3 style="font-weight: bold;" >Permissions</h3>
+                              <div class="col-12">
+                                <div class="row">
+                                  <div class="col-auto p-2 pb-2"  *ngFor="let i of [3,1,2,5,5,2,5,5]">
+                                    <div class="card" style="margin: 0;; width: 180px;height: 115px; border-radius: 12px;background-color: #3063AD;color: white;">
+                                      <div class="card-body"> {{i}} </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Role Description</label>
-                            <input type="text" name="description" class="form-control" formControlName="description" id="description"
-                            [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}"
-                            >
+
+                        <div class="col-3">
+
+                          <h3  style="margin-bottom: 35px;padding-left: 15px;font-weight: bold;">Users</h3>
+
+                          <div class="row " style="margin-bottom: 35px;" *ngFor="let i of [3,1,2,5,5]">
+                            <div class="col-auto" style="padding-right: 0;justify-content: flex-end;">
+                              <img src="../../../../../assets/img/3dAvatar.png" alt="" style="width: 67px;">
+                            </div>
+                            <div class="col-7 p-0" style="align-items: center;display: flex;">
+                              <div class="row" style="font-size: 12px;">
+                                <div class="col-12">
+                                  <span>696080087</span>
+                                </div>
+                                <div class="col-12 pb-1 pt-1">
+                                  <span>tchinda valdo</span>
+                                </div>
+                                <div class="col-12">
+                                  <span>tchindavaldoblair@gmail.com</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
                         </div>
+                      </div>
                     </div>
 
                     <div class="card-footer text-end col-auto">
@@ -36,6 +90,4 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
- </div>
+        </div> 

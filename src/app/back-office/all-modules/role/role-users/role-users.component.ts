@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { ToastrService } from 'ngx-toastr';
+import { log } from 'console';
 
 
 
@@ -47,6 +48,7 @@ export class RoleUsersComponent implements OnInit, AfterViewInit {
     this.loadListUsers();
     this.startListener();
     this.cdRef.detectChanges();
+    this.getRoleName()
   }
 
 
@@ -60,6 +62,8 @@ export class RoleUsersComponent implements OnInit, AfterViewInit {
   }
   getRoleName(){
    this.roleChooseName = this.roleService.getNameOfRole(this.id);
+   return this.roleChooseName
+   
   }
 
   startListener(){

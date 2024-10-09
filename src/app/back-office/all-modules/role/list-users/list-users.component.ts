@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { Location } from '@angular/common';
 import { Role } from '../service/role.model';
+import { log } from 'console';
 
 @Component({
   selector: 'app-list-users',
@@ -69,11 +70,14 @@ export class ListUsersComponent implements OnInit {
     if (this.customers) {
       this.customers = JSON.parse(localStorage.getItem('users-list'));
       this.wating = false;
+        console.log('infos a propos du users ', this.customers[0]);
     } else {
       this.userService.getAllUsers()
       .then((result) => {
         this.customers = JSON.parse(localStorage.getItem('users-list'));
         this.wating = true;
+        console.log('infos a propos du users ', this.customers[0]);
+        
           setTimeout(() => {
             this.wating = false;
           }, 3000);
@@ -153,5 +157,20 @@ export class ListUsersComponent implements OnInit {
 
   }
 
+
+    getUserRolePercentage(userRoles: number, totalRoles: number): number
+    {
+
+      let ratio = (userRoles / totalRoles) * 100     
+      return ratio;
+
+    }
+
+
+  getRoleNameById(roleId: string): string {
+  
+    const role = this.roleService.listRole.find(role => role._id === roleId); 
+    return role ? role.name : 'Role not found';
+}
 
 }

@@ -2,3 +2,16 @@
     margin-bottom: 10px;
 }
 
+.page-wrapper>.content {
+    padding: 1.875rem 0.875rem 0 !important;
+}
+
+.page-wrapper {
+  
+    height: max-content !important;
+}
+.card {
+
+    margin-bottom: 0;
+
+}

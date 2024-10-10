@@ -4,15 +4,18 @@
 
 export const environment = {
   production: false,
-    // url:  'http://localhost:3000',
-    // urlProd:  'http://localhost:3000'
-    // socketIoUrl:  'http://127.0.0.1:3000',
-    url:  'http://192.168.1.122:3000',
-    urlProd:  'http://192.168.1.122:3000',
-    socketIoUrl:  'http://192.168.1.122:3000',
-    // url:  'http://192.168.1.125:3000',
-    // urlProd:  'http://192.168.1.125:3000',
-    // socketIoUrl:  'http://192.168.1.125:3000',
+  // url:  'http://localhost:3000',
+  // urlProd:  'http://localhost:3000'
+  // socketIoUrl:  'http://127.0.0.1:3000',
+  // url: 'http://192.168.43.101:3000',
+  // urlProd: 'http://192.168.43.101:3000',
+  // socketIoUrl: 'http://192.168.43.101:3000',
+  url: 'http://192.168.1.122:3000',
+  urlProd: 'http://192.168.1.122:3000',
+  socketIoUrl: 'http://192.168.1.122:3000',
+  // url:  'http://192.168.1.125:3000',
+  // urlProd:  'http://192.168.1.125:3000',
+  // socketIoUrl:  'http://192.168.1.125:3000',
 
   //   url:  'https://asdesmots-api.yaba-in.com',
   // urlProd:  'https://asdesmots-api.yaba-in.com'

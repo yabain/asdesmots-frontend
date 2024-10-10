@@ -1,209 +1,239 @@
 
-      <!-- /Page Header -->
+<!-- /Page Header -->
 
-      <!-- Search Filter -->
-      <div id="filter_inputs" class="card filter-card">
-        <div class="card-body pb-0">
-          <div class="row">
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-              <div class="form-group">
-                <label>Phone</label>
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /Search Filter -->
+<!-- Search Filter -->
+<div id="filter_inputs" class="card filter-card">
+	<div class="card-body pb-0">
+		<div class="row">
+			<div class="col-sm-6 col-md-3">
+				<div class="form-group">
+					<label>Name</label>
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="form-group">
+					<label>Email</label>
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="form-group">
+					<label>Phone</label>
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Search Filter -->
 
-        <p class=" text-center" *ngIf="wating">
-          <img src="../../../../../assets/img/loader.gif" height="30px" alt="">
-        </p>
+<p class=" text-center" *ngIf="wating">
+	<img src="../../../../../assets/img/loader.gif" height="30px" alt>
+</p>
 
-  <!-- <p>
+<!-- <p>
      <button (click)="backClicked()" class="btn btn-primary me-2"
                         style="color: #035858 !important; background-color: #ffff !important;">
                         <i class="fas fa-arrow-left"></i> {{ 'back' | translate }}
      </button>
   </p> -->
 
-      <div class="row" *ngIf="!wating">
-          <!-- <h4 class="card-title">List of Users</h4> -->
-               
-           
-           
-              <div class="table-responsive">
-                <table datatable class="table table-stripped table-hover">
-                  <thead class="thead-light">
-                    <tr>
-                      <th>{{'user.user' | translate }}s</th>
-                      <th>{{'user.email' | translate }}</th>
-                      <th>{{'user.phone' | translate }}</th>
-                      <th> <span>Nombre de Role</span> </th>
-                      <th> <span style="margin-left:40px;">Role</span> </th>
-                      <!-- <th>{{'status' | translate }}</th> -->
-                      <th style="width: 10% !important;" class="text-center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let customer of customers; let i = index"
-                      (click)="buildListRoleChooseUser(customer)">
-                      <td style="padding: 15px 15px 15px 0;">
-                        <h2 class="table-avatar">
-                          <a class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle"
-                              src="../../../../../assets/img/3dAvatar.png" alt="User Image" /></a>
-                          <a>{{ customer.firstName }} {{ customer.lastName }}<span>{{ customer.phone }}</span></a>
-                        </h2>
-                      </td>
-                      <td> <span class="me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" color="#8e8b0c" width="16" height="16" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
-                          <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
-                          <path
-                            d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791" />
-                        </svg>
-                      </span> 
-                      {{ customer.email }}</td>
-                      <td> <span class="me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" color="#2d0c8e" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                          <path fill-rule="evenodd"
-                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
-                        </svg>
-                    </span> {{ customer.phoneNumber}}</td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <div class="flex-grow-1">
-                            <div class="rating-bar">
-                            <div   class="rating-fill" [style.width.%]="getUserRolePercentage(customer.roles.length, roleService.listRole.length)"></div>                            
-                            </div>
-                          </div>
-                          <span class="ms-2">{{customer.roles.length}}/{{roleService.listRole.length}}</span> <!-- Note à droite -->
-                        </div>
-                    </td>
-                      <td style="padding: 15px 0 15px 45px;">
-                       
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-light dropdown-toggle" style="border-radius: 0.65rem;    font-size: 12px;    font-weight: bold;padding: 2px 16px !important; background-color: #e6f7f0; color: #0c8e63;" data-bs-toggle="dropdown" aria-expanded="false">
-                              Enable
-                            </button>
-                            <ul *ngIf="customer.roles.length !== 0" class="dropdown-menu">
-                              <li *ngFor="let id of customer.roles;"><a class="dropdown-item" href="#">{{  getRoleNameById(id) }}</a></li> 
-                            </ul>
+<div class="row" *ngIf="!wating">
+	<!-- <h4 class="card-title">List of Users</h4> -->
 
-                            <ul *ngIf="customer.roles.length === 0" class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#"> no role assigned </a></li>
-                            </ul>
-                          </div>
+	<div class="table-responsive">
+		<table datatable class="table table-stripped table-hover">
+			<thead class="thead-light">
+				<tr>
+					<th>{{'user.user' | translate }}s</th>
+					<th>{{'user.email' | translate }}</th>
+					<th>{{'user.phone' | translate }}</th>
+					<th> <span>Nombre de Role</span> </th>
+					<th> <span style="margin-left:40px;">Role</span> </th>
+					<!-- <th>{{'status' | translate }}</th> -->
+					<th style="width: 10% !important;" class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let customer of customers; let i = index"
+					(click)="buildListRoleChooseUser(customer)">
+					<td style="padding: 15px 15px 15px 0;">
+						<h2 class="table-avatar">
+							<a class="avatar avatar-sm me-2"><img
+									class="avatar-img rounded-circle"
+									src="../../../../../assets/img/3dAvatar.png"
+									alt="User Image" /></a>
+							<a>{{ customer.firstName }} {{ customer.lastName }}<span>{{
+									customer.phone }}</span></a>
+						</h2>
+					</td>
+					<td> <span class="me-2">
+							<svg xmlns="http://www.w3.org/2000/svg" color="#8e8b0c" width="16"
+								height="16" fill="currentColor" class="bi bi-envelope-at-fill"
+								viewBox="0 0 16 16">
+								<path
+									d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
+								<path
+									d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791" />
+							</svg>
+						</span>
+						{{ customer.email }}</td>
+					<td> <span class="me-2">
+							<svg xmlns="http://www.w3.org/2000/svg" color="#2d0c8e" width="16"
+								height="16" fill="currentColor" class="bi bi-telephone-fill"
+								viewBox="0 0 16 16">
+								<path fill-rule="evenodd"
+									d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+							</svg>
+						</span> {{ customer.phoneNumber}}</td>
+					<td>
+						<div class="d-flex align-items-center">
+							<div class="flex-grow-1">
+								<div class="rating-bar">
+									<div class="rating-fill"
+										[style.width.%]="getUserRolePercentage(customer.roles.length, roleService.listRole.length)"></div>
+								</div>
+							</div>
+							<span
+								class="ms-2">{{customer.roles.length}}/{{roleService.listRole.length}}</span>
+							<!-- Note à droite -->
+						</div>
+					</td>
+					<td style="padding: 15px 0 15px 45px;">
 
-                      </td>
-                      <!-- <td>{{ customer.country }}</td> -->
-                      <!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
+						<div class="btn-group">
+							<button type="button" class="btn btn-light dropdown-toggle"
+								style="border-radius: 0.65rem;    font-size: 12px;    font-weight: bold;padding: 2px 16px !important; background-color: #e6f7f0; color: #0c8e63;"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								Enable
+							</button>
+							<ul *ngIf="customer.roles.length !== 0" class="dropdown-menu">
+								<li *ngFor="let id of customer.roles;"><a class="dropdown-item"
+										href="#">{{ getRoleNameById(id) }}</a></li>
+							</ul>
 
-                      <td class="text-center">
+							<ul *ngIf="customer.roles.length === 0" class="dropdown-menu">
+								<li><a class="dropdown-item" href="#"> no role assigned
+									</a></li>
+							</ul>
+						</div>
 
-                        <a  data-bs-toggle="modal" data-bs-target="#AddRole"
-                          class="btn btn-sm btn-white   me-2" >
-                          <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"  data-placement="top" title="add role on this user"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            
-          
-      </div>
+					</td>
+					<!-- <td>{{ customer.country }}</td> -->
+					<!-- <td>{{ customer.createdAt | date: "dd MMM yyyy" }}</td> -->
 
-  <div class="modal custom-modal fade" id="AddRole" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"> Liste des roles  </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-           <p class="text-center" *ngIf="roleService.waitingResponse">
-                <img src="../../../../../assets/img/loader.gif" alt="" height="30px">
-            </p>
-          <div class="card card-table" *ngIf="!roleService.waitingResponse">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table datatable class="table table-stripped table-hover">
-                  <thead class="thead-light">
-                    <tr>
-                      <th>Name</th>
-                      <th style="padding-left: 7%;">Description </th>
-                      <th class="text-center">Active</th>
-                    </tr>
-                  </thead>
-                  <tbody *ngIf="roleService.listRoleOfUser.length != 0" >
-                    <tr *ngFor="let role of roleService.listRole; let i = index"
-                          >
-                      <td>
-                       
-                            <span style="width: 160px; display: flex;text-wrap: wrap;align-items: center;">
-                              <i style="margin-right: 12px;color: #0c4b8e;"  class="fa fa-user" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add role on this user"></i>
-                              {{ role.name }} </span>
-                       
-                      </td>
+					<td class="text-center">
 
-                      <td style="padding-left: 7%;">
+						<a data-bs-toggle="modal" data-bs-target="#AddRole"
+							class="btn btn-sm btn-white   me-2">
+							<i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip"
+								data-placement="top" title="add role on this user"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-                            <span style="width: 185px; display: flex;text-wrap: wrap;align-items: center;">
+</div>
 
-                                   <i style="margin-right: 12px;color: #308e0c;" class="fa fa-align-left" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="add role on this user"></i>
-                                   {{ role.description }}
+<div class="modal custom-modal fade" id="AddRole" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"> Liste des roles </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p class="text-center" *ngIf="roleService.waitingResponse">
+					<img src="../../../../../assets/img/loader.gif" alt height="30px">
+				</p>
+				<div class="card card-table" *ngIf="!roleService.waitingResponse">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table datatable class="table table-stripped table-hover">
+								<thead class="thead-light">
+									<tr>
+										<th>Name</th>
+										<th style="padding-left: 7%;">Description </th>
+										<th class="text-center">Active</th>
+									</tr>
+								</thead>
+								<tbody *ngIf="roleService.listRoleOfUser.length != 0">
+									<tr *ngFor="let role of roleService.listRole; let i = index">
+										<td>
 
-                            </span>
-                            
-                     </td>
+											<span
+												style="width: 160px; display: flex;text-wrap: wrap;align-items: center;">
+												<i style="margin-right: 12px;color: #0c4b8e;"
+													class="fa fa-user" aria-hidden="true"
+													data-toggle="tooltip" data-placement="top"
+													title="add role on this user"></i>
+												{{ role.name }} </span>
 
-                      <td class="text-center">
-                        <div class="form-check text-center" style="margin-left: 50%;">
-                          <input class="form-check-input"  [(ngModel)]="role.checked" type="checkbox" [checked]="role.isEnable"  value="" id="flexCheckDefault" (change)="updateCheckboxState(role)">
+										</td>
 
+										<td style="padding-left: 7%;">
 
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tbody *ngIf="roleService.listRoleOfUser.length == 0">
-                    <tr>
-                      <td></td>
-                      <td class="text-center">
-                        <img src="../../../../../assets/img/no_result.gif" alt="No result" style="max-width: 150px;">
-                        <br>Aucun Role !
-                      </td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-           </div>
-        </div>
+											<span
+												style="width: 185px; display: flex;text-wrap: wrap;align-items: center;">
 
-        </div>
+												<i style="margin-right: 12px;color: #308e0c;"
+													class="fa fa-align-left" aria-hidden="true"
+													data-toggle="tooltip" data-placement="top"
+													title="add role on this user"></i>
+												{{ role.description }}
 
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" (click)="reset()" data-bs-dismiss="modal" id="cancel-btn2">
-            {{ 'close' | translate }}
-          </button>
-          <button type="button" class="btn btn-primary" [disabled]="roleService.isSaveButtonIsDisabled" *ngIf="!roleService.roleAdded" (click)="addRoleOnUser()">
-            <span  *ngIf="!loader">Sauvegarder <i class="fa fa-save" aria-hidden="true"></i></span>
-            <span *ngIf="loader"><img src="../../../../../assets/img/loader.gif" alt="" width="30px"></span>
-          </button>
+											</span>
 
-      </div>
-    </div>
-  </div> 
+										</td>
+
+										<td class="text-center">
+											<div class="form-check text-center"
+												style="margin-left: 50%;">
+												<input class="form-check-input"
+													[(ngModel)]="role.checked" type="checkbox"
+													[checked]="role.isEnable" value id="flexCheckDefault"
+													(change)="updateCheckboxState(role)">
+
+											</div>
+										</td>
+									</tr>
+								</tbody>
+								<tbody *ngIf="roleService.listRoleOfUser.length == 0">
+									<tr>
+										<td></td>
+										<td class="text-center">
+											<img src="../../../../../assets/img/no_result.gif"
+												alt="No result" style="max-width: 150px;">
+											<br>Aucun Role !
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="modal-footer text-center">
+				<button type="button" class="btn btn-secondary" (click)="reset()"
+					data-bs-dismiss="modal" id="cancel-btn2">
+					{{ 'close' | translate }}
+				</button>
+				<button type="button" class="btn btn-primary"
+					[disabled]="roleService.isSaveButtonIsDisabled"
+					*ngIf="!roleService.roleAdded" (click)="addRoleOnUser()">
+					<span *ngIf="!loader">Sauvegarder <i class="fa fa-save"
+							aria-hidden="true"></i></span>
+					<span *ngIf="loader"><img src="../../../../../assets/img/loader.gif"
+							alt width="30px"></span>
+				</button>
+
+			</div>
+		</div>
+	</div>

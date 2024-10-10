@@ -1,0 +1,59 @@
+.dropdown-toggle::after {
+
+       display: none;
+}
+
+th {
+       width: 20% !important;
+}
+
+.table>tbody>tr>td {
+       font-size: 13px;
+}
+
+table.table td, table.table th {
+       border: none;
+}
+
+.table-responsive {
+       border: 1px solid #00000017;
+       border-radius: 21px;
+       padding-top: 20px;
+}
+
+
+.action:hover {
+       background-color: #8f3d3d;
+       color: white;
+}
+
+.action {
+       color: #8f3d3d;
+}
+
+
+.custom-modal .modal-content {
+
+       border-radius: 30px;
+
+}
+
+
+.custom-modal .modal-body {
+
+       padding: 10px 30px !important;
+
+}
+
+
+.custom-modal .modal-footer {
+
+       padding-bottom: 0.75rem !important;
+
+}
+
+.modal .card {
+
+       margin-bottom: 10px !important;
+
+}

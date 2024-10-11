@@ -19,8 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
 } )
 export class ListUsersComponent implements OnInit
 {
-
-	customers: any;
+	customers: User[] = []; // Initialisation comme un tableau vide
 	waiting: boolean = false;
 	userData: User = new User();
 	formAddRole: FormGroup;
@@ -30,9 +29,13 @@ export class ListUsersComponent implements OnInit
 	isClosed: boolean = false;
 	checkedRoles: string[] = [];
 
+	pageOption = {
+		skip: 0, // Valeur de décalage
+		limit: 10 // Limite d'entrées par page
+	};
 	public totalData = 0;
 	public pageSize = 10;
-	dataSource!: MatTableDataSource<any>;
+	dataSource = new MatTableDataSource<any>();
 	private pagination: PaginationService;
 
 	public serialNumberArray: Array<number> = [];
@@ -83,39 +86,11 @@ export class ListUsersComponent implements OnInit
 		} );
 	}
 
-	loadUsers()
-	{
-		this.customers = localStorage.getItem( 'users-list' );
-
-		if ( this.customers )
-		{
-			this.customers = JSON.parse( this.customers );
-			this.totalData = this.customers.length; // Mettez à jour totalData
-			this.getTableData( { skip: 0, limit: this.pageSize } ); // Appel initial pour les données de tableau
-			this.waiting = false;
-		} else
-		{
-			this.userService.getAllUsers()
-				.then( ( result ) =>
-				{
-					this.customers = result;
-					localStorage.setItem( 'users-list', JSON.stringify( this.customers ) ); // Mettez à jour le stockage local
-					this.totalData = this.customers.length; // Mettez à jour totalData
-					this.getTableData( { skip: 0, limit: this.pageSize } ); // Appel initial pour les données de tableau
-					this.waiting = false;
-				} )
-				.catch( ( error ) =>
-				{
-					this.toastr.error( error.message, '', { timeOut: 7000 } );
-					this.waiting = false;
-				} );
-		}
-	}
 
 	doAddRole()
 	{
-		console.log( 'data to add', { userId: this.userData._id, roleId: this.formAddRole.get( 'idRole' ).value } );
-		this.roleService.addRoleOnUser( { userId: this.userData._id, roleId: this.formAddRole.get( 'idRole' ).value } );
+		console.log( 'data to add', { userId: this.userData._id, roleId: this.formAddRole.get( 'idRole' )?.value } );
+		this.roleService.addRoleOnUser( { userId: this.userData._id, roleId: this.formAddRole.get( 'idRole' )?.value } );
 	}
 
 	refreshList()
@@ -203,24 +178,119 @@ export class ListUsersComponent implements OnInit
 		{
 			this.customers = data.sort( ( a, b ) =>
 			{
-				const aValue = ( a as never )[ sort.active ];
-				const bValue = ( b as never )[ sort.active ];
+				const aValue = ( a as any )[ sort.active ];
+				const bValue = ( b as any )[ sort.active ];
 				return ( aValue < bValue ? -1 : 1 ) * ( sort.direction === 'asc' ? 1 : -1 );
 			} );
 		}
 	}
 
-	getTableData( pageOption: pageSelection ): void
-	{
-		this.customers = localStorage.getItem( 'users-list' );
 
-		if ( this.customers )
+	applyFilter( event: Event )
+	{
+		const filterValue = ( event.target as HTMLInputElement ).value;
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+	}
+
+	onPageChange( event: any ): void
+	{
+		this.pageOption.skip = event.pageIndex * this.pageOption.limit; // Mettez à jour le décalage
+		this.pageOption.limit = event.pageSize; // Mettez à jour la limite
+		this.getTableData( this.pageOption ); // Rechargez les données de la table
+	}
+
+
+
+
+	loadUsers()
+	{
+		this.waiting = true; // Début du chargement
+		console.log( 'loader user appelé' );
+		const storedCustomers = localStorage.getItem( 'users-list' );
+
+		if ( storedCustomers )
 		{
-			this.customers = JSON.parse( this.customers );
+			const parsedCustomers = JSON.parse( storedCustomers );
+			console.log( 'Données récupérées du localStorage:', parsedCustomers );
+
+			if ( parsedCustomers && parsedCustomers.data && Array.isArray( parsedCustomers.data ) )
+			{
+				// Accéder directement au tableau des utilisateurs
+				this.customers = parsedCustomers.data;
+				console.log( 'Tableau des utilisateurs après récupération:', this.customers );
+			} else
+			{
+				console.error( 'Les données dans localStorage ne contiennent pas un tableau valide:', parsedCustomers );
+				this.customers = [];
+			}
+
 			this.totalData = this.customers.length;
 
+			if ( Array.isArray( this.customers ) )
+			{
+				console.log( 'Liste des utilisateurs:', this.customers );
+				const paginatedData = this.customers.slice( this.pageOption.skip, this.pageOption.skip + this.pageOption.limit );
+				this.dataSource.data = paginatedData; // Mettez à jour ici
+				console.log( 'Données paginées ajoutées à dataSource.data:', this.dataSource.data ); // Log de dataSource.data
+			}
+		} else
+		{
+			this.userService.getAllUsers()
+				.then( ( result ) =>
+				{
+					console.log( 'Données récupérées du service:', result );
+					if ( result && result.data && Array.isArray( result.data ) )
+					{
+						this.customers = result.data;
+						console.log( 'Tableau des utilisateurs récupérés du service:', this.customers );
+					} else
+					{
+						console.error( 'Données du service ne contiennent pas un tableau d\'utilisateurs:', result );
+						this.customers = [];
+					}
+
+					this.totalData = this.customers.length;
+
+					console.log( 'Liste des utilisateurs:', this.customers );
+					const paginatedData = this.customers.slice( this.pageOption.skip, this.pageOption.skip + this.pageOption.limit );
+					this.dataSource.data = paginatedData; // Mettez à jour ici
+					console.log( 'Données paginées ajoutées à dataSource.data:', this.dataSource.data ); // Log de dataSource.data
+
+					// Mettez à jour le stockage local
+					localStorage.setItem( 'users-list', JSON.stringify( result ) );
+				} )
+				.catch( ( error ) =>
+				{
+					this.toastr.error( error.message, '', { timeOut: 7000 } );
+				} )
+				.finally( () =>
+				{
+					this.waiting = false; // Fin du chargement
+				} );
+		}
+	}
+
+	getTableData( pageOption: pageSelection ): void
+	{
+		const storedCustomers = localStorage.getItem( 'users-list' );
+
+		if ( storedCustomers )
+		{
+			this.customers = JSON.parse( storedCustomers ).data; // Accéder à parsedCustomers.data directement
+
+			// Vérifiez si customers n'est pas un tableau et convertissez-le
+			if ( !Array.isArray( this.customers ) )
+			{
+				console.error( 'Les données dans localStorage ne sont pas un tableau:', this.customers );
+				// Convertir en tableau si ce n'est pas un tableau
+				this.customers = Object.values( this.customers );
+				console.warn( 'parsedCustomers.data n\'est pas un tableau, conversion effectuée:', this.customers );
+			}
+
+			this.totalData = this.customers.length;
 			const paginatedData = this.customers.slice( pageOption.skip, pageOption.skip + pageOption.limit );
 			this.dataSource = new MatTableDataSource<User>( paginatedData );
+			console.log( 'Données ajoutées à dataSource:', this.dataSource.data ); // Log de dataSource.data
 
 			this.paginationService.calculatePageSize.next( {
 				totalData: this.totalData,
@@ -236,34 +306,21 @@ export class ListUsersComponent implements OnInit
 			this.userService.getAllUsers()
 				.then( ( result ) =>
 				{
-					this.customers = result;
-					localStorage.setItem( 'users-list', JSON.stringify( this.customers ) ); // Mettez à jour le stockage local
-					this.getTableData( pageOption ); // Mettez à jour les données du tableau
+					console.log( 'Données récupérées du service dans getTableData:', result );
+					this.customers = result.data;
+					this.totalData = this.customers.length;
+					const paginatedData = this.customers.slice( pageOption.skip, pageOption.skip + pageOption.limit );
+					this.dataSource = new MatTableDataSource<User>( paginatedData );
+					console.log( 'Données ajoutées à dataSource:', this.dataSource.data ); // Log de dataSource.data
+					localStorage.setItem( 'users-list', JSON.stringify( result ) );
 					this.waiting = false;
 				} )
 				.catch( ( error ) =>
 				{
 					this.toastr.error( error.message, '', { timeOut: 7000 } );
-					this.waiting = false;
 				} );
 		}
 	}
 
-	onPageChange( pageEvent: any )
-	{
-		const pageSize = pageEvent.pageSize;
-		const pageIndex = pageEvent.pageIndex;
-		const skip = pageIndex * pageSize;
 
-		this.getTableData( { skip, limit: pageSize } );
-	}
-}
-
-export interface pageSizeCal
-{
-	totalData: number;
-	pageSize: number;
-	tableData: any; // Remplacez par le type approprié si possible
-	tableData2: any; // Assurez-vous d'avoir cette propriété
-	serialNumberArray: number[];
 }

@@ -1,0 +1,160 @@
+@font-face {
+	font-family: 'Circular Std';
+	font-style: normal;
+	font-weight: 400;
+	// src: url('../../fonts/CircularStd-Book.eot');
+	src:
+		// url('../../fonts/CircularStd-Book.eot?#iefix') format('embedded-opentype'),
+		url('../../fonts/CircularStd-Book.woff') format('woff'),
+		//  url('../../fonts/CircularStd-Book.svg#Circular Std') format('svg');
+}
+
+@font-face {
+	font-family: 'Circular Std';
+	font-style: normal;
+	font-weight: 500;
+	// src: url('../../fonts/CircularStd-Medium.eot');
+	src:
+		// url('../../fonts/CircularStd-Medium.eot?#iefix') format('embedded-opentype'),
+		url('../../fonts/CircularStd-Medium.woff') format('woff'),
+		//  url('../../fonts/CircularStd-Medium.svg#Circular Std') format('svg');
+}
+
+
+@font-face {
+	font-family: 'Circular Std';
+	font-style: normal;
+	font-weight: 700;
+	// src: url('../../fonts/CircularStd-Bold.eot');
+	src:
+		// url('../../fonts/CircularStd-Bold.eot?#iefix') format('embedded-opentype'),
+		url('../../fonts/CircularStd-Bold.woff') format('woff'),
+		//  url('../../fonts/CircularStd-Bold.svg#Circular Std') format('svg');
+}
+
+$__body__font__family: 'Inter', sans-serif;
+
+$__bold: 700;
+$__semibold: 600;
+$__medium: 500;
+$__regular: 400;
+$__light: 300;
+
+$__body__font__size: 14px;
+$__menu__font__size: 16px;
+$__button__font__size: 18px;
+$__font__size__8: 8px;
+$__font__size__10: 10px;
+$__font__size__11: 11px;
+$__font__size__12: 12px;
+$__font__size__13: 13px;
+$__font__size__14: 14px;
+$__font__size__15: 15px;
+$__font__size__16: 16px;
+$__font__size__17: 17px;
+$__font__size__19: 19px;
+$__font__size__18: 18px;
+$__font__size__20: 20px;
+$__font__size__22: 22px;
+$__font__size__24: 24px;
+$__font__size__25: 25px;
+$__font__size__26: 26px;
+$__font__size__28: 28px;
+$__font__size__30: 30px;
+$__font__size__36: 36px;
+$__font__size__40: 40px;
+$__font__size__48: 48px;
+$__font__size__42: 42px;
+$__font__size__50: 50px;
+$__font__size__80: 80px;
+
+h1 {
+	font-weight: $__medium;
+	font-size: $__font__size__40;
+	font-family: $__body__font__family;
+	color: #28084B;
+
+	@include respond-below(custom767) {
+		font-size: $__font__size__26 + 1;
+	}
+}
+
+h2 {
+	font-weight: $__medium;
+	font-size: $__font__size__30;
+	color: #28084B;
+
+	@include respond-below(custom767) {
+		font-size: $__font__size__22 + 1;
+	}
+}
+
+h3 {
+	font-weight: $__medium;
+	font-size: $__font__size__28;
+	color: #28084B;
+
+	@include respond-below(custom1023) {
+		font-size: $__font__size__20;
+	}
+
+	@include respond-below(custom767) {
+		font-size: $__font__size__16;
+	}
+}
+
+h4 {
+	font-weight: $__medium;
+	font-size: $__font__size__24;
+	font-family: $__body__font__family;
+	color: #28084B;
+
+	@include respond-below(custom1023) {
+		font-size: $__font__size__18;
+	}
+
+	@include respond-below(custom767) {
+		font-size: $__font__size__18;
+	}
+}
+
+h5 {
+	font-weight: $__medium;
+	font-size: 1.25rem;
+	color: #28084B;
+
+	@include respond-below(custom992) {
+		font-size: $__font__size__18;
+		@include margin-padding(0 0 0, null)
+	}
+}
+
+h6 {
+	font-weight: $__medium;
+	font-size: $__font__size__16;
+	color: #28084B;
+
+	@include respond-below(custom1023) {
+		font-size: $__font__size__16;
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	&.card-title {
+		color: #28084B;
+
+	}
+}
+
+.card-title {
+	color: #8A8E9C;
+}
+
+.card-body {
+	color: #8A8E9C;
+}

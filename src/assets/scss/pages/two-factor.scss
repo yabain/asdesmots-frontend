@@ -1,0 +1,39 @@
+.card-body.two-factor {
+  
+    .content-page-header.factor {
+        @include margin-padding(0 0 20px 0, null);
+    }
+    .two-factor.content h5 {
+        @include margin-padding(0 0 5px 0, null);
+        font-size: $__font__size__16;
+    }
+    .two-factor.content p {
+        @include margin-padding(0 0 30px 0, null);
+        font-size: $__font__size__16;
+    }
+    .two-factor.icon h5 {
+        @include margin-padding(null, 30px 0 0px 0);
+        font-size: $__font__size__16;
+        border-top: 1px solid $__cloud__grays;
+        display: flex;
+        align-items: center;
+    }
+    .two-factor.icon h5 img {
+        margin-right: 7px;
+    }
+    .status-toggle .checktoggle.factor {
+        transform: none;
+    }
+    .factor-checkbox {
+        display: flex;
+        text-align: right;
+        justify-content: end;
+
+        @include respond-below(custom575) {
+            text-align: left;
+            justify-content: start;
+            margin-bottom: 30px;
+        }
+    }
+
+}

@@ -1,0 +1,204 @@
+.saas-login-wrapper {
+	width: 100%;
+	overflow: hidden;
+	height: 100vh;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	background: $__white;
+	.login-content {
+		width: 100%;
+		height: 100vh;
+		padding: 60px 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		align-items: center;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		justify-content: center;
+		-webkit-justify-content: center;
+		-ms-flex-pack: center;
+		flex-wrap: wrap;
+		.login-logo {
+			display: block;
+			text-align: center;
+		}
+		@include respond-below(custom575){
+			padding: 40px 15px;
+		}
+	}
+	form {
+		@include respond-below(custom575){
+			width: 100%;
+		}
+	}
+	.login-userset {
+		width: 496px;
+		@include respond-below(custom1199){
+			width: 400px;
+		}
+		@include respond-below(custom991){
+			width: 496px;
+		}
+		@include respond-below(custom575){
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+}
+.login-heading {
+	margin-bottom: 20px;
+	h3 {
+		font-weight: 600;
+		margin-bottom: 5px;
+	}
+	p {
+		margin-bottom: 0;
+	}
+}
+.form-wrap {
+	position: relative;
+	margin-bottom: 24px;
+}
+.login-card {
+	padding: 24px;
+	border-radius: 10px;
+	background-color: $__white;
+	box-shadow: 0px 16px 32px 0px #BEBEBE33;
+	margin: 40px 0;
+	.toggle-password {
+		position: $__absolute;
+		right: 17px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #757575;
+		cursor: $__pointer;
+		&.fa-eye {
+			margin-right: 1px;
+		}
+	}
+	.pass-group {
+		position: $__relative;
+	}
+}
+.login-content {
+	.btn {
+		width: 100%;
+		height: auto;
+		padding: 8px 20px;
+	}
+}
+.acc-in {
+	text-align: center;
+	p {
+		font-size: 15px;
+		font-weight: 500;
+		margin-bottom: 0;
+		a {
+			color: #1D1D1D;
+			&:hover {
+				color: $__primarycolor;
+			}
+		}
+	}
+}
+.authentication-wrapper {
+	background: $__primarycolor;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 50%;
+	padding: 24px 0 0 24px;
+	.authen-img {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		line-height: 0;
+		max-width: 600px;
+		@include respond-below(custom1399){
+			max-width: 520px;
+		}
+		@include respond-below(custom1199){
+			max-width: 380px;
+		}
+	}
+	@include respond-below(custom991){
+		display: none;
+	}
+}
+.authentication-content {
+	height: 100%;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-direction: column;
+	h1 {
+		font-size: $__font__size__36;
+		color: $__white;
+		max-width: 490px;
+		margin-bottom: 22px;
+		font-weight: $__bold;
+	}
+	p {
+		color: $__white;
+		font-size: $__font__size__18;
+	}
+}
+.forgot-link {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1D1D1D;
+	text-decoration: underline;
+}
+.pass-group {
+	input[type="password"] {
+		padding-right: 40px;
+	}
+}
+.login-bg-img {
+	.vector-bg-one {
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: -1;
+	}
+	.vector-bg-two {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		z-index: -1;
+	}
+	.vector-bg-three {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		z-index: -1;
+	}
+	.vector-bg-four {
+		position: absolute;
+		left: 15%;
+		top: 35%;
+		z-index: -1;
+	}
+}
+.saas-pass-box {
+	.input-block {
+		&:first-child {
+			margin-right: 5px;
+			@include respond-below(custom575){
+				margin-right: 0;
+			}
+		}
+	}
+	@include respond-below(custom575){
+		flex-direction: column;
+	}
+}

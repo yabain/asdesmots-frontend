@@ -1,0 +1,147 @@
+.view-delivery-challans {
+	.file-link {
+		.download-link{
+			padding: 10px 15px;
+		}
+		@include respond-below(custom992) {
+	        margin: 20px 0;
+	   	} 
+	}
+	.invoice-one {
+		.invoice-wrapper {
+			margin: 0;
+			padding: 0;
+			box-shadow: $__none;
+		}
+		.inv-content {
+			@include rounded(10px);
+			.invoice-header {
+				border-bottom: $__none;
+				.inv-header-left {
+					h4 {
+						font-size: $__font__size__20;
+						margin-bottom: 0;
+					}
+					h5 {
+						font-size: $__font__size__18;
+						font-weight: $__bold;
+						margin-bottom: 0;
+						background: $__none;
+						padding: 0;
+						margin: 5px 0;
+					}
+					h6 {
+						font-size: $__font__size__16;
+						font-weight: $__medium;
+						color:  $__dark;
+					}
+				}
+				.inv-header-right {
+					h3 {
+						color: $__gray__white__light;
+						font-size: $__font__size__18;
+						font-weight: 450;
+					}
+					p {
+						background: $__bg__green__light;
+						@include rounded(5px);
+    					padding: 5px 10px;
+    					display: inline-block;
+    					font-weight: $__semibold;
+						span {
+							background: $__none;
+							font-weight: $__regular;
+							padding-right: 0;
+						}
+					}
+				}
+			}
+			.terms-condition {
+				span {
+					color:  $__primarycolor1;
+					font-size: $__font__size__18;
+				}
+				ol {
+					padding-left: 15px;
+					color:  $__gray__white__light;
+				}
+			}
+		}
+		.bill-add {
+			color: $__gray__white__light;
+		}
+		.customer-name {
+			font-size: $__font__size__18;
+			font-weight: $__semibold;
+			margin-bottom: 20px;
+			h4 {
+				font-size: $__font__size__18;
+				font-weight: $__semibold;
+			}
+			span {
+				font-weight: $__regular;
+				color: $__gray__white__light;
+			}
+		}
+		.reference {
+			h4 {
+				color:  $__grayish__blue;
+				font-size: $__font__size__16;
+				font-weight: $__semibold;
+				margin-bottom: 10px;
+			}
+			p {
+				color: $__gray2;
+				font-size: $__font__size__16;
+			}
+			hr {
+				margin: 20px 0;
+				border-color: $__gray_gray;
+			}
+		}
+		.invoice-table {
+			tr {
+				th {
+					font-size: $__font__size__18;
+					font-weight: 450;
+					color: $__dark;
+				}
+			}
+			h5 {
+				font-size: $__font__size__24;
+				font-weight: $__bold;
+				@include respond-below(custom992) {
+			        font-size: $__font__size__18;
+			   	}
+			}
+		}
+		.authorization {
+			h6 {
+				font-size: $__font__size__14;
+				font-weight: $__bold;
+				color:  $__dark;
+			}
+		}
+	}
+	.powered {
+		h6 {
+			font-size: $__font__size__14;
+			font-weight: $__bold;
+			color:  $__dark;
+		}
+	}
+}
+[data-layout-mode=dark] {
+	.invoice-one .inv-content .invoice-header { 
+		background: $__none;
+	}
+	.view-delivery-challans .invoice-one .inv-content .invoice-header .inv-header-left h6, .view-delivery-challans .invoice-one .inv-content .invoice-header .inv-header-right p, .view-delivery-challans .invoice-one .reference h4{
+		color:  $__white;
+	}
+	.view-delivery-challans .invoice-one .inv-content .invoice-header .inv-header-right p {
+		background: $__invoice__bg;
+	}
+	.view-delivery-challans .invoice-one .reference p, .view-delivery-challans .invoice-one .authorization h6, .view-delivery-challans .invoice-one .inv-content .terms-condition span, .view-delivery-challans .powered h6 {
+		color: $__gray__dark
+	}
+}

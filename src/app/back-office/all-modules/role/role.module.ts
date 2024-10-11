@@ -15,9 +15,10 @@ import { RolepermissionlistComponent } from './rolepermissionlist/rolepermission
 import { ListUsersComponent } from './list-users/list-users.component';
 import { DataTablesModule } from 'angular-datatables';
 import { PermissionsCardComponent } from './role-create/permissions-card/permissions-card.component';
+import { CustomPaginationModule } from 'src/app/shared/custom-pagination/custom-pagination.module';
 
 
-@NgModule({
+@NgModule( {
   declarations: [
     RoleComponent,
     RoleListComponent,
@@ -35,7 +36,8 @@ import { PermissionsCardComponent } from './role-create/permissions-card/permiss
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-  DataTablesModule
+    DataTablesModule,
+    CustomPaginationModule,
   ]
-})
+} )
 export class RoleModule { }

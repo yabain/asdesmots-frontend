@@ -1,0 +1,51 @@
+.receipt-four {
+	.receipt-top {
+        .receipt-title {
+	   	   font-size: $__font__size__18;
+	   	   color: $__black;
+	   	   margin-bottom: 10px;
+	    }
+	    .company-name {
+	       color: $__grey__nuetral;
+	       text-transform: $__uppercase;
+	       font-size: $__font__size__10;  
+	    }
+	    .company-logo {
+	       background: none;
+	       margin-bottom: 0;
+	       img {
+	          vertical-align: middle;
+	       }
+	    }
+	    .receipt-title {
+	        margin-top: 10px;
+	    }
+	    .company-email {
+	        padding-bottom: 10px;
+	    }
+    }
+    .receipt-seperator {
+        margin: 1px 0;
+    }
+    .bill-list {
+        .receipt-seperator {
+           margin: 6px 0;
+        }
+    }
+    .customer-list {
+       margin-top: 10px;
+    }
+    .receipt-table {
+       margin-top: 0;
+       thead {
+           th {
+              border-top: 0;
+           }
+       }
+    }
+    .sample_text {
+	    img {
+	       margin-top: 10px;
+	    }
+    } 
+}

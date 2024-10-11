@@ -1,0 +1,129 @@
+.tabs-set{
+    .nav-tabs {
+        border-bottom: 0;
+        margin-bottom: 20px;
+        .nav-link{
+            color: $__secondarycolor;
+            @include margin-padding(null, 8px 15px);
+            font-size: $__font__size__16;
+            font-weight: $__bold;
+            border: 0;
+            min-width: 120px;
+            margin-right: 10px;
+            background: $__light__gooses;
+            border-radius: 5px !important;
+            @include margin-padding(null, null);
+            &:focus{
+                border-color: $__transparent;
+            }
+            &:hover{
+                border-color: $__transparent;
+            }
+            &.active{
+                border:0;
+                border-bottom:2px solid $__primarycolor;
+                background: $__primarycolor;
+                color: $__white;
+            }
+        }
+    }
+}
+.tab-content {
+    padding-top: 32px;
+}
+.navtab-bg {
+    .nav-link {
+        background-color: #edeff1;
+        color: #455560;
+    }
+}
+.nav-bordered {
+    li a {
+        border: 0 !important;
+    }
+}
+.nav-tabs{
+    .nav-item{
+        &.show{
+            .nav-link{
+                color: #495057;
+                background-color: $__white;
+                border-color: $__gray $__gray $__white;
+            }
+        }
+       
+    }
+    .nav-link{
+        &.active{
+            color: #495057;
+            background-color: $__white;
+            border-color: #dee2e6 #dee2e6 $__white;
+        }
+    }
+}
+.navtab-bg {
+    .nav-item {
+        margin: 0 5px;
+    }
+}
+.nav-bordered {
+    a.active {
+        border-bottom: 2px solid $__primarycolor !important;
+    }
+}
+.tabs-sets{
+    .nav-tabs {
+        border-bottom: 0;
+        @include margin-padding(0 0 30px, null);
+        .nav-link{
+            color: $__black;
+            font-size: $__font__size__14;
+            font-weight: $__bold;
+            border: 0;
+            background: $__light-goose-grays;
+            min-width: 112px;
+            margin-right:15px;
+            @include margin-padding(null, 15px);
+            @include rounded(5px);
+            &:focus{
+                border-color: $__transparent;
+            }
+            &:hover{
+                border-color: $__transparent;
+            }
+            &.active{
+                background: $__primarycolor;
+                color: $__white;
+            }
+        }
+    }
+}
+.nav-pills .nav-link {
+    color: #455560;
+    border-radius: 4px;
+}
+.nav-link{
+    color: #888;
+}
+.card-buttons {
+    p {
+        margin-bottom: 20px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .card-title {
+        margin-bottom: 10px;
+    }
+    .btn {
+        @include respond-below(custom768) {
+            margin-bottom: 10px;
+        }
+    }
+    .card-text {
+        margin-bottom: 10px;
+    }
+    .header-title {
+        margin-bottom: 10px;
+    }
+}

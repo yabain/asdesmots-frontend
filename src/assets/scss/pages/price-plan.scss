@@ -1,0 +1,139 @@
+.price-table-main {	
+	.card {
+		@include margin-padding(30px 0 0 0, null);
+	}
+	.price-selected {
+		@include margin-padding(0, null);
+		background: $__primarycolor;
+		border: 1px solid $__light__vampires;
+		@include rounded(24px);
+		color: $__white;
+	}
+	.plan-selected {
+		@extend %flex-align-center;
+		@include margin-padding(0 0 30px 0, null);
+	}
+	h4 {
+		font-weight: $__semibold;
+		font-size: $__font__size__18;
+	}
+	.status-toggle {
+		.checktoggle {
+			transform: translate(calc(-0% - 5px), -0%);
+			width: 74px;
+			height: 33px;
+			@include rounded(20px);
+			&:after {
+				height: 20px;
+				width: 20px;
+				left:5px;
+			}
+		}
+		.check {
+			&:checked {
+				+ .checktoggle {
+					transform: translate(calc(-0% - 5px), -0%);
+				}
+			}
+		}
+	}
+	.plan-header {
+		@extend %display-flex-center;
+		@include margin-padding(0 0 16px 0, null);
+		.plan-widget-icon {
+			background: $__primary__light__blue;
+			@include margin-padding(null, 10px);
+			@include rounded(16px);
+			@extend %flex-align-center;
+		}
+		.plan-title {
+			@include margin-padding(0 0 0 18px, null);
+			h6 {
+				color: $__gray__dark;
+			}
+		}
+		.plan-name{
+			font-weight: $__bold;
+		}
+	}
+	.price-popular {
+		@include margin-padding(0 0 0 30px, 12px 24px);
+		background: $__primarylight;
+		@include rounded(10px);
+		font-size: $__font__size__14;
+		font-weight: $__regular;
+		height: 100%;
+			@include respond-below(custom1199) {
+				@include margin-padding(0 0 0 30px, 8px 10px);
+			}
+			@include respond-below(custom992) {
+				display: none;
+			}
+	}
+	.description-content {
+		p {
+			@include margin-padding(0 0 10px 0, null);
+		}
+	}
+	.price-dollar {
+		h1 {
+			font-size: $__font__size__48;
+			font-weight: $__bold;
+			@include margin-padding(0 0 10px 0, null);
+			span {
+				font-weight: $__medium;
+				color: $__gray__dark;
+				font-size: $__font__size__13;
+			}
+				@include respond-below(custom1199) {
+					font-size: $__font__size__40;
+				}
+		}
+	}
+	.plan-description {
+		@include margin-padding(0 0 34px 0, null);
+		h6 {
+			font-size: $__font__size__16;
+			font-weight: $__semibold;
+			@include margin-padding(0 0 18px 0, null);
+		}
+		ul {
+			li {
+			@extend %display-flex-center;
+			@include margin-padding(0 0 14px 0, null);		
+			&:last-child {
+				@include margin-padding(0, null);
+			}
+				span {
+					background: $__primarydark;
+					color: $__white;
+					display: $__inline__flex;
+					@include margin-padding(0, 3px);
+					line-height: 0;
+					i {
+						font-weight: $__medium;
+					}
+				}			
+			}
+		}
+	}
+	.plan-button {
+		.btn {
+			@include margin-padding(null, 10px);
+			font-size: $__font__size__16;
+			font-weight: $__semibold;
+			span {
+				line-height: 0;
+			}
+		}
+	}
+	.plan-header-selected {
+		@include margin-padding(30px 0 30px 0, null);
+	}
+}
+.price-selected .card-body{
+	color:#fff
+}
+.price-table-main .status-toggle .check:checked + .checktoggle:after {
+    transform: translate(calc(-100% - 5px), -50%)
+}

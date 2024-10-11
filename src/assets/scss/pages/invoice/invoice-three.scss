@@ -1,0 +1,216 @@
+.invoice-three {
+    .invoice-wrapper {
+        padding: 50px;
+        .inv-content  {
+            border: none;
+            .invoice-header {
+                padding: 0 0 50px 0;
+                @extend %align-items-start;
+                .inv-header-left {
+                    .tax-invoice {
+                        color: #7539FF;
+                        font-weight: 700;
+                        font-size: 24px;
+                        margin-bottom: 24px;
+                    }
+                }
+                .inv-header-right {
+                    img {
+                        max-width: 270px;
+                    }
+                }
+                .company-details {
+                    .invoice-title {
+                        color: #000;
+                        font-size: 24px;
+                        font-weight: 700;
+                        margin-bottom: 10px;
+                        display: inline-block;
+                    }
+                    .gst-details {
+                        margin: 0 0 10px 0;
+                        padding: 0;
+                        &:last-child {
+                            margin: 0;
+                        }
+                      
+                        span {
+                            color: #000;
+                            font-weight: 450;
+                            font-family: 'Circular Std';
+                            font-size: 16px;
+                        }
+                        &:first-child {
+                            span {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+                
+                
+            }
+            .invoice-address {
+                padding: 0;
+                border: 1px solid #BDBDBD;
+                margin-bottom: 50px;
+                @include respond-below(custom767) {
+                    display: flex;     
+                }
+                .invoice-address-details {
+                    padding: 24px 0 24px 24px;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                .invoice-details-content {
+                    width: 50%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    .invoice-status-details {
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 50px 0;
+                        border: 1px solid #BDBDBD;
+                        border-top: none;
+                        span {
+                            display: block;
+                            margin-bottom: 15px;
+                            &:last-child {
+                                color: #7539FF;
+                                font-size: 24px;
+                                font-weight: 700;
+                                margin-bottom: 0;
+                                @include query-print {
+                                    font-size: 18px;
+                                } 
+                            }
+                        }
+                    }
+                }
+                .invoice-to {
+                    span {
+                        margin: 0 0 15px;
+                    }
+                    .inv-to-address {
+                        line-height: 24px;
+                    }
+                }
+            }
+            .invoice-table {
+                padding: 0;
+                margin-bottom: 50px;
+                table {
+                    font-family: 'Circular Std';
+                    border: 1px solid #BEBEBE;
+                    .table_width_2 {
+                        width: 30%;
+                    }
+                    tr {
+                        border-bottom: 1px solid #BEBEBE;
+                    }
+                    thead {
+                        tr {
+                            background: #fff;
+                            th {
+                                font-size: 18px;
+                                font-weight: 450;
+                                color: #000;
+                            }
+                        }
+                    }
+                    td {
+                        vertical-align: middle;
+                        color: #2C3038;
+                        font-weight: 400;
+                        font-size: 16px;
+                        height: 80px;
+                        white-space: pre-wrap;
+                        @include query-print {
+                            height:72px;
+                        } 
+                    }
+                    .unit-price-data {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        span {
+                            color: #7539FF;
+                            font-size: 12px;
+                            margin-top: 5px;
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+            .invoice-table-footer {
+                padding: 0;
+                .table-footer-right {
+                    width: 50%;
+                    table {
+                        tr {
+                            td {
+                                width: 60%;
+                                color: #2C3038;
+                                padding: 7px 0;
+                                font-size: 18px;
+                                font-weight: 600;
+                                &.table-footer-right-title{
+                                    color: #878A99;
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+                .table-footer-left {
+                    display: flex;
+                    flex-direction: column;
+                    span {
+                        color: #2C3038;
+                        &.total-item {
+                            color: #878A99;
+                        }
+                    }
+                }
+            }
+            .bank-details {
+                padding: 50px 0;
+                .account-info {
+                    display: flex;
+                    gap: 24px;
+                    .qr-code {
+                        img {
+                            margin-bottom: 10px;
+                        }
+                        .scan-details {
+                            font-size: 14px;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .account-details {
+                    margin: 0 0 10px;
+                    span {
+                        color: #000;
+                        font-weight: 450;
+                    }
+                }
+            }
+            .invoice-notes {
+                background: #DDF3FF;
+                padding: 14px;
+                border-radius: 10px;
+                border: 1px solid #2DA7FF;
+            }
+            .thanks-msg {
+                padding: 40px 0 0 0;
+            }
+        }
+    }
+   
+}

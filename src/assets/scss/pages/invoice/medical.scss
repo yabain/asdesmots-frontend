@@ -1,0 +1,253 @@
+.medical {
+   .inv-content {
+       border: 1px solid $__black;
+       @include margin-padding(0,30px);    
+    .invoice-header {
+        border-top: 10px solid $__black__nuetral;
+        border-bottom: 10px solid $__black__nuetral;
+        @include margin-padding(0, 20px 20px);
+            .inv-header-left  {          
+                width: 54%;
+                @include respond-below(custom1199) {
+                    width: 56%; 
+                }
+                @include respond-below(custom767) {
+                    width: 100%; 
+                }
+                h4 {
+                   color: #28084B;
+                   font-size: 48px;
+                   font-weight: $__bold;
+                   margin-bottom: 15px;
+                   @include respond-below(custom767) {
+                       display: $__none;
+                    } 
+                }
+            }
+            .inv-header-right {                
+                 span {
+                   display: $__block;
+                   margin: 15px 0;                  
+                }       
+                h3 {
+                    font-size: $__font__size__40;                   
+                    @include margin-padding(0,0);
+                    color: $__black__nuetral;
+                    font-weight: $__bold;
+                    @include respond-below(custom992) {
+                       font-size: $__font__size__30;
+                    } 
+                } 
+            }
+            .company-details {
+                position: $__relative;
+                overflow: hidden;
+                .gst-details {
+                    position: $__relative;
+                    @include margin-padding(0, 40px 30px);
+                    color: $__white;
+                    z-index: 2;
+                    span {
+                       color: $__white;
+                       @include respond-below(custom992) {
+                          color: $__black; 
+                       }
+                    }
+                    @include respond-below(custom992) {
+                        color: $__black;
+                        @include margin-padding(0, 10px 0px);
+                    }  
+                    @include respond-below(custom767) {
+                        @include margin-padding(0, 10px 0px);
+                    }
+                 }
+                .address-bg {
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    -webkit-transform: skewX(-35deg);
+                    transform: skewX(-35deg);
+                    top: 0px;
+                    right: 38px;
+                    overflow: hidden;
+                    background-color: $__tablehead__bg;
+                    &:hover {
+                       background-color: $__tablehead__bg;
+                    }
+                    @include respond-below(custom1199) {
+                       right: 58px; 
+                    }
+                    @include respond-below(custom992) {
+                       display: $__none; 
+                    }  
+                }
+            } 
+            @include respond-below(custom767) {
+                flex-direction: column-reverse; 
+                display: $__flex;
+            }           
+        }
+     .patient-info {
+            display: $__flex;
+            @include margin-padding(0 0 20px,0);
+            .patient-details,.treatment-info {
+               background: $__invborder__color;
+               @include margin-padding(0 20px 0 0, 20px);
+               width: 50%;
+               h5 {
+                  color: $__darktableheadbg;
+                  margin-bottom: 15px; 
+                  font-size: $__font__size__18;
+               }
+               div {
+                   display: $__flex;
+                   justify-content: space-between;
+                   span {
+                       color: $__black__nuetral;
+                       width: 70%;
+                       text-align: $__right;
+                   }
+                   @include respond-below(custom992) {
+                       font-size: $__font__size__12; 
+                       display: $__block;                      
+                    }
+                    @include respond-below(custom767) {
+                       font-size: $__font__size__15;                       
+                    }
+               }               
+                @include respond-below(custom767) {
+                  width: 100%; 
+                  margin-bottom: 20px;
+                  @include margin-padding(0 10px 20px 0, 15px);
+               } 
+            }
+
+            @include respond-below(custom767) {
+                 display: $__block;
+            } 
+        }
+    h5 {
+        background: $__exchangebg;
+        color: $__black__nuetral;
+        border-radius: 10px;
+        font-size: $__font__size__18;
+        @include margin-padding (20px 0,10px 20px);
+    }    
+    .invoice-table {
+	  @include margin-padding(0,0 0 20px);
+	  table {
+		color: $__black__nuetral;
+		@include margin-padding(0,0px);
+        thead {
+            tr {
+                border-top: 1px solid $__black;
+	            border-bottom: 1px solid $__black;
+	            color: $__black;
+            }
+        }
+        .table_width_2 {
+		   width: 50%;
+		}
+		tr {
+		   border-bottom: 1px solid $__black;
+		   .table-description {
+			   color: $__black__nuetral;
+			   span {
+			      display: $__block;
+			      color: $__grey__nuetral;
+			   }
+		    }
+		    td {
+		       @include margin-padding (0,20px 15px);
+		    }
+		    td,th {
+                &:last-child {
+                    padding-right: 25px;
+                }
+                @include respond-below(custom992) {
+		            white-space: $__nowrap;
+		        }		       
+		    }			
+		}
+	  }
+	}
+    .invoice-table-footer  {
+        @include margin-padding (0,20px 10px);
+        border-bottom: 1px solid $__black;
+        .table-footer-right {
+            color: $__black__nuetral;
+            table {
+              td {
+                 @include margin-padding (0,5px 15px);
+                 @include respond-below(custom767) {
+                      @include margin-padding (0,5px 0px);
+                 }
+              }
+            }
+        }
+        .total-item {
+            @include respond-below(custom767) {
+                display: $__none;
+            }   
+        }
+    }
+    .table-total-item {
+        @include margin-padding (0,15px 10px 15px 20px);
+        @include respond-below(custom767) {
+            @include margin-padding (0,15px 0px);
+        } 
+    } 
+    .total-amountdetails {
+        @include margin-padding(0, 20px 0);
+        border-bottom: 1px solid $__black;
+        text-align: $__center;
+        @include respond-below(custom992) {
+            text-align: $__center;
+        }   
+    }
+    .bank-details {  
+        @include margin-padding(0, 25px 15px);
+        border-bottom: 1px solid $__black;          
+        .payment-info {
+            color: $__black__nuetral;
+            .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+            }
+            div {
+                 @include margin-padding(0 0 10px,0);
+            }
+            span{
+                color: $__grey__nuetral;
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0,0);
+            color: $__black__nuetral;
+            span {
+                font-size: $__font__size__18;
+                margin: 0 0 10px;
+            } 
+            ol {
+                color: $__grey__nuetral;
+            }
+            @include respond-below(custom767) {
+                @include margin-padding (10px 0,0px 0px);  
+            } 
+        }         
+        @include respond-below(custom767) {
+            @include margin-padding (0,10px 0px);  
+        }        
+    }
+    .thanks-msg {
+        background: $__invborder__color;
+        border-bottom: 1px solid $__black; 
+        color: $__black;
+    } 
+    @include respond-below(custom767) {
+        @include margin-padding (0,20px);  
+    }   
+  }
+}

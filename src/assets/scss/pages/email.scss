@@ -1,0 +1,101 @@
+.inbox-menu {
+    display: $__inline__block;    
+    width: $__full__width;
+    li {
+        display: $__inline__block;
+        width: $__full__width;
+        a {
+            color: $__gray;
+            display: $__inline__block;
+            padding: 10px 15px;
+            width: $__full__width;
+            font-weight: $__semibold;
+            text-transform: capitalize;
+            @include transition(all 0.3s ease);
+            &:hover{
+                background: $__gray13;
+            }
+            i {
+                font-size: $__font__size__14;
+                padding-right: 10px;
+                color: $__gray15;
+            }
+        }
+    }
+}
+@include respond-below(custom768) {
+    .user-menu.nav {
+        > li {
+            > a > span:not(.user-img) {
+                display: $__none;
+            }
+        }
+    }
+}
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+.dropdown-menu {
+    border: 1px solid $__mainly_blue-dark;
+    @include rounded(0.8rem);
+    transform-origin: left top 0;
+    background-color: $__white;
+    padding: 0;
+    box-shadow: 0 0 1.25rem $__mainly_blue;
+    overflow: hidden;
+}
+.flag-nav .dropdown-menu.notifications {
+    transform: translateY(49px) !important;
+}
+.flag-nav .dropdown-menu {
+    transform: translateY(59px) !important;
+}
+.table-inbox {
+    font-size: 15px;
+    margin-bottom: 0;
+}   
+.inbox-menu li a:hover, .inbox-menu li.active a, .inbox-menu li a:focus {
+    background: $__mainly_blue-dark;
+}
+.compose-btn {
+    margin-bottom: 25px;
+}
+.top-action-left{
+    .dropdown-toggle{
+        height: 40px;
+        &::after{
+            display: $__none;
+        }
+    }
+}
+.table-inbox {
+    .starred.fas.fa-star {
+        color: $__golden__yellow;
+    }
+    .checked {
+        background-color: #ffffcc;
+    }
+    tbody{
+        tr{
+            td{
+                font-size: 14px;
+                color: $__secondarycolor;
+            }
+        }
+    }
+}
+.unread{                                                        
+    .name,
+    .subject,
+    .mail-date{
+        color: $__black;
+        font-weight: 700;
+    }
+}

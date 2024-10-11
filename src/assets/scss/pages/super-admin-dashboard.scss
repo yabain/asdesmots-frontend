@@ -1,0 +1,278 @@
+.super-admin-dashboard {
+	.dash-user-card {
+		background: $__primarycolor;
+		padding: 24px;
+		border-radius: 10px;
+		position: relative;
+		z-index: 1;
+		margin-bottom: 24px;
+		h4 {
+			color: $__white;
+			display: inline-flex;
+			align-items: center;
+			font-weight: $__bold;
+			margin-bottom: 10px;
+			i {
+				margin-right: 5px;
+			}
+		}
+		p {
+			color: $__white;
+		}
+		.dash-btns {
+			margin-top: 75px;
+			@include respond-below(custom575){
+				margin-top: 45px;
+			}
+			a {
+				padding: 8px 15px;
+				color: $__white;
+				@include respond-below(custom575){
+					padding: 8px 6px;
+				}
+				&.view-company-btn {
+					background: $__sky__blue;
+					border: 1px solid $__sky__blue;
+					box-shadow: inset 0 0 0 0 $__white;
+					&:hover {
+						color: $__sky__blue;
+						border: 1px solid $__sky__blue;
+						background: $__white;
+					}
+				}
+				&.view-package-btn {
+					color: $__sky__blue;
+					border: 1px solid $__sky__blue;
+					background: $__white;
+					margin-left: 5px;
+					&:hover {
+						background: $__sky__blue;
+						border: 1px solid $__sky__blue;
+						color: $__white;
+					}
+				}
+			}
+		}
+	}
+	.dash-img {
+		position: absolute;
+		right: 10px;
+		bottom: 0;
+		line-height: 0;
+		z-index: -1;
+	}
+}
+.company-detail-card {
+	padding: 24px;
+	background: $__history__light;
+	border-radius: 10px;
+	margin-bottom: 24px;
+	@include respond-below(custom1599){
+		padding: 24px 17px;
+	}
+	h6 {
+		font-size: $__font__size__14;
+		color: #1D1D1D;
+		font-weight: $__semibold;
+		margin-bottom: 5px;
+		@include respond-below(custom1599){
+			font-size: $__font__size__13;
+		}
+	}
+	.company-icon {
+		width: 68px;
+		height: 68px;
+		border-radius: 10px;
+		background: $__white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 15px;
+	}
+	h5 {
+		font-size: $__font__size__24;
+		margin-bottom: 15px;
+		color: $__history__orange;
+	}
+	p {
+		color: #484848;
+		span {
+			color: $__text__success__dark;
+		}
+	}
+	&.bg-info-light {
+		background: $__bg__info__light;
+		h5 {
+			color: #1E8EDF;
+		}
+	}
+	&.bg-pink-light {
+		background: $__bg__danger__light;
+		h5 {
+			color: $__text__danger__light;
+		}
+	}
+	&.bg-success-light {
+		h5 {
+			color: $__text__success__dark;
+		}
+	}
+}
+.dash-company-row {
+	@include respond-below(custom991){
+		
+	}
+}
+.super-admin-dash-card {
+	border: 1px solid #E0E0E0;
+	padding: 24px;
+	width: 100%;
+	.card-header {
+		padding: 0 0 15px;
+		margin-bottom: 5px;
+		.card-title {
+			font-size: $__font__size__18;
+			font-weight: $__semibold;
+		}
+	}
+	table {
+		td {
+			vertical-align: middle;
+			.view-companies {
+				border: 1px solid #E0E0E0;
+				color: #484848;
+				border-radius: 5px;
+				&:hover {
+					background: $__primarycolor;
+					border-color: $__primarycolor;
+					color: $__white;
+				}			
+			}
+			&.expired-date {
+				color: #484848;
+			}
+			.active-inactive-btn {
+				display: flex;
+				align-items: center;
+				justify-content: end;
+				a {
+					width: 24px;
+					height: 24px;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 5px;
+					color: $__white;
+					&.active-domain {
+						background: $__success__light;
+						margin-right: 5px;
+					}
+					&.inactive-domain {
+						background: $__text__danger__light;
+					}
+				}
+			}
+		}
+	}
+	.dropdown.main {
+		.btn-white {
+			color: #484848;
+			&:hover {
+				color: $__white;
+			}
+		}
+	}
+	.dash-plane-list {
+		background: $__cylindrical;
+		padding: 24px;
+		border-radius: 10px;
+		margin-top: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		@include respond-below(custom1399){
+			padding: 15px;
+		}
+		.plane-info {
+			display: flex;
+			align-items: center;
+			.icon-plane-custom {
+				width: 50px;
+				height: 50px;
+				border-radius: 15px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				background: $__primary__light__blue;
+				margin-right: 8px;
+				flex-shrink: 0;
+				@include respond-below(custom1399){
+					width: 45px;
+					height: 45px;
+				}
+			}
+			.icon-company {
+				width: 40px;
+				height: 40px;
+				border: 1px solid #E0E0E0;
+				background: $__white;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+				margin-right: 8px;
+				border-radius: 40px;
+			}
+			.name-company {
+				color: #1D1D1D;
+				font-size: $__font__size__16;
+			}
+			.plane-name {
+				color: #1D1D1D;
+				font-weight: $__medium;
+				span {
+					color: #484848;
+					font-weight: $__normal;
+				}
+				h6 {
+					font-size: $__font__size__14;
+					color: #484848;
+					font-weight: $__normal;
+					margin-top: 3px;
+				}
+			}
+		}
+		.plane-rate {
+			color: #1D1D1D;
+			font-size: $__font__size__14;
+		}
+	}
+	.dash-incoice-table {
+		color: #1D1D1D;
+		font-weight: $__medium;
+	}
+	.dash-incoice-date {
+		color: #484848;
+		font-size: $__font__size__14;
+		display: block;
+		margin-top: 3px;
+	}
+}
+#plane-chart {
+	.apexcharts-legend {
+		display: none;
+	}
+}
+.earning-income-text {
+	color: $__primarycolor;
+	display: inline-flex;
+	align-items: center;
+	margin-right: 15px;
+	i {
+		width: 12px;
+		height: 12px;
+		border-radius: 2px;
+		background: $__primarycolor;
+		margin-right: 5px;
+	}
+}

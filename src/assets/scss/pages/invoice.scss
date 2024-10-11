@@ -1,0 +1,486 @@
+.app-listing {
+    padding: 0;
+    margin: 0 -15px;
+    list-style: $__none;
+    @extend %display-flex-between;
+    flex-wrap: wrap;
+    li {
+        width: 20%;
+        padding-left: 10px;
+        padding-right: 10px;
+        @include respond-below(custom991) {
+            width:50%
+        }
+        @include respond-below(sm) {
+            width:100%
+        }
+    }
+    .checkbox-title {
+        font-weight: $__semibold;
+        font-size: $__font__size__16;
+        color: $__primarycolor;
+        margin-bottom: 14px;
+    }
+    .form-custom {
+        margin-bottom: 14px;
+        .form-control {
+            padding-left: 14px;
+            border: 1px solid rgba(231, 234, 252, 0.75);
+            border-radius: 6px;
+        }
+    }
+    
+}
+.selectbox-cont {
+    height: 220px;
+    overflow-y: $__auto;
+    padding-right: 5px;
+}
+.multipleSelection {
+    position: $__relative;
+    margin-bottom: 20px;
+    .selectbox,  .selectboxes {
+        position: $__relative;
+        background: $__white;
+        width: 100%;
+        padding: 13px 10px;
+        font-weight: $__regular;
+        background: $__white;
+        border: 1px solid #F7F8F9;
+        border-radius: 7px;
+        @extend %display-flex-between;
+        cursor: $__pointer;
+        p {
+            color: $__graybackblue;
+            font-weight: $__medium;
+            .select-icon {
+                color: $__primarycolor;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
+.custom_check {
+    color: $__graybackblue;
+    display: $__inline__block;
+    position: $__relative;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    cursor: $__pointer;
+    font-weight: $__regular;
+    user-select: $__none;
+    input:checked ~ .checkmark {
+        background-color: $__primarycolor;
+        border-color: $__primarycolor;
+        &:after {
+            display: $__block;
+        }
+    }
+    input {
+        position: $__absolute;
+        opacity: 0;
+        cursor: $__pointer;
+    }
+    .checkmark {
+        position: $__absolute;
+        top: 0;
+        left: 0;
+        height: 19px;
+        width: 19px;
+        border: 1px solid #C4C4C4;
+        background-color: $__white;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+        &::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: $__absolute;
+            display: $__none;
+            left: 4px;
+            top: 2px;
+            color: $__white;
+            font-size: 9px;
+        }
+    }
+}
+.input-block{
+    .custom_check{
+        margin-bottom: 20px;
+    }
+}
+.table {
+    tbody td a{
+        &.btn-white {
+            background-color: $__white;
+            border-color: #e7eaf3;
+            color: #212529;
+        }
+    }
+}
+
+.date-list {
+    .date-btn {
+        background: $__white;
+        color: $__graybackblue;
+        border: 1px solid #E7EAFC;
+        border-radius: 4px;
+        padding: 10px 0 !important;
+        width: 100%;
+    }
+}
+.form-custom{
+    font-size: 14px;
+    &.cal-icon{
+        position: $__relative;
+        &:after {
+            color: #979797;
+            content: "\f073";
+            display: block;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 15px;
+            margin: $__auto;
+            position: $__absolute;
+            right: 15px;
+            top: 10px;
+        }
+    }
+}
+.btn-grey {
+    background: rgba(231, 234, 252, 0.75);
+    color: $__graybackblue;
+    margin-top: 10px;
+    &:hover {
+        background: $__graybackblue;
+        color: $__white;
+    }
+}
+.date-picker {
+    width: 50%;
+    float: left;
+    padding-right: 10px;
+}
+.date-list {
+    ul {
+        @extend %ul_reset;
+        text-align: $__center;
+        li {
+            width: 100%;
+            padding: 0;
+            padding-bottom: 5px;
+        }
+    }
+}
+.sortby {
+    #checkbox{
+        display: $__none;
+        position: $__absolute;
+        width: 300px;
+        left: 0;
+        z-index: 1;
+        margin-top: 10px;
+        padding: 20px;
+        background: $__white;
+        border: 1px solid #F2ECFF;
+        box-shadow: 0px 4px 44px rgb(231 234 252 / 75%);
+        border-radius: 6px;
+        &:before {
+            border: 7px solid #F2ECFF;
+            border-color: transparent transparent $__white $__white;
+            box-shadow: -2px 2px 2px -1px rgb(0 0 0 / 10%);
+            content: "";
+            left: 30px;
+            position: absolute;
+            top: 0;
+            transform: rotate(135deg);
+        }
+    }
+}
+.multipleSelection{
+    #checkboxes{
+        display: $__none;
+        position: $__absolute;
+        width: 300px;
+        left: 0;
+        z-index: 1;
+        margin-top: 10px;
+        padding: 20px;
+        background: $__white;
+        border: 1px solid #F2ECFF;
+        box-shadow: 0px 4px 44px rgb(231 234 252 / 75%);
+        border-radius: 6px;
+    }
+}
+
+.report-card {
+    @include rounded(5px);
+}
+.report-btn{
+    .btn {
+        font-weight: $__semibold;
+        color: $__primarycolor;
+        background: $__white;
+        border: 2px solid $__primarycolor;
+        border-radius: 8px;
+        width: 100%;
+        padding: 11px 0;
+        &:hover {
+            color: $__white;
+            background: $__primarycolor;
+            border: 2px solid $__primarycolor;
+            img {
+                filter: invert(0) brightness(100);
+            }
+        }
+    }
+}
+.invoices-settings-btn {
+    @extend %display-flex-center;
+    justify-content: end;
+}
+.invoices-main-tabs {
+    border-bottom: 2px solid $__cloud__grays;
+    @include margin-padding(null, 0 0 12px 0);
+    .invoices-tabs {
+        ul {
+            @extend %ul_reset;
+            li {
+                position: $__relative;
+                display: $__inline__block;
+                @include margin-padding(0 24px 0 0, null);
+                @include respond-below(custom575) {
+                    display: block;
+                    @include margin-padding(0 0 20px 0, null);
+                }
+                a {
+                    font-weight: $__medium;
+                    font-size: $__font__size__14;
+                    color: $__gray__dark;
+                    @include transition(all 0.5s ease);
+                    @include margin-padding(null, 0 0 14px 0);
+                    &.active {
+                        color: $__primarycolor;
+                        border-bottom: 2px solid $__primarycolor;
+                        @include transition(all 0.5s ease);
+                        @include respond-below(custom991) {
+                            border-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .invoices-settings-icon {
+        color: $__primarycolor;
+        margin-right: 20px;
+    }
+    .btn {
+        font-weight: $__semibold;
+        color: $__white;
+        padding: 12px 10px;
+        min-width: 167px;
+        background: $__graybackblue;
+        border: 1px solid $__graybackblue;
+        border-radius: 6px;
+        @extend %display-flex;
+        @extend %align-items-center;
+        @extend %justify-content-center;
+        
+    }
+}
+.paid-continue-btn {
+	background-color: $__primarycolor;
+	border: 1px solid $__primarycolor;
+	@include rounded(5px);
+	color: $__white;
+	display: block;
+	font-size: $__font__size__14;
+	font-weight: $__semibold;
+	padding: 8px 20px;
+	text-align: center;
+}
+.paid-continue-btn:hover,
+.paid-continue-btn:focus,
+.paid-continue-btn:active {
+	background-color: $__white;
+	border: 1px solid $__primarycolor;
+	color: $__primarycolor;
+}
+.paid-cancel-btn {
+	background-color: $__white;
+	border: 1px solid $__primarycolor;
+	@include rounded(5px);
+	color: $__primarycolor;
+	display: block;
+	font-size: $__font__size__14;
+	font-weight: $__semibold;
+	padding: 8px 20px;
+	text-align: center;
+}
+.paid-cancel-btn:hover,
+.paid-cancel-btn:active {
+	background-color: $__primarycolor;
+	border: 1px solid $__primarycolor;
+	color: $__primarycolor;
+}
+.paid-cancel-btn:focus {
+	color: $__primarycolor;
+}
+
+.inovices-card {
+    @include rounded(5px);
+    @include margin-padding(0 0 32px 0 , null);
+    .inovices-widget-header {
+        @extend %display-flex-between;
+       .inovices-amount {
+            font-weight: $__semibold;
+            font-size: $__font__size__24;
+            color: $__primarycolor;
+        }
+    }
+    .inovices-all {
+        font-weight: $__medium;
+        font-size: $__font__size__10;
+        color: $__gray__dark;
+    }
+    .inovice-trending {
+        @extend %display-flex-center;
+        font-weight: $__medium;
+        font-size: 10px;
+        span {
+            @include margin-padding(0, null);
+            line-height: 0;
+        }
+    }
+    
+}
+.invoices-tabs-card {
+    background: $__transparent;
+    box-shadow: $__unset;
+}
+.invoices-grid-card {
+    background: $__white;
+    box-shadow: 0px 4px 24px rgb(228 228 228 / 25%);
+    border-radius: 10px;
+    color: $__graybackblue;
+    .card-header {
+        padding: 20px;
+        border: 0;
+        .action-icon {
+            color: $__graybackblue;
+            display: $__initial;
+        }
+        .invoice-grid-link {
+            color: $__graybackblue;
+        }
+        .dropdown-action {
+            margin-bottom: 0;
+        }
+    }
+    .card-middle {
+        padding: 20px;
+        background: #F7F7FF;
+        .avatar-sm {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+        .card-middle-avatar {
+            align-items: $__center;
+            display: $__inline__flex;
+            font-size: $__font__size__16;
+            margin: 0;
+        }
+    }
+    .card-body {
+        padding: 20px;
+        span {
+            font-size: 14px;
+        }
+        h6 {
+            font-size: $__font__size__16;
+            font-weight: $__medium;
+            color: $__graybackblue;
+            margin-top: 4px;
+        }
+    }
+    .card-footer {
+        padding: 20px;
+        border: 0;
+    }
+}
+.inovices-card{
+    .card-body {
+        @include margin-padding(null, 10px);
+    }
+}
+.badge {
+    &.bg-info-lights {
+        background: $__info__color;
+        color: $__primarycolor;
+    }
+}
+.admin-invoice { 
+    p {
+        display: $__flex;
+        flex-direction: column;
+    }
+}
+.dropdown-menu {
+    &.dropdown-menu-end {
+        &.customer-dropdown {
+            width: 230px;
+            height: 200px;
+            overflow-y: auto;
+        }
+    }
+}
+.dropdown-menu {
+    &.dropdown-menu-right {
+        &.credit-note-dropdown {
+            width: 235px;
+            height: 200px;
+            overflow-y: auto;
+        }
+    }
+}
+.card {
+    &.company-settings-new {
+        .content-page-header {
+            margin: 0 0 20px 0;
+            padding: 0 0 10px 0;
+            border-bottom: 1px solid $__cloud__grays;
+        }
+        .input-block {
+            &.service-upload {
+                &.logo-upload {
+                    min-height: 130px;
+                    justify-content: space-between;
+                    padding: 15px 30px;
+                    .text-info {
+                        line-height: 1;
+                    }
+                    .sites-logo {
+                        border: 1px solid $__cloud__grays;
+                        padding: 20px;
+                        border-radius: 10px;
+                        margin-left: 20px;
+                        @include respond-below(custom991) {
+                            margin-left: 0;
+                        }
+                        img {
+                            margin-right: 0;
+                            max-width: 116px;
+                            max-height: 30px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+

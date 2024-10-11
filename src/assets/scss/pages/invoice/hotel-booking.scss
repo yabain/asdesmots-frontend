@@ -1,0 +1,250 @@
+
+
+.hotel-booking {
+    .inv-content {
+        .invoice-header {
+            .inv-header-left  {
+                span {
+                   display: $__block;
+                   margin:10px 0 0;
+                }
+            }
+            .inv-header-right {
+                width: 54%;
+                position: $__relative;
+                overflow: hidden;
+            }
+            .company-details {
+                .gst-details {
+                    position: $__relative;
+                    @include margin-padding(0, 40px 30px);
+                    color:$__grayish__blue;
+                    z-index: 2;
+                    left: 20px;
+                    @include respond-below(custom992) {
+                        color: $__black; 
+                    }  
+                    @include respond-below(custom767) {
+                        @include margin-padding(0, 10px 0px);
+                    }
+                 }
+                .address-bg {
+			        position: absolute;
+				    height: 100%;
+				    width: 100%;
+				    -webkit-transform: skewX(35deg);
+				    transform: skewX(35deg);
+				    top: 0px;
+				    right: -46px;
+				    overflow: hidden;
+                    background:$__table__head__bg;
+                    &:hover {
+                       background: linear-gradient(270.14deg, #7638FF -0.04%, #3698FF 100%);;
+                    }
+                    @include respond-below(custom992) {
+                       display: $__none; 
+                    }  
+			    }
+            }            
+        }
+        .hotel-info {
+            display: $__flex;
+            @include margin-padding(0,10px 30px 0);
+            .hotel-booking-details {
+                width: 70%;
+                border: 1px solid $__invborder__color;
+			    @include margin-padding(0 15px 0 0,0px);
+			    display: $__flex;
+			    flex-wrap: wrap;
+			    .booked-info {
+			        width: 33.33%;
+			        display: inline-flex;
+			        span {
+			            @include margin-padding(0 0px 0 0,15px);
+					    border-right: 1px solid $__invborder__color;
+					    border-bottom: 1px solid $__invborder__color;
+					    display: inline-block;
+					    width: 50%;
+			        }
+                    .right-info {
+                        border-right: 0;
+                        color: $__dark;
+                    }
+                     @include respond-below(custom992) {
+                        width: 50%;
+                    }
+                     @include respond-below(custom767) {
+                        width: 100%;
+                    }
+			    }
+                @include respond-below(custom767) {
+                    display: $__block;
+                    width: 100%;
+                }
+            }
+            .hotel-booking-address {
+                border: 1px solid $__invborder__color;
+                @include margin-padding(0 0 0,25px);
+                width: 30%;
+                .billing-name {
+                     color: $__black__nuetral;
+                     display: $__block;
+                     margin: 10px 0;
+                }
+                @include respond-below(custom767) {
+                    width: 100%;
+                    margin: 10px 0;
+                }
+            
+            } 
+            @include respond-below(custom767) {
+                display: $__block;
+            }
+        }
+        .hotel-name {
+            font-size: $__font__size__40;
+            @include margin-padding(0,0px 0 0 30px);
+            color: $__primarycolor;
+            font-weight: $__bold;
+        }
+        .service-details {
+            @include margin-padding (0, 0 30px);
+            h4 {
+               color: $__black__nuetral;
+               font-size: $__font__size__24;
+               @include margin-padding(0,30px 0 30px 10px);
+               font-weight: $__bold;
+            }
+            table {
+               border-collapse: separate;
+               border-spacing: 10px;
+               color: $__black;               
+               width: 100%;
+               thead {
+                   th {
+                       background: $__black__nuetral;
+                       border-top: 1px solid $__black;
+                       border-bottom: 1px solid $__black;
+                       padding: 4px ;
+                       color: $__invborder__color;
+                       text-align: $__center;
+                       font-size: $__font__size__18;
+                       @include respond-below(custom767) {
+                          font-size: $__font__size__14;
+                       }
+                   }                   
+               }
+               .services {
+                    width: 40%;   
+                }
+                .dates {
+                    width: 10%;
+                }
+                .rooms {
+                    width: 15%;
+                }
+                .description {
+                    width: 25%;
+                }
+                .charged-amount {
+                    width: 20%;
+                }
+                .discount {
+                    width: 15%;
+                }
+                .total {
+                    width: 15%;
+                }
+                tr {
+                   &:nth-child(odd) {
+                       background: $__invborder__color;
+                   }
+                   td {
+                       padding: 10px;
+                       div {
+                         @extend %display-flex;
+                         @extend %justify-content-between;
+                         
+                       }
+                        @include respond-below(custom992) {
+                            white-space: nowrap;
+                        }  
+                    }
+                }
+            }
+            .invoice-table-footer {
+                @include margin-padding (0, 0);
+                .table-footer-right {
+                    width: 32%;
+                    table {
+                        td {
+	                      &:first-child {
+	                          background: $__white;
+	                      }
+	                      &:last-child {
+	                          background: $__invborder__color;
+	                      }
+                          @include respond-below(custom767) {
+                              width: 50%;
+                          } 
+	                    }
+                    }
+                    @include respond-below(custom992) {
+                        width: 55%;
+                    } 
+                    @include respond-below(custom992) {
+                        width: 100%;
+                    }                    
+                }
+                @include respond-below(custom767) {
+                    display: $__block;
+                } 
+            }
+            .subtotal {
+                .table-footer-right {
+                    table {
+                          td {
+                              &:last-child {
+                                background: $__tablelightbg;
+                          } 
+                       }
+                    }
+                }
+            }
+            .table-total-item {
+                .table-footer-right {
+                   table {
+                      td {
+                         &:last-child {
+	                          background: $__black__nuetral;
+	                          color: $__white;
+	                      }
+                      }
+                   }
+                }
+            }            
+        }
+        .terms-condition {
+             border-bottom: 0; 
+             @include margin-padding (0, 30px);
+             span {
+                 color: $__black__nuetral;
+             }
+             ol {
+                 color: $__grey__nuetral;
+             }
+        }
+        .thanks-msg {
+            background: $__invborder__color;
+            border-bottom: 1px solid $__black; 
+            border-top: 1px solid $__black;
+            @include margin-padding (0 30px 40px, 15px 0);
+            color: $__black;
+        }        
+    }
+}
+.booking-date {
+    color: $__dark;
+    font-size: 16px;
+    font-weight: 450;
+}

@@ -1,0 +1,318 @@
+.domain-hosting {
+	.inv-content {
+	    .invoice-header {
+            background: $__invborder__color;
+            @include margin-padding(20px,30px);
+            h2 {
+               font-size: $__font__size__40;
+               font-weight: $__bold;
+               line-height: 50px;
+               color: $__black__nuetral;
+               @include respond-below(custom767) {
+                   font-size: $__font__size__28; 
+               } 
+            }
+            .inv-header-right {
+                @include respond-below(custom767) {
+                   margin-top: 10px;
+               } 
+            }
+            @include respond-below(custom767) {
+               display: $__flex;
+               flex-direction: column-reverse;
+            } 
+	    }
+	    .flight-invoice-details {
+	        @include margin-padding(0,0 20px);
+	        h3 {
+	            color: $__black__nuetral;
+		        font-size: $__font__size__40;
+		        font-weight: $__bold;
+		        text-align: center;
+		        @include margin-padding(30px 0 22px 0,0);
+		        line-height: normal;
+		        @include respond-below(custom767) {
+                    font-size: $__font__size__30; 
+                    margin: 20px 0;                      
+                }
+	        }
+	        .invoice-infomation {
+	            display: $__flex;
+	            @extend %justify-content-between;
+	            div  {
+	               background: $__invborder__color;
+	               padding: 10px;
+	               width: 32.8%;
+	               display: $__flex;
+	               justify-content: space-between;
+	               color: $__black__nuetral;
+	               span {
+	                   color: $__black;
+	               }
+	               @include respond-below(custom767) {
+                        width: 100%;
+                        margin-bottom: 10px; 
+                   } 
+	            }
+	            @include respond-below(custom767) {
+                   display: $__block;
+                } 
+	        }
+	    }
+	    .invoice-address {
+	        @include margin-padding(0,30px 20px);
+	        justify-content: $__normal;
+	        div {
+	           width: 50%;
+	           @include respond-below(custom767) {
+                  width: 100%; 
+               } 
+	        }
+	    }
+	    .service-details {
+            @include margin-padding (0, 0 20px);
+            h4 {
+               color: $__black__nuetral;
+               font-size: $__font__size__24;
+               @include margin-padding(0,20px 0 10px 10px);
+               font-weight: $__bold;
+            }
+            table {
+               border-collapse: separate;
+               border-spacing: 10px;
+               color: $__black;               
+               width: 100%;
+               thead {
+                   th {
+                       background: $__invborder__color;
+                       border-top: 1px solid $__black;
+                       border-bottom: 1px solid $__black;
+                       padding: 13px ;
+                       color: $__black;
+                       text-align: $__center;
+                       font-size: $__font__size__18;
+                       @include respond-below(custom767) {
+                          font-size: $__font__size__14;
+                       }
+                   }                   
+               }
+               .services {
+                    width: 50%;   
+                }
+                .dates {
+                    width: 10%;
+                }
+                .rooms {
+                    width: 15%;
+                }
+                .description {
+                    width: 50%;
+                }
+                .charged-amount {
+                    width: 15%;
+                }
+                .discount {
+                    width: 15%;
+                }
+                .total {
+                    width: 15%;
+                }
+                tr {
+                   &:nth-child(odd) {
+                       background: $__invborder__color;
+                   }
+                   td {
+                       padding: 10px;
+                       div {
+                         @extend %display-flex;
+                         @extend %justify-content-between;
+                         
+                       }
+                        @include respond-below(custom992) {
+                            white-space: nowrap;
+                        }  
+                    }
+                }
+            }
+            .invoice-table-footer {
+                @include margin-padding (0, 0);
+                .table-footer-right {
+                    width: 34%;
+                    table {
+                        td {
+	                      &:first-child {
+	                          background: $__white;
+	                      }
+	                      &:last-child {
+	                          background:$__invborder__color;
+	                      }
+                          @include respond-below(custom767) {
+                              width: 50%;
+                          } 
+	                    }
+                    }
+                    @include respond-below(custom992) {
+                        width: 55%;
+                    } 
+                    @include respond-below(custom992) {
+                        width: 100%;
+                    }                    
+                }
+                @include respond-below(custom767) {
+                    display: $__block;
+                } 
+            }
+            .subtotal {
+                .table-footer-right {
+                    table {
+                          td {
+                              &:last-child {
+                                background: $__tablelightbg;
+                          } 
+                       }
+                    }
+                }
+            }
+            .table-total-item {
+                .table-footer-right {
+                   table {
+                      td {
+                         &:last-child {
+	                          background: $__primarycolor1;
+	                          color: $__invborder__color;
+	                      }
+                      }
+                   }
+                }
+            }            
+        }	   
+        .invoice-table-footer {
+            border: 0;
+            .notes {
+                span {
+                    display: $__block;
+                    color: $__black__nuetral;
+                }
+            }
+            .table-footer-right {
+                table {
+                   td {
+                      padding: 10px;
+                   }
+                }
+            }
+            @include respond-below(custom767) {
+		        @include margin-padding(0, 5px 10px 0);
+		        .total-item {
+		           display: $__none;
+		        }
+		    }
+        }
+         .totalamount-footer {
+            background: $__bodybg__color;
+            border: 0;
+            @include margin-padding(10px 20px 0, 10px 10px 10px 15px);
+            @extend %align-items-center; 
+            .table-footer-left, .table-footer-right {
+                width: 50%;
+                table {
+                    width: 100%;
+                    td {
+                       width: 50%;
+                        @include respond-below(custom767) {
+			               width: auto;
+			            } 
+                    }
+                } 
+                @include respond-below(custom767) {
+			        width: 100%;
+			    }               
+            }
+            .table-footer-left {
+               table {
+                 td {
+                   &:last-child {
+                      div {
+                          background: $__tablelightbg;
+	                      padding: 10px;
+	                      display: $__flex;
+	                      justify-content: space-between;
+                      }                     
+                   }
+                 }
+               }
+            }
+            .table-footer-right {
+               table {
+                 td {
+                    text-align: $__left;
+                    &:last-child {
+                      div {
+                          background: $__black;
+	                      padding: 10px;
+	                      color: $__white;
+	                      display: $__flex;
+	                      justify-content: space-between;
+                      }                     
+                   }
+                   @include respond-below(custom767) {
+			           padding: 10px 0 0;
+			       }
+                 }
+               }
+            }
+            @include respond-below(custom767) {
+                display: $__block;
+            }             
+        }
+        .payable-table {
+            @include margin-padding(0 20px,20px 0px);
+            border-bottom: 1px solid $__tablehead__bg;
+            @include respond-below(custom767) {
+                flex-direction: column-reverse;                        
+            }
+            .table-footer-left {
+                @include respond-below(custom767) {
+                   width: 100%;    
+               }
+            }
+            .amount-payable {
+                width: 35%;
+                @include respond-below(custom992) {
+                   width: 80%;    
+               }
+               @include respond-below(custom767) {
+                   width: 100%;    
+               }
+            } 
+        }
+         .bank-details {  
+            @include margin-padding(0 20px, 20px 0px 10px);
+            border-bottom: 1px solid $__invborder__color;          
+            .payment-info {
+               color: $__black__nuetral;
+              .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+              }
+              div {
+                 @include margin-padding(0 0 10px,0);
+              }
+              span{
+                  color: $__grey__nuetral;
+              }
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0 20px,30px 0);
+            p {
+               color: $__black;
+            }
+        }
+        .thanks-msg {
+             padding: 30px 0;
+        }
+	}
+}

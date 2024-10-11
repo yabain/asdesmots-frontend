@@ -1,0 +1,119 @@
+.subscription-invoice {
+    .invoice-header {
+        margin-bottom: 20px;
+        padding: 0 0 20px;
+    }
+    padding: 35px;
+    .inv-header-right {
+        span {
+            display: $__block;
+        }
+    }
+    .inv-header-left {
+        h4 {
+            font-size: $__font__size__20;
+            font-weight: $__semibold;
+        }
+    }
+    .invoice-num-date {
+        ul {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            li {
+                color: #95979B;
+                margin-right: 20px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                span {
+                    color: #2C3038 !important;
+                    font-weight: $__medium;
+                    display: inline-block;
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+    .sub-invoive-detail {
+        margin-bottom: 24px;
+        h5 {
+            font-size: $__font__size__20;
+            margin-bottom: 15px;
+            font-weight: $__bold;
+        }
+        p {
+            color: #484848;
+            font-weight: $__medium;
+        }
+        ul {
+            li {
+                color: #484848;
+                font-weight: $__medium;
+            }
+        }
+        &.detail-right {
+            text-align: right;
+            @include respond-below(custom575) {
+                text-align: left;
+            }
+        }
+    }
+    td {
+        h4 {
+            font-weight: $__semibold;
+        }
+    }
+    .bank-details {
+        margin: 15px 0;
+        padding: 0 0 15px;
+        .payment-info {
+            margin-bottom: 15px;
+            h5 {
+                margin-bottom: 15px;
+            }
+        }
+        .company-sign {
+            margin-bottom: 15px;
+        }
+    }
+    .terms-condition {
+        span {
+            color: #484848;
+            font-weight: $__semibold;
+        }
+        ol {
+            padding-left: 15px;
+            margin-top: 5px;
+            li {
+                font-weight: $__semibold;
+            }
+        }
+    }
+}
+.subscription-invoice-foot {
+    &.file-link {
+        .print-link {
+            background: #EADDFF;
+            color: #7539FF;
+            border-color: #EADDFF;
+            transition: 0.5s all;
+            &:hover {
+                background: $__primarycolor;
+                color: $__white;
+                transition: 0.5s all;
+            }
+        }
+        .download-link {
+            background: $__primarycolor;
+            color: $__white;
+            transition: 0.5s all;
+            &:hover {
+                background-color: #fff;
+                border: 1px solid #7539FF;
+                color: #7539FF;
+                transition: 0.5s all;
+            }
+        }
+    }
+}

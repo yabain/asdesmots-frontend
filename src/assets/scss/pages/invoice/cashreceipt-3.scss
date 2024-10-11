@@ -1,0 +1,62 @@
+.receipt-three {
+    .receipt-top {
+        .receipt-title {
+	   	   font-size: $__font__size__18;
+	   	   color: $__black;
+	   	   margin-bottom: 5px;
+	    }
+	    .company-name {
+	       color: $__grey__nuetral;
+	       text-transform: $__uppercase;
+	       font-size: $__font__size__10;  
+	    }
+    }
+    .receipt-seperator {
+        margin: 1px 0;
+    }
+    .customer-list {
+        margin: 10px 0 0;
+    }	
+    .receipt-table {
+       thead  {
+           th {
+              border-top: 0;
+              padding-top: 10px;
+           }
+        }
+        td {
+           padding-bottom: 10px;
+        }
+    }
+    .bill-list {    
+       margin: 0;
+       padding: 5px 0;
+       font-size: $__font__size__10;
+       border-bottom: 1px dashed $__grey__nuetral; 
+       .bill_list_in {
+		    display: $__flex;
+		    text-align: $__right;
+		    justify-content: flex-end;
+		    padding: 4px 0;
+		    .bill_title {
+			   padding-right: 20px;
+			}
+			.bill_value {
+			   width: 90px;
+			}
+		}
+		.receipt-seperator {
+           width: 150px;
+           margin-left: $__auto;	
+           margin-top: 6px;
+           margin-bottom: 6px;   
+        }
+    }
+    
+    .sample_text {
+	    img {
+	       margin-top: 10px;
+	    }
+    } 
+}
+

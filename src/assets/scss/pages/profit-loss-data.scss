@@ -1,0 +1,35 @@
+.btn-primary.profit-loss {
+    display: $__block;
+    margin-top: 30px;
+}
+.card-table .profit-table .table{
+        background: #fff;
+        margin-bottom: 0px !important; 
+        border-radius: 8px;
+}
+.table-profit-loss {
+    thead {
+        background-color: $__cylindrical;
+    }
+
+    tr {
+        td h6 {
+          font-size: $__font__size__14;
+        }
+    }
+}
+.table-bg {
+    background: $__cylindrical;
+    border-top: 1px solid $__cloud__grays;
+}
+.card-table .card-body .table .profitpadding {
+    padding-left: 10px !important;
+}
+.card-table .card-body .table .table-profit-head {
+     padding-left: 15px !important;
+     background: $__white;
+}
+.card-table .card-body .companies-table.profit-border .table td {
+    border: 0;
+}
+

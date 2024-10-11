@@ -1,0 +1,169 @@
+.movie-booking {
+  .inv-content {
+     @include margin-padding(0,40px);   
+	.cineplux-title {
+	    font-size: $__font__size__80;
+	    line-height: 100px;
+	    @include respond-below(custom767) {
+            font-size: $__font__size__50;
+	        line-height: 70px;      
+        } 
+	} 
+	.invoice-header {
+	    @include margin-padding(0,0 0 15px);
+	   .inv-header-right {
+	      a {
+             display: $__block;
+	      }
+	      span {
+             margin-bottom: 10px;
+             display: block;
+	      }
+	      .inv-details {
+	        display: $__block;
+	        .inv-date {
+	            @include margin-padding(0 0 5px,0);
+	            span {
+	                display: $__inline;
+	            }
+	        }
+	      }
+	   }
+	   .inv-header-left{
+		.tax-invoice{
+           color:$__primarycolor1;
+		}
+	   }
+	   .company-details {
+	      .invoice-title {
+	         color: $__primarycolor1;
+	      }
+	      .gst-details {
+	         @include margin-padding(5px 0 0, 0);
+	      }
+	       @include respond-below(custom767) {
+                @include margin-padding(10px 0 0, 0);
+	       }
+	   }
+	   @include respond-below(custom767) {
+            display: $__flex;
+            flex-direction: column-reverse;
+            align-items: $__normal;
+            @include margin-padding(0,15px 0);
+            .tax-invoice {
+                display: $__none;
+            }
+       } 
+	}
+	.invoice-address {
+	     @include margin-padding(0, 30px 0px);
+	     border: 0;
+	    .invoice-to {
+	       span {
+               font-size: $__font__size__18;
+               margin: 0 0 5px;
+	      }
+	      @include respond-below(custom767) {
+	           margin: 0;
+	      }
+	    }
+	    @include respond-below(custom767) {
+	         @include margin-padding(0, 10px 0px 20px);
+	    }
+	}
+	.invoice-table {
+	  @include margin-padding(0,0);
+	  table {
+		color: $__grey__nuetral;
+		@include margin-padding(0,0px);
+        thead {
+            .movie-ticket-table {
+                background: $__tablehead__bg;
+                color: $__white;
+            }
+        }
+        .table_width_2 {
+		   width: 50%;
+		}
+		tr {
+		    
+		   .table-description {
+			   color: $__black__nuetral;
+			   span {
+			      display: $__block;
+			      color: $__grey__nuetral;
+			   }
+		    }
+		    td {
+		       @include margin-padding (0,25px 15px);
+		    }
+		    td,th {
+                @include respond-below(custom992) {
+		            white-space: $__nowrap;
+		        }		       
+		    }			
+		}
+	  }
+	}
+	.invoice-table-footer {
+        @include margin-padding (0,5px 0);
+        .total-item {
+            @include respond-below(custom767) {
+		       display: $__none;
+		    } 
+        }
+        .table-footer-right {
+            td {
+	            @include respond-below(custom767) {
+			        @include margin-padding (0,5px 0px);  
+			    } 
+            }
+        }
+	}
+	.total-amountdetails {
+        @include margin-padding (0,25px 0);
+        text-align: center;
+	}
+	 .bank-details {  
+        @include margin-padding(0, 25px 0px);
+        border-bottom: 1px solid $__invborder__color;          
+        .payment-info {
+            color: $__black__nuetral;
+            .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+            }
+            div {
+                 @include margin-padding(0 0 10px,0);
+            }
+            span{
+                color: $__grey__nuetral;
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0,0);
+            color: $__black__nuetral;
+            span {
+                font-size: $__font__size__18;
+                margin: 0 0 10px;
+            }           
+            ol {
+                color: $__grey__nuetral;
+            }
+            @include respond-below(custom767) {
+			    @include margin-padding (10px 0,0px 0px);  
+			} 
+        } 
+        @include respond-below(custom767) {
+		    @include margin-padding (0,10px 0px);  
+		}        
+     }
+    .thanks-msg {
+        background: $__tablehead__bg;   
+        color: $__white;
+        border-radius: 5px;          
+    }
+  }
+}

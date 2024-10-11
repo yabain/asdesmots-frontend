@@ -1,0 +1,11 @@
+.avatar-img.rounded-circle.report-circle {
+    width: 40px;
+    height: 40px;
+    border-radius:100px;
+    border: 1px solid $__primarycolor;
+}
+.table tbody td h2.table-avatar .report-img {
+    height: 40px;
+    width: 40px;
+    display: $__inline__block;
+}

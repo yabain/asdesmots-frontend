@@ -1,0 +1,504 @@
+.invoice-four{
+    .invoice-wrapper{
+        padding: 24px;
+        .inv-content  {
+            border: none;
+            .invoice-header {
+                border:none;
+                padding:0px;
+                @extend %align-items-start;
+                .inv-header-left {
+                    .tax-invoice {
+                        color: #7539FF;
+                        font-weight: 700;
+                        font-size: 24px;
+                        margin-bottom: 15px;
+                    }
+                }
+                .inv-header-right {
+                    a{
+                        img{
+                            text-align:right;
+                            max-width: 271px;
+                            margin-bottom: 20px;
+                            @include respond-below(custom767) {
+                                max-width: 200;
+                            } 
+                        }
+                       
+                    }
+                 
+                }
+                .company-details {
+                    .invoice-title {
+                        color: #000;
+                        font-size: 24px;
+                        font-weight: 700;
+                        margin-bottom: 10px;
+                        display: inline-block;
+                        @include respond-below(custom767) {
+                           font-size: 20px;
+                        } 
+                    }
+                    .gst-details-four {
+                        margin: 0 0 10px 0;
+                        padding: 0;
+                        &:last-child {
+                            font-size:16px;
+                            margin: 0;
+                        }
+                      
+                        span {
+                            color: #000;
+                            font-weight: 450;
+                            font-family: 'Circular Std';
+                            font-size: 16px;
+                        }
+                        &:first-child {
+                            span {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+                .inv-date{
+                    width:100%;
+                    float:right;
+                    &:last-child {
+                        margin-right: 0;
+                       margin-bottom: 20px;
+                      
+
+                     }
+                }
+                .inv-details{
+                    position: relative;
+                }
+                .inv-date-no{
+                    font-size:18px;
+                    color:$__grayish__blue;
+                    background: linear-gradient(320deg, #DBECFF 0%,  #DDCEFF 100%);
+                    padding:14px 20px 15px 87px;
+                    @include respond-below(custom767) {
+                        padding:0px
+                    } 
+                    @include respond-below(custom992) {
+                       padding:0px
+                    } 
+                   
+                    span{
+                        font-weight: 700;
+                    }
+                    
+                   
+                    &:last-child {
+                        margin-right: 0;
+                       margin-bottom: 20px;
+                      
+                    }
+                    @include respond-below(custom767) {
+                        background: none;
+                    } 
+                    
+                }
+                .triangle-right{
+                    width: 56px;
+                    height: 49px;
+                    border-top: 30px solid transparent;
+                    border-left: 58px solid $__white;
+                    border-bottom: 26px solid transparent;
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    @include respond-below(custom767) {
+                        display: none;
+                    } 
+                    @include respond-below(custom992) {
+                        display: none;
+                    } 
+                }
+                
+            }
+            .invoice-address-four {
+                @include margin-padding(24px 0, 24px ); 
+                @extend %display-flex;
+                @extend %justify-content-spacebetween;
+                border-radius: 20px;
+                background-color:rgba(242, 242, 242, 0.24);
+                border-bottom: 1px solid $__invborder__color;
+                align-items: center;
+                border: 1px solid #E0E0E0;
+                .invoice-to {
+                    span {
+                        color:$__gray__dark;
+                        margin: 0 0 15px;
+                        display: block;
+                        font-size: $__font__size__18;    
+                        @include respond-below(custom767) {
+                            margin: 0 0 10px;
+                                     
+                        }
+                        @include respond-below(custom575) {
+                                    
+                        }
+                    }
+                    .inv-to-address {
+                        color: $__primarycolor1;
+                        font-size: $__font__size__16;    
+        
+                    }
+                    .invoice-to-payment{
+                        background: rgba(242, 242, 242, 0.50);
+                        border-radius: 10px;
+                        @include margin-padding(0, 20px 0px); 
+                    }
+                    @include respond-below(custom767) {
+                        margin-bottom: 20px;
+                    }  
+                }
+                .invoice-to-payment{
+                   border-left:1px solid $__light__gray;
+                   @include margin-padding(0, 24px 0px 24px 50px); 
+                   span{
+                  
+                    color:$__gray__dark;
+                    font-size:18px;
+                   }
+                   .inv-to-address{
+                    h6{
+                        @include margin-padding(0 0 50px 0, 5px 18px); 
+                        background-color: $__light_orange;
+                        border-radius: 5px;
+                    }
+                    color:$__sky_lightblue
+                   }
+                   h5{
+                    span{
+                        background-color: $__bg__info__light;
+                        border-radius: 5px;
+                        font-size:16px;
+                        font-weight: 700;
+                        color:$__sky_lightblue;
+                        padding:5px 18px;
+                       
+                    }
+                   }
+                }
+                .company-details {
+                    text-align: $__right;
+                    .company-name {
+                        font-size:$__font__size__24;
+                        color: $__tablehead__bg;
+                        margin: 0 0 10px;
+                        font-weight: $__bold;
+                        display: $__block;   
+                    }
+                    .gst-details {
+                        
+                        margin: 0 0 10px;
+                        span {                    
+                            color: $__grey__nuetral;;                    
+                            display: $__block;
+                        }
+                        @include query-print {
+                             margin: 0 0 5px;
+                        }  
+                    }
+                    @include respond-below(custom767) {
+                        text-align: left;
+                        margin: 0 0 20px;
+                    } 
+                } 
+                @include query-print {
+                    font-size: $__font__size__10;              
+                } 
+                @include respond-below(custom992) {
+                    font-size: $__font__size__14; 
+                }
+                @include respond-below(custom767) {
+                    display: flex; 
+                    padding: 0px 30px;
+                }               
+            }
+            .invoice-table-details {
+                @include margin-padding(0 0 30px 0,0 0 0);
+                table {
+                    font-family: 'Circular Std';
+                    width: 100%;
+                    color: $__black__nuetral;
+                    .table_width_1 {
+                        width: 3%;
+                    }
+                    .table_width_2 {
+                        width: 20%;
+                    }
+                    .table_width_3 {
+                        width: 40%;
+                    }
+                    .table_width_4 {
+                        width: 15%;
+                    }
+                    .table_width_5 {
+                        width: 15%;
+                    }
+                    thead {
+                       
+                        tr {
+                            background: $__invborder__color;
+                            th {
+                                font-size: 18px;
+                                font-weight: 450;
+                                color: #000;
+                            }
+                        }
+                    }
+                    tr {
+                        border-bottom: 1px solid $__light__ash;
+                        td, th {
+                           padding: 15px;
+                            @include query-print {
+                                padding: 8px;                      
+                            }
+                            @include respond-below(custom767) {
+                                white-space: nowrap;           
+                            } 
+                        }
+                        td{
+                            vertical-align: middle;
+                            font-size: $__font__size__16;
+                            white-space: pre-wrap;
+                            height:69px;  
+                        }
+                       .table-description {
+                           width:33%;
+                           color: $__black__nuetral;
+                           font-size: $__font__size__16;  
+                           font-weight: $__regular; 
+                           vertical-align: middle;
+                       }
+                       h6{
+                         color:$__primarycolor;
+                         font-size: $__font__size__12; 
+                       }
+                      
+                    }           
+                }
+                @include query-print {
+                    font-size: $__font__size__12;            
+                }
+                @include respond-below(custom767) {
+                    font-size: $__font__size__14;           
+                } 
+            }
+            .invoice-table-footer {
+                @extend %display-flex;
+                @extend %align-items-center;
+                border:none;
+                justify-content: space-between;
+               
+                padding: 5px 30px;
+                .table-footer-left {
+                    width: 70%;
+                    
+                    @include respond-below(custom575) {
+                       width: auto;   
+                       font-size: $__font__size__14;  
+                    } 
+                }
+                .table-footer-right {
+                    width: 80%; 
+                    table {
+                        width: 100%;
+                        td{
+                            color:$__black__nuetral;
+                            font-size: $__font__size__18;
+                          text-align: right;
+                          width: 50%;
+                          padding: 5px 10px;
+                          @include query-print {
+                             width: auto;
+                          } 
+                          @include respond-below(custom992) {
+                             width: auto; 
+                          } 
+                          &:first-child {
+                            @include respond-below(custom767) {
+                                text-align: left; 
+                             } 
+                          }                  
+                        }
+                        span{
+                            color:$__gray__dark;
+                        }
+                        @include query-print {
+                          font-size: $__font__size__12;
+                        }  
+                    }
+                    .totalamt-table {
+                        td {
+                            
+                           color: $__primarycolor;
+                           font-size: $__font__size__24;
+                           font-weight: $__bold;
+                           @include query-print {
+                              font-size: $__font__size__12;
+                           }
+                           @include respond-below(custom992) {
+                              font-size: $__font__size__16;
+                           }   
+                        } 
+                        @include query-print {
+                          font-size: $__font__size__12;
+                        }                
+                    }            
+                    @include respond-below(custom992) {
+                        width: 60%;
+                    } 
+                    @include respond-below(custom767) {
+                        width: 100%;     
+                    }
+                    @include query-print {
+                        width: 50%;
+                    }  
+                }
+               
+                @include query-print {
+                    font-size: $__font__size__12;
+                } 
+                .total-info {
+                     @include respond-below(custom767) {
+                        display: $__none;     
+                    }
+                }
+            }
+            .totalamount-footer{
+                border-top: 1px solid $__cloud__grays;
+                border-bottom: 1px solid $__cloud__grays;
+            }
+            .total-amountdetails{
+                padding: 0;
+                border-bottom: 1px solid $__cloud__grays;
+                p{
+                    text-align: center;
+                    font-size:16px;
+                    @include margin-padding(0, 20px 0);
+                    
+                }
+                span{
+                    color:$__black__nuetral;
+                }
+            }
+            .bank-details{
+                @extend %display-flex;
+                @extend %justify-content-spacebetween;
+                @extend %align-items-center;
+                @include margin-padding(0, 15px 30px);
+                border-bottom: 1px solid $__invborder__color;
+               .payment-info{
+                display: flex;
+                .qr-code{
+                    margin-right: 24px;
+                    .scan-details{
+                        font-size: 13px;
+                    }
+                    .img{
+                        max-width: 140px;
+                    }
+                }
+               
+                .debitcard{
+                    color:$__black;
+                }
+                .payment-title{
+                   color:$__black__nuetral ;
+                   font-size:$__font__size__18;
+                }
+                .debit-card{
+                    margin-top:15px;
+                    margin-bottom: 10px;
+                }
+                span{
+                    color:#95979B;
+                }
+               }
+              
+            }
+           
+            .terms-condition {
+                @include margin-padding(0, 0 0);
+               
+                ol {
+                    list-style: number;
+                    padding-left: 13px;
+                    color: $__gray__dark;            
+                }
+                span {
+                    display: $__block;
+                    margin: 0 0 15px;
+                    color:$__black__nuetral
+                }
+                @include query-print {
+                    font-size: $__font__size__12;  
+                    @include margin-padding(0, 10px 30px);              
+                } 
+                @include respond-below(custom575) {
+                    font-size: $__font__size__14;            
+                }  
+            }
+            .thanks-msg {
+                color:$__dark;
+                border-top: 1px solid #BEBEBE;
+                border-bottom: 1px solid #BEBEBE;
+                background: $__invborder__color;
+                @include margin-padding(0, 15px 0);
+                @include query-print {
+                   font-size: $__font__size__10;  
+                   @include margin-padding(0, 10px);              
+                } 
+                @include respond-below(custom575) {
+                    font-size: $__font__size__12;             
+                }  
+            }
+        }
+    }
+}
+.file-link-four {
+    margin-bottom: 40px;
+    
+   
+   
+    .download-link {
+        color: $__primarycolor;
+        @include margin-padding(0px , 12px 22px);
+        margin-right: 10px;
+        border: 1px solid $__downloadcolor;
+        border-radius: 5px;
+        background: $__white; 
+        height: 46px;  
+        &:hover {
+            background: $__downloadcolor; 
+            color: $__white;
+        }          
+   }   
+   .print-link {
+        color: $__primarycolor;
+        @include margin-padding(0 0 0 0, 15px 22px);        
+        border: 1px solid $__printcolor;
+        border-radius: 5px;
+        height: 46px; 
+        background: $__white; 
+        display: $__flex;
+        align-items: $__center;
+        i {
+        margin-right: 6px;
+        }
+        &:hover {
+            background: $__printcolor; 
+            color: $__white;
+        }              
+   } 
+   @include respond-below(custom992) {
+        margin: 20px;
+   } 
+      
+}

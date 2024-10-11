@@ -1,0 +1,386 @@
+.car-booking {
+	.inv-content {
+	    border: 1px solid $__darktableheadbg;
+	    .invoice-header {
+            background:$__table__head__bg;
+            @include margin-padding(20px 20px 0,30px);
+            h2 {
+               font-size: $__font__size__40;
+               font-weight: $__bold;
+               line-height: 50px;
+               color: $__white;
+               margin-top: 10px;
+               @include respond-below(custom767) {
+                   font-size: $__font__size__30; 
+               } 
+            }
+            .inv-header-right {
+               @include respond-below(custom767) {
+                   margin-top: 10px;
+               } 
+            }
+             @include respond-below(custom767) {
+                  display: $__flex;
+                  align-items: start;
+                  flex-direction: column-reverse;
+             } 
+	    }
+	    .flight-invoice-details {
+	        @include margin-padding(0,0 20px);
+	        .bus-booking-address {
+	            display: $__flex;
+	            @extend %justify-content-between;
+	            align-items: $__center;
+	            @include margin-padding(30px 0,0);
+	            .booked-add {
+	                color: $__black__nuetral;
+					font-weight:450;
+	                span {
+	                   display: $__block;
+	                   color: $__grey__nuetral;
+	                }
+	                width: 50%;
+	                @include respond-below(custom767) {
+                        width: 100%;
+                    } 
+	            }
+	            .info {
+	                text-align: $__right;
+	                p {
+	                  color: $__grey__nuetral;
+	                }
+	                @include respond-below(custom767) {
+                       text-align: $__left;
+                    } 
+	            }
+	             @include respond-below(custom767) {
+                    display: $__block;
+                    margin-top: 20px;                      
+                }
+	        }
+	        h3 {
+	            color: $__black__nuetral;
+		        font-size: $__font__size__40;
+		        font-weight: $__bold;
+		        text-align: center;
+		        @include margin-padding(30px 0,0);
+		        line-height: normal;
+		        @include respond-below(custom767) {
+                    font-size: $__font__size__30; 
+                    margin: 20px 0;                      
+                }
+	        }
+	        .invoice-infomation {
+	            display: $__flex;
+	            @extend %justify-content-between;
+	            @include margin-padding(0 0 15px,0);
+	            div  {
+	               background: $__invborder__color;
+	               padding: 10px;
+	               width: 32.8%;
+	               text-align: $__center;
+	               color: $__black__nuetral;
+	               @include margin-padding(0 15px 0px 0,10px);
+	               @include respond-below(custom767) {
+                        width: 100%;
+                        margin-bottom: 10px; 
+                   }
+                   span {
+                       color: $__black;
+                       margin-left: 10px;
+                   } 
+	            }
+	            .station {
+	                @include margin-padding(0 15px 0 0,25px);
+	                div {
+	                    @include margin-padding(0,0px);
+	                    color: $__grey__nuetral;
+	                    text-align: $__left;
+	                    span{
+	                        display: $__block;
+	                        margin: 0 0 5px;
+	                    }
+	                }
+	                .station-info {
+	                    display: $__flex;
+	                    width: 100%;
+	                    align-items: $__center;
+	                    .point-img {
+	                        width: 5%;
+	                        margin-right: 15px;
+	                    }
+	                    .station-details {
+	                        width: 95%;
+	                        div {
+	                           width: auto;
+	                           .from-add {
+	                               color: $__black__nuetral;
+	                           }
+	                        }	                       
+	                        span {
+	                           display: $__inline;
+	                        }
+	                    }	                  
+	                }
+	                 @include respond-below(custom767) {
+	                    margin-bottom: 15px;                      
+	                }
+	            }
+	            .days-detail {
+	               background: none;
+	               padding: 0px;
+	               display: $__flex;
+	               div {
+	                  width: 50%;
+	                  padding: 15px;
+	                  margin-right: 15px;
+	                  text-align: $__center;
+	                  span {
+	                   &:first-child {
+	                       margin: 0 0 10px;
+	                   }
+	                  }
+	               }
+	               .invoice-title {
+	                   font-size: 18px;
+					   color:$__tablehead__bg;
+	               }
+	            }
+	            @include respond-below(custom767) {
+                   display: $__block;
+                } 
+	        }
+	    }
+	    .invoice-address {
+	        @include margin-padding(0,30px 20px);
+	        justify-content: $__normal;
+	        div {
+	           width: 50%;
+	           @include respond-below(custom767) {
+                  width: 100%; 
+               } 
+	        }
+	    }
+	    .passenger-info {
+	        display: $__flex;
+	        @include margin-padding(0,0);
+	        .passenger-details,.payment-info {
+	           background: none;
+	           @include margin-padding(0 15px 0 0, 0px);
+	           width: 50%;
+	           h5 {
+	              color: $__darktableheadbg;
+	              margin-bottom: 15px; 
+	              font-size: $__font__size__18;
+	           }
+	           div {
+	               display: $__flex;
+	               justify-content: space-between;
+	               span {
+	                   color: $__black__nuetral;
+	                   width: 65%;
+	                   text-align: $__right;
+	               }
+	               @include respond-below(custom992) {
+                       font-size: $__font__size__12; 
+                       display: $__block;                      
+	                }
+	                @include respond-below(custom767) {
+                       font-size: $__font__size__15;                       
+	                }
+	           }
+	           .passenger-details-display {
+	              display:$__block;
+	              background: $__invborder__color;
+	              @include margin-padding(0 , 20px);
+	              min-height: 180px;
+	           }
+	            @include respond-below(custom767) {
+                  width: 100%; 
+                  margin-bottom: 20px;
+                  @include margin-padding(0 10px 20px 0, 15px);
+               } 
+	        }
+
+	        @include respond-below(custom767) {
+                 display: $__block;
+            } 
+	    }
+	    .passenger-ticket-details {
+	         @include margin-padding(0,15px 20px 30px);
+	         .invoice-title {
+                @include margin-padding(0 0 15px,20px);
+                position: $__relative;
+                overflow: $__hidden;
+                font-size: $__font__size__18;
+                font-weight: $__normal;
+                span {
+					&:nth-child(1){
+						color: $__white;
+						z-index: 2;
+						position: $__relative;
+					}
+	               
+                }
+	         }
+	         .ticket-title-bg {
+	            position: absolute;
+				display:block;
+				height: 100%;
+				width: 100%;
+				-webkit-transform: skewX(35deg);
+				transform: skewX(35deg);
+				top: 0px;
+				left: -22px;
+				background: $__table__head__bg;
+				&:hover {
+				   background: linear-gradient(270.14deg, #7638FF -0.04%, #3698FF 100%);
+				}				
+	         }
+	    }
+	    .invoice-table {
+	        @include margin-padding(0, 0px 20px);
+	        h6 {
+	           padding: 0 0 30px;
+	           line-height: normal;
+	        }
+	          table {
+				color: $__grey__nuetral;
+		        thead {
+		            tr {
+		               color: $__black__nuetral;
+		            }
+		        }
+		        .table_width_2 {
+				   width: 56%;
+				}
+				tr {
+				    border-bottom: 1px solid $__invborder__color;
+				   .table-description {
+					   color: $__black__nuetral;
+					   span {
+					      display: $__block;
+					      color: $__grey__nuetral;			      
+					   }
+				    }
+				    td,th {
+		                @include respond-below(custom992) {
+				            white-space: $__nowrap;
+				        } 
+				    }			
+				}
+				@include respond-below(custom767) {
+		           @include margin-padding(0, 15px 20px 0);
+		        } 
+			}
+			.invoice-table-footer {
+			    .table-footer-right {
+			        color: $__black__nuetral;
+			    }
+			    .total-item {
+			        @include respond-below(custom767) {
+                         display: $__none;
+			        }
+			    }
+			     @include respond-below(custom767) {
+		           @include margin-padding(0, 5px 10px 0);
+		           .total-item {
+		              display: $__none;
+		           }
+		        }
+			}
+			.total-amountdetails {
+			   span {
+			       display: $__block;
+			   }
+			   @include respond-below(custom767) {
+		          @include margin-padding(0, 15px 20px);
+		       } 
+			}
+	    }
+	    .totalamount-footer {
+             background: $__bodybg__color;
+             border: 0;
+             @include margin-padding(10px 20px, 10px 10px 10px 15px);
+             @extend %align-items-center;             
+        }
+        .invoice-table-footer {
+            border: 0;
+            .notes {
+                span {
+                    display: $__block;
+                    color: $__black__nuetral;
+                }
+            }
+            .amount-payable {
+                width: 35%;
+            }
+            .table-footer-right {
+                table {
+                   td {
+                      padding: 5px;
+					  
+                   }
+                }
+            }
+            @include respond-below(custom767) {
+		        @include margin-padding(0, 5px 10px 0);
+		        .total-item {
+		           display: $__none;
+		        }
+		    }
+        }
+        .payable-table {
+            @include margin-padding(0 20px,20px 0px);
+            border-bottom: 1px solid $__invborder__color;
+
+            @include respond-below(custom767) {
+                flex-direction: column-reverse;                        
+            }
+            .table-footer-left {
+                @include respond-below(custom767) {
+                   width: 100%;    
+               }
+            }
+            .amount-payable {
+                width: 35%;
+                @include respond-below(custom992) {
+                   width: 80%;    
+               }
+               @include respond-below(custom767) {
+                   width: 100%;    
+               }
+            } 
+        }
+         .bank-details {  
+            @include margin-padding(0 20px, 30px 0px 20px);
+            border-bottom: 1px solid $__invborder__color;          
+            .payment-info {
+               color: $__black__nuetral;
+              .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+              }
+              div {
+                 @include margin-padding(0 0 10px,0);
+              }
+              span{
+                  color: $__grey__nuetral;
+              }
+            }
+        }
+        .terms-condition {
+             @include margin-padding(0 20px,30px 0);
+             p {
+                color: $__black;
+				font-weight: 450;
+				font-size:$__font__size__16 ;
+             }
+        }
+        .thanks-msg {
+             padding: 30px 0;
+        }
+	}
+}

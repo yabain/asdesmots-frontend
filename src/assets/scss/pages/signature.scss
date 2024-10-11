@@ -1,0 +1,91 @@
+.custom-modal {
+    &.signature-add-modal  {
+        .modal-body {
+            padding:20px;
+            .service-upload {
+                border-radius: 8px ;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .service-upload-info {
+                min-height: 70px;
+            }
+            p {
+                color: $__light__gray;
+                margin-top: 10px;
+                font-size: 12px;
+            }
+            .custom_check {
+                font-size: 14px;
+                color: #333333;
+                margin-bottom: 0;
+                padding-left: 26px; 
+            }
+        }
+        .modal-footer {
+            padding: 0 20px 20px;
+        }
+    }
+    &.signature-delete-modal {
+        .modal-body {
+            .form-header {
+                i {
+                    color: $__dark__brown;
+                    font-size: 40px;
+                    margin-bottom: 15px ;
+                }
+                p {
+                    color: $__gray2;
+                }
+            }
+        }
+    }
+
+}
+.signature-preview {
+    background-color: #F7F8F9;
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+    height: 70px;
+    a {
+       position: absolute; 
+       right: 3px;
+       top: 3px;
+       width: 25px;
+       height: 25px;
+       border-radius: 50%;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       background-color: #FFECEC;
+       
+       i {
+        color: #AE2C2C;
+       }
+    }
+    @include respond-below(custom991) {
+        img{
+            height:60px;
+        }
+       
+    }
+}
+.signature-table {
+    tbody {
+        tr {
+            td {
+                a {
+                    &.btn-action-icon {
+                        &.active {
+                            background: #EADDFF;
+                            color: #7539FF;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,186 @@
+.btn {
+    font-size: $__font__size__14;
+    font-weight: $__semibold;
+    position: $__relative;
+    @include margin-padding(0, null);
+    z-index: 1;
+    text-transform: initial;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    @include margin-padding(null, 8px 15px);
+    &:hover {
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+}
+.btn-white {
+    background-color: $__white;
+    border-color: $__light__grayish;
+    color: $__primarycolor;
+    box-shadow: inset 0 0 0 0 $__white;
+    &:hover {
+        background-color: $__white;
+        border-color: $__white;
+        color: $__white;
+        box-shadow: inset 0 50px 0 0 $__primarycolor;
+    }
+}
+.btn-white-outline {
+    background-color: $__white;
+    border-color: $__light__grayish;
+    color: $__grayish__blue;
+    &:hover {
+        background-color: $__white;
+        border-color: $__light__grayish;
+        color: $__grayish__blue;
+    }
+}
+.btn-primary {
+    background-color: $__primarycolor;
+    border: 1px solid $__primarycolor;
+    box-shadow: inset 0 0 0 0 $__white;
+    border-radius: 4px;
+    &:hover {
+        background-color: $__white;
+        border-color: $__primarycolor;
+        color: $__primarycolor;
+        box-shadow: inset 0 50px 0 0 $__white;
+    }
+}
+.btn-gray {
+    background-color: $__cloud__grays;
+    border: 1px solid $__cloud__grays;
+    box-shadow: inset 0 0 0 0 $__white;
+    color: $__gray__white__light;
+    @include margin-padding(null, 8px 20px);
+    border-radius: 4px;
+
+    &:hover {
+        background-color: $__white;
+        border-color: $__cloud__grays;
+        color: $__gray__white__light;
+    }
+}
+.btn-primary.tax{
+    background-color: $__light__gray__has;
+    border: 1px solid $__light__gray__has;
+    box-shadow: inset 0 0 0 0 $__white;
+    border-radius: 4px;
+    color:$__gray__white__light;
+    &:hover, &.active {
+        background-color: $__primarycolor;
+        border-color:  $__primarycolor;
+        color: $__white;
+    }
+}
+.btn-upload {
+    background-color: $__primarycolor;
+    border: 1px solid $__primarycolor;
+    box-shadow: inset 0 0 0 0 $__white;
+    color:$__white;
+    border-radius: 4px;
+    box-shadow: inset 0 50px 0 0 $__primarycolor;
+    &:hover {
+        background-color: $__white;
+        border-color: $__primarycolor;
+        color:$__primarycolor;
+        box-shadow: inset 0 50px 0 0 $__white;
+    }
+}
+
+.btn-gray {
+    background-color: $__white__smoke;
+    border: 1px solid $__white__smoke;
+    box-shadow: inset 0 0 0 0 $__white;
+    &:hover {
+        background-color: $__white;
+        border-color: $__white__smoke;
+        color: $__gray15;
+        box-shadow: inset 0 50px 0 0 $__white;
+    }
+}
+.btn-gray-outline {
+    background-color: $__white;
+    border: 1px solid $__white__smoke;
+    box-shadow: inset 0 0 0 0 $__white;
+    &:hover {
+        background-color: $__white__smoke;
+        border-color: $__white;
+        color: $__gray15;
+        box-shadow: inset 0 50px 0 0 $__white;
+    }
+}
+.btn-outline-primary {
+    color: $__primarycolor;
+    border-color: $__primarycolor;
+    &:hover {
+        background-color: $__primarycolor;
+        border-color: $__primarycolor;
+    }
+}
+.btn-check:focus+.btn-primary, 
+.btn-primary:focus {
+    box-shadow: $__none !important;
+}
+.btn{
+    &:focus{
+        box-shadow: $__none !important; 
+    }
+    &.btn-greys{
+        background: $__white__smoke;
+        color: $__secondarycolor;
+        font-size: $__font__size__14;
+        @include margin-padding(null, 8px 16px);
+        font-weight: $__semibold;
+    }
+}
+.cancel {
+    background-color: $__bg__primary__light;
+    // border: 1px solid $__primarycolor;
+    box-shadow: inset 0 0 0 0 $__violet__dark;
+    color: $__primarycolor;
+    border-radius: 6px;
+    &:hover {
+        background-color: $__primarycolor;
+        border:1px solid $__bg__primary__light;
+        color: $__bg__primary__light;
+        box-shadow: inset 0 50px 0 0 $__primarycolor;
+    }
+}
+.btn {
+    &.btn-primary,&.btn-outline-primary {
+        &:active {
+            background: $__primarycolor;
+            border-color: $__primarycolor;
+        }
+    }
+}
+.nav-pills {
+    &.navtab-bg {
+        .nav-link {
+            &.active {
+                background: $__primarycolor;
+            }
+        }
+    }
+    &.flex-column  {
+        .nav-link {
+            &.active {
+                background: $__primarycolor;
+            }
+        }
+    }
+}
+.nav-tabs {
+    &.nav-bordered {
+        .nav-link {
+            &.active {
+                border-bottom-color: $__primarycolor;
+            }
+        }
+    }
+}

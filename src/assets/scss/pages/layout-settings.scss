@@ -1,0 +1,431 @@
+.sticky-sidebar {
+    position: $__fixed;
+    border: 3px solid #555a64;
+    top: 50%;
+    background: #555a64;
+    z-index: 600;
+    right: 0px;
+    padding: 0px 0px;
+    width: 50px;
+    box-shadow: 0px 0px 15px rgb(0 0 0 / 12%);
+    border-radius: 5px 0px 0px 5px;
+    transform: translateY(-50%);
+    flex-wrap: wrap;
+    transition: all 0.8s;
+    @extend %display-flex;
+    @extend %justify-content-center;
+    > li > a {
+        height: 30px;
+        width: 30px;
+        color: $__white;
+        position: $__relative;
+        @extend %display-flex;
+        @extend %align-items-center;
+        @extend %justify-content-center;
+    }
+}
+.tooltip-five {
+    position: $__relative;
+    text-align: $__center;
+    margin: $__auto;
+    display: $__flex;
+    &:hover .tooltiptext {
+        visibility: $__visible;
+    }
+    .tooltiptext {
+        visibility: $__hidden;
+        width: 126px;
+        background-color: $__primarycolor;
+        color: $__white;
+        text-align: $__center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: $__absolute;
+        z-index: 111111;
+        top: 0px;
+        right: 41px;
+        font-size: 14px;
+        line-height: 18px;
+        text-transform: $__capitalize;
+        &:after {
+            content: "";
+            position: $__absolute;
+            top: 49%;
+            left: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: $__transparent $__transparent $__transparent $__primarycolor;
+        }
+    }
+}
+.sidebar-logo img {
+    max-height: 45px;
+    width: $__auto;
+}
+.sticky-sidebar{
+    &.siderbar-view.show-sidebar {
+        right: 617px;
+        z-index: 10000;
+        transition: all 0.8s;
+    }
+}
+.sidebar-layout {
+    width: 600px;
+    height: $__auto;
+    background-color: rgb(0,0,0,0.2);
+    position: $__fixed;
+    right: -600px;
+    top: 0;
+    height: 100vh;
+    z-index: 9999;
+    overflow-x: $__hidden;
+    -ms-overflow-style: $__none;
+    scrollbar-width: $__none;
+    overflow-y: scroll;
+    transition: ease all 0.8s;
+    @include respond-below(custom575) {
+        width:100%
+    }
+    &.show-layout {
+        right: 0;
+        transition: ease all 0.8s;
+        scrollbar-width: $__none;
+        overflow-y: scroll;
+        width: 100%;
+    }
+    .sidebar-content {
+        width: 600px;
+        position: $__absolute;
+        right: 0px;
+        background: $__white;
+        @include respond-below(custom575) {
+            width:100%
+        }
+        .container-fluid {
+            padding: 20px;
+        }
+        .sidebar-top {
+            padding: 0;
+            border-bottom: 1px solid #F0F1F5;
+            
+            .btn-closed {
+                position: $__relative;
+                z-index: 1;
+                color: #FF0000;
+                border: 1px solid $__transparent;
+                text-align: $__center;
+                float: $__right;
+                padding: 2px;
+                top: 0px;
+                width: 25px;
+                height: 25px;
+                border-radius: 50px;
+                @extend %display-flex;
+                @extend %align-items-center;
+                @extend %justify-content-center;
+                @include respond-below(custom991) {
+                    margin-top:  -45px;
+                }
+            }
+            .sidebar-logo {
+                img {
+                    max-height: 45px;
+                    width: $__auto;
+                }
+            }
+        }
+        .sidebar-title {
+            font-size: 18px;
+            color: #212529;
+            margin: 0px 11px 15px 11px;
+            padding: 0;
+        }
+        .sidebar-image {
+            flex-wrap: wrap;
+            @extend %display-flex;
+        }
+        .layout {
+            padding: 30px 11px;
+            @extend %display-flex;
+            @extend %align-items-center;
+            justify-content: $__left;
+            .layout-title {
+                font-size: 15px;
+                color: #212529;
+                margin: 0px;
+                text-align: $__center;
+            }
+        }
+    }
+}
+.switch {
+    position: $__relative;
+    display: $__inline__block;
+    width: 46px;
+    height: 26px;
+    margin-right: 0px;
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .layout-link {
+        position: $__relative;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        display: $__inline__block;
+    }
+    .layout-link{
+        &.checked {
+            + .slider {
+                background-color: $__primarycolor;
+                border: 2px solid $__primarycolor;
+                &:before {
+                    -webkit-transform: translateX(26px);
+                    -ms-transform: translateX(26px);
+                    transform: translateX(16px);
+                    background: $__white;
+                }
+            }
+        }
+    }
+    .round {
+        border-radius: 45px;
+    }
+    .slider {
+        cursor: pointer;
+        background-color: $__white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border: 2px solid #6e82a5;
+        @include position($__absolute,0,0,0,0);
+        &:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 3px;
+            background-color: #6e82a5;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        &.round:before {
+            border-radius: 50%;
+        }
+    }
+}
+.sidebar-icons {
+    padding: 7px 0px;
+}
+
+.sidebar-settings {
+    width: 600px;
+    height: auto;
+    background-color: rgb(0,0,0,0.2);
+    position: fixed;
+    right: -600px;
+    top: 0;
+    height: 100vh;
+    z-index: 9999;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+    transition: ease all 0.8s;
+    -webkit-transition: ease all 0.8s;
+    -ms-transition: ease all 0.8s;
+    &.show-settings {
+        right: 0;
+        transition: ease all 0.8s;
+        scrollbar-width: none;
+        overflow-y: scroll;
+        width: 100%;
+    }
+    .sidebar-content {
+        width: 600px;
+        position: absolute;
+        right: 0px;
+        background: $__white;
+        @include respond-below(custom991) {
+            width: 100%;
+        }
+    }
+    .sidebar-top {
+        padding: 0;
+        border-bottom: 1px solid #F0F1F5;
+        .container-fluid {
+            padding: 20px;
+        }
+        .btn-closed {
+            position: relative;
+            z-index: 1;
+            color: #FF0000;
+            border: 1px solid $__transparent;
+            text-align: center;
+            float: right;
+            padding: 2px;
+            top: 0px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50px;
+            @extend %display-flex;
+            @extend %align-items-center;
+            @extend %justify-content-center;
+        }
+    }   
+    .sidebar-content {
+        .container-fluid {
+            padding: 20px;
+        }
+        .sidebar-title {
+            font-size: 18px;
+            color: #212529;
+            margin: 0px 11px 15px 11px;
+            padding: 0;
+        }
+        .setting-title {
+            font-size: 12px;
+            color: #212529;
+            margin: 0;
+        }
+    }
+
+}
+.setting {
+    padding: 15px 11px;
+    @extend %display-flex;
+    @extend %align-items-center;
+    justify-content: $__left;
+    &:nth-child(2) {
+       justify-content: end;
+    }
+}
+.sidebar-color {
+    background: $__white;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 11%);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    margin: 10px 0px;
+    span {
+        border-radius: 1px;
+        width: 100%;
+        height: 75px;
+        display: block;
+        margin: 1px;
+    }
+    
+}
+.color-one {
+    background: $__white;
+    border: 1px solid #DBDFEA;
+}
+.color-two {
+    background: #F0F1F5;
+    border: 1px solid #DBDFEA;
+}
+.color-three {
+    background: #101924;
+    border: 1px solid #DBDFEA;
+}
+.color-four {
+    background: $__primarycolor;
+    border: 1px solid #DBDFEA;
+}
+.color-eight {
+    background: #757575;
+    border: 1px solid #DBDFEA;
+}
+.sidebar-sub-title {
+    font-size: 15px;
+    color: #6E82A5;
+    margin: 10px 0px 10px 11px;
+    padding: 0;
+}
+.sidebar-color-one {
+    background: $__white;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 11%);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 53px;
+    margin: 10px 0px;
+    display: inline-block;
+   span{
+        border-radius: 1px;
+        width: 54px;
+        height: 30px;
+        display: inline-block;
+        margin: 0px 3px;
+   }
+    .color-five {
+        background: #757575;
+        border: 1px solid #DBDFEA;
+    }
+    .color-six {
+        background: #DBDFEA;
+        border: 1px solid #DBDFEA;
+    }
+    .color-seven {
+        background: #6E82A5;
+        border: 1px solid #DBDFEA;
+    }
+}
+.sidebar-but {
+    padding: 6px 23px;
+    background: $__primarycolor;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid $__primarycolor;
+    width: auto;
+    margin: 20px auto;
+    color: $__white;
+    border: 1px solid $__primarycolor;
+    display: flex;
+    align-items: center;
+    &:hover {
+        background: #621aff;
+        color: $__white;
+    }
+}
+@include respond-below(custom991) {
+    .layout, .setting {
+        flex: 1 0 0%;
+    }
+    .layout:nth-child(2) {
+        justify-content: end !important;
+    }
+}
+.circle-btn {
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-light {
+    border-color: #e6e6e6;
+    color: #a6a6a6;
+}
+
+.user-menu-eight.nav {
+    > li > a {
+        color: #fff;
+        &.dropdown-toggle-eight:after {
+            border-bottom: 2px solid #fff;
+            border-right: 2px solid #fff;
+        }
+    }
+}
+.sidebar-three{
+    .nav-tabs .nav-link:hover {
+        background-color: transparent;
+        border-color: transparent;
+        color: #fff;
+    }
+}

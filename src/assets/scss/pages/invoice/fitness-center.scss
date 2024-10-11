@@ -1,0 +1,202 @@
+.fitness-center {
+	.invoice-header {
+	    @include margin-padding(0 20px,20px 0px 15px);
+	    .tax-invoice {
+            font-size: $__font__size__24;
+			 font-weight: 700;
+	    }
+	   .inv-header-right {
+	      a {
+             display: $__block;
+	      }
+	      span {
+             margin-bottom: 5px;
+             display: block;
+			 font-size: $__font__size__18;
+			 font-weight: 400;
+	      }
+	      .inv-details {
+	        display: $__block;
+	        .inv-date {
+	            @include margin-padding(0 ,0);
+	            span {
+	                display: $__inline;
+	            }
+	        }
+	      }
+	   }
+	   .company-details {
+	      .invoice-title {
+	         color: $__black;
+	         display: $__block;
+	         margin-top: 10px;
+	      }
+	      .gst-details {
+	         @include margin-padding(10px 0 0, 0);
+	         span {
+	            color: $__black__nuetral;
+	         }
+	      }
+	       @include respond-below(custom767) {
+                @include margin-padding(15px 0 0, 0);
+	       }
+	   }
+	   @include respond-below(custom767) {
+            display: $__flex;
+            flex-direction: column-reverse;
+            align-items: $__normal;
+            @include margin-padding(0, 20px 20px);
+            .tax-invoice {
+                display: $__none;
+            }
+       } 
+	}
+	.invoice-address {
+        @include margin-padding(0,25px 20px);
+	    .grand-total {
+	       background:  $__invborder__color;
+	       @include margin-padding(0,15px);
+	       text-align: $__center;
+	       width: 200px;
+	       span {
+	           display: $__block;
+	           &:last-child {
+	               color: $__black;
+	               font-size: $__font__size__24;
+	               font-weight: $__bold;
+	           }
+	       }
+	    }
+	    @include respond-below(custom767) {
+            padding: 15px 20px;    
+        }
+	}
+	.invoice-table {
+       @include margin-padding(0,0 20px);
+	   table {
+		color: $__grey__nuetral;
+        thead {
+             .fitness-center{
+                background: $__black__nuetral;
+                color: $__grey__nuetral;
+            }
+        }
+        .table_width_2 {
+		   width: 52%;
+		}
+		tr {
+		    border-bottom: 1px solid $__invborder__color;
+		   .table-description {
+			   color: $__black__nuetral;
+			   span {
+			      display: $__block;
+			      color: $__grey__nuetral;			      
+			   }
+		    }
+		    td,th {
+                @include respond-below(custom992) {
+		            white-space: $__nowrap;
+		        } 
+		    }			
+		}
+		@include respond-below(custom767) {
+           @include margin-padding(0, 15px 20px 0);
+        } 
+	  }
+	}
+	.invoice-table-footer {
+	    @include margin-padding(0 22px, 5px 0 );
+	    .table-footer-left {
+	        span {
+	           display: $__block;
+	           color: $__black__nuetral;
+	        }
+	        @include respond-below(custom767) {
+	          width: auto;
+	          .total-item {
+                 display: $__none;
+              }
+	        }
+	    }
+	    .table-footer-right {
+	        color: $__black__nuetral;
+	        width: 36%;
+            @include respond-below(custom992) {
+	          width: 64%;
+	        }
+	        @include respond-below(custom767) {
+	          width: 100%;
+	        }
+	    }
+	    @include respond-below(custom767) {
+           @include margin-padding(0, 5px 10px 0);
+           .total-item {
+              display: $__none;
+           }
+        }
+	}
+	.payable-table {
+	    @include margin-padding(0 22px, 20px 0 );
+	    @include respond-below(custom767) {
+                flex-direction: column-reverse;                        
+        }
+        .table-footer-left {
+            @include respond-below(custom767) {
+               width: 100%;    
+            }
+        }
+        .amount-payable {
+            width: 35%;
+            @include respond-below(custom992) {
+               width: 80%;    
+            }
+            @include respond-below(custom767) {
+                width: 100%;    
+            }
+        }
+        @include respond-below(custom767) {
+            @include margin-padding(0 20px, 10px 0 );   
+        } 
+	}
+	.total-amountdetails {
+	   span {
+	       display: $__block;
+	   }
+	   @include respond-below(custom767) {
+          @include margin-padding(0, 15px 20px);
+       } 
+	}
+	.bank-details {  
+        @include margin-padding(0 20px, 10px 0px);
+        border-bottom: 1px solid $__invborder__color;          
+        .payment-info {
+            color: $__black__nuetral;
+            .payment-title {
+              color: $__black__nuetral;
+              font-size: $__font__size__18;
+              @include margin-padding(0 0 15px,0);
+              display: $__block;
+            }
+            div {
+               @include margin-padding(0 0 10px,0);
+            }
+            span {
+                color: $__grey__nuetral;
+            }
+        }
+        .company-sign {
+            color: $__black;
+        }
+    }
+    .terms-condition {
+        @include margin-padding(0 20px,20px 0);
+        p {
+            color: $__black;
+        }
+    }
+	.bank-details,.terms-condition {
+	    @include respond-below(custom767) {
+          @include margin-padding(0, 5px 20px);
+       } 
+	}	
+}

@@ -1,1 +1,881 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$template-primary: mat.define-palette(mat.$indigo-palette);
+$template-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$template-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$template-theme: mat.define-light-theme((color: (primary: $template-primary,
+        accent: $template-accent,
+        warn: $template-warn,
+      ),
+    ));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($template-theme);
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+// regular style toast
+@import "node_modules/ngx-toastr/toastr";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "./assets/material/material.scss";
+
+@import "./assets/scss/main.scss";
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.siderbar-view.show-sidebar {
+  right: 600px;
+  transition: ease all 0.8s;
+  -webkit-transition: ease all 0.8s;
+  -ms-transition: ease all 0.8s;
+  z-index: 99999;
+}
+
+.icons-items {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.icons-list {
+  max-height: calc(100vh - 328px);
+}
+
+// ::-webkit-scrollbar {
+//   width: 4px;
+//   height: 4px;
+//   overflow-y: scroll;
+//   background: #ffff;
+//   box-shadow: inset 0 0 4px #707070;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background: #adb5bd;
+//   border-radius: 0px;
+// }
+
+.tag_input {
+  mat-form-field {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+
+    .mat-form-field-flex {
+      padding: 0.4em 0.75em 0.4em 0.75em;
+    }
+
+    mat-chip-list {
+      mat-chip {
+        background-color: #7638ff !important;
+        color: #fff !important;
+        border-radius: 5px !important;
+
+        mat-icon {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.show-sub-menu {
+  display: block !important;
+  transition: ease all 0.8s;
+  -webkit-transition: ease all 0.8s;
+  -ms-transition: ease all 0.8s;
+}
+
+.hide-sub-menu {
+  display: none !important;
+  transition: ease all 0.8s;
+  -webkit-transition: ease all 0.8s;
+  -ms-transition: ease all 0.8s;
+}
+
+.switch {
+  .active {
+    +.slider {
+      background-color: $__primarycolor;
+      border: 2px solid $__primarycolor;
+
+      &:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(16px);
+        background: $__white;
+      }
+    }
+  }
+}
+
+// .feather {
+//   font-size: 18px;
+// }
+
+.mini-sidebar .menu-title {
+  display: none !important;
+}
+
+.table_header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  // padding: 1rem 1.5rem;
+
+  .dataTables_length {
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    select {
+      width: auto;
+      display: inline-block;
+      margin: 0px 3px;
+    }
+  }
+
+  .dataTables_filter {
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    input {
+      width: auto;
+      display: inline-block;
+      margin: 0px 3px;
+      border: 1px solid #e5e5e5;
+      color: #1b2559;
+      height: 40px;
+      border-radius: 8px;
+      background: url(assets/img/icons/search.svg) no-repeat 5% 50% / 14px;
+      padding-left: 30px;
+    }
+  }
+}
+
+.table_footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 1.5rem 1.5rem;
+
+  .pagination_section {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.edit-options .feather {
+  font-size: 14px;
+}
+
+.list-inline-item span {
+  margin: 0 5px;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #333;
+}
+
+// .nav-tabs .nav-link.active {
+//   color:#fff;
+//   background-color: #001621;
+//   border-color: #182b3e #182b3e #182b3e;
+//   border: 1px solid #203247 !important;
+// }
+
+.mat-button-base {
+  background: $__primarycolor;
+  color: #fff;
+}
+
+.page-wrapper.page-wrapper-fluid {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.page-wrapper.page-wrapper-fluid .page-header {
+  margin: 0;
+}
+
+.page-wrapper.page-wrapper-fluid .content {
+  padding: 0;
+  max-width: 1140px;
+}
+
+.sidebar-three {
+  .sidebar-menu-three {
+    .tab-content-three {
+      a {
+        span {
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+}
+
+.tab {
+  .tablinks {
+    display: block;
+    background-color: inherit;
+    color: #6e82a5;
+    padding: 22px 24px !important;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    margin: 0px 0px;
+    font-size: 17px;
+    border: 0 !important;
+    transition: all 0.2s ease;
+  }
+}
+
+.submenu-five {
+  .dropdown-toggle::after {
+    border-top: 0;
+  }
+}
+
+.mini-sidebar {
+  .header {
+    .header-left.header-left-two {
+      .logo.logo-small {
+        padding: 10px 0 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.page-wrapper.page-wrapper-fluid {
+  @include respond-below(custom991) {
+    padding: 15px;
+  }
+}
+
+apx-chart {
+  display: block;
+  width: -webkit-fill-available !important;
+}
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 10000;
+}
+
+.date-mat-datepicker1-toggle {
+  position: absolute;
+  top: 22px;
+  right: 9px;
+}
+
+.date-mat-datepicker2-toggle {
+  position: absolute;
+  top: 24px;
+  right: 10px;
+}
+
+.pagination .page-item a {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  background: #fff;
+}
+
+.invoice-content-title a {
+  font-size: 13px;
+  padding: 10px;
+  color: #28084b;
+  display: inline-block;
+}
+
+.form-select .option {
+  background-color: #7638ff !important;
+}
+
+.invoice-card-title h6 {
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+// .view-content {
+//   overflow: hidden;
+//   max-height: 200px;
+//   transition: max-height 0.5s ease-out;
+// }
+
+.open {
+  display: block;
+}
+
+.closed {
+  display: none;
+}
+
+.inv-content .invoice-address .company-details .company-name {
+  font-size: 24px;
+  color: #7638ff;
+  margin: 0 0 10px;
+  font-weight: 700;
+  display: block;
+}
+
+.pagination {
+  margin: 2px 0;
+  white-space: nowrap;
+  justify-content: flex-end;
+}
+
+.pagination .paginate_button.previous .page-link {
+  margin-right: 20px;
+  border: 1px solid #E5E7EB;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.pagination .paginate_button.next .page-link {
+  margin-left: 20px;
+  border: 1px solid #E5E7EB;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.table-footer {
+  margin-top: 24px;
+}
+
+// upload image //
+.service-upload {
+  border: 2px dashed $__light__whites;
+  text-align: $__center;
+  background-color: $__white;
+  position: $__relative;
+  @include margin-padding(null, 16px 0);
+  min-height: 180px;
+  border: 2px dashed #e5e5e5 !important;
+
+  .drop-browse {
+    font-size: $__font__size__14;
+    font-weight: $__medium;
+    color: $__grayish__blue;
+    margin-bottom: 5px;
+    flex-direction: $__column;
+
+    p {
+      font-weight: 500;
+      font-size: 14px;
+      color: $__light__vampire !important;
+    }
+  }
+
+  span {
+    font-size: 15px;
+    color: #858585;
+    display: $__block;
+  }
+
+  input[type="file"] {
+    @include position($__absolute, 0, null, null, 0);
+    width: $__full__width;
+    height: $__full__height;
+    opacity: 0;
+    cursor: $__pointer;
+  }
+}
+
+.service-upload.add-credit {
+  min-height: 100%;
+  height: 100%;
+}
+
+mat-tooltip-component .mdc-tooltip--shown .mdc-tooltip__surface-animation {
+  background: #000;
+  color: #fff;
+  padding: 7px;
+}
+
+.mdc-tooltip.mdc-tooltip--shown.mat-mdc-tooltip.mat-mdc-tooltip-show::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 7px solid #000;
+
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 7px solid #000;
+}
+
+.btn-white:hover {
+  background-color: #7539ff;
+  border-color: #7539ff;
+  color: #fff;
+  box-shadow: inset 0 50px 0 0 #7539FF;
+}
+
+.btn-white:focus:not(:focus-visible) {
+  outline: 0;
+  background-color: #fff;
+  border-color: #e7eaf3;
+  color: #7539ff;
+}
+
+.formcal {
+  position: relative;
+}
+
+.mat-cust-select.form-control:focus {
+  border-color: $__white;
+}
+
+.sort-by .mat-cust-select.form-control {
+  border: 0;
+}
+
+.cancel:hover {
+  background-color: #fff;
+  border-color: #377dff;
+  color: #fff;
+  box-shadow: inset 0 50px 0 0 #377dff;
+}
+
+button:focus:not(:focus-visible) {
+  color: #377dff;
+}
+
+.invoice-id {
+  margin-bottom: 0px;
+}
+
+.fc .fc-toolbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.bs-datepicker-body table td.week span {
+  color: $__primarycolor !important;
+}
+
+.bs-datepicker-body table td span.selected,
+.bs-datepicker-head,
+.bs-datepicker-head,
+.bs-datepicker button:active,
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after,
+.bs-datepicker-body table td.active-week span:hover {
+  background-color: $__primarycolor !important;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dataTables_length label:before {
+  content: "Show";
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.dataTables_length label:after {
+  content: "Entries";
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.dataTables_length label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.table-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 7px;
+  overflow-y: scroll;
+  transition: all 0.5s;
+  border: 4px solid transparent;
+  background: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: rgb(205, 202, 202);
+
+  background-color: #ddceff;
+  background-clip: content-box;
+  border-radius: 50px;
+  -webkit-background-clip: content-box;
+  border: 2px solid transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ddceff;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  height: 15px;
+  border: 8px solid #ddceff;
+}
+
+.table-scroll {
+  overflow-y: auto;
+}
+
+.card-table.permission {
+  margin-bottom: 24px;
+}
+
+.icon-frame:before {
+  display: none;
+}
+
+.custom-class .mdc-menu-surface.mat-mdc-select-panel {
+  background: #1C1D22;
+}
+
+.custom-class mat-select.custom-mat-select {
+  background-color: #1C1D22;
+}
+
+mat-select.custom-mat-select {
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  border-radius: 5px;
+  color: #878a99;
+  line-height: 41px;
+  border-radius: 5px;
+  height: 43px;
+  background-color: #fff;
+}
+
+.custom-mat-select .mat-mdc-select-trigger {
+  padding-right: 30px;
+  padding-left: 15px;
+}
+
+mat-option mat-pseudo-checkbox {
+  display: none;
+}
+
+mat-select .mat-mdc-select-placeholder {
+  color: #878a99;
+  font-family: "Inter", sans-serif;
+}
+
+mat-option.mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 14px;
+  color: #878a99;
+  font-family: "Inter", sans-serif;
+}
+
+mat-option mat-pseudo-checkbox.mat-pseudo-checkbox {
+  display: none;
+}
+
+mat-option.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) {
+  background-color: #7539ff;
+}
+
+mat-option.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: #fff;
+}
+
+mat-option.mat-mdc-option:focus.mdc-list-item,
+mat-option.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+  background-color: #7539ff;
+  min-height: 35px;
+}
+
+.mat-mdc-option.mdc-list-item.mat-mdc-option-active .mdc-list-item__primary-text {
+  color: #fff;
+}
+
+mat-option.mat-mdc-option.mdc-list-item {
+  min-height: 35px;
+}
+
+.mdc-tooltip__surface {
+  background-color: #000;
+  color: #fff;
+}
+
+.card-table .card-body .table td {
+  box-sizing: content-box;
+}
+
+.mdc-list-item--selected,
+.mat-mdc-option:hover {
+  background: #7539ff;
+  color: #fff;
+}
+
+.mdc-menu-surface.mat-mdc-select-panel {
+  background: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+body.date-range-picker bs-daterangepicker-container {
+  transform: translate3d(500px, 124px, 0px) !important;
+}
+
+mat-select.custom-mat-select .mat-mdc-select-arrow {
+  left: 15px;
+  color: #878a99;
+}
+
+label.custom_check.custom-check-cls {
+  margin-bottom: 0;
+}
+
+.editor {
+  border: 1px solid #e0e0e0;
+  box-shadow: none;
+  border-radius: 4px;
+  margin: 0;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #878a99;
+  height: 180px;
+}
+
+.cal-icon-info {
+  &:after {
+    font-family: "Feather";
+    content: "\e83a";
+    color: $__gray__dark;
+    font-weight: $__regular;
+    font-size: $__font__size__18;
+    top: 8px;
+  }
+}
+
+.owl-carousel-item .packages.card.active.plan-extra a {
+  color: #2DA7FF;
+}
+
+.custom-class .bs-datepicker {
+  display: flex;
+  align-items: stretch;
+  flex-flow: row wrap;
+  background: #000;
+  box-shadow: 0 0 10px 0 #aaa;
+  position: relative;
+  z-index: 1;
+  border-color: #3B3C3E;
+}
+
+.date-pickers bs-daterangepicker-container {
+  transform: translate3d(745px, 124px, 0px) !important;
+}
+
+mat-slider {
+  width: 100% !important;
+}
+
+.mdc-slider__value-indicator {
+  transform: scale(1) !important;
+}
+
+.horizontal .sidebar .sidebar-menu ul li.active a::before,
+.horizontal .sidebar .sidebar-menu ul li.active a::after {
+  display: none;
+}
+
+
+.horizontal .main-logo {
+  background: none;
+  box-shadow: none;
+}
+
+ngx-mat-intl-tel-input {
+  position: relative;
+}
+
+.country-selector {
+  opacity: 1 !important;
+}
+
+.mdc-button__label span.country-selector-flag {
+  margin-bottom: 3px;
+}
+
+app-email .btn-group.dropdown-action.mail-search input {
+  margin: 10px 0;
+}
+
+app-breadcrumb .card-title,
+p {
+  margin-bottom: 10px;
+}
+
+.app-calendar .full-calendar span.fc-icon-chevron-left {
+  color: #797979;
+}
+
+.mat-sort-header-container .mat-sort-header-arrow::before {
+  left: 1em;
+}
+
+.mat-sort-header-container .mat-sort-header-arrow::after {
+  left: 1em;
+}
+
+.horizontal .sidebar {
+  @include respond-below(custom991) {
+    display: none;
+  }
+}
+
+.fc .fc-button-primary {
+  color: #797979 !important;
+}
+
+.custom-admin-invoice {
+  margin-top: 15px;
+}
+
+full-calendar .fc-toolbar-chunk .fc-button-group .fc-button {
+  text-transform: capitalize;
+}
+
+.fc .fc-button:disabled {
+  text-transform: capitalize;
+}
+
+full-calendar .fc-header-toolbar.fc-toolbar .fc-button {
+  text-transform: capitalize;
+}
+
+full-calendar .fc .fc-list-day-cushion,
+.fc .fc-list-table td {
+  padding: 8px 14px;
+  color: #000;
+}
+
+@include respond-below(custom575) {
+  .table-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    display: flex;
+  }
+}
+
+@include respond-below(custom575) {
+  .table-footer .dataTables_length select {
+    padding: 0;
+  }
+}
+
+.super-admin-dash-card {
+  overflow: hidden;
+}
+
+
+#earnings-chart apx-chart {
+  width: 500px !important;
+}
+
+#companies_flow apx-chart {
+  width: 340px !important;
+}
+
+#plane-chart apx-chart {
+  width: 425px !important;
+}
+
+app-super-admin app-companies .feather,
+app-super-admin app-subscription .feather,
+app-super-admin app-dashboard .feather,
+app-super-admin app-packages .feather,
+app-super-admin app-domain .feather,
+app-super-admin app-plans-list .feather,
+app-email-template .feather {
+  width: auto;
+  height: auto;
+}
+
+ngx-mat-intl-tel-input div.ngx-mat-tel-input-container button {
+  width: 20% !important; 
+}
+
+ngx-editor .NgxEditor {
+  border: 1px solid #E0E0E0;
+  box-shadow: none;
+  border-radius: 4px;
+  margin: 0;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3F4254;
+  height: 180px;
+}

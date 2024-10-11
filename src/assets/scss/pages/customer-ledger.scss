@@ -1,0 +1,90 @@
+.customer-table .btn-greys{
+    background-color: $__white__smoke;
+    color: $__primarycolor;
+    &:hover {
+		background-color: $__white__smoke;
+        border: 1px solid $__white__smoke;
+        color: $__primarycolor;
+	}
+}
+.customer-table .table tbody td h2.table-avatar a {
+    color: #1F0066;
+}
+.companies-table.Ledger .table tbody tr td {
+    height: 36px;
+}
+.companies-table.Ledger .dataTables_length {
+    display: none;
+}
+.companies-table.Ledger div.dataTables_wrapper div.dataTables_paginate  {
+    display: none;
+}
+.content-page-header.add{
+    margin: 0;
+}
+.page-header.add{
+    @include margin-padding(0, 20px 20px 0);
+}
+.modal-footer.add i{
+    margin-right: 5px;
+}
+.sidebar-header.ledge{
+    border: 0;
+}
+.sidebar-header.submenu{
+    @include margin-padding(null, 0 20px 20px);
+}
+.accordion .modal-footer{
+    padding: 20px 0;
+}
+.toggle-sidebar.ledge .sidebar-body .accordion {
+    border: 0;
+    margin-bottom: 0;
+}
+.card-table .card-body .customer-table .table td {
+    height: 40px;
+}
+.modal-footer.add .btn-success{
+    &:hover {
+		color: $__success__light;
+        background-color: $__white;
+        border: 1px solid $__success__light;
+	}
+}
+.modal-footer.add .btn-danger{
+    &:hover {
+		color: $__text__danger__light;
+        background-color: $__white;
+        border: 1px solid $__text__danger__light;
+	}
+}
+#add_ledger {
+    .add-header {
+        h6 {
+            font-size: $__font__size__16;
+        }
+        p {
+            font-weight: $__medium;
+        }
+    }
+    .table {
+        tbody {
+            td {
+                h2 {
+                    span {
+                        font-size: $__font__size__12;
+                        /*color: $__gray__white__light; */
+                    }
+                }
+            }
+        }
+    }
+}
+.ledge  {
+    .cal-icon-info:after {
+        top:  5px;
+    }
+    .notes-form-group-info textarea.form-control {
+        font-size: $__font__size__14;
+    }
+}

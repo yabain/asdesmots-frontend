@@ -1,0 +1,186 @@
+.coffee-shop {
+   .inv-content {
+       border: 5px solid $__black;
+       @include margin-padding(0,40px);    
+   .invoice-header {
+       @include margin-padding(0,0 0 30px); 
+       border-bottom: 5px solid $__black;
+       a {
+          @include margin-padding(0 0 10px,0px); 
+       }
+       .inv-header-left {
+           width: 30%;
+           @include respond-below(custom992) {
+                width: 40%;
+           }
+           @include respond-below(custom767) {
+               width: auto;
+           }
+       }
+       .inv-header-right {
+            @include respond-below(custom767) {
+               margin: 15px 0 0;
+            }
+           .tax-invoice {
+              @include margin-padding(15px 0 10px,0px); 
+           }
+           .gst-details {
+              @include margin-padding(5px 0 0px,0px); 
+           }
+       }
+       .inv-details {
+           display: $__block;
+           span {
+              font-size: $__font__size__24;
+              color: $__black__nuetral;
+              font-weight: $__bold;
+           }
+           .inv-date {
+              @include margin-padding(0 0 10px,0px); 
+           }
+           .inv-no {
+              background: url('../../../img/inv-bg.png');
+              background-repeat: no-repeat;
+              background-size: 100%;
+			  @include margin-padding(0,19px);
+			  color: #fff;
+			  font-size: $__font__size__16;
+			  color: $__white;
+			  span {
+			      color: $__white;
+			      font-size: $__font__size__18;
+			  }
+              @include respond-below(custom992) {
+                @include margin-padding(0,10px);
+                background: $__black;
+              }
+               @include respond-below(custom767) {
+                  width: 275px;
+               }
+               @include respond-below(custom575) {
+                width: 245px;
+             }
+           }
+       }	   
+    }
+    .invoice-address {
+        @include margin-padding(0 ,40px 0); 
+        .invoice-to {
+            .invoice-title {
+                @include margin-padding(0,0);
+            }
+            @include respond-below(custom767) {
+                margin: 0; 
+            }           
+        }
+    }
+    .invoice-table {
+	  @include margin-padding(0,0 0 25px);
+	  table  {
+		color: $__black__nuetral;
+		@include margin-padding(0,0px);
+        thead {
+            .coffee-shop {
+                background: $__tablehead__bg;
+                border-top: 1px solid $__black;
+	            border-bottom: 1px solid $__black;
+	            color: $__black;
+            }
+        }
+        .table_width_2 {
+		   width: 50%;
+		}
+		tr {
+		   border-bottom: 1px solid $__black;
+		   .table-description {
+			   color: $__black__nuetral;
+			   span {
+			      display: $__block;
+			      color: $__grey__nuetral;
+			   }
+		    }
+		    td {
+		       @include margin-padding (0,25px 15px);
+		    }
+		    td,th {
+                @include respond-below(custom992) {
+		            white-space: $__nowrap;
+		        }		       
+		    }			
+		}
+	  }
+	}
+    .invoice-table-footer  {
+        @include margin-padding (0,25px 0px);
+        border-bottom: 1px solid $__black;
+        .table-footer-right {
+            color: $__black__nuetral;
+            table {
+              td {
+                 @include margin-padding (0,5px 15px);
+              }
+            }
+        }
+        .total-item {
+            @include respond-below(custom767) {
+                display: $__none;
+            }   
+        }
+    }
+    .table-total-item {
+        @include margin-padding (0,15px 0px);
+    } 
+    .total-amountdetails {
+        @include margin-padding(0, 25px 0);
+        border-bottom: 1px solid $__black;
+        text-align: $__right;
+        @include respond-below(custom992) {
+            text-align: $__center;
+        }   
+    }
+    .bank-details {  
+        @include margin-padding(0, 25px 15px);
+        border-bottom: 1px solid $__black;          
+        .payment-info {
+            color: $__black__nuetral;
+            .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+            }
+            div {
+                 @include margin-padding(0 0 10px,0);
+            }
+            span{
+                color: $__grey__nuetral;
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0,0);
+            color: $__black__nuetral;
+            span {
+                font-size: $__font__size__18;
+                margin: 0 0 10px;
+            } 
+            ol {
+                color: $__grey__nuetral;
+            }
+            @include respond-below(custom767) {
+                @include margin-padding (10px 0,0px 0px);  
+            } 
+        }         
+        @include respond-below(custom767) {
+            @include margin-padding (0,10px 0px);  
+        }        
+    }
+    .thanks-msg {
+        background: $__tablehead__bg;
+        border-bottom: 1px solid $__black; 
+        color: $__black;
+    } 
+    @include respond-below(custom767) {
+        @include margin-padding (0,20px);  
+    }   
+  }
+}

@@ -1,0 +1,48 @@
+.list-btn .btn-filters.form-date {
+    padding: 10px;
+}
+
+// .fa-regular {
+//     margin-right: 10px;
+// }
+
+.btn-path.tax-purchase {
+    @include margin-padding(0 10px 32px, null);
+    .btn-gray {
+        @include margin-padding(0 0 0 10px, null);
+        @include respond-below(custom575) {
+            display: $__inline__block;
+            @include margin-padding(10px 0 0 0, null);
+        }
+    }
+}
+.from-to-date {
+     @extend %display-flex;
+      .form-control.tax{
+         border-top-right-radius: 0;
+        border-bottom-right-radius: 0; 
+        border-right: none; 
+        direction: rtl;
+        width:130px;
+        padding: 9px 8px 9px 12px;
+    }
+    .form-control.taxes{
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+            width: 98px;
+             padding: 9px 12px 9px 0;
+         }
+  }
+    .cal-icon-info.profitloss:after {
+        left: 10px;
+    }
+// .filter-img{
+//     img{
+//         width: 80px;
+
+//     }
+// }
+.filter-img-top{
+    width: 73px;
+}

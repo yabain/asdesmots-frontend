@@ -1,0 +1,39 @@
+.addnew-modal .input-block.mb-3{
+    margin-bottom:24px !important;
+}
+.addnew-modal .select2-selection__rendered{
+    padding-left: 12px;
+}
+.addnew-checkbox .status-toggle .checktoggle{
+    transform: none;
+}
+.modal-footer.add{
+    @include margin-padding(null, 24px 0 0);
+}
+.custom-modal .modal-body.add {
+    @include margin-padding(null, 20px);
+}
+.input-block.add label{
+    display: flex;
+    gap: 5px;
+}
+.input-block.add .checkbox{
+    display: flex;
+    input {
+        min-width: 15px;
+        height: 15px;
+    }
+    input:checked {
+        accent-color: #7539FF;
+        border-color: #592AC6;
+    }
+}
+.companies-table.filed .dataTables_length {
+    display: none;
+}
+.companies-table.filed div.dataTables_wrapper div.dataTables_paginate  {
+    display: none;
+}
+.card-table .card-body .companies-table .table td {
+    height: 40px;
+}

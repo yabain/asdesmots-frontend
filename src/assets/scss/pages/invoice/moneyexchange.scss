@@ -1,0 +1,151 @@
+.money-exchange {
+	.inv-content {
+	    @include rounded(10px);
+	    border: 1px solid $__grey__nuetral;
+	    .invoice-header {
+	        background: $__tablelightbg;
+	        @include rounded(8px);
+	        @include margin-padding (25px, 25px);
+	       .cineplux-title {
+	          font-size: 64px;
+	          line-height : 80px;
+	          @include respond-below(custom992) {
+                 font-size: 40px;
+	             line-height : 40px;
+	          }
+	          @include respond-below(custom767) {
+                 font-size: 30px;
+	             line-height : 50px;
+	          }
+	       }
+	       .inv-header-left {
+		      a {
+	             display: $__block;
+		      }
+		      span {
+	             margin-bottom: 10px;
+	             display: block;
+		      }
+		      .inv-details {
+		        display: $__block;
+		        .inv-date {
+		            @include margin-padding(0 0 5px,0);
+		            span {
+		                display: $__inline;
+		                color: $__black__nuetral;
+					    font-weight: $__bold;
+					    font-size: $__font__size__24;
+					    margin-left: 8px;
+		            }
+		        }
+		      }
+		   }
+	       .inv-header-right {
+	          .company-name {
+	              @include margin-padding (0 0 10px,0);
+	              display: $__block;
+	          }
+	       }
+	    }
+	    .exchange-details {
+	        @include margin-padding (0 25px,0);
+	        h4 {
+	            background: $__exchangebg;
+	            color: $__black__nuetral;
+	            border-radius: 10px;
+	            font-size: $__font__size__18;
+	            @include margin-padding (0,10px 30px);
+	        }
+	        .exchange-info {
+	            display: $__flex;
+	            @extend %justify-content-between;
+	            @include margin-padding(20px 0 0,0);
+	            div {
+	                background: $__tablelightbg;
+	                border-radius: 10px;
+	                width: 24%;
+	                @include margin-padding(0,10px);
+	                display: $__flex;
+	                @extend %justify-content-between;
+	                border: 1px solid $__exchangeborder;
+	                @include respond-below(custom992) {
+                       width: 49%;
+                       margin-bottom: 15px;
+	                }
+	                @include respond-below(custom767) {
+                       width: 100%;                       
+	                }
+	                span {
+	                    color: $__black__nuetral;
+	                }
+	            }
+	            @include respond-below(custom992) {
+                    flex-wrap: wrap;
+	            }
+	             @include respond-below(custom767) {
+                    display: $__block;
+	            }
+	        }
+	    }
+	    .transfer-overview {
+	        @include margin-padding(0,30px 25px);
+	        .exchange-info {
+               div {
+                   width: 32%;
+                   @include respond-below(custom767) {
+                       width: 100%;                       
+	                }
+               }
+	        }
+	        .exchange-rate {
+	            div {
+	                width: 49%;
+	                @include respond-below(custom767) {
+                       width: 100%;                       
+	                }
+	            }
+	        }
+	    }
+	    .sendto-details {
+	        display: $__flex;
+	        @extend %justify-content-between;
+	        @include margin-padding(20px 0 30px,0);           
+            .sendto-left,.sendto-right {
+               border: 1px solid $__exchangeborder;
+               background: $__tablelightbg;
+	           border-radius: 10px;
+	           @include margin-padding(0,20px);	            
+	           width: 49%;
+	           div {
+	               display: $__flex;
+	               @extend %justify-content-between;
+	               span {
+	                  color: $__black__nuetral;
+	               }
+	               @include respond-below(custom992) {
+                      display: $__block;
+	               }
+	           }
+	           @include respond-below(custom767) {
+                    width: 100%;    
+                    margin-bottom: 10px;                   
+	           }
+            }
+            @include respond-below(custom767) {
+                display: $__block;                       
+	        }
+	    }
+	    .exchange-notes {
+	        p {
+              @include margin-padding(20px 0 30px 0,0); 
+	        }
+	    }
+	    .thanks-msg {
+	        @include margin-padding(0px 25px 30px 25px,15px);
+	        border: 1px solid $__exchangeborder; 
+	        color: $__white;
+	        background: $__tablehead__bg;
+	        @include rounded(10px);
+	    }
+	}
+}

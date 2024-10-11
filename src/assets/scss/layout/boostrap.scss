@@ -1,0 +1,42 @@
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover {
+	background-color: $__warningcolors;
+	text-shadow: $__unset;
+}
+.bootstrap-datetimepicker-widget table td.today:before {
+	border-bottom-color: $__warningcolors;
+}
+.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+    background: $__transparent;
+}
+.bor-b1{
+    border-bottom: 1px solid $__light-goose-grays;
+}
+.progress-example .progress {
+    margin-bottom: 1.5rem;
+}
+.progress-xs {
+	height: 4px;
+}
+.progress-sm {
+	height: 15px;
+}
+.progress {
+	&.progress-sm {
+		height: 6px;
+	}
+	&.progress-md {
+		height: 8px;
+	}
+	&.progress-lg {
+		height: 18px;
+	}
+}
+.alert-dismissible .btn-close{
+	width:20px;
+	height: 20px;
+	top:3px;
+	right:3px;
+	font-size:8px;
+}
+

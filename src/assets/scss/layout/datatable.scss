@@ -1,0 +1,165 @@
+table.dataTable>thead .sorting:after, 
+table.dataTable>thead .sorting_asc:after,
+table.dataTable>thead .sorting_desc:after,
+table.dataTable>thead .sorting_asc_disabled:after, 
+table.dataTable>thead .sorting_desc_disabled:after {
+	right: 1em;
+	content: "\f0d7";
+    font-family: 'Font Awesome 5 Free';
+	bottom: 8px;
+	font-size: 13px;
+	color: $__gray__dark;
+	opacity: 1;
+	font-weight: 900;
+}
+table.dataTable>thead .sorting:before, 
+table.dataTable>thead .sorting_asc:before, 
+table.dataTable>thead .sorting_desc:before, 
+table.dataTable>thead .sorting_asc_disabled:before, 
+table.dataTable>thead .sorting_desc_disabled:before {
+	right: 1em;
+	content: "\f0d8";
+    font-family: 'Font Awesome 5 Free';	
+	color: $__blue__light;
+	bottom: 15px;
+	font-weight: 900;
+	font-size: 13px;
+	opacity: 1;
+}
+div.dataTables_wrapper{
+	div.dataTables_length select {
+		font-size: $__font__size__14;
+	}
+}
+.paging_numbers {
+    float: $__right;
+}
+.pagination{
+	li.previous {
+		margin-right: 0;
+	}
+}
+
+div.dataTables_wrapper {
+	div.dataTables_info {
+		padding-top: 0;
+		white-space: nowrap;
+		display: none;
+		font-size: 15px;
+	}
+}
+.pagination{
+	.previous {
+		@include margin-padding(0 !important, null);
+	}
+	.next {
+		@include margin-padding(0 !important, null);
+	}
+	li {
+		@include margin-padding(0 5px !important, null);
+		@include respond-below(custom320) {    
+			@include margin-padding(0 2px !important, null);
+		}
+		a{
+			@include rounded(5px);
+			color: $__gray;
+			&:hover{
+				background: $__primarycolor;
+				color: $__white;
+			}			
+			&:focus {
+				outline: none;
+				box-shadow: none;
+			}
+		}
+		&.active a.page-link{
+			background: $__primarycolor;
+			border-color: $__primarycolor;
+			@include rounded(5px);
+		}
+	}
+	.page-link {
+		@include respond-below(custom320) {    
+			@include margin-padding(null, 8px 12px);
+			font-size: $__font__size__14;
+		}
+	}
+}
+.dataTables_length {
+	margin-top:0px !important;
+	width:50%;
+	float: left;
+}
+.dataTables_paginate {
+	margin-top:0 !important;
+	width:50%;
+	float: left;
+}
+.pagination{
+	.paginate_button {
+		a{
+			background: $__transparent;
+			border: 0;
+			font-size: $__font__size__14;
+		}
+		&.previous{
+			.page-link{
+				margin-right:20px ;
+				border: 1px solid $__dopely-__colors;
+				@include rounded(5px);
+				background: $__white;
+				font-size: $__font__size__14;
+				&:hover {
+					background: #7539FF;
+				}
+			}
+		}
+		&.next{
+			.page-link{
+				margin-left:20px ;
+				border: 1px solid $__dopely-__colors;
+				@include rounded(5px);
+				background: $__white;
+				font-size: $__font__size__14;
+				&:hover {
+					background: #7539FF;
+				}
+			}
+		}
+	}
+}
+div.dataTables_wrapper {
+	div.dataTables_filter {
+		input {
+			margin-left: 0;
+			display: inline-block;
+			width: auto;
+			padding-left: 30px;
+			border: 1px solid $__light__whites;
+			color: $__graybackblue;
+			height: 40px;
+			border-radius: 8px;
+		}
+		label {
+			margin-bottom: 0;
+			position: relative;
+			i {
+				position: absolute;
+				top: 13px;
+				left: 10px;
+				font-size: 14px;
+			}
+		}
+	}	
+	div.dataTables_paginate {
+		@include respond-below(custom320) {        
+			margin: 5px;
+			white-space: nowrap;
+			text-align: right;
+			float: right;
+		}
+	}
+}
+.pagination li {
+    margin: 0;
+}

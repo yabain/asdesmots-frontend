@@ -1,0 +1,78 @@
+.table-profit-loss{
+    thead{
+    background-color:$__cylindrical;    
+    }
+    tr{
+        td h6{
+            font-size: 14px;
+           }
+     }
+}
+.card-table .card-body .table .profit.space {
+    padding: 10px 10px 20px 10px !important; 
+    margin-bottom: 10px;
+}
+.card-table .card-body .table .loss-space{
+    padding: 10px !important;
+    
+}
+.card-table .card-body .table .table-profit-head {
+    padding-left: 15px !important;
+}
+.profitloss-bg{
+    background-color:$__cylindrical; 
+    border-top: 1px solid $__cloud__grays;
+    border-bottom: 1px solid $__cloud__grays;
+}
+.proft-head {
+    padding-left:25px ;
+}
+.card-table .table.profit{
+    margin-bottom:0 !important;
+    padding: 15px 20px;
+}
+.card-table .card-body .table-profit-loss tr td {
+    border: none;
+}
+.profit thead.profitloss-heading tr th{
+    background-color: $__white !important;
+}
+.profit-menu{
+    padding: 0 0 30px;
+    .input-block {
+        input { 
+            &.form-control {
+                min-height: 43px;
+            }
+        }
+    } 
+}
+.card-table .card-body .table .thead-light.loss th {
+    @include margin-padding(null, 21px 25px 18px);
+}
+.card-table .card-body .companies-table.loss .table td {
+    border: none;
+}
+.btn-primary.loss{
+    display: block;
+    margin-top: 30px;
+    height: 41px;
+}
+.daterangepicker-wrap {
+    padding-left: 23px;
+    &.cal-icon {
+        &:after {
+            left: 10px;
+            right:  auto;
+            top:  6px;
+        }
+    }
+    input {
+        width: $__full__width;
+        padding-left: 35px;
+        padding-right: 10px;
+        &.btn-filters {
+            font-weight: $__normal;
+        }
+    }
+}

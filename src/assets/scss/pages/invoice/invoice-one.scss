@@ -1,0 +1,535 @@
+.logo-darkmode {
+    display: $__none;
+}
+.invoice-one {
+    .inv-content {
+        border: 1px solid $__light__gray;
+        @include margin-padding(0,24px); 
+        span{
+            &.line{
+                display: block;
+                background: linear-gradient(320deg, #DDCEFF 0%, #DBECFF 100%);
+                height:10px;
+            }
+           
+        }
+     .invoice-header {
+         
+         @include margin-padding(0, 20px 20px);
+        
+         background: $__white;   
+             .inv-header-left  {          
+                 width: 54%;
+                 @include respond-below(custom1199) {
+                     width: 56%; 
+                 }
+                 @include respond-below(custom767) {
+                     width: 100%; 
+                 }
+                 h4 {
+                    color:$__tablehead__bg;
+                    font-size: 48px;
+                    font-weight: $__bold;
+                    margin-bottom: 29px;
+                    @include respond-below(custom767) {
+                        font-size: 28px;
+                        margin-bottom: 0;
+                    }
+                 }
+             }
+             .inv-header-right{
+                    
+                p {
+                    font-size: $__font__size__16; 
+                    font-weight: 600;                  
+                    @include margin-padding(0,0);
+                    color:$__dark;
+                    font-weight: $__bold;
+                    
+                    align-items: $__center;
+                    @include respond-below(custom992) {
+                       font-size: $__font__size__16;
+                    }
+                    @include respond-below(custom767) {
+                        font-size: $__font__size__15;
+                     }
+                     @include respond-below(custom767) {
+                        flex-direction: unset;
+                    }
+
+                    span {
+                        
+                       background: $__bg__green__light;
+                       border-radius:5px;
+                       padding:5px 10px; 
+                       @include respond-below(custom767) {
+                        background: none;
+                        padding:0;
+                        font-size:14px;
+                    }
+                                    
+                     }
+                } 
+                 
+            }
+
+             .company-details {
+                
+                background: var(--color-gradient, linear-gradient(320deg, #DBECFF 0%, #DDCEFF 100%));
+                border-radius:  14px 77px 14px 14px;
+                @include respond-below(custom992) {
+                    background:none;
+                 }
+                .gst-details {
+                    position: $__relative;
+                    @include margin-padding(0, 30px 30px);
+                    color: $__white;
+                    z-index: 2;
+                    span {
+                        color: $__grayish__blue;
+                        font-size: 16px;
+                        font-weight: 450;
+                        @include respond-below(custom992) {
+                        color: $__black; 
+                        }
+                    }
+                    @include respond-below(custom992) {
+                        color: $__black;
+                        @include margin-padding(0, 10px 0px);
+                    }  
+                    @include respond-below(custom767) {
+                        @include margin-padding(0, 10px 0px);
+                    }
+                }
+                .address-bg{
+                    position: absolute;
+                    width: 473.11px;
+                    height: 126px;
+                    top: 0px;
+                    overflow: hidden;
+                
+                
+                    
+                    @include respond-below(custom992) {
+                    right: 58px; 
+                    background: none;
+                    }
+                    @include respond-below(custom767) {
+                    background: none;
+                    }
+                    }     
+             }
+            } 
+                      
+         }
+
+         .add-details{
+            color:$__black__nuetral;
+            font-size: 16px;
+            font-weight: 450; 
+            margin-bottom: 25px;
+         }
+         .bill-add{
+            margin-bottom: 15px;
+           
+            font-size: 18px;
+            font-weight: 450;
+            color:$__gray__dark;
+         }
+         .customer-name{
+            font-size: 24px;
+            font-weight: 700;
+            color: $__black__nuetral;
+            margin-bottom:15px;
+            @include respond-below(custom767) {
+                font-size: $__font__size__20;                       
+             }
+
+            span{
+               color: $__gray__dark;
+               font-size: 16px;
+               font-weight: 600;
+               
+            }
+         }
+         .payment-status{
+            color:$__gray__dark;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom:10px;
+            span{
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+            color:$__success__light;
+            }
+         }
+
+      .patient-info {
+             display: $__flex;
+             @include margin-padding(0 0 20px,0);
+             .patient-details,.treatment-info {
+                @include margin-padding(0 20px 0 0, 20px);
+                width: 50%;
+                h5 {
+                   color: $__darktableheadbg;
+                   margin-bottom: 15px; 
+                   font-size: $__font__size__18;
+                }
+                div {
+                    display: $__flex;
+                    justify-content: space-between;
+                    span {
+                        color: $__black__nuetral;
+                        width: 70%;
+                        text-align: $__right;
+                    }
+                    @include respond-below(custom992) {
+                        font-size: $__font__size__12; 
+                        display: $__block;                      
+                     }
+                     @include respond-below(custom767) {
+                        font-size: $__font__size__15;                       
+                     }
+                }               
+                 @include respond-below(custom767) {
+                   width: 100%; 
+                   margin-bottom: 20px;
+                   @include margin-padding(0 10px 20px 0, 15px);
+                } 
+             }
+ 
+             @include respond-below(custom767) {
+                  display: $__block;
+             } 
+         }
+     h5 {
+         background: $__exchangebg;
+         color: $__black__nuetral;
+         font-size: $__font__size__18;
+         font-weight: 450;
+         @include margin-padding (20px 0,10px 20px);
+         @include respond-below(custom767) {
+            background: none;
+            padding:0;
+         } 
+     } 
+
+     .invoice-table {
+        @include margin-padding(0,0 0 20px);
+        table {
+          color: $__black__nuetral;
+          @include margin-padding(0,0px);
+          thead {
+              tr {
+                  border-bottom:none; 
+                  font-size:18px;
+                }  
+              
+              .amount{
+                  font-size: 16px;
+                  font-weight: 450;
+              }
+          }
+          .table_width{
+              font-size: 18px;
+              font-weight: 450;
+          }
+                  
+          .table_width_2 {
+              width: 40%;
+          }
+          .table_width_3{
+              width: 20%;  
+          }   
+         
+          tr {
+             border-bottom: 1px solid $__light__ash;
+             .table-description {
+                 color: $__black__nuetral;
+                 font-size: 16px;
+                 span {
+                    display: $__block;
+                    color: $__grey__nuetral;
+                 }
+              }
+              td {
+                 @include margin-padding (0,20px 15px);
+                 font-size: 16px;
+                 font-weight: 450;
+                 height:82px;
+                 vertical-align: middle;
+                 span{
+                  color:$__primarycolor;
+                  display: $__block;
+                  font-size: 12px;
+                  font-weight:400;
+                 }
+                
+              }
+              td,th {
+                  &:last-child {
+                      padding-right: 25px;
+                  }
+                  @include respond-below(custom992) {
+                     
+                  }		       
+              }			
+          }
+        }
+      }
+     
+      .invoice-table-footer {
+        @extend %display-flex;
+        @extend %align-items-center;
+        justify-content: end;
+        padding: 5px 30px;
+        @include respond-below(custom768) {
+           padding:0;
+         } 
+        .table-footer-left {
+            width: 58%;
+            @include respond-below(custom575) {
+               width: auto;   
+               font-size: $__font__size__14;  
+            } 
+        }
+        .table-footer-right {
+            width: 80%; 
+            table {
+                width: 100%;
+                td{
+                    color:$__black__nuetral;
+                    font-size: $__font__size__18;
+                  text-align: right;
+                  width: 50%;
+                  padding: 5px 10px;
+                  @include query-print {
+                     width: auto;
+                  } 
+                  @include respond-below(custom992) {
+                     width: auto; 
+                  } 
+                  &:first-child {
+                    @include respond-below(custom767) {
+                        text-align: left; 
+                     } 
+                  }                  
+                }
+                span{
+                    color:$__gray__dark;
+                   
+                }
+                @include query-print {
+                  font-size: $__font__size__12;
+                }  
+                @include respond-below(custom767) {
+                    font-size:15px;
+                } 
+            }
+            .totalamt-table {
+                td {
+                    
+                   color: $__black__nuetral;
+                   font-size: $__font__size__24;
+                   font-weight: $__bold;
+                   @include query-print {
+                      font-size: $__font__size__12;
+                   }
+                   @include respond-below(custom992) {
+                      font-size: $__font__size__16;
+                   }   
+                } 
+                @include query-print {
+                  font-size: $__font__size__12;
+                }                
+            }            
+            @include respond-below(custom992) {
+                width: 100%;
+            } 
+            @include respond-below(custom768) {
+                width: 100%;     
+            }
+            @include query-print {
+                width: 50%;
+            }  
+        }
+       
+        @include query-print {
+            font-size: $__font__size__12;
+        } 
+        .total-info {
+             @include respond-below(custom767) {
+                display: $__none;     
+            }
+        }
+    }
+    .totalamount-footer {
+            
+        border: 1px solid $__invseven_border;
+        border-left:none;
+        border-right:none;
+        @include margin-padding(10px 0 0, 15px);
+        @extend %align-items-center;
+   }
+   
+    .table-total-item {
+        @include margin-padding (0,15px 10px 15px 20px);
+        @include respond-below(custom767) {
+            @include margin-padding (0,15px 0px);
+        } 
+    } 
+    .total-amountdetails {
+        @include margin-padding(0, 20px 0);
+        border-bottom: 1px solid $__light__ash;
+        text-align:end;
+        @include respond-below(custom992) {
+            text-align:end;
+        }   
+    }
+    .bank-details {  
+        @include margin-padding(0, 25px 15px);
+        border-bottom: 1px solid $__light__ash;          
+        .payment-info {
+            color: $__black__nuetral;
+            display: flex;
+           
+            .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+            }
+            div {
+                font-size: 16px;
+                font-weight: 450;
+                @include margin-padding(0 0 10px,0);
+                 
+            }
+            span{
+                color: $__grey__nuetral;
+            }
+            .pay-details{
+                padding-left: 20px
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0,0);
+            color: $__black__nuetral;
+            border: 0;
+            span {
+                font-size: $__font__size__18;
+                margin: 0 10px 10px;
+            } 
+            ol {
+                color: $__grey__nuetral;
+            }
+            @include respond-below(custom767) {
+                @include margin-padding (10px 0,0px 0px);  
+            } 
+        }         
+        @include respond-below(custom767) {
+            @include margin-padding (0,10px 0px);  
+        }        
+    }
+    .thanks-msg {
+        background: $__invborder__color;
+        border-bottom: 1px solid $__light__ash; 
+        color: $__black;
+        font-size: 16px;
+        font-weight: 450;
+    } 
+    @include respond-below(custom767) {
+        @include margin-padding (0,20px);  
+    }   
+    .table-data{
+        border:none !important;
+     }
+     .file-one-link {
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .duedate-bg{
+        
+        span{
+            border-radius: 5px;
+            padding: 5px 10px;
+           background-color:$__bg__green__light;
+           font-size:16px;
+       
+        }
+    }
+    .invoice-wrapper {
+        background: #fff;
+        margin: 60px 0 40px;
+        padding: 48px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        @include respond-below(custom767) {
+            padding: 0px;
+        }
+    }
+    .file-link {
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        padding-top: 24px;
+        justify-content: flex-start;
+    }
+    .qr{
+       width: 140px;
+       height: 140px;
+       margin: 0px 0 20px !important; 
+       .scan-details{
+        font-size: 13px;
+        font-weight: 600;
+       }
+    }
+    
+    .gst-details{
+        h6{
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+            color:$__black;
+            margin-bottom:5px;
+            @include respond-below(custom767) {
+                font-size:15px;
+            } 
+          
+        }
+    
+    }
+    .inv-header-right{
+        a{
+           img{
+                max-width: 271px !important;
+                margin-bottom:19px;
+                @include respond-below(custom767) {
+                   width:100%;
+                } 
+           }
+
+            
+        }
+        h6{
+            color:$__black;
+            font-weight: 600;
+            margin-bottom:5px;
+            span{
+             font-weight: 400;;
+            }
+        }
+       
+    }
+    .text-end {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+  }
+
+ 
+
+

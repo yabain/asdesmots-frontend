@@ -1,0 +1,191 @@
+.invoice-wrapper {
+    background: $__white;
+    @include margin-padding(60px 0 40px, 25px);
+    @include rounded(10px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);   
+    @include query-print {
+       padding: 0px;
+   }   
+   @include respond-below(custom767) {
+      padding: 0;
+   }    
+}
+.invoice-header, .inv-details {
+    @extend %display-flex;
+    @extend %justify-content-between;
+    @extend %align-items-center;
+}
+.inv-details {
+    @include respond-below(custom767) {
+        display: $__block;      
+    } 
+}
+.index-two {
+    .company-details {
+        padding: 25px 0;
+        border-bottom: 1px solid $__invseven_border;
+        .company-name {
+            color:$__black__nuetral;
+           display: $__block;
+           margin-bottom: 7px;
+        }
+        .gst-details {
+            width: 20%;
+            span {
+               display: block;
+               color: $__black__nuetral;                
+            }
+            @include respond-below(custom992) {
+               width: 32%;             
+            } 
+            @include respond-below(custom767) {
+               width: auto;
+               margin: 10px 0;             
+            } 
+            &:last-child {
+                @include respond-below(custom767) {
+                  margin: 0px 0;             
+               } 
+            } 
+        }
+        .company-address {
+            width: auto;
+            @include respond-below(custom992) {
+               width: 32%;             
+            } 
+            @include respond-below(custom767) {
+               width: auto;             
+            } 
+        }
+    }
+    .company-info {
+        @extend %display-flex;
+        @extend %align-items-center; 
+        @include respond-below(custom767) {
+           display: $__block;             
+        }  
+    } 
+    .inv-content {
+        border: 1px solid $__invseven_border;
+        @include margin-padding(0px, 40px 40px 0);
+        .invoice-header {
+            border-bottom: 1px solid $__invseven_border;
+            @include margin-padding(0, 0 0 15px);            
+        }
+        .invoice-address {
+            @include margin-padding(0, 25px 0);
+            border-bottom: none;
+            justify-content: normal;
+            .invoice-to {
+                color:$__light__gray__light;
+                width: 50%;
+            }
+        }
+        .invoice-table {
+           @include margin-padding(0,0);
+           table {
+              border: 1px solid $__invseven_border;
+              tr{
+                 border: 1px solid $__invseven_border;
+              }
+           }
+        }
+        .invoice-table-footer {
+           @include margin-padding(0, 15px);
+           border-bottom: none;
+           color: $__black__nuetral;
+           .table-footer-left {
+                span{
+                    display: $__block;
+                    color: $__grey__nuetral;
+                }
+                @include respond-below(custom767) {
+                   width: 100%;       
+                } 
+            }
+            .notes {
+                @include respond-below(custom767) {
+                   display: $__none;       
+                } 
+                .delivery-notes {
+                   max-width: 500px;
+                }
+            }
+            .table-footer-right {
+                table {
+                    td {
+                       padding: 5px 0px;
+                       &:first-child{
+                          @include respond-below(custom767) {
+                             text-align: left;         
+                          }   
+                       }
+                       &:last-child {
+                           @include respond-below(custom767) {
+                             text-align: right;         
+                          } 
+                       }                       
+                    }
+                }
+                .totalamt-table {
+                    tr {
+                        td {
+                           padding: 0;                           
+                        }
+                    }                   
+                } 
+                @include respond-below(custom767) {
+                     width: 100%;         
+                }                
+            }
+            @include respond-below(custom767) {
+                flex-direction: column-reverse;   
+                @include margin-padding(0, 15px 0);      
+            }            
+        }
+        .totalamount-footer {
+             background: $__bodybg__color;
+             border: 1px solid $__invseven_border;
+             @include margin-padding(10px 0 0, 15px);
+             @extend %align-items-center;
+        }
+        .total-amountdetails {
+            border-bottom: 1px solid $__invseven_border;
+            @include margin-padding(0, 15px);
+            @include respond-below(custom767) {
+                @include margin-padding(0, 15px 0);      
+            }  
+        }
+        .bank-details {  
+            @include margin-padding(0, 15px 0);
+            border-bottom: 1px solid $__invseven_border;          
+            .payment-info {
+               color: $__black__nuetral;
+              .payment-title {
+                color: $__black__nuetral;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+              }
+              div {
+                 @include margin-padding(0 0 5px,0);
+              }
+              span{
+                  color: $__grey__nuetral;
+              }
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0, 15px 0);
+            border-bottom: 1px solid $__invseven_border;
+            ol {
+                list-style: disc;
+                padding-left: 16px;               
+            }
+        }
+        @include respond-below(custom767) {
+            padding: 25px;        
+        } 
+    }    
+}
+

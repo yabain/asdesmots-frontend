@@ -1,0 +1,91 @@
+#plan-billing-slider {
+    .owl-stage-outer {
+        padding-top: 10px;
+    }
+    .owl-item {
+        img {
+            width: auto;
+        }
+        .packages{
+            box-shadow: $__none;
+            border-color: $__primarycolor;
+            background: $__bg__primary__light;
+            .package-header {
+                margin-bottom: 0;
+                .icon-frame {
+                    @include respond-below(custom575){
+                        margin-bottom: 20px;
+                    }
+                }
+                h5 {
+                    font-size: $__font__size__18;
+                }
+                p {
+                    font-weight: $__medium;
+                    margin-bottom: 20px;
+                }
+                span {
+                    font-weight: $__medium;
+                    color: $__primarycolor;
+                }
+            }
+            &.active {
+                border-color: rgba(0, 0, 0, 0.20);
+                background: $__white;
+                position: $__relative;
+                a {
+                    color: $__sky__blue;
+                }
+                &:before {
+                    position: $__absolute;
+                    top: -4px;
+                    right: -11px;
+                    width: 21px;
+                    height: 21px;
+                    border-radius: $__full__width;
+                    background: $__white;
+                    content: "";
+                    z-index: 1;
+                }
+                &:after {
+                    position: $__absolute;
+                    top: -12px;
+                    right: -12px;
+                    content: "\f058";
+                    font-family: "Font Awesome 6 Free";
+                    color: $__success__green;
+                    font-size:  $__font__size__24;
+                    font-weight: 900;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+     .owl-dots { 
+        text-align: center;
+         .owl-dot {
+            margin-bottom: 24px;
+            span {
+                width: 23px;
+                height: 5px;
+                margin-right: 10px;
+                border-radius: 5px;
+                display: block;
+                background: $__exchangeborder;
+                -webkit-transition: all 0.4s ease;
+                -moz-transition: all 0.4s ease;
+                transition: all 0.4s ease;
+            }
+            &.active {
+                span {
+                    background: $__primarycolor;
+                }
+            }
+        }
+    }
+}
+.table-plan-billing {
+    .dataTables_length, .dataTables_paginate {
+        display: none;
+    }
+}

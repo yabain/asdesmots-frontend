@@ -1,0 +1,11 @@
+.btn.btn-greys.bg-history-light{
+    background-color: $__history__light;
+    color: $__history__orange;
+    &:hover{
+        background-color: $__history__light;
+    color: $__history__orange;
+         }
+}
+.card-table .card-body .inventory-table .table td {
+    color: $__info__companies;
+}

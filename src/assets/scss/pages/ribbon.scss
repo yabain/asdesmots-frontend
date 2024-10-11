@@ -1,0 +1,591 @@
+.ribbon-primary {
+	background: #7366ff;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #7366ff;
+			border-left-color: #7366ff;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #7366ff;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #7366ff;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #43f;
+			border-right-color: #43f;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #43f;
+			border-left-color: #43f;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #43f;
+			border-right-color: #43f;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #43f;
+			border-right-color: transparent;
+			border-left-color: #43f;
+		}
+	}
+}
+.ribbon-bookmark {
+	&.ribbon-primary {
+		&:before {
+			border-color: #7366ff;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-right {
+		&.ribbon-primary {
+			&:before {
+				border-right-color: #7366ff;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-secondary {
+			&:before {
+				border-right-color: #f73164;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-success {
+			&:before {
+				border-right-color: #51bb25;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-danger {
+			&:before {
+				border-right-color: #dc3545;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-info {
+			&:before {
+				border-right-color: #a927f9;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-light {
+			&:before {
+				border-right-color: #f4f4f4;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-dark {
+			&:before {
+				border-right-color: #2c323f;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-warning {
+			&:before {
+				border-right-color: #f8d62b;
+				border-left-color: transparent;
+			}
+		}
+	}
+	&.ribbon-secondary {
+		&:before {
+			border-color: #f73164;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-success {
+		&:before {
+			border-color: #51bb25;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-danger {
+		&:before {
+			border-color: #dc3545;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-info {
+		&:before {
+			border-color: #a927f9;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-light {
+		&:before {
+			border-color: #f4f4f4;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-dark {
+		&:before {
+			border-color: #2c323f;
+			border-right-color: transparent;
+		}
+	}
+	&.ribbon-warning {
+		&:before {
+			border-color: #f8d62b;
+			border-right-color: transparent;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-primary:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-primary:before {
+	border-right-color: #7366ff;
+	border-bottom-color: transparent;
+}
+.ribbon-secondary {
+	background: #f73164;
+	background: #f73164;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #f73164;
+			border-left-color: #f73164;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #f73164;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #f73164;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #ec0944;
+			border-right-color: #ec0944;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #ec0944;
+			border-left-color: #ec0944;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #ec0944;
+			border-right-color: #ec0944;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #ec0944;
+			border-right-color: transparent;
+			border-left-color: #ec0944;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-secondary:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-secondary:before {
+	border-right-color: #f73164;
+	border-bottom-color: transparent;
+}
+.ribbon-success {
+	background: #51bb25;
+	background: #51bb25;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #51bb25;
+			border-left-color: #51bb25;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #51bb25;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #51bb25;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #3f901d;
+			border-right-color: #3f901d;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #3f901d;
+			border-left-color: #3f901d;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #3f901d;
+			border-right-color: #3f901d;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #3f901d;
+			border-right-color: transparent;
+			border-left-color: #3f901d;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-success:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-success:before {
+	border-right-color: #51bb25;
+	border-bottom-color: transparent;
+}
+.ribbon-danger {
+	background: #dc3545;
+	background: #dc3545;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #dc3545;
+			border-left-color: #dc3545;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #dc3545;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #dc3545;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #bd2130;
+			border-right-color: #bd2130;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #bd2130;
+			border-left-color: #bd2130;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #bd2130;
+			border-right-color: #bd2130;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #bd2130;
+			border-right-color: transparent;
+			border-left-color: #bd2130;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-danger:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-danger:before {
+	border-right-color: #dc3545;
+	border-bottom-color: transparent;
+}
+.ribbon-info {
+	background: #a927f9;
+	background: #a927f9;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #a927f9;
+			border-left-color: #a927f9;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #a927f9;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #a927f9;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #9106e7;
+			border-right-color: #9106e7;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #9106e7;
+			border-left-color: #9106e7;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #9106e7;
+			border-right-color: #9106e7;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #9106e7;
+			border-right-color: transparent;
+			border-left-color: #9106e7;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-info:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-info:before {
+	border-right-color: #a927f9;
+	border-bottom-color: transparent;
+}
+.ribbon-light {
+	background: #f4f4f4;
+	background: #f4f4f4;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #f4f4f4;
+			border-left-color: #f4f4f4;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #f4f4f4;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #f4f4f4;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #dbdbdb;
+			border-right-color: #dbdbdb;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #dbdbdb;
+			border-left-color: #dbdbdb;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #dbdbdb;
+			border-right-color: #dbdbdb;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #dbdbdb;
+			border-right-color: transparent;
+			border-left-color: #dbdbdb;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-light:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-light:before {
+	border-right-color: #f4f4f4;
+	border-bottom-color: transparent;
+}
+.ribbon-dark {
+	background: #2c323f;
+	background: #2c323f;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #2c323f;
+			border-left-color: #2c323f;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #2c323f;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #2c323f;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #171a21;
+			border-right-color: #171a21;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #171a21;
+			border-left-color: #171a21;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #171a21;
+			border-right-color: #171a21;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #171a21;
+			border-right-color: transparent;
+			border-left-color: #171a21;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-dark:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-dark:before {
+	border-right-color: #2c323f;
+	border-bottom-color: transparent;
+}
+.ribbon-warning {
+	background: #f8d62b;
+	background: #f8d62b;
+	&.ribbon-corner {
+		&:before {
+			border-top-color: #f8d62b;
+			border-left-color: #f8d62b;
+		}
+		&.ribbon-right {
+			&:before {
+				border-right-color: #f8d62b;
+				border-left-color: transparent;
+			}
+		}
+		&.ribbon-bottom {
+			&:before {
+				border-top-color: transparent;
+				border-bottom-color: #f8d62b;
+			}
+		}
+	}
+	&.ribbon-clip {
+		&:before {
+			border-color: transparent;
+			border-top-color: #e8c308;
+			border-right-color: #e8c308;
+		}
+	}
+	&.ribbon-clip-right {
+		&:before {
+			border-right-color: transparent;
+			border-top-color: #e8c308;
+			border-left-color: #e8c308;
+		}
+	}
+	&.ribbon-clip-bottom {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #e8c308;
+			border-right-color: #e8c308;
+		}
+	}
+	&.ribbon-clip-bottom-right {
+		&:before {
+			border-top-color: transparent;
+			border-bottom-color: #e8c308;
+			border-right-color: transparent;
+			border-left-color: #e8c308;
+		}
+	}
+}
+.ribbon-bookmark.ribbon-vertical-left.ribbon-warning:before, .ribbon-bookmark.ribbon-vertical-right.ribbon-warning:before {
+	border-right-color: #f8d62b;
+	border-bottom-color: transparent;
+}
+.ribbon-wrapper {
+	position: relative;
+	padding-top: 40px;
+}
+.ribbon-wrapper .card-body,
+.ribbon-vertical-left-wrapper .card-body,
+.ribbon-vertical-right-wrapper .card-body {
+	position: unset;
+}
+.ribbon {
+	padding: 0 20px;
+	height: 30px;
+	line-height: 30px;
+	clear: left;
+	position: absolute;
+	top: 12px;
+	left: 0px;
+	color: #fff;
+	z-index: 1;
+}
+.ribbon-right {
+	left: auto;
+	right: -2px;
+}
+.ribbon-vertical-left-wrapper {
+	padding-left: 40px;
+	position: relative;
+}
+.ribbon-vertical-left {
+	clear: none;
+	padding: 0 5px;
+	height: 70px;
+	width: 30px;
+	line-height: 70px;
+	text-align: center;
+	left: 12px;
+	top: -2px;
+}
+.ribbon-vertical-right-wrapper {
+	padding-right: 40px;
+}
+.ribbon-vertical-right {
+	clear: none;
+	padding: 0 5px;
+	height: 70px;
+	width: 30px;
+	line-height: 70px;
+	text-align: center;
+	top: -2px;
+	left: auto;
+	right: 12px;
+}

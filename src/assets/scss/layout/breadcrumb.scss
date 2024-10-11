@@ -1,0 +1,60 @@
+.breadcrumb-line {
+	.breadcrumb-item {
+		&:before {
+			content: "-";
+		}
+		&:first-child {
+			&:before {
+				content: "";
+			}
+		}
+	}
+}
+.breadcrumb-dot {
+	.breadcrumb-item {
+		&:before {
+			content: "•";
+		}
+		&:first-child {
+			&:before {
+				content: "";
+			}
+		}
+	}
+}
+.breadcrumb-separatorless {
+	.breadcrumb-item {
+		&:before {
+			content: "";
+		}
+	}
+}
+.breadcrumb{
+	margin: 0;
+}
+.breadcrumb-colored {
+	@include margin-padding(0 0 10px, 12px 16px);
+	@include rounded(4px);
+	li {
+		a {
+			color: $__white;
+		}
+	}
+	.breadcrumb-item {
+		&.active {
+			color: $__white;
+			opacity: 0.8;
+		}
+		& + .breadcrumb-item {
+			&::before {
+				color: $__white;
+			}
+		}
+	}
+}
+.twitter-bs-wizard-pager-link {
+	display: $__inline__block;
+}
+.breadcrumb-item.active {
+    color: $__gray__lightdark;
+}

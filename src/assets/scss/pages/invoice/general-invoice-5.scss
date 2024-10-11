@@ -1,0 +1,270 @@
+.index-five {
+    .invoice-wrapper {
+          background: $__darkthemebg;
+    }    
+    .invoiceten-header {
+        background: $__darktheme__header;
+        padding: 20px;
+        .invoice-header {
+            @extend %display-flex;
+            @extend %justify-content-between;
+            @extend %align-items-center;
+            @include respond-below(custom767) {
+              display: $__block;        
+            }
+        }
+        .inv-header-right {
+            .invoice-title {
+                color: $__white;
+            }            
+        }
+    }
+    .company-details {
+       
+        .company-name {
+           color: $__white;
+        }
+        padding: 15px 0 0;
+        border-bottom: 0;
+        .gst-details {
+            @include margin-padding(0 125px 10px 0, 0);
+            span {
+               display: block;
+               color: $__white;                
+            }           
+            @include respond-below(custom767) {
+               width: auto;
+               margin: 10px 0;             
+            } 
+            &:last-child {
+                @include respond-below(custom767) {
+                  margin: 0px 0;             
+               } 
+            } 
+        }
+        .company-address {
+            width: auto;
+            @include respond-below(custom767) {
+               width: auto;             
+            } 
+        }
+        .company-content {
+             @extend %display-flex;
+             @extend %justify-content-between;
+             @include margin-padding(10px 0 0,0);
+            .inv-details {
+                display: $__block;
+                text-align: $__right;
+                font-size: $__font__size__18;
+                .inv-date {
+                  margin-bottom: 10px;
+                }
+                span {
+                  display: $__block;
+                  color: $__white;
+                  font-size: $__font__size__24;
+                  font-weight: $__bold;
+                  line-height: 27px;
+                }
+                @include respond-below(custom767) {
+                   text-align: left;          
+                } 
+            }
+            @include respond-below(custom767) {
+               flex-direction: column-reverse;             
+            } 
+        }
+    }
+    .company-info {
+        @extend %display-flex;
+        @extend %align-items-center; 
+        @include respond-below(custom767) {
+           display: $__block;             
+        }  
+    } 
+    .inv-content {
+        border: none;
+        @include margin-padding(0px, 0px);
+        .invoice-header {
+            border-bottom: 0;
+            @include margin-padding(0, 15px);  
+            background: $__darktheme__logobg;          
+        }
+        .invoice-address {
+            @include margin-padding(0, 25px 15px);
+            border-bottom: none;
+            justify-content: normal;
+            .invoice-to {
+                width: 50%;
+                .inv-to-address {
+                   color: $__white;
+                }
+            }
+        }
+        .invoice-table {
+           @include margin-padding(0,0);
+           table {
+              border: 1px solid $__invborder__color;
+              color: $__white;
+              thead {
+                tr {
+                    background: $__darktheme__tablebg;
+                }
+              }
+              tr{
+                 border: 1px solid $__invborder__color;
+                 td{
+                     border-right: 1px solid $__invborder__color;
+                 }
+              }
+              .table-qty {
+                  width: 10%;
+              }
+              .table-price {
+                  width: 10%;
+                  padding: 15px 25px;
+              }
+           }
+        }
+        .invoice-table-footer {
+           @include margin-padding(0, 15px 0 15px 15px);
+           border-bottom: none;
+           color: $__black__nuetral;
+           align-items: $__center;
+           .table-footer-left {
+                span{
+                    display: $__block;
+                    color: $__grey__nuetral;
+                }
+                @include respond-below(custom767) {
+                   width: 100%;       
+                } 
+                color: $__grey__nuetral;
+            }
+            .notes {
+                @include respond-below(custom767) {
+                   display: $__none;       
+                } 
+                .delivery-notes {
+                   max-width: 500px;
+                   color: $__white;
+                }
+            }
+            .table-footer-right {
+                color: $__white;
+                table {
+                    tr{
+                       border-bottom: 1px solid $__invborder__color;
+                       &:last-child {
+                           border-bottom: 0;
+                       }
+                    }
+                    td {
+                       padding: 8px 15px;
+                       &:first-child{
+                          padding: 8px 25px;
+                          @include respond-below(custom767) {
+                             text-align: left; 
+                             @include margin-padding(0, 8px 15px);        
+                          }   
+                       }
+                       &:last-child {
+                           @include respond-below(custom767) {
+                             text-align: right;         
+                          } 
+                       }                       
+                    }
+                }
+                .totalamt-table {
+                    tr {
+                        td {
+                           padding: 0; 
+                           color: $__white;                          
+                        }
+                    }                   
+                } 
+                @include respond-below(custom767) {
+                     width: 100%;         
+                }                
+            }
+            @include respond-below(custom767) {
+                flex-direction: column-reverse;   
+                @include margin-padding(0, 15px 0);      
+            }            
+        }
+        .totalamount-footer {
+             background: none;
+             border-top: 1px solid $__invborder__color;
+             border-bottom: 1px solid $__invborder__color;
+             @include margin-padding(0, 15px);
+             @extend %align-items-center;
+        }
+        .total-amountdetails {
+            span {
+                color: $__white;
+            }
+            border-bottom: 1px solid $__invborder__color;
+            @include margin-padding(0, 15px);
+            @include respond-below(custom767) {
+                @include margin-padding(0, 15px);      
+            }  
+        }
+        .bank-details {  
+            @include margin-padding(0, 10px 15px);
+            border-bottom: 1px solid $__invborder__color;          
+            .payment-info {
+               color: $__white;
+              .payment-title {
+                color: $__white;
+                font-size: $__font__size__18;
+                @include margin-padding(0 0 15px,0);
+                display: $__block;
+              }
+              div {
+                 @include margin-padding(0 0 10px,0);
+              }
+              span{
+                  color: $__grey__nuetral;
+              }
+            }
+            .company-sign {
+                span {
+                   color: $__white;
+                }                
+            }
+        }
+        .terms-condition {
+            @include margin-padding(0, 15px 15px);
+            border-bottom: 1px solid $__invborder__color;
+            ol {
+                list-style: disc;
+                padding-left: 16px;  
+                color: $__white;             
+            }
+        }
+        @include respond-below(custom767) {
+            padding: 25px;        
+        }
+        .thanks-msg {
+            border-bottom: 1px solid $__invborder__color;
+        } 
+    }      
+}
+.dartheme {
+    background: $__black;
+    .file-link {
+        .download-link,.print-link {
+             background: none;
+             border: 1px solid $__grey__nuetral;
+             color: $__grey__nuetral;
+             &:hover {
+                border: 1px solid $__white;
+                color: $__white;
+             }
+        }
+        @include respond-below(custom767) {
+            @include margin-padding(40px 0, 15px); 
+        }
+    }  
+}
+

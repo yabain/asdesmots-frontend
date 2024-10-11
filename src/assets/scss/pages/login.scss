@@ -1,0 +1,163 @@
+
+.login-body {
+	display: $__table;
+	height: 100vh;
+	min-height: 100vh;
+    margin: $__auto;
+}
+.logo-light {
+    max-width: 180px;
+    margin: $__auto;
+    display: $__none;
+}
+.logo-dark {
+	max-width: 180px;
+	margin: $__auto;
+    display: $__block;
+}
+.login-wrapper {
+    width: $__full__width;
+    height: $__full__height;
+    display: table-cell;
+    vertical-align: $__middle;
+    padding-top: 1.875rem;
+    .loginbox {
+        background-color: $__white;
+        box-shadow: 0 0 13px 0 rgba(82,63,105,0.05);
+        display: $__flex;
+        margin: 1.875rem $__auto;
+        max-width: 450px;
+        width: 100%;
+        @include rounded(20px);
+        .login-left {
+            align-items: $__center;
+            background: linear-gradient(180deg, #8BC34A, #00bcd4);
+            flex-direction: $__column;
+            justify-content: $__center;
+            padding: 80px;
+            width: 450px;
+            display: flex;
+            @include rounded(6px 0 0 6px);
+        }
+        .login-right {
+            align-items: $__center;
+            display: $__flex;
+            justify-content: $__center;
+            padding: 2rem;
+            width: 450px;
+            @include respond-below(custom320) {             
+                width: 100%;
+            }
+            .login-right-wrap {
+                max-width: 100%;
+                flex: 0 0 100%;
+                h1 {
+                    font-size: 26px;
+                    font-weight: 500;
+                    margin-bottom: 5px;
+                    text-align: $__center;
+                }
+            }
+            .forgotpass a {
+                color: #a0a0a0;
+                &:hover {
+                    color: #333;
+                    text-decoration: $__underline;
+                }
+            }
+            .dont-have {
+                color: #a0a0a0;
+                margin-top: 1.875rem;
+                a {
+                    color: #333;
+                    &:hover {
+                        text-decoration: $__underline;
+                    }
+                }
+            }
+            .social-login {
+                text-align: $__center;
+                span {
+                    color: #757575;
+                    margin-right: 8px;
+                }
+                a {
+                    background-color: #ccc;
+                    color: $__white;
+                    display: $__inline__block;
+                    font-size: 18px;
+                    height: 32px;
+                    line-height: 32px;
+                    margin-right: 6px;
+                    text-align: $__center;
+                    width: 32px;
+                    @include rounded(4px);
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &.facebook {
+                        background-color: #4b75bd;
+                    }
+                    &.google {
+                        background-color: #fe5240;
+                    }
+                }
+            }
+        }
+        .account-subtitle {
+            color: #4c4c4c;
+            font-size: 17px;
+            margin-bottom: 1.875rem;
+            text-align: $__center;
+        }
+        .login-or {
+            color: #757575;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            position: $__relative;
+        }
+        .or-line {
+            background-color: #e5e5e5;
+            height: 1px;
+            margin-bottom: 0;
+            margin-top: 0;
+            display: $__block;
+        }
+        .span-or {
+            background-color: $__white;
+            display: $__block;
+            left: 50%;
+            margin-left: -20px;
+            position: $__absolute;
+            text-align: $__center;
+            text-transform: $__uppercase;
+            top: 0;
+            width: 42px;
+        } 
+        .lock-user {
+            margin-bottom: 20px;
+            text-align: $__center;
+            img {
+                margin-bottom: 15px;
+                width: 100px;
+            }
+        }
+        .toggle-password {
+            position: $__absolute;
+            right: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #757575;
+            cursor: $__pointer;
+            &.fa-eye {
+                margin-right: 1px;
+            }
+        }
+        .pass-group {
+            position: $__relative;
+        }
+    }
+    
+}

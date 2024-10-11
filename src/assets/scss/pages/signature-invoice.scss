@@ -1,0 +1,45 @@
+.signature-invoice {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    .form-group-bank {
+        background-color: #F3F3F9;
+        .nav-pills {
+            background-color: $__white;
+            padding: 15px;
+        }
+        .custom_radio.active input ~ .checkmark:after, .custom_radio_one.active input ~ .checkmark:after {
+            transform: scale(1);
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    .service-upload-info {
+        height: 76px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span{
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+        }
+    }
+    .e-signature-block {
+        .signature-draw-area {
+            height: 100px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        a {
+            display: block;
+            color: #ED3A3A;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    }
+
+}

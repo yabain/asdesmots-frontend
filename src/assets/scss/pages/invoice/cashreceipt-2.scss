@@ -1,0 +1,31 @@
+.receipt-two {
+    .bill-list {    
+       margin: 0;
+       padding: 5px 0;
+       font-size: $__font__size__10;
+       border-bottom: 1px dashed $__grey__nuetral; 
+       .bill_list_in {
+		    display: $__flex;
+		    text-align: $__right;
+		    justify-content: flex-end;
+		    padding: 4px 0;
+		    .bill_title {
+			   padding-right: 20px;
+			}
+			.bill_value {
+			   width: 90px;
+			}
+		}
+    }
+    .receipt-table {
+         margin-top: 0;
+    }
+    .receipt-seperator {
+        width: 150px;	   
+    }
+    .sample_text {
+	    img {
+	       margin-top: 10px;
+	    }
+    }
+}                

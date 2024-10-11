@@ -1,0 +1,16 @@
+ .bg-inactive {
+      background-color: $__bg__danger__light;
+      color: $__text__danger__light;
+      @include margin-padding(null, 4px 10px);
+      @include rounded(4px);
+ }
+ .avatar-img.rounded-circle.subscription-circle {
+      width: 40px;
+      height: 40px;
+      border-radius:100px;
+ }
+ .table tbody td h2.table-avatar .subscription-img {
+      height: 40px;
+      width: 40px;
+      display: $__inline__block;
+ }

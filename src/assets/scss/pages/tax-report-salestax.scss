@@ -1,0 +1,60 @@
+/* .input-block .form-control.tax{
+    direction: rtl;
+} */
+
+.input-block.tax{
+    @include margin-padding(null, 0 5px 0 0); 
+}
+/* .cal-icon-info.tax:after{
+    left: 12px;
+}
+.cal-icon-info.taxes:after{
+    left: 12px;
+} */
+/* .input-block.tax{
+    max-width: 181px;
+} */
+.btn-primary.tax{
+    margin-right: 10px;
+    width: 181px;
+    @include respond-below(custom575) {
+        &.tax {
+            margin-bottom: 10px;
+        }
+    }
+}
+.btn-primary.taxs{
+    min-width: 154px;
+}
+.filter-btn.tax{
+    @extend %display-flex;
+    @include margin-padding(null, 0 0 30px);
+    @include respond-below(custom575) {
+        &.tax {
+            display: block;
+        }
+    }
+}
+.from-to-date{
+    @extend %display-flex;
+     
+    .form-control.tax{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;  
+            border-right: none;   
+            direction: rtl;
+            width:130px;
+            padding: 9px 8px 9px 12px;
+        }
+    .form-control.taxes{
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+            width: 98px;
+            padding: 9px 12px 9px 0;
+    }
+
+}
+.cal-icon-info.profitloss:after{
+    left: 10px;
+}

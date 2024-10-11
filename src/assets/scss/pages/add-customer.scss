@@ -1,0 +1,698 @@
+.profile-picture {
+    @extend %display-flex-center;
+    @include margin-padding(0 0 30px 0, null);
+    @include respond-below(custom575) {
+        display: $__block;
+        @include margin-padding(0 0 25px 0, null);
+    }
+    .upload-profile {
+        @extend %display-flex-center;
+        margin-right: 50px;
+        @include respond-below(custom575) {
+            @include margin-padding(0 0 20px 0, null);
+        }
+        .profile-img {
+            .avatar {
+                width: 61px;
+                height: 61px;
+                @include respond-below(custom575) {
+                    @include margin-padding( 0 20px 0 0, null);
+                }
+            }
+        }
+        .add-profile {
+            h5 {
+                font-size: $__font__size__14;
+                @include margin-padding(0 0 4px, null);
+            }
+            span {
+                font-size: $__font__size__14;
+            }
+        }
+    }
+    .img-upload {
+        position: $__relative;
+        .btn {
+            @include respond-below(custom768) {
+                max-width: 120px;
+            }
+        }
+        .btn {
+            position: $__relative;
+            overflow: $__hidden;
+            cursor: $__pointer;
+            min-width: 82px;
+            @include margin-padding(0 15px 0 0, 8px 20px);
+            input {
+                position: $__absolute;
+                top: 0;
+                right: 0;
+                min-width: $__full__width;
+                min-height: $__full__height;
+                font-size: 100px;
+                text-align: $__right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: $__none;
+                background: $__white;
+                cursor: $__inherit;
+                display: $__block;
+            }
+        }
+        .upload {
+            background-color: $__primarycolor;
+            color: $__white;
+            @include margin-padding(0 15px 0 0,8px 20px);
+            @include rounded(6px);
+            
+        }
+        .btn-remove {
+            background-color: $__white;
+            color:$__text__danger__light;
+            border: 1px solid $__text__danger__light;
+            min-width: 87px;
+            @include margin-padding(null, 8px 20px);
+            box-shadow: inset 0 0 0 0 $__text__danger__light;
+            @include rounded(6px);
+            &:hover {
+                color: $__white;
+                background-color: $__text__danger__light;
+                box-shadow: inset 0 50px 0 0 $__text__danger__light;
+            }
+        }
+    }
+}
+.billing-btn {
+    @extend %display-flex-center-between;
+    @include margin-padding(0 0 15px 0 , null);
+    button {
+        background-color: $__primarycolor;
+        color: $__white;
+    }
+    .btn-primary {
+        min-width: 139px;
+        border-radius: 6px;
+        @include margin-padding(null , 8px 20px);
+    }
+}
+.card-title {
+    &.title-form {
+        margin-bottom: 36px;
+    }
+}
+
+.custom_radio, .custom_radio_one {
+	color: $__gray__dark;
+	@extend %align-items-center;
+	position: $__relative;
+	font-size: $__font__size__14;
+	padding-left: 25px;
+	margin-bottom: 10px;
+	cursor: $__pointer;
+	user-select: $__none;
+	input {
+		position: $__absolute;
+		opacity: 0;
+        padding: 0;
+		&:checked {
+			& ~ .checkmark {
+				border: 1px solid $__primarycolor;
+				&:after {
+					@include transform(scale(1));
+					opacity: 1;
+					visibility: $__visible;
+				}
+			}
+		}
+	}
+	.checkmark {
+        @include position($__absolute, 2px, null, null, 0);
+		height: 18px;
+		width: 18px;
+		background-color: $__transparent;
+        border: 1px solid #cfcfcf;
+		border-radius: 50%;
+		@include transition(all 0.3s ease-in-out);
+		&:after {
+			display: $__block;
+			content: "";
+			@include position($__absolute, 2px, null, null, 2px);
+			opacity: 0;
+			width: 12px;
+			height: 12px;
+			@include rounded(50%);
+			background: $__primarycolor;
+			visibility: $__visible;
+			@include transform(scale(0.1));
+			@include transition(all 0.3s ease-in-out);
+		}
+	}
+}
+.card-support {
+    background: $__white;
+    border: 1px solid $__white__smoke;
+    box-shadow: 0px 2px 4px rgb(190 190 190 / 20%);
+}
+.customer-details-group {
+    .customer-details {
+        @include margin-padding(0 0 25px 0 , null);
+        .customer-widget-img {
+            @include margin-padding(0 15px 0 0 , null);
+            width: 60px;
+            height: 60px;
+            @include respond-below(custom768) {
+                width: 40px;
+                height: 40px;
+            }
+            i {
+                font-size: 24px;
+            }        
+        }
+        .customer-widget-icon {
+            @include margin-padding(0 15px 0 0 , null);
+            i {
+                background: $__ghost__white;
+                @include margin-padding(null , 18px);
+                border-radius: 50px;
+                font-size: 24px;
+                 @include respond-below(custom768) {
+                    @include margin-padding(null , 10px);
+                    font-size: 20px;
+                }
+            }
+        }
+        .customer-details-cont {            
+            h6 {
+                font-weight: $__semibold;
+                margin-bottom: 4px;
+            }
+            p {
+                color: $__gray__dark;
+                @include margin-padding(0, null);
+            }
+            .customer-mail {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 150px;
+                white-space: nowrap;
+            }
+
+        }
+    }
+}
+.ticket-details-group {
+    @include margin-padding(0 0 40px 0 , null);   
+    .ticket-widget-img {
+        width: 61px;
+        height: 61px;
+        background: $__white;
+        @include margin-padding(0 15px 0 0 , 16px);            
+    }
+    .ticket-details-cont {
+        p {
+            font-weight: $__semibold;
+            color: $__primarycolor;
+            @include margin-padding(0 0 4px 0 , null);
+        }
+        h6 {
+            font-weight: $__semibold;
+            font-size: $__font__size__18;
+            color: $__grayish__blue;
+            @include margin-padding(0 , null);
+        }
+    }    
+    .ticket-details {
+        @include respond-below(custom768) {
+            @include margin-padding(30px 0 0, 0);
+       }
+        .badge {
+            @include margin-padding(null, 8px);
+        }
+    }
+}
+.ticket-description-group {
+    @include margin-padding(0 0 24px, null);
+    h6 {
+        font-weight: $__semibold;
+        font-size: $__font__size__14;
+        color: $__secondarycolor;
+        @include margin-padding(0 0 18px, null);
+    }
+    p {
+        @include margin-padding(0 0 10px, null);
+    }
+}
+.ticket-information {
+    @include margin-padding(0 0 28px, 0 0 28px);
+    border-bottom: 1px solid $__white__smoke;
+    .customer-details {
+        border-right: 1px solid $__white__smoke;
+        @include respond-below(custom768) {
+            @include margin-padding(0 0 30px, 0);
+       }
+    }
+    .customer-widget-img {
+        width: 50px;
+        height: 50px;
+        @include margin-padding(0 10px, null);
+    }
+    .customer-widget-icon {
+        @include margin-padding(0 10px 0, 15px);
+        background: $__white;
+        i {
+            font-size: $__font__size__20;
+        }
+    }
+    .customer-details-cont {
+        h6 {
+            font-weight: $__regular;
+            color: $__grayish__blue;
+            @include margin-padding(0 0 4px, null);
+        }
+    }
+    .support-widget-icon {
+        @include margin-padding(0 10px 0 0, 12px);
+        background: $__smoke__white;
+        i {
+            font-size: $__font__size__18;
+            font-weight: $__semibold;
+            color: $__grayish__blue;
+        }
+    }
+    .support-details-cont {
+        h6 {
+            font-weight: $__semibold;
+            color: $__grayish__blue;
+            @include margin-padding(0 0 4px, null);
+            @include respond-below(custom575) {
+                font-size: $__font__size__12;
+            }
+        }
+    }
+    .support-details {
+        background: $__white;
+        border: 1px solid $__white__smoke;
+        border-radius: 8px;
+        @include margin-padding(0 0 13px, 9px);
+        line-height: 20px;
+        .btn-action-icon {
+            background: $__smoke__white;
+            color: $__gray__dark;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            @extend %flex-align-center;
+            border-radius: 50px;
+        }
+    }
+}
+.ticket-history {
+    .card-inform {
+        @include margin-padding(0 0 31px, null);
+        @include respond-below(custom575) {
+            @include margin-padding(15px 0 31px, null);
+        }
+        #image_personal {
+            display: none;
+        }
+        .ticket-info {
+            h6 {
+                font-weight: $__semibold;
+                font-size: $__font__size__14;
+                color: $__secondarycolor;
+
+            }
+            .ticket-upload {
+                background-color: #fff;
+                border: 1px solid $__primarycolor;
+                color: $__primarycolor;
+                box-shadow: inset 0 0 0 $__primarycolor;
+                @include margin-padding(null, 6px 15px);
+                font-size: $__font__size__14;
+                border-radius: 5px;
+                @extend %inline-flex;
+                cursor: pointer;
+            }
+        }
+    }
+}
+.ticket-sidebar {    
+    .action-sets {
+        border: 1px solid rgba(145, 158, 171, 0.32);
+        padding: 4px 10px;
+        color: #878A99;
+        line-height: 34px;
+        border-radius: 5px;
+        @extend %display-flex-center-between;
+    }
+       
+    .dropdown-menu {
+        min-width: 220px;
+        border-radius: 6px;
+        margin-top: 0 !important;
+        .dropdown-item {
+            font-size: 14px;
+            @extend %display-flex;
+            justify-content: start;
+            i {
+                line-height: 20px !important;
+            }
+        }
+    }
+    .multiselect-native-select {
+        .multiselect-container.dropdown-menu {
+            transform: translate3d(0px, 40px, 0px) !important;
+            right: 0 !important;
+            left: 0 !important;
+            padding: 10px;
+            border: 1px solid #F4F3FF;
+            box-shadow: 0px 6px 13px rgb(213 228 235 / 11%);
+            border-radius: 5px;
+            margin-top: 7px !important;
+            max-height: 464px;
+            min-width: 270px !important;
+            width: 100%;
+        }
+    }
+}
+.multi-search-select-image {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px -1px -1px -3px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    left: 50%;
+    top: 30px;
+}
+.multiselect {
+    border: 1px solid #E3E2FF;
+    border-radius: 5px;
+    background: #FBFBFF;
+    height: 40px;
+    padding: 8px 20px;
+    text-align: left !important;
+    line-height: 15px;
+}
+.dropdown-item img {
+    margin-right: 5px;
+}
+.multi-drop-img {
+    height: 25px;
+    width: 25px !important;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.comments {
+    .comments-head {
+        h5 {
+            font-weight: $__semibold;
+            font-size: $__font__size__20;
+            margin-bottom: 24px;
+        }
+    }
+    .comments-widget-img {
+        width: 40px;
+        height: 40px;
+        @include margin-padding(0 10px 0 0, null);
+    }
+    .comments-widget-icon {
+        @include margin-padding(0 10px 0, 15px);
+        background: $__white;
+        i {
+            font-size: $__font__size__20;
+        }
+    }
+    .comments-details-cont {
+        h6 {
+            font-weight: $__semibold;
+            color: $__grayish__blue;
+            @include margin-padding(0 0 4px, null);
+        }
+    }
+    .card-describe {
+        @include margin-padding(16px 0 0, null);
+        p {
+            font-weight: $__regular;
+            line-height: 26px;
+        }
+        .describe-btn {
+            .badge {
+                @include margin-padding(7px, null);
+            }
+        }
+    }
+    .describe-btn {
+        @include margin-padding(22px 0 0, null);
+        .badge {
+            @include margin-padding(null, 7px);
+            @include rounded(4px);
+            font-weight: $__regular;
+            min-width: 66px;
+            @extend %inline-flex;
+            justify-content: center;
+        }
+        span {
+            font-size: 12px;
+            @extend %inline-flex;
+            align-items: center;
+        }
+    }
+    .reply-comment {
+        font-weight: $__semibold;
+        font-size: $__font__size__14;
+        line-height: 0;
+        color: $__grayish__blue;
+        i {
+            font-weight: $__semibold;
+            line-height: 0;
+        }
+    }
+}
+
+.radio_input {
+	.custom_radio {
+		& + .custom_radio {
+			margin-left: 15px;
+		}
+	}
+}
+.input-block  {
+    .label-text {
+        font-size: $__body__font__size;
+        color: #455560;
+        font-weight: $__semibold;
+        @include margin-padding(0 0 5px 0, null);
+    }
+    &.check-mark {
+        @extend %display-flex-center-between;
+    }
+}
+.check-mark-status {
+    .status-toggle {
+        .checktoggle {
+            transform: translate(calc(-30% - 5px), -0%);
+        }
+        .check {
+            &:checked {
+                + .checktoggle{
+                    transform: translate(calc(-30% - 5px), -0%);
+                }
+            }
+        }
+    }
+}
+.add-customer-btns {
+    .btn {
+        font-size: $__font__size__14;
+        @include respond-below(custom575) {
+            max-width: $__inherit;
+            margin:10px;
+        }
+    }
+    .customer-btn-cancel {
+        color: $__grayish__blue;
+        border: 1px solid $__light__gray;
+        background: $__white;
+        // box-shadow: inset 0 0 0 0 $__sky__blue;
+        border-radius: 6px;
+        @include margin-padding(0 12px 0 0, 11px 22px);
+        @include respond-below(custom575) {
+            @include margin-padding(0 10px 0 0, null);
+        }
+        &:hover {
+            color: $__white;
+            background: $__grayish__blue;
+            border-color:  $__grayish__blue;
+            box-shadow: inset 0 50px 0 0  $__grayish__blue;
+        }
+    }
+    .customer-btn-save {
+        color: $__white;
+        border: 1px solid $__primarycolor;
+        background: $__primarycolor;
+        box-shadow: inset 0 0 0 0 $__white;
+        border-radius: 6px;
+        padding:11px 22px;
+        @include respond-below(custom320) {
+            @include margin-padding(0 0 0 0, 8px 15px);
+        }
+        &:hover {
+            color: $__primarycolor;
+            background: $__white;
+            border-color: $__primarycolor;
+            box-shadow: inset 0 50px 0 0 $__white;
+        }
+    }
+}
+.add-vendor-btns {
+    .btn {
+        font-size: $__font__size__14;
+        @include respond-below(custom320) {
+            max-width: $__inherit;
+        }
+    }
+    .vendor-btn-cancel {
+        color: $__sky__blue;
+        border: 1px solid $__sky__blue;
+        background: $__white;
+        box-shadow: inset 0 0 0 0 $__sky__blue;
+        border-radius: 6px;
+        min-width: 98px;
+        @include margin-padding(0 12px 0 0, 10px 20px);
+        @include respond-below(custom320) {
+            @include margin-padding(0 10px 0 0, 8px 15px);
+        }
+        &:hover {
+            color: $__white;
+            background: $__sky__blue;
+            border-color: $__sky__blue;
+            box-shadow: inset 0 50px 0 0 $__sky__blue;
+        }
+    }
+    .vendor-btn-add {
+        color: $__white;
+        border: 1px solid $__primarycolor;
+        background: $__primarycolor;
+        box-shadow: inset 0 0 0 0 $__white;
+        border-radius: 6px;
+        min-width: 136px;
+        @include margin-padding(0 0 0 0, 10px 15px);
+        @include respond-below(custom320) {
+            @include margin-padding(0 0 0 0, 8px 15px);
+        }
+        &:hover {
+            color: $__primarycolor;
+            background: $__white;
+            border-color: $__primarycolor;
+            box-shadow: inset 0 50px 0 0 $__white;
+        }
+    }
+}
+
+.iti--separate-dial-code {
+    .iti__selected-flag {
+        background-color: $__transparent;
+    }
+}
+
+.customer-additional-form {
+    .input-block{
+        label {
+            color: $__mine__shaft;
+        }
+    }
+    .custom_radio {
+        .checkmark {
+            top: 2px;
+            border-color: $__gray__dark;
+        }
+    }
+    .status-toggle {
+        .checktoggle {
+            &:after {
+                height: 18px;
+                width: 18px;
+                transform: translate(3px, -50%);
+                -webkit-transform: translate(3px, -50%);
+            }
+        }
+        .check:checked + .checktoggle:after {
+            transform: translate(calc(-100% - 3px), -50%);
+            -webkit-transform: translate(calc(-100% - 3px), -50%);
+        }
+    }
+}
+.product-list-item-img {
+    display: $__flex;
+    align-items: $__center;    
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        margin-right: 8px;
+    }
+    span {
+        color: $__title__black;
+    }
+}
+.table {
+    tbody {
+        td {
+            h2 {
+                &.table-avatar {
+                    a {
+                        &.product-list-item-bg {
+                            margin-right: 8px;
+                            width: 40px;
+                            height: 40px;
+                            background: $__cloud__grays;
+                            @include rounded(6px);
+                            @extend %flex-align-center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.input-block {
+    &.add-products {
+        position: $__relative;
+        button {
+            @include position($__absolute,34px,5px,null,null);
+            padding: 5px;
+        }
+    }
+}
+.dropdown-menu {
+    &.dropdown-menu-right {
+        &.quatation-dropdown {
+            width: 200px;
+            height: 200px;
+            overflow: $__auto;
+        }
+    }
+}
+.input-block {
+    input {
+        &.form-control {
+            color: $__grayish__blue;
+            font-size: $__font__size__14;
+        }
+    }
+}
+.description-box {
+    .note-fullscreen, .note-fontname,.note-undo,.note-redo,.note-fontsize,.note-para {
+        display: $__none;
+    }
+    .note-resizebar {
+        visibility: hidden;
+    }
+    .note-frame {
+        height: 180px;
+        background: $__white;
+    }
+}

@@ -71,7 +71,7 @@ export class CreatePartModalComponent implements OnInit {
 
     if (this.createForm.get('startDate')?.value < formattedDate)
       this.createForm.controls['startDate'].setErrors({
-        laterThanToday: true,
+        atLeastOneHourAfterNow: true,
       });
     if (
       this.createForm.get('endDate')?.value <

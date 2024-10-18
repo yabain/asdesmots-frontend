@@ -95,9 +95,9 @@
                 </div>
                 <div *ngIf="
                     createForm.controls['startDate'].errors &&
-                    createForm.controls['startDate'].errors['laterThanToday']
+                    createForm.controls['startDate'].errors['atLeastOneHourAfterNow']
                   " style="color: red">
-                  {{ "laterThanToday" | translate }}
+                  {{ "atLeastOneHourAfterNow" | translate }}
                 </div>
               </div>
             </div>

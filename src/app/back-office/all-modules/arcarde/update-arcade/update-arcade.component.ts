@@ -81,39 +81,34 @@ export class UpdateArcadeComponent implements OnInit {
       return;
     }
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mois commence à 0, donc ajoutez 1
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+    const now = new Date();
+    let startDate: any = new Date(this.updateForm.get("startDate")?.value);
+    let endDate: any = new Date(this.updateForm.get("endDate")?.value);
+    let startRegistrationDate: any = new Date(this.updateForm.get("startRegistrationDate")?.value);
+    let endRegistrationDate: any = new Date(this.updateForm.get("endRegistrationDate")?.value);
 
-    if (this.updateForm.get('startRegistrationDate')?.value < formattedDate)
-      this.updateForm.controls['startRegistrationDate'].setErrors({
-        laterThanToday: true,
-      });
-    if (
-      this.updateForm.get('endRegistrationDate')?.value <
-      this.updateForm.get('startRegistrationDate')?.value
-    )
+    const oneHourInMs = 60 * 60 * 1000;
+
+    // Critère 1 : Validation: La date de fin d'enregistrement doit être supérieure d'au moins une heure à la date de début d'enregistrement
+    if (endRegistrationDate.getTime() < startRegistrationDate.getTime() + oneHourInMs) { // 3600000 ms = 1 heure
       this.updateForm.controls['endRegistrationDate'].setErrors({
-        laterThanStartRegistrationDate: true,
+          atLeastOneHourAfterStartRegistration: true,
       });
-    if (
-      this.updateForm.get('startDate')?.value <
-      this.updateForm.get('endRegistrationDate')?.value
-    )
-      this.updateForm.controls['startDate'].setErrors({
-        laterThanEndRegistrationDate: true,
+    }
+
+    // Critère 2 : La date de début de la compétition doit être supérieure à la date de fin d'enregistrement d'au moins 1h
+    if (startDate.getTime() < endRegistrationDate.getTime() + oneHourInMs) {
+      this.updateForm.controls["startDate"].setErrors({
+        atLeastOneHourAfterEndRegistration: true,
       });
-    if (
-      this.updateForm.get('endDate')?.value <
-      this.updateForm.get('startDate')?.value
-    )
-      this.updateForm.controls['endDate'].setErrors({
-        laterThanStartDate: true,
+    }
+
+    // Critère 3 : La date de fin de la compétition doit être supérieure à la date de début d'au moins 1h
+    if (endDate.getTime() < startDate.getTime() + oneHourInMs) {
+      this.updateForm.controls["endDate"].setErrors({
+        atLeastOneHourAfterStartDate: true,
       });
+    }
 
     if (this.updateForm.invalid) {
       return;

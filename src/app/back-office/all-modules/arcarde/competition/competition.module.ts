@@ -27,6 +27,7 @@ import { SharedModule } from 'src/app/back-office/shared/shared.module';
 import { ArcadeListPlaceholderComponent } from '../list-arcarde/arcade-list-placeholder/arcade-list-placeholder.component';
 import { PartDetailsModalComponent } from './gane-parts/part-details-modal/part-details-modal.component';
 import { CompetitonTreeComponent } from './competiton-tree/competiton-tree.component';
+import { SubCompetitionsComponent } from './competition-details/sub-competitions/sub-competitions.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CompetitonTreeComponent } from './competiton-tree/competiton-tree.compo
     ArcadeListPlaceholderComponent,
     PartDetailsModalComponent,
     CompetitonTreeComponent,
+    SubCompetitionsComponent,
   ],
   imports: [
     CompetitionRoutingModule,

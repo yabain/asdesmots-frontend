@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ArcardeService } from '../../services/arcarde.service';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/shared/services/translation/language.service';
 import { SousCompetitionService } from '../../competition/services/sous-competition.service';
 
 @Component({
@@ -22,7 +20,6 @@ export class ArcadeSuscribersComponent implements OnInit {
   constructor(
     public arcadeService: ArcardeService,
     public userService: UserService,
-    private arcardeService: ArcardeService,
     private subCompetitionService: SousCompetitionService
   ) {}
 

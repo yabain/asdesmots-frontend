@@ -294,18 +294,10 @@
                   <div *ngIf="
                       updateForm.controls['startDate'].errors &&
                       updateForm.controls['startDate'].errors[
-                        'laterThanEndRegistrationDate'
+                        'atLeastOneHourAfterEndRegistration'
                       ]
                     " style="color: red">
-                    {{ 'laterThanEndRegistrationDate' | translate }}
-                  </div>
-                  <div *ngIf="
-                      updateForm.controls['startDate'].errors &&
-                      updateForm.controls['startDate'].errors[
-                        'laterThanToday'
-                      ]
-                    " style="color: red">
-                    {{ 'laterThanToday' | translate }}
+                    {{ 'atLeastOneHourAfterEndRegistration' | translate: { date: arcadeData.endRegistrationDate | formatDate} }}
                   </div>
                 </div>
               </div>
@@ -332,10 +324,10 @@
                   <div *ngIf="
                       updateForm.controls['endDate'].errors &&
                       updateForm.controls['endDate'].errors[
-                        'laterThanStartDate'
+                        'atLeastOneHourAfterStartDate'
                       ]
                     " style="color: red">
-                    {{ 'laterThanStartDate' | translate }}
+                    {{ 'atLeastOneHourAfterStartDate' | translate }}
                   </div>
                 </div>
               </div>

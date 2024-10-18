@@ -1,56 +1,56 @@
-<div *ngIf="!subscribers?.length || fetching" class="d-flex align-items-center text-center justify-content-center vh-50">
-  <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
-    <p *ngIf="!(subscribers?.length || fetching)" class="text-center">{{ "competition.noSubscribers" | translate }}</p>
+<div *ngIf="!subscribers?.length || fetching"
+  class="d-flex align-items-center text-center justify-content-center vh-50">
+  <img *ngIf="fetching" src="assets/img/loader.gif" alt width="30px" />
+  <p *ngIf="!(subscribers?.length || fetching)" class="text-center">{{
+    "competition.noSubscribers" | translate }}</p>
 </div>
 <div
   class="competition-container"
-  *ngFor="let subscriber of subscribers; let i = index"
->
-  <div
-    class="competition-collapse d-flex justify-content-between align-items-center"
-  >
-    <div>
-      <a class="avatar avatar-sm me-2"
-        ><img
-          class="avatar-img rounded-circle"
-          src="assets/img/user-profile.png"
-          alt="User Image"
-        />
-      </a>
-      <a> {{ subscriber.firstName }} {{ subscriber.lastName }}<br /> </a>
-      <!-- <span class="tag tag-coach ms-2">COACH</span> -->
-    </div>
-    <div>
-      <span>{{ subscriber.email }}</span>
-    </div>
-    <div>
-      <span>{{ subscriber.phoneNumber }}</span>
-    </div>
-    <div class="col-auto">
-      <!-- <a class="badge badge-pill bg-info-light me-2"
+  *ngFor="let subscriber of subscribers; let i = index">
+  <div *ngIf="subscriber">
+    <div
+      *ngIf="subscriber"
+      class="competition-collapse d-flex justify-content-between align-items-center">
+      <div>
+        <a class="avatar avatar-sm me-2"><img
+            class="avatar-img rounded-circle"
+            src="assets/img/user-profile.png"
+            alt="User Image" />
+        </a>
+        <a> {{ subscriber.firstName }} {{ subscriber.lastName }}<br /> </a>
+        <!-- <span class="tag tag-coach ms-2">COACH</span> -->
+      </div>
+      <div>
+        <span>{{ subscriber.email }}</span>
+      </div>
+      <div>
+        <span>{{ subscriber.phoneNumber }}</span>
+      </div>
+      <div class="col-auto">
+        <!-- <a class="badge badge-pill bg-info-light me-2"
           [routerLink]="['/competition/details',subscriber._id]" data-toggle="tooltip"
           data-placement="top" title="View details">
           <i class="fas fa-eye"></i>
         </a> -->
-      <a
-        class="badge badge-pill bg-danger-light me-2"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="Delete the competition"
-        data-bs-toggle="modal"
-        [attr.data-bs-target]="'#unsubscribe-' + subscriber._id"
-      >
-        <i class="fas fa-trash"></i>
-      </a>
+        <a
+          class="badge badge-pill bg-danger-light me-2"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Delete the competition"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#unsubscribe-' + subscriber._id">
+          <i class="fas fa-trash"></i>
+        </a>
+      </div>
     </div>
+    <app-competition-unsubscribe-modal
+      [subscriber]="subscriber"
+      [competitionId]="competitionId"
+      [arcadeId]="arcadeId"
+      [index]="subscriber._id"
+      (unsubscribedFeedback)="subscriptionFeedback($event)">
+    </app-competition-unsubscribe-modal>
   </div>
-  <app-competition-unsubscribe-modal
-    [subscriber]="subscriber"
-    [competitionId]="competitionId"
-    [arcadeId]="arcadeId"
-    [index]="subscriber._id"
-    (unsubscribedFeedback)="subscriptionFeedback($event)"
-  >
-  </app-competition-unsubscribe-modal>
 </div>
-<app-arcade-subscribe-form [arcadeId]="arcadeId" (subscribedFeedback)="subscriptionFeedback($event)"></app-arcade-subscribe-form>
+<app-arcade-subscribe-form [arcadeId]="arcadeId"
+  (subscribedFeedback)="subscriptionFeedback($event)"></app-arcade-subscribe-form>

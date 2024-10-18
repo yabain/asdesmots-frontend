@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 import { State } from 'src/app/shared/entities/state.enum';
 import { ArcardeService } from '../services/arcarde.service';
+import { SousCompetitionService } from '../competition/services/sous-competition.service';
 
 @Component({
   selector: 'app-arcade-details',
@@ -12,15 +13,17 @@ import { ArcardeService } from '../services/arcarde.service';
 export class ArcadeDetailsComponent implements OnInit {
   arcadeId: string = '';
   arcadeCompetitionId: string;
+  competitionTree: any;
   gameState = State;
   activeTab: string = 'overview';
   arcardeData: any = new Arcarde();
   loading: boolean = true;
+  fetching: boolean = true;
 
   constructor(
     public arcardeServ: ArcardeService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.arcadeId = this.activatedRoute.snapshot.paramMap.get('arcadeId');
   }

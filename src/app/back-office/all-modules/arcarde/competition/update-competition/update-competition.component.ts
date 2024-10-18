@@ -4,6 +4,8 @@ import { SousCompetitionService } from '../services/sous-competition.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LevelService } from 'src/app/shared/services/level/level.service';
 import { ToastrService } from 'ngx-toastr';
+import { ArcardeService } from '../../services/arcarde.service';
+import { Arcarde } from 'src/app/shared/entities/arcarde.model';
 
 @Component({
   selector: 'app-update-competition',
@@ -16,6 +18,7 @@ export class UpdateCompetitionComponent implements OnInit {
   fetching: boolean = false;
   updateForm: FormGroup;
   competitionId: string = '';
+  arcadeData: Arcarde;
   competitions: any[] = [];
   gameLevels: any[] = [];
   competitionData: any;
@@ -24,6 +27,7 @@ export class UpdateCompetitionComponent implements OnInit {
     public sousCompetitionService: SousCompetitionService,
     private levelService: LevelService,
     private fb: FormBuilder,
+    public arcardeSrv: ArcardeService,
     private activedRouter: ActivatedRoute
   ) {
     this.competitionId = this.activedRouter.snapshot.params['id'];
@@ -34,6 +38,9 @@ export class UpdateCompetitionComponent implements OnInit {
     this.sousCompetitionService.getCompetitionById(this.competitionId).then(
       (resp: any) => {
         this.competitionData = resp.data;
+        this.arcardeSrv.getArcardeById(this.competitionData.arcadeId).then((resp: any) => {
+          this.arcadeData = resp.data;
+        });
         this.initForm();
         this.loading = false;
       },
@@ -111,20 +118,26 @@ export class UpdateCompetitionComponent implements OnInit {
       return;
     }
 
-    if (
-      this.updateForm.get('startDate')?.value <
-      this.updateForm.get('endRegistrationDate')?.value
-    )
-      this.updateForm.controls['startDate'].setErrors({
-        laterThanEndRegistrationDate: true,
+    const now = new Date();
+    const endRegistrationDate = new Date(this.arcadeData.endRegistrationDate);
+    let startDate: any = new Date(this.updateForm.get("startDate")?.value);
+    let endDate: any = new Date(this.updateForm.get("endDate")?.value);
+
+    const oneHourInMs = 60 * 60 * 1000;
+
+    // Critère 1 : La date de début de la compétition doit être supérieure à la date de fin d'enregistrement d'au moins 1h
+    if (startDate.getTime() < endRegistrationDate.getTime() + oneHourInMs) {
+      this.updateForm.controls["startDate"].setErrors({
+        atLeastOneHourAfterEndRegistration: true,
       });
-    if (
-      this.updateForm.get('endDate')?.value <
-      this.updateForm.get('startDate')?.value
-    )
-      this.updateForm.controls['endDate'].setErrors({
-        laterThanStartDate: true,
+    }
+
+    // Critère 2 : La date de fin de la compétition doit être supérieure à la date de début d'au moins 1h
+    if (endDate.getTime() < startDate.getTime() + oneHourInMs) {
+      this.updateForm.controls["endDate"].setErrors({
+        atLeastOneHourAfterStartDate: true,
       });
+    }
 
     if (this.updateForm.invalid) {
       return;

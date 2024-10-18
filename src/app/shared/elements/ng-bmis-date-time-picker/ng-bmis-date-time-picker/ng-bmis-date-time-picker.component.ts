@@ -19,8 +19,8 @@ import {
 export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
   @Output() dateTimeChange = new EventEmitter<string>();
 
-  currentDate = new Date();
-  selectedDate = new Date();
+  currentDate: Date;
+  selectedDate: Date;
   months = [
     "January",
     "February",
@@ -99,8 +99,9 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
         this.currentDate = parsedDate;
       }
     } else {
-      this.selectedDate = new Date(); // Utiliser new Date() si aucune valeur n'est présente
-      this.currentDate = new Date();
+      const date = new Date();
+      this.selectedDate = date; // Utiliser new Date() si aucune valeur n'est présente
+      this.currentDate = date;
     }
 
     this.dateTimePicker = document.getElementById(
@@ -146,7 +147,6 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
       const lastDay = new Date(year, month + 1, 0);
 
       const prevLastDay = new Date(year, month, 0);
-      const nextFirstDay = new Date(year, month + 1, 1);
 
       this.daysContainer.innerHTML = "";
 
@@ -210,10 +210,14 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
     };
 
     const formatDateTime = (date: Date, time: string): string => {
-      const yyyy = date.getFullYear();
-      const MM = (date.getMonth() + 1).toString().padStart(2, "0");
-      const dd = date.getDate().toString().padStart(2, "0");
-      return `${yyyy}-${MM}-${dd} ${time || "00:00"}`;
+      // Convertir la chaîne localDateString en objet Date
+      const reconvertedSelectedDate = new Date(date);
+      const yyyy = reconvertedSelectedDate.getFullYear();
+      const MM = (reconvertedSelectedDate.getMonth() + 1).toString().padStart(2, "0");
+      const dd = reconvertedSelectedDate.getDate().toString().padStart(2, "0");
+      const hh = reconvertedSelectedDate.getHours().toString().padStart(2, "0");
+      const i = reconvertedSelectedDate.getMinutes().toString().padStart(2, "0");
+      return `${yyyy}-${MM}-${dd} ${time || `${hh}:${i}`}`;
     };
 
     const updateDisplay = () => {
@@ -222,6 +226,11 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
         this.selectedDate,
         this.timeInput?.value
       );
+      // Convertir la chaîne localDateString en objet Date
+      const reconvertedSelectedDate = new Date(this.selectedDate);
+      const hh = reconvertedSelectedDate.getHours().toString().padStart(2, "0");
+      const i = reconvertedSelectedDate.getMinutes().toString().padStart(2, "0");
+      this.timeInput.value = `${hh}:${i}` ;
       this.dateTimeInput.value = formattedDateTime;
       this.dateTimeChange.emit(formattedDateTime);
     };
@@ -248,8 +257,10 @@ export class NgBmisDateTimePickerComponent implements OnInit, AfterViewInit {
         this.dateTimePicker.style.display = "none";
       }
     });
-
-    this.monthSelect.value = this.currentDate.getMonth().toString();
+    
+    // Convertir la chaîne localDateString en objet Date
+    const reconvertedSelectedDate = new Date(this.currentDate);
+    this.monthSelect.value = reconvertedSelectedDate.getMonth().toString();
     this.yearSelect.value = currentYear.toString();
 
     updateDisplay();

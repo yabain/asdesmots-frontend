@@ -242,7 +242,7 @@
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="maxTimeToPlay"> {{ 'competition.countdownTime' | translate }} </label>
+                    <label for="maxTimeToPlay"> {{ 'competition.countdownTime' | translate }} (s) </label>
                     <input type="number" min="0" name="maxTimeToPlay" class="form-control"
                       formControlName="maxTimeToPlay" id="maxTimeToPlay" [ngClass]="{
                         'is-invalid':
@@ -306,18 +306,21 @@
                       <div *ngIf="
                           createForm.controls['startDate'].errors &&
                           createForm.controls['startDate'].errors[
-                            'laterThanEndRegistrationDate'
+                            'atLeastOneHourAfterEndRegistration'
                           ]
                         " style="color: red">
-                        {{ 'laterThanEndRegistrationDate' | translate }}
+                        {{ 'atLeastOneHourAfterEndRegistration' | translate: { date: arcadeData.endRegistrationDate | formatDate} }}
                       </div>
                       <div *ngIf="
                           createForm.controls['startDate'].errors &&
                           createForm.controls['startDate'].errors[
-                            'laterThanToday'
+                            'atLeastOneHourAfterNow'
+                          ] &&
+                          !createForm.controls['startDate'].errors[
+                            'atLeastOneHourAfterEndRegistration'
                           ]
                         " style="color: red">
-                        {{ 'laterThanToday' | translate }}
+                        {{ 'atLeastOneHourAfterNow' | translate }}
                       </div>
                     </div>
                   </div>
@@ -344,10 +347,10 @@
                       <div *ngIf="
                           createForm.controls['endDate'].errors &&
                           createForm.controls['endDate'].errors[
-                            'laterThanStartDate'
+                            'atLeastOneHourAfterStartDate'
                           ]
                         " style="color: red">
-                        {{ 'laterThanStartDate' | translate }}
+                        {{ 'atLeastOneHourAfterStartDate' | translate }}
                       </div>
                     </div>
                   </div>

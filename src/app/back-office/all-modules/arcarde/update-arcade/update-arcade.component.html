@@ -222,10 +222,10 @@
                       <div *ngIf="
                             updateForm.controls['startRegistrationDate'].errors &&
                             updateForm.controls['startRegistrationDate'].errors[
-                              'laterThanToday'
+                              'atLeastOneHourAfterNow'
                             ]
                           " style="color: red">
-                        {{ 'laterThanToday' | translate }}
+                        {{ 'atLeastOneHourAfterNow' | translate }}
                       </div>
                     </div>
                   </div>
@@ -261,10 +261,10 @@
                       <div *ngIf="
                             updateForm.controls['endRegistrationDate'].errors &&
                             updateForm.controls['endRegistrationDate'].errors[
-                              'laterThanStartRegistrationDate'
+                              'atLeastOneHourAfterStartRegistration'
                             ]
                           " style="color: red">
-                        {{ 'laterThanStartRegistrationDate' | translate }}
+                        {{ 'atLeastOneHourAfterStartRegistration' | translate }}
                       </div>
                     </div>
                   </div>
@@ -294,11 +294,11 @@
                       <div *ngIf="
                             updateForm.controls['startDate'].errors &&
                             updateForm.controls['startDate'].errors[
-                              'laterThanEndRegistrationDate'
+                              'atLeastOneHourAfterEndRegistration'
                             ]
                           " style="color: red">
                         {{ "startDate" | translate }}
-                        {{ 'laterThanEndRegistrationDate' | translate }}
+                        {{ 'atLeastOneHourAfterEndRegistration' | translate }}
                       </div>
                     </div>
                   </div>
@@ -325,10 +325,10 @@
                       <div *ngIf="
                             updateForm.controls['endDate'].errors &&
                             updateForm.controls['endDate'].errors[
-                              'laterThanStartDate'
+                              'atLeastOneHourAfterStartDate'
                             ]
                           " style="color: red">
-                        {{ 'laterThanStartDate' | translate }}
+                        {{ 'atLeastOneHourAfterStartDate' | translate }}
                       </div>
                     </div>
                   </div>

@@ -221,6 +221,43 @@ export class SousCompetitionService {
     });
   }
 
+  //Get competition tree
+  getCompetitionTree(competitionId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(
+          `${environment.url}/${EndpointSousCompetion.GET_COMPETITION_TREE}/${competitionId}`,
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error: any) => {
+            if (error.statusCode === 404)
+              this.translate
+                .get("arcade.arcade")
+                .subscribe((arcade: string) => {
+                  this.translate
+                    .get("errorResponse.entityNotFound", { entity: arcade })
+                    .subscribe((res: string) => {
+                      this.toastr.error(res, "Error");
+                    });
+                });
+            else
+              this.translate
+                .get("errorResponse.unexpectedError")
+                .subscribe((res: string) => {
+                  this.toastr.error(res, "Error");
+                });
+            reject(error);
+          }
+        );
+    });
+  }
+
   getArcadeCompetitionsByChildCompetition(competitionId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.httpClient

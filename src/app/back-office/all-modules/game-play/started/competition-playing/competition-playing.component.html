@@ -56,8 +56,10 @@
             <div class="d-flex align-items-center current-player-timer w-100">
               <app-avatar-photo [name]="player.name"></app-avatar-photo>
               <p class="mb-0 me-3">{{ player.name }} 
-                <span *ngIf="player._id === playerId">(Vous) </span>
-                <!-- <span class="text-success" *ngIf="player._id === currentPlayerId"><i class="fas fa-clock"></i></span> -->
+                <span *ngIf="player._id === playerId"> <br> (Vous) </span> <br>
+                <!-- <span class="badge bg-primary text-light" *ngIf="playing">
+                  Votre tour de jouer
+                </span> -->
               </p> 
               <div #circularProgress *ngIf="playing && (player._id === currentPlayerId)" class="circular-progress">
                 <span class="progress-value"></span>

@@ -1,12 +1,17 @@
 <section id="competitions">
-  <div *ngIf="!competitions?.length || fetching"
-    class="d-flex align-items-center text-center justify-content-center vh-50">
-    <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
-    <p *ngIf="!(competitions?.length || fetching)" class="text-center">{{ 'arcade.noSubCompetitions' | translate }}</p>
-  </div>
-  <div *ngIf="!fetching" class="tree">
-    <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId"
-      (deletedFeedback)="deletedSubCompettitionFeedback($event)">
-    </app-arcade-sub-competition>
+  <div class="d-md-flex">
+    <app-competiton-tree class="col-md-3" [competitions]="competitions"></app-competiton-tree>
+    <div class="col-md-9 me-md-3">
+      <div *ngIf="!competitions?.length || fetching"
+        class="d-flex align-items-center text-center justify-content-center vh-50">
+        <img *ngIf="fetching" src="assets/img/loader.gif" alt="" width="30px" />
+        <p *ngIf="!(competitions?.length || fetching)" class="text-center">{{ 'arcade.noSubCompetitions' | translate }}</p>
+      </div>
+      <div *ngIf="!fetching" class="tree">
+        <app-arcade-sub-competition *ngIf="competitions?.length" [competitions]="competitions" [arcadeId]="arcadeId"
+          (deletedFeedback)="deletedSubCompettitionFeedback($event)">
+        </app-arcade-sub-competition>
+      </div>
+    </div>
   </div>
 </section>

@@ -26,7 +26,6 @@ export class CompetitionDetailsComponent implements OnInit {
 
   constructor(
     public subCompetitionService: SousCompetitionService,
-    private toastr: ToastrService,
     private router: Router,
     private activedRouter: ActivatedRoute
   ) {

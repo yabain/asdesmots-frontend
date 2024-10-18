@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SousCompetitionService } from '../services/sous-competition.service';
 
 @Component({
   selector: 'app-competiton-tree',
@@ -7,29 +6,11 @@ import { SousCompetitionService } from '../services/sous-competition.service';
   styleUrls: ['./competiton-tree.component.css']
 })
 export class CompetitonTreeComponent implements OnInit {
-  @Input() arcadeId: string;
-  
-  fetching: boolean = true;
-  competitions: any[] = [];
+  @Input() competitions: any[] = [];
 
-  constructor(private subCompetitionService: SousCompetitionService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getCompetitionsByArcade(this.arcadeId)
-  }
-
-  
-  getCompetitionsByArcade(arcadeId: string) {
-    this.subCompetitionService
-      .getArcadeCompetitions(arcadeId)
-      .then((response: any) => {
-        this.competitions.push(response.data);
-        this.fetching = false;
-      })
-      .catch((error) => {
-        console.error(error);
-        this.fetching = false;
-      });
   }
 
 }

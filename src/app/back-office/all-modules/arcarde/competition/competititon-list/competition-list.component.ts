@@ -12,6 +12,7 @@ export class CompetitionlistComponent implements OnInit {
   @Output() updateArcadeCompetitionId = new EventEmitter<string>();
   @Input() competition: any;
   @Input() arcadeId: string;
+  @Input() competitionId: string;
 
   fetching: boolean = true;
 
@@ -23,8 +24,12 @@ export class CompetitionlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.arcadeId)
+    if(this.arcadeId) {
       this.getCompetitionsByArcade(); 
+    }
+    else if(this.competitionId) {
+      this.getCompetitionsTree(); 
+    }
   }
 
   getCompetitionsByArcade() {
@@ -33,6 +38,22 @@ export class CompetitionlistComponent implements OnInit {
       .then((response: any) => {
         this.updateArcadeCompetitionId.emit(response.data._id);
         this.competitions.push(response.data);
+        console.log(this.competitions);
+        this.fetching = false;
+      })
+      .catch((error) => {
+        console.error(error);
+        this.fetching = false;
+      });
+  }
+
+  getCompetitionsTree() {
+    this.sousCompetitionService
+      .getCompetitionTree(this.competitionId)
+      .then((response: any) => {
+        this.updateArcadeCompetitionId.emit(response.data._id);
+        this.competitions.push(response.data);
+        console.log(this.competitions);
         this.fetching = false;
       })
       .catch((error) => {

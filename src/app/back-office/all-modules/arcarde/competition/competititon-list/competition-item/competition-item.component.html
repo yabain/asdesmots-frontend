@@ -1,14 +1,31 @@
-  <ng-container *ngIf="competition.children && competition.children.length > 0; else noChildren">
-    <details>
-      <summary>{{ competition.name }}</summary>
-      <!-- <p>{{ competition.description }}</p> -->
-      <ul *ngIf="competition.children && competition.children.length > 0">
-        <li *ngFor="let child of competition.children">
-          <app-competition-item [competition]="child"></app-competition-item>
-        </li>
-      </ul>
-    </details>
-  </ng-container>
-  <ng-template #noChildren>
-    <p>{{ competition.description }}</p>
-  </ng-template>
+ <ng-container
+  *ngIf="competition.children && competition.children.length > 0; else noChildren">
+  <details>
+    <summary>
+      {{ competition.name }}
+      <a class="badge badge-pill bg-info-light ms-3"
+        [routerLink]="['/competition/details',competition._id]"
+        data-toggle="tooltip" data-placement="top"
+        title="{{ 'competition.details' | translate }}">
+        <i class="fas fa-eye"></i>
+      </a>
+    </summary>
+    <!-- <p>{{ competition.description }}</p> -->
+    <ul *ngIf="competition.children && competition.children.length > 0">
+      <li *ngFor="let child of competition.children">
+        <app-competition-item [competition]="child"></app-competition-item>
+      </li>
+    </ul>
+  </details>
+</ng-container>
+<ng-template #noChildren>
+  <p>
+    {{ competition.name }}
+    <a class="badge badge-pill bg-info-light ms-3"
+      [routerLink]="['/competition/details',competition._id]"
+      data-toggle="tooltip" data-placement="top"
+      title="{{ 'competition.details' | translate }}">
+      <i class="fas fa-eye"></i>
+    </a>
+  </p>
+</ng-template>

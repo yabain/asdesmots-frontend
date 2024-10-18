@@ -1,100 +1,139 @@
    .rating-bar {
-            height: 5px;
-            background-color: #e0e0e0; /* Couleur de fond grise */
-            border-radius: 5px; /* Arrondi */
-        }
-        .rating-fill {
-            height: 100%;
-            background-color: #17a2b8; /* Couleur de la barre remplie (teinte info) */
-            border-radius: 5px; /* Arrondi */
-            width: 0; /* Largeur initiale */
-            transition: width 0.3s; /* Animation pour le chargement */
-        }
+          height: 5px;
+          background-color: #e0e0e0;
+          /* Couleur de fond grise */
+          border-radius: 5px;
+          /* Arrondi */
+   }
+
+   .rating-fill {
+          height: 100%;
+          background-color: #17a2b8;
+          /* Couleur de la barre remplie (teinte info) */
+          border-radius: 5px;
+          /* Arrondi */
+          width: 0;
+          /* Largeur initiale */
+          transition: width 0.3s;
+          /* Animation pour le chargement */
+   }
 
 
-/* style="width: 80%;" : Définissez la largeur de la barre remplie en fonction de la note. Par exemple,
+   .row-role::-webkit-scrollbar {
+          display: none;
+   }
+
+
+   .row-role {
+          scrollbar-width: none;
+   }
+
+
+   .card-list-user {
+          /* background-color: red !important; */
+   }
+
+   /* style="width: 80%;" : Définissez la largeur de la barre remplie en fonction de la note. Par exemple,
  pour une note de 4 sur 5, vous pouvez définir la largeur à 80% (4/5 * 100). */
 
 
 
- .dropdown-toggle::after {
-    
-    margin-left: 1.255em;
-}
+   .dropdown-toggle::after {
 
-th {
-    width: 20% !important;
-}
+          margin-left: 1.255em;
+   }
 
-.table>tbody>tr>td { 
-    font-size: 13px;
-}
+   th {
+          width: 20% !important;
+   }
 
-table.table td, table.table th {
-    border: none;
-}
+   .table>tbody>tr>td {
+          font-size: 13px;
+   }
 
-.table-responsive { 
-    border: 1px solid #00000017;
-    border-radius: 21px;
-    padding-top: 20px;
-}
+   table.table td, table.table th {
+          border: none;
+   }
 
-
- .btn:hover { 
-    background-color: hsl(120 40% 40% / 1);
-    color: white;
-}
+   .table-responsive {
+          /* border: 1px solid #00000017; */
+          /* border-radius: 21px;
+          padding-top: 20px; */
+   }
 
 
-.custom-modal .modal-content
-{
-     
-    border-radius: 30px; 
-
-}
+   .btn:hover {
+          background-color: hsl(120 40% 40% / 1);
+          color: white;
+   }
 
 
-.custom-modal .modal-body
-{
+   .custom-modal .modal-content {
 
-    padding: 10px 30px !important;
+          border-radius: 30px;
 
-}
-
-
-.custom-modal .modal-footer
-{
-    
-    padding-bottom: 0.75rem !important;
-
-}
-
-.modal .card
-{
-
-  margin-bottom: 10px !important;
-
-}
+   }
 
 
-.form-check-input[type=checkbox]
-{
+   .custom-modal .modal-body {
 
-    width: 1.1rem;
-    height: 1.1rem;
-    border: 1.5px solid;
+          padding: 10px 30px !important;
 
-}
+   }
+
+
+   .custom-modal .modal-footer {
+
+          padding-bottom: 0.75rem !important;
+
+   }
+
+   .modal .card {
+
+          margin-bottom: 10px !important;
+
+   }
+
+
+   .form-check-input[type=checkbox] {
+
+          width: 1.1rem;
+          height: 1.1rem;
+          border: 1.5px solid;
+
+   }
 
 
 
+   .card-table .card-body .table td {
+
+          height: 100%;
+   }
+
+
+   .tdHover {
+          width: max-content;
+          height: max-content;
+          background-color: #ffffff;
+   }
+
+   .tr {
+          /* width: 32% !important; */
+   }
 
 
 
+   .tr:hover {
+          /* width: 100% !important; */
+   }
 
 
-/* .modal {
+   .ctnRole:hover .tr {
+
+          /* width: 50% !important; */
+   }
+
+   /* .modal {
   position: fixed;
   top: 0;
   left: 0;

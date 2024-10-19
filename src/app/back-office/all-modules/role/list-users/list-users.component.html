@@ -26,11 +26,14 @@
               </div>
        </div>
 </div>
-<!-- /Search Filter -->
 
-<p class=" text-center" *ngIf="waiting">
-       <img src="../../../../../assets/img/loader.gif" height="30px" alt>
-</p>
+<!-- Bloc de chargement -->
+<div *ngIf="dataIsloading" class="row">
+       <div *ngFor="let plh of [1,1,1,1,1,1,1,1,1,1,1,1]; let i = index"
+              class="col-12 col-md-2 col-lg-4 col-xl-3">
+              <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
+       </div>
+</div>
 
 <!-- <p>
      <button (click)="backClicked()" class="btn btn-primary me-2"
@@ -39,9 +42,27 @@
      </button>
   </p> -->
 
-<div class="row" *ngIf="!waiting">
+<div class="row" *ngIf="!dataIsloading">
        <div class="card-table card-list-user">
-              <div class="card-body">
+              <div class="card-body" style="position: relative;">
+                     <div class="backdrop" (click)="onMouseLeave('user')"
+                            [ngStyle]="{ 
+                                                                      'backdrop-filter': showBackdrop ? 'blur(4px)' :'blur(0px)',
+                                                                      'background': showBackdrop ? 'hsl(0deg 0% 0% / 3%)' :'hsl(0deg 0% 0% / 0%)',
+                                                                      'z-index': showBackdrop  ? '10' :'0'
+                                                                      
+                                                                      }"
+                            style="
+                                                               
+                                                               position: absolute;
+                                                               top: 0;
+                                                               left: 0;
+                                                               height: 100%;
+                                                               width: 100%;
+                                                               background: hsl(0deg 0% 0% / 3%);
+                                                               transition-duration: 150ms;
+                                                                /* z-index: 5; */
+                                                               "></div>
                      <div class="table-responsive">
                             <div class="table-scroll" style="border: none;">
                                    <table matSort
@@ -68,22 +89,23 @@
                                           </thead>
                                           <tbody
                                                  style="display: flex;flex-wrap: wrap;justify-content: space-between;">
+
                                                  <tr
                                                         [ngStyle]="{ 
                                                                'padding': showElement && idxHover === indexUser && customer.roles.length >4 ? '10px 0px' :'10px 8px',
-                                                               'z-index': showElement  && idxHover === indexUser? '1000' :'1'  
-                                                          }"
+                                                              'z-index': showElement && idxHover === indexUser || idxHover === indexUser  ? '1000' : '1'
+                                                               }"
                                                         class="tr"
                                                         style=" 
-                                                        width: 24%;
+                                                        width: 24.5%;
                                                         border-radius: 20px;
                                                         height: 240px;
-                                                        margin-bottom: 45px;
+                                                        margin-bottom: 15px;
                                                         padding: 10px 25px ;
                                                         background-color: white;
+                                                        transition-duration: 200ms;
                                                         border: 1px solid hsl(214deg 100% 61% / 20%) !important;
                                                  "
-                                                        (mouseleave)="onMouseLeave()"
                                                         (click)="buildListRoleChooseUser(customer)"
                                                         *ngFor="let customer of dataSource.data; let indexUser = index;">
                                                         <!-- <td>
@@ -105,14 +127,11 @@
 
                                                         <td
                                                                [ngStyle]="{ 'height': showElement  && idxHover === indexUser  && customer.roles.length >4? 'max-content' : '100%',
-                                                                             'padding': showElement && idxHover === indexUser && customer.roles.length >4 ? '0px 8px 75px 8px' :'0',
+                                                                             'padding': showElement && idxHover === indexUser && customer.roles.length >4 ? '0px 8px 30px 8px' :'0',
                                                                              'border': showElement && idxHover === indexUser && customer.roles.length >4 ? '0px solid hsl(214deg 100% 61% / 20%) ' :'none',
                                                                              'border-radius': showElement && idxHover === indexUser && customer.roles.length >4 ? '20px ' :'0',
-                                                                                     'box-shadow': showElement && idxHover === indexUser && customer.roles.length >4 ? '0 0px 8px hsl(214deg 100% 61% / 20%) ' : 'none'
-
-
-
-
+                                                                             'box-shadow': showElement && idxHover === indexUser && customer.roles.length >4 ? '0 0px 8px hsl(214deg 100% 61% / 20%) ' : 'none'
+ 
                                                                 }"
                                                                style=" background-color: white ;display: flex;flex-direction: column; justify-content: space-between;padding: 0;">
                                                                <h2
@@ -129,7 +148,6 @@
                                                                </h2>
 
                                                                <div
-                                                                      (mouseenter)="onMouseEnter(customer,indexUser)"
                                                                       [ngStyle]="{ 'height': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'max-content' : '150px'  }"
                                                                       class="ctnRole"
                                                                       style="    height: 150px; overflow: hidden;"
@@ -149,17 +167,40 @@
                                                                                                   class="dash-widget-header mb-0">
 
                                                                                                   <div
+                                                                                                         (mouseenter)="onMouseRoleEnter(indexUser,idxRole)"
+                                                                                                         (mouseleave)="onMouseLeave('role')"
                                                                                                          class="dash-count">
                                                                                                          <div
                                                                                                                 class="dash-title"
-                                                                                                                [ngStyle]="{ 'overflow': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'visible' : 'hidden',
-                                                                                                                'white-space': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'break-spaces' : 'nowrap'  }"
                                                                                                                 style="font: 400 calc(14px * 0.83) / 20px Roboto, 'Helvetica Neue', sans-serif;
                                                                                                                 color: hsl(214deg 100% 61% / 70%)  !important;
-                                                                                                                overflow: hidden;
-                                                                                                                width: 70px;">{{
-                                                                                                                getRoleNameById(id,'description')
-                                                                                                                }}</div>
+                                                                                                                display: flex;
+                                                                                                                       align-items: center;
+                                                                                                                ">
+                                                                                                                <div
+                                                                                                                       [ngStyle]="{ 'overflow': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'visible' : 'hidden',
+                                                                                                                'white-space': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'break-spaces' : 'nowrap'  }"
+                                                                                                                       style="overflow: hidden;width: 70px;">
+                                                                                                                       {{
+                                                                                                                       getRoleNameById(id,'description')
+                                                                                                                       }}</div>
+
+                                                                                                                <span
+                                                                                                                       (click)="removeUserRole(customer._id,id)"
+                                                                                                                       [ngStyle]="{ 'visibility': idxHover === indexUser  &&  idxRole == idxRoleHover ? 'visible' : 'hidden' }">
+
+                                                                                                                       <button
+                                                                                                                              style="    padding: 0px 5px;"
+                                                                                                                              type="button"
+                                                                                                                              class="btn btn-rounded btn-outline-danger me-1">
+                                                                                                                              <i
+                                                                                                                                     class="fa fa-trash"
+                                                                                                                                     data-bs-toggle="tooltip"
+                                                                                                                                     title="supprimer"></i>
+                                                                                                                       </button>
+                                                                                                                </span>
+                                                                                                         </div>
+
                                                                                                          <div
                                                                                                                 class="dash-counts">
                                                                                                                 <p
@@ -177,26 +218,34 @@
                                                                </div>
 
                                                                <div
+                                                                      [ngStyle]="{ 
+                                                                             'margin-top': showElement && idxHover === indexUser && customer.roles.length >4 ? '25px' :'0'
+                                                                             
+                                                                }"
                                                                       class="row row-role">
                                                                       <div
-                                                                             class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                                                                             class="col-7 ">
                                                                              <div
                                                                                     class="btn-group">
                                                                                     <button
                                                                                            type="button"
                                                                                            class="btn btn-primary">Roles</button>
                                                                                     <button
+                                                                                           (click)="onMouseRoleBtnEnter(indexUser); closeDropdown('true')"
                                                                                            type="button"
                                                                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split me-1"
                                                                                            data-bs-toggle="dropdown"
                                                                                            aria-haspopup="true"
-                                                                                           aria-expanded="false">
+                                                                                           aria-expanded="false"
+                                                                                           #roleDropdown>
                                                                                            <span
                                                                                                   class="visually-hidden">Toggle
                                                                                                   Dropdown</span>
                                                                                     </button>
                                                                                     <div
-                                                                                           class="dropdown-menu">
+                                                                                           [ngStyle]="{'visibility' : showDropDown  ?  'visible' : 'hidden'}"
+                                                                                           style="z-index: 20;  top: -13px;"
+                                                                                           class="dropdown-menu ">
                                                                                            <a
                                                                                                   *ngFor="let roleGet of this.roleService.listRole"
                                                                                                   class="dropdown-item"
@@ -219,14 +268,44 @@
                                                                                            <div
                                                                                                   class="dropdown-divider"></div>
                                                                                            <button
+                                                                                                  style="width: 100%;"
                                                                                                   (click)="addRoleOnUser(customer._id); showUserID(customer._id);stopPropagation($event)"
                                                                                                   type="button"
-                                                                                                  class="btn btn-primary">ajouter</button>
+                                                                                                  class="btn btn-primary">
+                                                                                                  <span
+                                                                                                         [ngStyle]="{
+                                                                                                                 'display': isAddingRole ?  'inline-block' : ' none '
+                                                                                                         }"
+                                                                                                         class="spinner-border spinner-border-sm"
+                                                                                                         role="status"
+                                                                                                         aria-hidden="true"></span>
+                                                                                                  <span
+                                                                                                         [ngStyle]="{'display': isAddingRole ?  'none' : 'inline-block'}">ajouter</span>
+                                                                                           </button>
                                                                                     </div>
                                                                              </div>
                                                                       </div>
+                                                                      <div
+                                                                             style="display: flex
+;
+                                                                             align-items: center;
+                                                                             align-items: end;
+                                                                             padding-bottom: 2px;
+                                                                             color: #0d6efd;
+                                                                             font-size: 13px;
+                                                                             line-height: 17px;"
+                                                                             class="col-5 ">
+
+                                                                             <a
+                                                                                    (click)="onMouseEnter(0,indexUser,indexUser,customer.roles.length)">Voir
+                                                                                    <br>
+                                                                                    tous
+                                                                                    les
+                                                                                    roles</a>
+                                                                      </div>
                                                                </div>
                                                         </td>
+
                                                         <!-- <td style="
     width: 129%;
 ">

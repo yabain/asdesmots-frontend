@@ -11,30 +11,33 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
 import { GamePlaceHolderComponent } from './started/game-place-holder/game-place-holder.component';
 import { SharedModule } from '../../shared/shared.module';
+
 import { OncommingListPlaceholderComponent } from './oncomming/oncomming-list-placeholder/oncomming-list-placeholder.component';
 import { CompetitionPlayingComponent } from './started/competition-playing/competition-playing.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule2 } from 'src/app/shared/shared.module2';
 
 
-@NgModule({
-  declarations: [
-    ListComponent,
-    OncommingComponent,
-    StartedComponent,
-    AvatarPhotoComponent,
-    GamePlaceHolderComponent,
-    OncommingListPlaceholderComponent,
-    CompetitionPlayingComponent
-  ],
-  imports: [
-    CommonModule,
-    GamePlayRoutingModule,
-    TranslateModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    SharedModule,
-    NgbModule
-  ]
-})
+@NgModule( {
+       declarations: [
+              ListComponent,
+              OncommingComponent,
+              StartedComponent,
+              AvatarPhotoComponent,
+              GamePlaceHolderComponent,
+              CompetitionPlayingComponent
+       ],
+       imports: [
+              CommonModule,
+              GamePlayRoutingModule,
+              TranslateModule,
+              FormsModule,
+              ReactiveFormsModule,
+              RouterModule,
+              SharedModule,
+              SharedModule2,
+
+              NgbModule
+       ]
+} )
 export class GamePlayModule { }

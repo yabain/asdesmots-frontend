@@ -62,10 +62,6 @@
    }
 
 
-   .btn:hover {
-          background-color: hsl(120 40% 40% / 1);
-          color: white;
-   }
 
 
    .custom-modal .modal-content {
@@ -132,6 +128,26 @@
 
           /* width: 50% !important; */
    }
+
+
+
+   .table .dropdown-menu {
+
+          margin-top: -3px !important;
+   }
+
+
+   .btn:hover {
+          transition: none !important;
+   }
+
+
+   .btn {
+    
+       transition: none !important;
+    
+   }
+
 
    /* .modal {
   position: fixed;

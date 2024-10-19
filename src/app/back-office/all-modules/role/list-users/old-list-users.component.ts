@@ -12,7 +12,7 @@ import { log } from 'console';
 
 @Component( {
        selector: 'app-list-users',
-       templateUrl: './list-users.component.html',
+       templateUrl: './list-users.component copy 2.html',
        styleUrls: [ './list-users.component.css' ]
 } )
 export class ListUsersComponent implements OnInit

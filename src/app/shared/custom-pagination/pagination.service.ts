@@ -20,9 +20,9 @@ export class PaginationService
        tableauUSerToshow: any[] = []
        tableauUSerToshowConvert: any
        pageSize = 12;
-       limit = 10;
+       limit = 12;
        skip = 0;
-       limitGeneral = 10;
+       limitGeneral = 12;
        skipGeneral = 0;
 
        tablePageSize: BehaviorSubject<tablePageSize> =

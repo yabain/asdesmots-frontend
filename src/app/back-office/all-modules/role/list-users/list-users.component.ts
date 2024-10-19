@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { RoleService } from '../service/role.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -39,19 +39,32 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
        checkedRoles: string[] = [];
 
 
-       showElement = false
        idxHover = null
+       idxRoleHover = null
+       showElement = false
+       dataIsloading = false
+       dataIsLoaded = false
+       showBackdrop = false
+       sendTrFront = false
+
+
+       isAddingRole = false
+       showDropDown = true
 
        pageOption = {
               skip: 0, // Valeur de décalage
-              limit: 10 // Limite d'entrées par page
+              limit: 12 // Limite d'entrées par page
        };
        public totalData = 0;
-       public pageSize = 10;
+       public pageSize = 12;
        dataSource = new MatTableDataSource<any>();
        private pagination: PaginationService;
 
        public serialNumberArray: Array<number> = [];
+
+
+       @ViewChild( '#roleDropdown', { static: true } ) boutonElement!: ElementRef;
+
 
        constructor (
               private translate: TranslateService,
@@ -61,7 +74,9 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
               private toastr: ToastrService,
               private fb: FormBuilder,
               private location: Location,
-              private paginationService: PaginationService // Ajout du service de pagination
+              private paginationService: PaginationService,// Ajout du service de pagination
+              private renderer: Renderer2,
+              private el: ElementRef,
        )
        {
               this.translate.use( this.translationService.getCurrentLanguage() );
@@ -155,18 +170,65 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
 
 
 
-
-
-
-       onMouseEnter( customer: any, idxGet )
+       triggerClick()
        {
-              this.showElement = true
-              this.idxHover = idxGet
+              this.boutonElement.nativeElement.click();
        }
 
-       onMouseLeave()
+
+
+
+       onMouseEnter( customer: any, idxUser, idxRoleGet, roleLenght )
        {
-              this.showElement = false
+              this.showElement = true
+              this.idxHover = idxUser
+
+              if ( roleLenght > 4 )
+              {
+
+                     this.showBackdrop = true
+              }
+       }
+
+
+
+       onMouseRoleEnter( idxUser: number, idxRoleGet: number )
+       {
+
+              this.idxRoleHover = idxRoleGet
+              this.idxHover = idxUser
+
+              // console.log( 'permission hover' )
+       }
+
+       onMouseRoleBtnEnter( idxUser: number )
+       {
+              this.idxHover = idxUser
+              this.showBackdrop = true
+              console.log( 'send tr font setted to true' )
+              console.log( 'idx user get', idxUser )
+       }
+
+       onMouseLeave( categorie )
+       {
+              if ( categorie === 'role' )
+              {
+
+
+                     this.idxRoleHover = null
+                     // console.log( 'sortir effectuer' )
+
+              }
+
+              if ( categorie === 'user' )
+              {
+
+
+                     this.showElement = false
+                     this.showBackdrop = false
+                     // console.log( 'sortir effectuer' )
+
+              }
        }
        // updateCheckboxState( role: any )
        // {
@@ -234,30 +296,111 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
 
 
 
-       addRoleOnUser( userid ): void
+       addRoleOnUser( userid: string ): void
        {
-              this.loader = true;
-              const listRoleId: string[] = this.checkedRoles;
+              this.isAddingRole = true;
+
+              const listRoleId: string[] = this.checkedRoles; // Liste des rôles sélectionnés
               const userId = userid;
-              this.roleService.addRoleOnUser( { userId: userId, roleId: listRoleId[ 0 ] } ).subscribe(
+
+              // Créer un tableau de Promises
+              const addRolePromises = listRoleId.map( ( roleId ) =>
+              {
+                     return this.roleService.addRoleOnUser( { userId: userId, roleId: roleId } ).toPromise() // Conversion en Promise
+                            .then( () =>
+                            {
+                                   console.log( `Rôle ${ roleId } ajouté avec succès à l'utilisateur ${ userId }` );
+                            } )
+                            .catch( ( error ) =>
+                            {
+                                   console.error( `Erreur lors de l'ajout du rôle ${ roleId } à l'utilisateur ${ userId }`, error );
+                            } );
+              } );
+
+              // Attendre que toutes les requêtes soient terminées
+              Promise.all( addRolePromises ).then( () =>
+              {
+                     // Toutes les requêtes sont terminées
+                     this.loadUsers(); // Recharge la liste des utilisateurs après l'ajout des rôles
+                     this.isAddingRole = false; // Mettre à jour l'état après l'ajout des rôles
+                     // this.closeDropdown(); // Fermer le dropdown même en cas d'erreur
+                     this.showDropDown = false
+                     this.showElement = false
+                     this.showBackdrop = false
+                     // this.triggerClick()
+
+
+
+
+                     console.log( 'Tous les rôles ont été ajoutés avec succès' );
+              } ).catch( ( error ) =>
+              {
+                     console.error( 'Erreur lors de l\'ajout de certains rôles', error );
+                     this.isAddingRole = false;
+              } );
+
+
+
+       }
+
+
+
+
+
+
+       // Méthode pour fermer le dropdown manuellement via JavaScript Bootstrap
+       closeDropdown( shw ): void
+       {
+              if ( shw === 'true' )
+              {
+
+                     this.showDropDown = true
+
+              } else
+              {
+                     this.showDropDown = false
+              }
+       }
+
+
+
+
+
+
+
+
+       removeUserRole( userId: string, roleId: string ): void
+       {
+              console.log( 'id du role a suppromer recu depuis le parametre', roleId )
+              this.loader = true;
+
+              // Itérer sur chaque rôle et l'envoyer un par un
+
+              this.roleService.removeRole( { userId: userId, roleId: roleId } ).subscribe(
                      ( response ) =>
                      {
-                            this.loader = false;
-                            const closeButton = document.getElementById( 'cancel-btn2' );
-                            if ( closeButton )
-                            {
-                                   closeButton.click();
-                            }
-                            this.loadUsers()
+                            // Vous pouvez ajouter une gestion des succès par rôle ici
 
+                            this.loadUsers(); // Recharge la liste des utilisateurs après l'ajout des rôles
+                            console.log( `Rôle ${ roleId } supprimer avec succès à l'utilisateur ${ userId }` );
                      },
                      ( error ) =>
                      {
-                            // Gestion des erreurs
-                            this.loader = false;
+                            // Gestion des erreurs pour chaque rôle
+                            console.error( `Erreur lors de la suppression du rôle ${ roleId } à l'utilisateur ${ userId }` );
                      }
               );
+
+
+
+
        }
+
+
+
+
+
+
 
        showUserID( id: any )
        {
@@ -311,28 +454,13 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
               this.dataSource.filter = filterValue.trim().toLowerCase();
        }
 
-       onPageChange( event: any ): void
-       {
-              // console.log( 'this.pagination applee' )
-
-              this.paginationService.skip = 0;
-              this.paginationService.limit = 10;
-              this.paginationService.pageSize = 10;
-       }
 
 
 
 
 
-       // Handle page size change
-       onPageSizeChange( pageSize: number ): void
-       {
-              console.log( 'apppeller' )
-              this.pageOption.limit = pageSize; // Mettez à jour la taille de la page
-              this.pageOption.skip = 0; // Réinitialiser le décalage
-              this.getTableData( this.pageOption ); // Recharger les données pour la première page avec la nouvelle taille de page
-       }
 
+       Z
 
 
 
@@ -342,6 +470,10 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
 
        loadUsers()
        {
+              if ( !this.dataIsLoaded )
+              {
+                     this.dataIsloading = true
+              }
               // this.waiting = true; // Début du chargement
               console.log( 'loader user appelé' );
               const storedCustomers = localStorage.getItem( 'users-list' );
@@ -381,6 +513,8 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
                             console.log( 'Données récupérées du service:', result );
                             if ( result && result.data && Array.isArray( result.data ) )
                             {
+
+                                   this.trierParRoles( result.data )
                                    this.customers = result.data;
 
                                    this.paginationService.tableauUSerGet = this.customers
@@ -423,6 +557,8 @@ export class ListUsersComponent implements OnInit, AfterContentChecked
                      .finally( () =>
                      {
                             this.waiting = false; // Fin du chargement
+                            this.dataIsloading = false
+                            this.dataIsLoaded = true
                      } );
               // }
        }

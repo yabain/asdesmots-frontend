@@ -457,14 +457,17 @@ export class RoleService
               } );
        }
 
-       removeRole( roleId: string, userId: string ): Observable<any>
+       removeRole( requestBody: { userId: string, roleId: string } ): Observable<any>
        {
               return new Observable( ( observer ) =>
               {
                      this.api
                             .delete(
-                                   EndpointRole.REMOVE_ROLE + `/${ userId }/${ roleId }`,
-                                   this.authorisation
+
+                                   EndpointRole.REMOVE_ROLE,
+                                   this.authorisation,
+                                   requestBody
+
                             )
                             .subscribe(
                                    ( resp ) =>
@@ -485,6 +488,10 @@ export class RoleService
                                           } else if ( error.status == 401 )
                                           {
                                                  this.toastr.error( 'Invalid Token', 'error', { timeOut: 10000 } );
+                                          }
+                                          else if ( error.status == 400 )
+                                          {
+                                                 this.toastr.error( 'Invalid ID', 'error', { timeOut: 10000 } );
                                           } else
                                           {
                                                  this.toastr.error( error.message, 'Error', { timeOut: 7000 } );

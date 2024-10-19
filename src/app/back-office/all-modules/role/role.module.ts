@@ -17,6 +17,11 @@ import { DataTablesModule } from 'angular-datatables';
 import { PermissionsCardComponent } from './role-create/permissions-card/permissions-card.component';
 import { CustomPaginationModule } from 'src/app/shared/custom-pagination/custom-pagination.module';
 import { ListUserOldComponent } from './list-user-old/list-user-old.component';
+import { ArcadeListPlaceholderComponent } from '../arcarde/list-arcarde/arcade-list-placeholder/arcade-list-placeholder.component';
+import { OncommingListPlaceholderComponent } from '../game-play/oncomming/oncomming-list-placeholder/oncomming-list-placeholder.component';
+import { GamePlayModule } from '../game-play/game-play.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule2 } from 'src/app/shared/shared.module2';
 
 
 @NgModule( {
@@ -30,11 +35,13 @@ import { ListUserOldComponent } from './list-user-old/list-user-old.component';
               ListUsersComponent,
               ListUserOldComponent,
               PermissionsCardComponent,
-              ListUserOldComponent,
+              ListUserOldComponent
+
 
        ],
        imports: [
               CommonModule,
+              SharedModule2,
               RoleRoutingModule,
               FormsModule,
               ReactiveFormsModule,

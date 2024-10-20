@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/entities/user';
 import { Permission } from 'src/app/shared/entities/permission';
 import { TranslationService } from 'src/app/shared/services/translation/language.service';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ErrorsService } from 'src/app/shared/services/errors/errors.service';
 
@@ -135,43 +135,95 @@ export class RoleService
               this.formAddPermission.valueChanges.subscribe( ( data ) => { } );
        }
 
-       createRole()
+
+
+       // fonction initiale pour effectuer l'ajout de role
+
+
+       // createRole(): Promise<any> {
+       //     this.waitingResponse = true;
+       //     this.creationDone = false;
+
+       //     return new Promise((resolve, reject) => {
+       //         this.api.post(EndpointRole.CREATE_ROLE, this.newRole, this.authorisation)
+       //             .subscribe(
+       //                 (resp) => {
+       //                     console.log('resp created role', resp);
+       //                     this.getListRole();
+       //                     this.waitingResponse = false;
+       //                     this.creationDone = true;
+       //                     this.toastr.success('Role Creation Done', 'Success', {
+       //                         timeOut: 5000,
+       //                     });
+
+       //                     resolve(resp); // Renvoie la réponse ici
+       //                 },
+       //                 (error: any) => {
+       //                     if (error.status === 500) {
+       //                         this.toastr.error(
+       //                             'Internal Server Error. Try again later please.',
+       //                             'Error',
+       //                             { timeOut: 10000 }
+       //                         );
+       //                     } else if (error.status === 401) {
+       //                         this.toastr.error('Invalid Token', 'error', { timeOut: 10000 });
+       //                     } else {
+       //                         this.toastr.error(error.message, 'Error', { timeOut: 7000 });
+       //                     }
+       //                     this.waitingResponse = false;
+       //                     reject(error); // Renvoie l'erreur ici
+       //                 }
+       //             );
+       //     });
+       // }
+
+
+
+       // fonction ajuster par valdo pour effectuer l'ajout de role
+
+       createRole(): Observable<any>
        {
               this.waitingResponse = true;
               this.creationDone = false;
-              this.api
-                     .post( EndpointRole.CREATE_ROLE, this.newRole, this.authorisation )
-                     .subscribe(
-                            ( resp ) =>
-                            {
-                                   console.log( 'resp created role', resp );
-                                   this.getListRole();
-                                   this.waitingResponse = false;
-                                   this.creationDone = true;
-                                   this.toastr.success( 'Role Creation Done', 'Success', {
-                                          timeOut: 5000,
-                                   } );
-                            },
-                            ( error: any ) =>
-                            {
-                                   if ( error.status == 500 )
+
+              return new Observable( ( observer ) =>
+              {
+                     this.api.post( EndpointRole.CREATE_ROLE, this.newRole, this.authorisation )
+                            .subscribe(
+                                   ( resp ) =>
                                    {
-                                          this.toastr.error(
-                                                 'Internal Server Error. Try again later please.',
-                                                 'Error',
-                                                 { timeOut: 10000 }
-                                          );
-                                   } else if ( error.status == 401 )
+                                          console.log( 'Rôle créé avec succès :', resp );
+                                          this.getListRole();
+                                          this.waitingResponse = false;
+                                          this.creationDone = true;
+
+                                          this.toastr.success( 'Role Creation Done', 'Success', { timeOut: 5000 } );
+
+                                          observer.next( resp ); // Émet la réponse avec next()
+                                          observer.complete();  // Termine l'observable
+                                   },
+                                   ( error: any ) =>
                                    {
-                                          this.toastr.error( 'Invalid Token', 'error', { timeOut: 10000 } );
-                                   } else
-                                   {
-                                          this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
+                                          this.waitingResponse = false;
+
+                                          if ( error.status === 500 )
+                                          {
+                                                 this.toastr.error( 'Internal Server Error. Try again later please.', 'Error', { timeOut: 10000 } );
+                                          } else if ( error.status === 401 )
+                                          {
+                                                 this.toastr.error( 'Invalid Token', 'error', { timeOut: 10000 } );
+                                          } else
+                                          {
+                                                 this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
+                                          }
+
+                                          observer.error( error );  // Émet une erreur avec error()
                                    }
-                                   this.waitingResponse = false;
-                            }
-                     );
+                            );
+              } );
        }
+
+
 
        updateRole( roleId: any, roleData?: any )
        {
@@ -323,74 +375,173 @@ export class RoleService
               );
        }
 
-       getListPermission()
+
+
+       // fonction iniatiale pour recuperer les lisye des permissions 
+
+       // getListPermission()
+       // {
+       //        this.waitinPermissionResp = true;
+       //        this.listPermission = [];
+       //        this.api
+       //               .get( EndpointRole.GET_LIST_PERMISSION, this.authorisation )
+       //               .subscribe(
+       //                      ( data: any ) =>
+       //                      {
+       //                             this.listPermission = Array.from( data.data );
+       //                             this.waitinPermissionResp = false;
+       //                      },
+       //                      ( error: any ) =>
+       //                      {
+       //                             if ( error.status == 500 )
+       //                             {
+       //                                    this.toastr.error(
+       //                                           'Internal Server Error. Try again later please.',
+       //                                           'Error',
+       //                                           { timeOut: 10000 }
+       //                                    );
+       //                             } else if ( error.status == 401 )
+       //                             {
+       //                                    this.toastr.error( 'Invalid Token', 'error', { timeOut: 10000 } );
+       //                             } else
+       //                             {
+       //                                    this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
+       //                             }
+       //                      }
+       //               );
+       // }
+
+
+
+       // fonction ajuster par valdo pour recuperer la liste des permissions
+
+
+       getListPermission(): Observable<any>
        {
               this.waitinPermissionResp = true;
               this.listPermission = [];
-              this.api
-                     .get( EndpointRole.GET_LIST_PERMISSION, this.authorisation )
-                     .subscribe(
-                            ( data: any ) =>
+
+              return this.api.get( EndpointRole.GET_LIST_PERMISSION, this.authorisation )
+                     .pipe(
+                            tap( ( data: any ) =>
                             {
                                    this.listPermission = Array.from( data.data );
                                    this.waitinPermissionResp = false;
-                            },
-                            ( error: any ) =>
+                            } ),
+                            catchError( ( error: any ) =>
                             {
-                                   if ( error.status == 500 )
+                                   this.waitinPermissionResp = false;
+
+                                   if ( error.status === 500 )
                                    {
                                           this.toastr.error(
                                                  'Internal Server Error. Try again later please.',
                                                  'Error',
                                                  { timeOut: 10000 }
                                           );
-                                   } else if ( error.status == 401 )
+                                   } else if ( error.status === 401 )
                                    {
                                           this.toastr.error( 'Invalid Token', 'error', { timeOut: 10000 } );
                                    } else
                                    {
                                           this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
                                    }
-                            }
+
+                                   // Utilisation de throwError pour renvoyer l'erreur dans le flux d'Observable
+                                   return throwError( () => new Error( error ) );
+                            } )
                      );
        }
 
-       addPermissionOnRole( requestBody: { roleId: string; permissionId: string[] } )
+
+       // fonction initiale pour ajouter les permission
+       // addPermissionOnRole( requestBody: { roleId: string; permissionId: string[] } )
+       // {
+       //        this.checkboxChecked = false;
+       //        this.loader = true;
+       //        console.log( 'request adding ', requestBody );
+       //        this.api
+       //               .post( EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation )
+       //               .subscribe(
+       //                      ( resp ) =>
+       //                      {
+       //                             this.getListRole();
+       //                             this.toastr.success( 'Permission Added', 'SUCCESS', { timeOut: 7000 } );
+       //                             this.loader = false;
+       //                      },
+       //                      ( error: any ) =>
+       //                      {
+       //                             if ( error.status == 500 )
+       //                             {
+       //                                    this.toastr.error(
+       //                                           this.languageService.transformMessageLanguage( 'internalError' ),
+       //                                           this.languageService.transformMessageLanguage( 'error' ),
+       //                                           { timeOut: 10000 }
+       //                                    );
+       //                             } else if ( error.status == 401 )
+       //                             {
+       //                                    this.toastr.error(
+       //                                           this.languageService.transformMessageLanguage( 'invalid token' ),
+       //                                           this.languageService.transformMessageLanguage( 'error' ),
+       //                                           { timeOut: 10000 }
+       //                                    );
+       //                             } else if ( error.status == 400 )
+       //                             {
+       //                                    this.toastr.error(
+       //                                           this.languageService.transformMessageLanguage(
+       //                                                  'permissionId must contain at least 1 elements'
+       //                                           ),
+       //                                           this.languageService.transformMessageLanguage( 'error' ),
+       //                                           { timeOut: 10000 }
+       //                                    );
+       //                             } else
+       //                             {
+       //                                    this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
+       //                             }
+       //                             this.loader = false;
+       //                      }
+       //               );
+       // }
+
+
+       // fonction ajuster par valdo pour ajputer les roles
+
+       addPermissionOnRole( requestBody: { roleId: string; permissionId: string[] } ): Observable<any>
        {
               this.checkboxChecked = false;
               this.loader = true;
               console.log( 'request adding ', requestBody );
-              this.api
-                     .post( EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation )
-                     .subscribe(
-                            ( resp ) =>
+
+              return this.api.post( EndpointRole.ADD_PERMISSION_ROLE, requestBody, this.authorisation )
+                     .pipe(
+                            tap( ( resp ) =>
                             {
                                    this.getListRole();
                                    this.toastr.success( 'Permission Added', 'SUCCESS', { timeOut: 7000 } );
                                    this.loader = false;
-                            },
-                            ( error: any ) =>
+                            } ),
+                            catchError( ( error: any ) =>
                             {
-                                   if ( error.status == 500 )
+                                   this.loader = false;
+
+                                   if ( error.status === 500 )
                                    {
                                           this.toastr.error(
                                                  this.languageService.transformMessageLanguage( 'internalError' ),
                                                  this.languageService.transformMessageLanguage( 'error' ),
                                                  { timeOut: 10000 }
                                           );
-                                   } else if ( error.status == 401 )
+                                   } else if ( error.status === 401 )
                                    {
                                           this.toastr.error(
                                                  this.languageService.transformMessageLanguage( 'invalid token' ),
                                                  this.languageService.transformMessageLanguage( 'error' ),
                                                  { timeOut: 10000 }
                                           );
-                                   } else if ( error.status == 400 )
+                                   } else if ( error.status === 400 )
                                    {
                                           this.toastr.error(
-                                                 this.languageService.transformMessageLanguage(
-                                                        'permissionId must contain at least 1 elements'
-                                                 ),
+                                                 this.languageService.transformMessageLanguage( 'permissionId must contain at least 1 elements' ),
                                                  this.languageService.transformMessageLanguage( 'error' ),
                                                  { timeOut: 10000 }
                                           );
@@ -398,10 +549,13 @@ export class RoleService
                                    {
                                           this.toastr.error( error.message, 'Error', { timeOut: 7000 } );
                                    }
-                                   this.loader = false;
-                            }
+
+                                   // Utilisation de throwError pour renvoyer l'erreur dans le flux d'Observable
+                                   return throwError( () => new Error( error ) );
+                            } )
                      );
        }
+
 
        // addRoleOnUser(requestBody: {userId: string, roleId: string }){
        //     this.api.post(EndpointRole.ADD_ROLE_ON_USER, requestBody, this.authorisation).subscribe((resp)=>{

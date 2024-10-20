@@ -139,7 +139,7 @@
                                                                       <a
                                                                              class="avatar avatar-sm me-2"><img
                                                                                     class="avatar-img rounded-circle"
-                                                                                    src="../../../../../assets/img/3dAvatar.png"
+                                                                                    src="../../../../../assets/img/user-profile.png"
                                                                                     alt="User Image" /></a>
                                                                       <a>
                                                                              {{
@@ -148,7 +148,9 @@
                                                                </h2>
 
                                                                <div
-                                                                      [ngStyle]="{ 'height': showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'max-content' : '150px'  }"
+                                                                      [ngStyle]="{ 'height': showElement  && idxHover === indexUser  && customer.roles.length >4 ? '300px' : '150px' ,
+                                                                             'overflow-y' : showElement  && idxHover === indexUser  && customer.roles.length >4 ? 'scroll' : 'hidden' 
+                                                                       }"
                                                                       class="ctnRole"
                                                                       style="    height: 150px; overflow: hidden;"
                                                                       class="row row-role"
@@ -244,7 +246,8 @@
                                                                                     </button>
                                                                                     <div
                                                                                            [ngStyle]="{'visibility' : showDropDown  ?  'visible' : 'hidden'}"
-                                                                                           style="z-index: 20;  top: -13px;"
+                                                                                           style="z-index: 20;  top: -13px;height: 350px !important;
+                                                                                                  overflow-y: scroll;"
                                                                                            class="dropdown-menu ">
                                                                                            <a
                                                                                                   *ngFor="let roleGet of this.roleService.listRole"

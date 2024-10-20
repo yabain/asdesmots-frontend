@@ -6,88 +6,274 @@
     </button>
 </p> -->
 <div class="row mt-4 h-100">
-               
-            <div class="col-12">
-                <form [formGroup]="roleService.formCreateRole">
-                    <div class="form-group">
-                      <div class="row justify-content-between">
-                        <div class="col-8">
-                            <div class="row " >
-                              <h3 style="margin-bottom: 35px;font-weight: bold;" >New Role</h3>
-                              <div class="col-auto">
-                                <div class="form-group was-validated">
-                                  <label for="name">Role Name</label>
-                                  <input required type="text" name="name" class="form-control" formControlName="name" id="name" [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}">
-                                </div>
-                            
-                              </div>
-                            
-                              <div class="col-auto">
-                            
-                            
-                                <div class="form-group was-validated">
-                                  <label for="description">Role Description</label>
-                                  <input required type="text" name="description" class="form-control" formControlName="description" id="description" [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}">
-                                </div>
-                              </div>
 
-                              <div class="col-12" style="margin-top: 15px;">
-                                <div class="col-10" style="border-bottom: 1px solid #3063AD;">
+       <div class="col-12">
+              <form [formGroup]="roleService.formCreateRole">
+                     <div class="form-group row justify-content-between">
 
-                                </div>
-                              </div>
+                            <div style="width: 65%;">
+                                   <div class="row " style="
+                                          margin-left: 0;
+                                          background-color: white;
+                                          padding: 25px 0 40px 0;
+                                          border-radius: 15px;
+                                          ">
+                                          <h3
+                                                 style="margin-bottom: 35px;font-weight: bold;">New
+                                                 Role</h3>
+
+                                          <div
+                                                 *ngIf="permission.length === 0 && customers.length === 0"
+                                                 class="row">
+                                                 <div
+                                                        *ngFor="let plh of [1,1,1,1]; let i = index"
+                                                        class="col-12 col-md-2 col-lg-4 col-xl-3">
+                                                        <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
+                                                 </div>
+                                          </div>
+
+                                          <div
+                                                 *ngIf="permission.length !== 0 && customers.length !== 0"
+                                                 class="col-auto">
+                                                 <div
+                                                        class="form-group was-validated">
+                                                        <label
+                                                               for="name">Role
+                                                               Name</label>
+                                                        <input required
+                                                               type="text"
+                                                               name="name"
+                                                               class="form-control"
+                                                               formControlName="name"
+                                                               id="name"
+                                                               [ngClass]="{ 'is-invalid': roleService.formCreation['name'].touched && roleService.formCreation['name'].invalid}">
+                                                 </div>
+
+                                          </div>
+
+                                          <div
+                                                 *ngIf="permission.length !== 0 && customers.length !== 0"
+                                                 class="col-auto">
+
+                                                 <div
+                                                        class="form-group was-validated">
+                                                        <label
+                                                               for="description">Role
+                                                               Description</label>
+                                                        <input required
+                                                               type="text"
+                                                               name="description"
+                                                               class="form-control"
+                                                               formControlName="description"
+                                                               id="description"
+                                                               [ngClass]="{ 'is-invalid':  roleService.formCreation['description'].touched &&  roleService.formCreation['description'].invalid}">
+                                                 </div>
+                                          </div>
+
+                                          <div class="col-12"
+                                                 style="margin-top: 15px;">
+                                                 <div class="col-10"
+                                                        style="border-bottom: 1px solid #3063AD;">
+
+                                                 </div>
+                                          </div>
+                                   </div>
+
+                                   <div class="row"
+                                          (mouseenter)="onMouseEnter('permission',0)"
+                                          (mouseleave)="onMouseLeave('permission')"
+                                          [ngStyle]="{'overflow-y': enter === 'permission' || enter === 'permissionItem' ? 'scroll':'hidden'}"
+                                          style="margin-top: 15px;margin-left: 0;background-color: white;border-radius: 15px;padding: 15px 0;height: 285px;overflow: hidden;">
+                                          <h3
+                                                 style="font-weight: bold;">Permissions</h3>
+                                          <div class="col-12">
+                                                 <!-- Bloc de chargement -->
+                                                 <div
+                                                        *ngIf="permission.length === 0 && customers.length === 0"
+                                                        class="row">
+                                                        <div
+                                                               *ngFor="let plh of [1,1,1,1,1,1,1,1,1,1,1,1]; let i = index"
+                                                               class="col-12 col-md-2 col-lg-4 col-xl-3">
+                                                               <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
+                                                        </div>
+                                                 </div>
+                                                 <div
+                                                        *ngIf="permission.length > 0 && customers.length > 0"
+                                                        class="row">
+                                                        <div
+                                                               class="col-auto p-2 pb-2"
+                                                               *ngFor="let i of permission; let idx = index">
+                                                               <!-- <div
+                                                                             class="card"
+                                                                             style="margin: 0;; width: 180px;height: 115px; border-radius: 12px;background-color: #3063AD;color: white;"> -->
+
+                                                               <div
+                                                                      (mouseenter)="onMouseEnter('permissionItem',idx)"
+                                                                      (mouseleave)="onMouseLeave('permissionItem')"
+                                                                      [ngStyle]="{'background-color': enter === 'permissionItem' && idxHover === idx ? '#3063AD':'unset'}"
+                                                                      class="card inovices-card"
+                                                                      style="margin: 0 !important; padding: 5px 2px;">
+                                                                      <div
+                                                                             class="card-body">
+                                                                             <!-- <div>Titre
+                                                                                           Permission</div>
+                                                                                    <div>Description
+                                                                                           de
+                                                                                           la
+                                                                                           Permission</div> -->
+
+                                                                             <div
+                                                                                    class="dash-widget-header mb-0">
+
+                                                                                    <div
+                                                                                           class="dash-count">
+
+                                                                                           <div
+                                                                                                  class="dash-counts">
+                                                                                                  <p
+                                                                                                         [ngStyle]="{'color': enter === 'permissionItem' && idxHover === idx ? 'white':'black'}"
+                                                                                                         style="font-size: 12px;"
+                                                                                                         class="mb-0">{{i.name}}</p>
+                                                                                           </div>
+
+                                                                                           <div
+                                                                                                  class="dash-title"
+                                                                                                  [ngStyle]="{'color': enter === 'permissionItem' && idxHover === idx ? 'hsl(214deg 100% 100% / 70%) ':'hsl(214deg 100% 61% / 70%) '}"
+                                                                                                  style="font: 400 calc(14px * 0.83) / 20px Roboto, 'Helvetica Neue', sans-serif;
+                                                                                                                 display: flex;
+                                                                                                                       align-items: center;
+                                                                                                                ">
+                                                                                                  <div
+                                                                                                         style="overflow: hidden;width: 70px;white-space: nowrap;">
+                                                                                                         {{i.description}}</div>
+
+                                                                                                  <span>
+
+                                                                                                         <a
+                                                                                                                class="dropdown-item">
+                                                                                                                <label
+                                                                                                                       class="custom_check">
+                                                                                                                       <input
+                                                                                                                              type="checkbox"
+                                                                                                                              value
+                                                                                                                              id="flexCheckDefault"
+                                                                                                                              (change)="updateCheckboxPermissionState(i._id)"
+                                                                                                                              name="invoice">
+                                                                                                                       <span
+                                                                                                                              class="checkmark"></span>
+                                                                                                                </label></a>
+
+                                                                                                  </span>
+                                                                                           </div>
+
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                               </div>
+                                                        </div>
+                                                 </div>
+                                          </div>
+                                   </div>
                             </div>
-                            
-                            
-                            <div class="row" style="margin-top: 65px;">
-                              <h3 style="font-weight: bold;" >Permissions</h3>
-                              <div class="col-12">
-                                <div class="row">
-                                  <div class="col-auto p-2 pb-2"  *ngFor="let i of [3,1,2,5,5,2,5,5]">
-                                    <div class="card" style="margin: 0;; width: 180px;height: 115px; border-radius: 12px;background-color: #3063AD;color: white;">
-                                      <div class="card-body"> {{i}} </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+
+                            <div
+                                   (mouseenter)="onMouseEnter('user',0)"
+                                   (mouseleave)="onMouseLeave('user')"
+                                   [ngStyle]="{'overflow-y': enter === 'user' ? 'scroll':'hidden'}"
+                                   style="
+                                          margin-right: 0;
+                                          width: 33%;
+                                          height: 508px;
+                                          overflow: hidden;
+                                          border-radius: 15px;
+                                          ">
+
+                                   <div class="row" style="
+                                          background-color: white;
+                                          border-radius: 15px;
+                                          margin-right: 0;
+                                          padding: 15px 0px 5px 15px;">
+                                          <h3
+                                                 style="margin-bottom: 35px;font-weight: bold;">Users</h3>
+
+                                          <div
+                                                 *ngIf="permission.length === 0 && customers.length === 0"
+                                                 class="row">
+                                                 <div
+                                                        *ngFor="let plh of [1,1,1,1,1,1,1,1]; let i = index"
+                                                        class="col-12">
+                                                        <app-oncomming-list-placeholder></app-oncomming-list-placeholder>
+                                                 </div>
+                                          </div>
+                                          <div class="row "
+                                                 *ngFor="let i of customers"
+                                                 style="margin-bottom: 20px; margin-right: 0;">
+                                                 <div class="col-auto"
+                                                        style="padding-right: 0;justify-content: flex-end;">
+                                                        <img
+                                                               src="../../../../../assets/img/user-profile.png"
+                                                               alt
+                                                               style="width: 35px;">
+                                                 </div>
+                                                 <div class="col-10 p-0"
+                                                        style="align-items: center;display: flex;">
+                                                        <div class="row"
+                                                               style="font-size: 12px; padding-left: 12px;width: 100%;">
+
+                                                               <div
+                                                                      style="display: flex; align-items: center;"
+                                                                      class="col-9">
+                                                                      <span>
+                                                                             {{i.email}}
+                                                                      </span>
+
+                                                               </div>
+
+                                                               <div
+                                                                      style="display: flex; align-items: center;padding-left: 25px;"
+                                                                      class="col-3">
+                                                                      <span> <a
+                                                                                    class="dropdown-item">
+                                                                                    <label
+                                                                                           class="custom_check">
+                                                                                           <input
+                                                                                                  type="checkbox"
+                                                                                                  (change)="updateCheckboxState(i._id)"
+                                                                                                  value
+                                                                                                  id="flexCheckDefault"
+                                                                                                  name="invoice">
+                                                                                           <span
+                                                                                                  class="checkmark"></span>
+                                                                                    </label></a>
+                                                                      </span>
+                                                               </div>
+                                                        </div>
+                                                 </div>
+                                          </div>
+                                   </div>
                             </div>
-                        </div>
 
-                        <div class="col-3">
+                     </div>
 
-                          <h3  style="margin-bottom: 35px;padding-left: 15px;font-weight: bold;">Users</h3>
-
-                          <div class="row " style="margin-bottom: 35px;" *ngFor="let i of [3,1,2,5,5]">
-                            <div class="col-auto" style="padding-right: 0;justify-content: flex-end;">
-                              <img src="../../../../../assets/img/3dAvatar.png" alt="" style="width: 67px;">
-                            </div>
-                            <div class="col-7 p-0" style="align-items: center;display: flex;">
-                              <div class="row" style="font-size: 12px;">
-                                <div class="col-12">
-                                  <span>696080087</span>
-                                </div>
-                                <div class="col-12 pb-1 pt-1">
-                                  <span>tchinda valdo</span>
-                                </div>
-                                <div class="col-12">
-                                  <span>tchindavaldoblair@gmail.com</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-footer text-end col-auto">
-                        <button class="btn btn-success" [disabled]="roleService.formCreateRole.invalid" (click)="createRole()" >
-                            <span *ngIf="roleService.waitingResponse" >Creation... <img src="../../../../../assets/img/loader.gif" alt=""
-                                width="30px"> </span>
-                            <span *ngIf="!roleService.waitingResponse" >Creer <i class="fa fa-plus" aria-hidden="true"></i> </span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div> 
+                     <div class="card-footer text-end col-auto"
+                            style="margin-top: 10px;">
+                            <button class="btn btn-success"
+                                   [disabled]="roleService.formCreateRole.invalid"
+                                   (click)="createRole()">
+                                   <span
+                                          *ngIf="roleService.waitingResponse">Creation...
+                                          <img
+                                                 src="../../../../../assets/img/loader.gif"
+                                                 alt
+                                                 width="30px">
+                                   </span>
+                                   <span
+                                          *ngIf="!roleService.waitingResponse">Creer
+                                          <i class="fa fa-plus"
+                                                 aria-hidden="true"></i>
+                                   </span>
+                            </button>
+                     </div>
+              </form>
+       </div>
+</div>
